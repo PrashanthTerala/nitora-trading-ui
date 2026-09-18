@@ -25,6 +25,7 @@ src/
 tools/
   lint-content.mjs       Validates all 128 lessons against docs/CONTENT-GUIDE.md
   test-engine.mjs        82 tests over the market generator, indicators and broker
+  test-figures.mjs       Checks all 85 teaching figures draw valid candles
 docs/
   CONTENT-GUIDE.md       The contract every lesson file follows
 ```
@@ -99,10 +100,17 @@ the wrong lesson.
 ## Checks
 
 ```bash
-node tools/lint-content.mjs    # all 128 lessons present and structurally valid
-node tools/test-engine.mjs     # 82 tests: generator, indicators, broker, statistics
-npm run typecheck
+npm run check   # typecheck, then all three suites below
 ```
+
+| Suite | What it proves |
+|-------|----------------|
+| `npm run lint:content` | All 128 lessons present and structurally valid |
+| `npm run test:engine` | 82 tests: generator, indicators, broker, statistics |
+| `npm run test:figures` | All 85 teaching figures draw valid candles with in-range annotations |
+
+A figure with an out-of-range annotation index renders silently wrong, so that is
+checked mechanically rather than by eye.
 
 The content linter enforces the contract in `docs/CONTENT-GUIDE.md`: correct file paths, no H1,
 required components, valid figure and indicator names, resolvable internal links, quiz arrays
