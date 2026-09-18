@@ -6,7 +6,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { Market, SUBTICKS } from '@/engine/market/feed';
-import { RealFeed, fetchRealHistory, fetchRealSymbols, type RealSymbolSpec } from '@/engine/market/realFeed';
+import { RealFeed, fetchRealHistory, fetchRealSymbols, fetchLive, livePollMs, mergeLive, type RealSymbolSpec, type LiveResponse } from '@/engine/market/realFeed';
 import { SYMBOLS, SYMBOL_MAP } from '@/engine/market/symbols';
 import { bucketStart, minuteOfSession } from '@/engine/market/generator';
 import type { Bar, Timeframe } from '@/engine/market/types';
@@ -46,7 +46,13 @@ export function getRealFeed() {
   return realFeed;
 }
 
-export type DataSource = 'synthetic' | 'real';
+export type DataSource = 'synthetic' | 'real' | 'live';
+
+/** Both real modes read from RealFeed; only the clock that drives them differs. */
+export const usesRealFeed = (s: DataSource) => s !== 'synthetic';
+
+/** Live polling handle, module-scoped for the same reason the feed is: never persisted. */
+let livePoll: number | null = null;
 
 export interface Overlays {
   sma20: boolean;
@@ -80,6 +86,8 @@ interface SimState {
   realStatus: 'idle' | 'loading' | 'ready' | 'error';
   realError: string | null;
   realMeta: { source: string; cached?: boolean; stale?: boolean; bars: number } | null;
+  /** Freshness facts for live mode, so the interface can be honest about what it is showing. */
+  liveMeta: { marketOpen: boolean; kind?: string; delayHint: number | null; asOf: number; forming: boolean } | null;
 
   setSymbol: (s: string) => void;
   setTimeframe: (tf: Timeframe) => void;
@@ -101,10 +109,13 @@ interface SimState {
   setSource: (s: DataSource) => void;
   setRealSymbol: (s: string) => void;
   loadReal: () => Promise<void>;
+  startLive: () => void;
+  stopLive: () => void;
+  pollLive: () => Promise<void>;
 }
 
 export function currentTime(cursor: number, subtick: number) {
-  if (useSim.getState().source === 'real' && realFeed) {
+  if (usesRealFeed(useSim.getState().source) && realFeed) {
     // Real bars carry their own timestamps; spread sub-ticks across the bar's span.
     const i = realFeed.clamp(cursor);
     const b = realFeed.baseBar(i);
@@ -118,7 +129,7 @@ export function currentTime(cursor: number, subtick: number) {
 
 export function pricesAt(cursor: number, subtick: number, symbols: string[]): PriceMap {
   const out: PriceMap = {};
-  if (useSim.getState().source === 'real') {
+  if (usesRealFeed(useSim.getState().source)) {
     // Only the replayed instrument exists in real mode; nothing else has prices.
     if (realFeed) out[realFeed.symbol] = realFeed.price(cursor, subtick);
     return out;
@@ -154,19 +165,24 @@ export const useSim = create<SimState>()(
       realStatus: 'idle',
       realError: null,
       realMeta: null,
+      liveMeta: null,
 
       setSymbol: (symbol) => set({ symbol }),
       setTimeframe: (timeframe) => {
         set({ timeframe });
         // Real data is fetched per timeframe rather than aggregated from one base series.
-        if (get().source === 'real') void get().loadReal();
+        const src = get().source;
+        if (src === 'real') void get().loadReal();
+        // The poll interval is derived from the timeframe, so live has to re-arm, not just refetch.
+        if (src === 'live') get().startLive();
       },
-      setPlaying: (playing) => set({ playing }),
+      // Live mode follows the wall clock; there is nothing to play, pause or step.
+      setPlaying: (playing) => set({ playing: get().source === 'live' ? false : playing }),
       setSpeed: (speed) => set({ speed: Math.max(1, Math.min(400, speed)) }),
       toggleOverlay: (k) => set((s) => ({ overlays: { ...s.overlays, [k]: !s.overlays[k] } })),
 
       advance: (n) => {
-        if (get().source === 'real') {
+        if (usesRealFeed(get().source)) {
           get().advanceReal(n);
           return;
         }
@@ -208,7 +224,7 @@ export const useSim = create<SimState>()(
       },
 
       stepBar: () => {
-        if (get().source === 'real') {
+        if (usesRealFeed(get().source)) {
           // One real bar is exactly one cursor step, so finish the forming bar.
           get().advance(SUBTICKS - get().subtick);
           return;
@@ -335,6 +351,57 @@ export const useSim = create<SimState>()(
         set((st) => ({ cursor, subtick, account, clock: st.clock + steps, playing: feed.exhausted(cursor) ? false : st.playing }));
       },
 
+      /**
+       * Live mode runs on the wall clock, not the replay clock. There is no Play, Step or speed:
+       * the market moves when it moves. Each poll replaces the tail of the series, so the final
+       * candle grows in front of you the way it does on a real platform.
+       */
+      startLive: () => {
+        get().stopLive();
+        void get().pollLive();
+        const tick = () => {
+          const st = useSim.getState();
+          if (st.source !== 'live') return;
+          void st.pollLive();
+        };
+        livePoll = window.setInterval(tick, livePollMs(get().timeframe));
+      },
+
+      stopLive: () => {
+        if (livePoll !== null) {
+          window.clearInterval(livePoll);
+          livePoll = null;
+        }
+      },
+
+      pollLive: async () => {
+        const token = ++realLoadToken;
+        const { realSymbol, timeframe } = get();
+        try {
+          const res: LiveResponse = await fetchLive(realSymbol, timeframe);
+          if (token !== realLoadToken || useSim.getState().source !== 'live') return;
+          const spec = get().realSymbols.find((x) => x.symbol === realSymbol);
+          const merged = realFeed && realFeed.symbol === realSymbol && realFeed.timeframe === timeframe
+            ? mergeLive(realFeed.bars, res.bars)
+            : res.bars;
+          realFeed = new RealFeed(realSymbol, timeframe, merged, spec?.decimals ?? 2);
+          set((st) => ({
+            realStatus: 'ready',
+            realError: null,
+            realMeta: { source: res.source, bars: merged.length },
+            liveMeta: { marketOpen: res.marketOpen, kind: res.kind, delayHint: res.delayHint, asOf: res.asOf, forming: res.forming },
+            // Sit on the newest bar. Live mode has no cursor of its own: the edge is the point.
+            cursor: merged.length - 1,
+            subtick: SUBTICKS - 1,
+            clock: st.clock + 1,
+          }));
+          lastPrices = { [realSymbol]: merged[merged.length - 1].close };
+        } catch (e) {
+          if (token !== realLoadToken) return;
+          set({ realStatus: 'error', realError: e instanceof Error ? e.message : String(e) });
+        }
+      },
+
       setSource: (next) => {
         if (next === get().source) return;
         // Positions and orders are priced against the market that created them, so
@@ -348,13 +415,16 @@ export const useSim = create<SimState>()(
           subtick: SUBTICKS - 1,
           realError: null,
         }));
+        get().stopLive();
         if (next === 'real') void get().loadReal();
+        if (next === 'live') get().startLive();
       },
 
       setRealSymbol: (sym) => {
         if (sym === get().realSymbol) return;
         set((st) => ({ realSymbol: sym, playing: false, account: createAccount(st.account.settings), clock: 0 }));
-        void get().loadReal();
+        if (get().source === 'live') get().startLive();
+        else void get().loadReal();
       },
 
       /**
@@ -402,6 +472,8 @@ export const useSim = create<SimState>()(
           state.setHydrated();
           // Bars are never persisted, so a session resumed in real mode has no feed yet.
           if (state.source === 'real') void state.loadReal();
+          // Live holds no bars across a reload either, and its clock is the wall clock.
+          if (state.source === 'live') state.startLive();
         }
       },
     },
@@ -410,20 +482,20 @@ export const useSim = create<SimState>()(
 
 /** Chart data for the active symbol at the current clock, from whichever market is live. */
 export function chartBars(symbol: string, tf: Timeframe, cursor: number, subtick: number): Bar[] {
-  if (useSim.getState().source === 'real') return realFeed ? realFeed.chartBars(cursor, subtick) : [];
+  if (usesRealFeed(useSim.getState().source)) return realFeed ? realFeed.chartBars(cursor, subtick) : [];
   return market.feed(symbol).chartBars(tf, cursor, subtick);
 }
 
 /** The instrument actually being replayed, whichever mode is active. */
 export function activeSymbol(): string {
   const st = useSim.getState();
-  return st.source === 'real' ? st.realSymbol : st.symbol;
+  return usesRealFeed(st.source) ? st.realSymbol : st.symbol;
 }
 
 /** Decimal places for the active instrument. */
 export function activeDecimals(): number {
   const st = useSim.getState();
-  if (st.source === 'real') return realFeed?.decimals ?? st.realSymbols.find((x) => x.symbol === st.realSymbol)?.decimals ?? 2;
+  if (usesRealFeed(st.source)) return realFeed?.decimals ?? st.realSymbols.find((x) => x.symbol === st.realSymbol)?.decimals ?? 2;
   return SYMBOL_MAP[st.symbol]?.decimals ?? 2;
 }
 

@@ -32,12 +32,13 @@ import * as broker from '@/engine/broker/broker';
 import * as stats from '@/engine/broker/stats';
 import { Rng, shuffled } from '@/lib/rng';
 import { csvCell, toCsv } from '@/lib/csv';
+import { defaultQty } from '@/lib/sizing';
 import { Market } from '@/engine/market/feed';
 import { RealFeed } from '@/engine/market/realFeed';
 import { SYMBOLS, SYMBOL_MAP } from '@/engine/market/symbols';
 import { aggregate, bucketStart, nextSessionMinute, minuteOfSession } from '@/engine/market/generator';
 import * as ind from '@/engine/market/indicators';
-export { broker, stats, Rng, shuffled, csvCell, toCsv, Market, RealFeed, SYMBOLS, SYMBOL_MAP, aggregate, bucketStart, nextSessionMinute, minuteOfSession, ind };
+export { broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, Market, RealFeed, SYMBOLS, SYMBOL_MAP, aggregate, bucketStart, nextSessionMinute, minuteOfSession, ind };
 `,
 );
 
@@ -48,7 +49,7 @@ execSync(
 );
 
 const M = await import(pathToFileURL(bundle).href);
-const { broker, stats, Rng, shuffled, csvCell, toCsv, Market, RealFeed, SYMBOLS, ind } = M;
+const { broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, Market, RealFeed, SYMBOLS, ind } = M;
 
 let pass = 0;
 let fail = 0;
@@ -421,6 +422,23 @@ const near = (a, b, eps = 1e-6) => Math.abs(a - b) < eps;
   const back = parse(doc.slice(1));
   check('csv round-trips a note containing quotes and a newline', back.length === 2 && back[1][1] === noteText, JSON.stringify(back[1]));
   check('csv round-trip keeps every row the same width', back.every((r) => r.length === back[0].length));
+}
+
+// ---------------------------------------------------------------- order sizing
+{
+  const EQ = 100000;
+  // Roughly a tenth of equity, whatever the instrument costs. The ticket used a flat 100
+  // units, which on an $81,000 crypto pair opened an eight-figure position.
+  for (const [label, price] of [['cheap biotech', 18.4], ['stock', 147], ['metal', 2350]]) {
+    const q = defaultQty(price, EQ);
+    const notional = q * price;
+    check('default size on a ' + label + ' is about a tenth of equity', notional > EQ * 0.05 && notional < EQ * 0.16, 'qty ' + q + ' = ' + Math.round(notional));
+  }
+  check('never returns less than one whole unit', defaultQty(81238, EQ) >= 1 && defaultQty(1e9, EQ) === 1);
+  check('rounds to a number a human would type', defaultQty(1.0842, EQ) % 100 === 0, String(defaultQty(1.0842, EQ)));
+  check('survives a nonsense price', defaultQty(0, EQ) === 1 && defaultQty(-5, EQ) === 1 && defaultQty(NaN, EQ) === 1);
+  check('survives a nonsense account', defaultQty(100, 0) === 1 && defaultQty(100, NaN) === 1);
+  check('scales with the account, not just the price', defaultQty(147, 1000000) > defaultQty(147, 100000));
 }
 
 // ---------------------------------------------------------------- real feed

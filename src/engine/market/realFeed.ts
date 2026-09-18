@@ -173,3 +173,66 @@ export async function pingDataApi(signal?: AbortSignal): Promise<boolean> {
     return false;
   }
 }
+
+// ---------------------------------------------------------------- live mode
+
+export interface LiveResponse {
+  symbol: string;
+  interval: string;
+  currency?: string;
+  exchange?: string;
+  bars: Bar[];
+  /** whether the final bar is still open */
+  forming: boolean;
+  marketOpen: boolean;
+  kind?: string;
+  /** seconds behind real time, or null when the service has no basis for a claim */
+  delayHint: number | null;
+  asOf: number;
+  source: string;
+  fetchedAt: number;
+}
+
+export async function fetchLive(symbol: string, tf: Timeframe, tail = 300, signal?: AbortSignal): Promise<LiveResponse> {
+  const r = await getJson<LiveResponse>(
+    `/api/live?symbol=${encodeURIComponent(symbol)}&interval=${intervalFor(tf)}&tail=${tail}`,
+    signal,
+  );
+  if (!r.bars?.length) throw new DataApiError(`No live ${tf} data available for ${symbol}.`, 'empty');
+  return r;
+}
+
+/**
+ * How often to ask for a fresh reading, in milliseconds.
+ *
+ * The upstream quote was measured advancing about every 15 seconds, so polling faster than
+ * that returns the same numbers and spends someone else's bandwidth for nothing. Above a
+ * minute the bar itself is the limit: there is no point asking four times inside one 4h
+ * candle. Capped so a daily chart does not poll all afternoon.
+ */
+export function livePollMs(tf: Timeframe): number {
+  switch (tf) {
+    case '1m':
+      return 15_000;
+    case '5m':
+      return 20_000;
+    case '15m':
+      return 30_000;
+    default:
+      return 60_000;
+  }
+}
+
+/**
+ * Merge a live reading into bars already on screen.
+ *
+ * The incoming tail overlaps what we hold, and the overlapping rows may have been revised, so
+ * the newer copy wins. Returning a fresh array rather than mutating keeps React's identity
+ * check meaningful.
+ */
+export function mergeLive(existing: Bar[], incoming: Bar[]): Bar[] {
+  if (!incoming.length) return existing;
+  const firstNew = incoming[0].time;
+  const kept = existing.filter((b) => b.time < firstNew);
+  return [...kept, ...incoming];
+}

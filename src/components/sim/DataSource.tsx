@@ -6,8 +6,8 @@
  * it. Real mode replays actual historical bars from the local data service, which needs
  * that service running and is bounded by how much history the provider will give.
  */
-import { useEffect } from 'react';
-import { AlertTriangle, Database, FlaskConical, Loader2, RefreshCw } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { AlertTriangle, Database, FlaskConical, Loader2, Radio, RefreshCw } from 'lucide-react';
 import { useSim } from '@/store/sim';
 
 export function DataSourceBar() {
@@ -19,6 +19,7 @@ export function DataSourceBar() {
   const realSymbol = useSim((s) => s.realSymbol);
   const loadReal = useSim((s) => s.loadReal);
   const timeframe = useSim((s) => s.timeframe);
+  const liveMeta = useSim((s) => s.liveMeta);
 
   return (
     <div className="flex shrink-0 flex-wrap items-center gap-3 border-b border-line bg-panel/30 px-3 py-1.5 text-xs">
@@ -37,7 +38,15 @@ export function DataSourceBar() {
           className={`flex items-center gap-1.5 rounded px-2.5 py-1 font-semibold transition ${source === 'real' ? 'bg-surface text-accent shadow-sm' : 'text-ink-soft hover:text-ink'}`}
           title="Replay real historical bars. Needs the local data service running."
         >
-          <Database size={12} /> Real data
+          <Database size={12} /> Real replay
+        </button>
+        <button
+          type="button"
+          onClick={() => setSource('live')}
+          className={`flex items-center gap-1.5 rounded px-2.5 py-1 font-semibold transition ${source === 'live' ? 'bg-surface text-accent shadow-sm' : 'text-ink-soft hover:text-ink'}`}
+          title="Follow the market as it trades now. The clock is real time, so there is no play, step or speed."
+        >
+          <Radio size={12} /> Live
         </button>
       </div>
 
@@ -71,7 +80,9 @@ export function DataSourceBar() {
         </span>
       ) : null}
 
-      {source === 'real' && (
+      {source === 'live' && liveMeta && <LiveFreshness meta={liveMeta} />}
+
+      {source !== 'synthetic' && (
         <span className="ml-auto hidden text-[11px] text-ink-soft xl:inline">
           Switching source starts a fresh account: positions are priced against the market that created them.
         </span>
@@ -108,5 +119,47 @@ export function RealSymbolPicker() {
         </option>
       ))}
     </select>
+  );
+}
+
+/**
+ * States plainly how stale what you are watching is.
+ *
+ * A LIVE badge over a fifteen-minute-delayed feed is the kind of small lie this site exists to
+ * argue against, so the delay is written out rather than implied, and an unknown delay says so
+ * instead of defaulting to something reassuring.
+ */
+function LiveFreshness({ meta }: { meta: NonNullable<ReturnType<typeof useSim.getState>['liveMeta']> }) {
+  const [, force] = useState(0);
+  // The age is a clock reading, so it has to re-render on its own rather than only on a poll.
+  useEffect(() => {
+    const id = window.setInterval(() => force((n) => n + 1), 1000);
+    return () => window.clearInterval(id);
+  }, []);
+
+  const age = Math.max(0, Math.floor(Date.now() / 1000 - meta.asOf));
+  const delay = meta.delayHint;
+
+  return (
+    <span className="flex flex-wrap items-center gap-2">
+      {meta.marketOpen ? (
+        <span className="flex items-center gap-1.5 font-semibold text-up">
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-up" /> Market open
+        </span>
+      ) : (
+        <span className="chip border-warn/50 text-[10px] text-warn">Market closed · nothing is moving</span>
+      )}
+      <span className="text-ink-soft">
+        last price {age < 90 ? age + 's' : Math.round(age / 60) + 'm'} ago
+      </span>
+      {delay === 0 && <span className="chip text-[10px]">real time</span>}
+      {delay !== null && delay > 0 && (
+        <span className="chip border-warn/50 text-[10px] text-warn" title="Set from what this instrument class was measured at, not from a guarantee.">
+          delayed ~{Math.round(delay / 60)} min
+        </span>
+      )}
+      {delay === null && <span className="chip text-[10px]">delay unknown</span>}
+      {!meta.forming && meta.marketOpen && <span className="chip text-[10px]">waiting for the next bar</span>}
+    </span>
   );
 }

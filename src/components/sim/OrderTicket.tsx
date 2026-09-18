@@ -6,6 +6,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AlertTriangle, Calculator } from 'lucide-react';
 import { useSim, specOf } from '@/store/sim';
+import { defaultQty } from '@/lib/sizing';
 import { equity, buyingPower } from '@/engine/broker/broker';
 import type { OrderType, Side } from '@/engine/broker/types';
 
@@ -29,10 +30,22 @@ export function OrderTicket({ symbol, price, prices }: Props) {
   const dp = spec?.decimals ?? 2;
 
   const [type, setType] = useState<OrderType>('market');
-  const [qty, setQty] = useState(100);
+  /**
+   * A fixed default of 100 units is only sensible for a hundred-dollar stock. On an
+   * instrument priced in the tens of thousands it opens an eight-figure position against a
+   * six-figure account, so the ticket greets you with negative buying power and a lecture
+   * about risk you have not taken yet. Size the default to a small slice of equity instead,
+   * then let the 1%-risk button do the real work.
+   */
+  const [qty, setQty] = useState(() => defaultQty(price, account.settings.startingCash));
   const [limitPrice, setLimitPrice] = useState<number>(() => round(price, dp));
   const [stopPrice, setStopPrice] = useState<number>(() => round(price, dp));
   const [useBracket, setUseBracket] = useState(true);
+  // Switching instrument keeps the ticket open, so the size has to follow the new price.
+  useEffect(() => {
+    setQty(defaultQty(price, account.settings.startingCash));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [symbol]);
   /**
    * The bracket is entered as a DISTANCE from the entry, not as an absolute price.
    * That is how real platforms do it, it keeps the ticket correct for both long and

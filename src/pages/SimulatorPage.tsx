@@ -3,7 +3,7 @@ import { Play, Pause, SkipForward, FastForward, RotateCcw, Settings2, Sparkles, 
 import { TradingChart } from '@/components/sim/TradingChart';
 import { OrderTicket } from '@/components/sim/OrderTicket';
 import { PositionsPanel, OrdersPanel, HistoryPanel, EventsPanel, AccountBar } from '@/components/sim/Panels';
-import { useSim, chartBars, pricesAt, startClock, specOf, type Overlays } from '@/store/sim';
+import { useSim, chartBars, pricesAt, startClock, specOf, usesRealFeed, type Overlays } from '@/store/sim';
 import { DataSourceBar, RealSymbolPicker } from '@/components/sim/DataSource';
 import { SYMBOLS } from '@/engine/market/symbols';
 import { TIMEFRAMES, type Timeframe } from '@/engine/market/types';
@@ -56,7 +56,9 @@ export function SimulatorPage() {
     return () => window.removeEventListener('keydown', onKey);
   }, [setPlaying, stepBar]);
 
-  const isReal = source === 'real';
+  // Both real modes read the same feed and the same instrument list; only the clock differs.
+  const isReal = usesRealFeed(source);
+  const isLive = source === 'live';
   /** The instrument on screen, whichever market is live. */
   const active = isReal ? realSymbol : symbol;
   const bars = useMemo(() => chartBars(symbol, timeframe, cursor, subtick), [symbol, timeframe, cursor, subtick, source, realSymbol, realStatus, clock]);
@@ -110,8 +112,8 @@ export function SimulatorPage() {
           ))}
         </div>
 
-        {/* clock controls */}
-        <div className="flex items-center gap-1">
+        {/* clock controls: meaningless in live mode, where the market owns the clock */}
+        <div className={`items-center gap-1 ${isLive ? 'hidden' : 'flex'}`}>
           <button type="button" onClick={() => setPlaying(!playing)} className="btn-ghost px-3 py-1.5" title="Play or pause (Space)">
             {playing ? <Pause size={15} /> : <Play size={15} />}
             {playing ? 'Pause' : 'Play'}
