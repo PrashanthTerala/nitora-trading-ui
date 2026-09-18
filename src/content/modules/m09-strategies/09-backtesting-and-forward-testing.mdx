@@ -98,6 +98,10 @@ Three stages, and you do not skip any of them.
 
 **2. Forward test on paper.** Trade the [simulator](/simulator) in real time, or in replay you have never seen, for at least 50 trades and several weeks. This stage tests something the backtest cannot: whether *you* can execute the rules, in sequence, under mild pressure, without improvising. Most strategies that die here die of the trader, not the strategy.
 
+The words *you have never seen* are doing real work in that stage. A synthetic seed you have already replayed is no longer a forward test, because you remember roughly what happens next even when you think you do not. Two honest ways to get a market you have not met: roll a new seed, or switch the simulator to **Real data** and replay an instrument's actual history. Real history brings the earnings gaps, holiday sessions and ugly stretches that invented data does not produce on its own.
+
+It is still not the same as trading live, and it is worth being precise about why. You know a chart exists to the right of the bar you are on, and that the instrument survived to be in the data at all. That knowledge quietly steadies your hand in a way it will not be steadied in real time.
+
 **3. Tiny real size.** Then, and only then, real money at a size where a full loss is trivial to you: roughly a tenth of your intended risk. You are not trying to make money here. You are testing whether your execution survives real consequences, which change fills, emotions and hesitation in ways paper trading cannot reproduce.
 
 | Stage | Minimum trades | What it actually tests |
@@ -127,4 +131,4 @@ If expectancy falls sharply between stages, the problem is almost always executi
   { q: "A backtest produces a smooth rising equity curve with almost no drawdown. What is the most likely explanation?", options: ["You have found a rare inefficiency", "The test contains an error such as look-ahead, survivorship or curve fitting", "The market was unusually kind", "The sample was too large"], answer: 1, explain: "Real edges are modest and uncomfortable; a flawless curve is nearly always a testing mistake." }
 ]} />
 
-<TryIt to="/simulator">Pick one strategy and test it properly. Use bar-by-bar replay on BLUE, write each order down before advancing the candle, and record 100 trades in the journal with costs included. Then freeze the rules and run the identical test on IDX. If the second test falls apart, you fitted the first one.</TryIt>
+<TryIt to="/simulator">Pick one strategy and test it properly. Use bar-by-bar replay on BLUE, write each order down before advancing the candle, and record 100 trades in the journal with costs included. Then freeze the rules and run the identical test on IDX. If the second test falls apart, you fitted the first one. Then run the same frozen rules once more in Real data mode on an instrument you do not follow, which is the closest this site gets to a market that owes you nothing.</TryIt>

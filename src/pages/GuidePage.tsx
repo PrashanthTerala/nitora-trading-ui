@@ -49,6 +49,21 @@ export function GuidePage() {
         Everything is deterministic from a seed. The same seed always produces the same market, so you can replay a session. <strong>New market</strong> rolls a fresh seed. Your
         account, orders and clock position are saved in this browser.
       </p>
+      <h3>Replaying real history</h3>
+      <p>
+        The toggle above the chart switches between <strong>Synthetic</strong> and <strong>Real data</strong>. Synthetic is the default and needs nothing: it works offline, it
+        generates unlimited history at any timeframe, and it is the market every worked example in the lessons is written against.
+      </p>
+      <p>
+        Real data replays actual historical bars for instruments you will recognise, one bar at a time, with the same order ticket and the same clock. It is worth using once the
+        mechanics are second nature, because real markets do things invented ones do not: earnings gaps, holiday sessions, the same level failing three times and holding the
+        fourth. It needs a small service running alongside the site, and if that service is not running the simulator says so and carries on in synthetic mode.
+      </p>
+      <p>
+        Two honest limits. History is bounded by what the data provider gives, which is roughly a week of one-minute bars but years of daily ones, so changing timeframe reloads
+        rather than re-slicing. And switching between the two markets starts a fresh account, for the same reason rolling a new market does: a position is priced against the
+        market that created it, so carrying it across would invent profit that was never made.
+      </p>
 
       <h2>3. Trainer</h2>
       <p>
@@ -64,7 +79,7 @@ export function GuidePage() {
 
       <h2>Honesty notes</h2>
       <ul>
-        <li>Synthetic data has no real news, earnings or macro. It teaches mechanics and discipline, not fundamentals.</li>
+        <li>Synthetic data has no real news, earnings or macro, so it teaches mechanics and discipline rather than fundamentals. Real-data replay does carry those events, but you are seeing them after the fact, already knowing a chart exists to the right of the bar you are on.</li>
         <li>Fills are optimistic compared with thin real markets. Real slippage on news is worse than anything here.</li>
         <li>Nothing on this site is financial advice. It is a school, not a broker.</li>
       </ul>
