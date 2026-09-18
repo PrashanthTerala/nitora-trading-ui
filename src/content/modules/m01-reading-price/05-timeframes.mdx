@@ -1,0 +1,126 @@
+Stand in a field and look at a hedge from two hundred metres away. You see a green line across the landscape. Walk up to it and you see branches, thorns and a blackbird's nest. Put a magnifying glass on one leaf and you see veins and a caterpillar.
+
+Nothing about the hedge changed. Only your distance changed, and every distance shows you something true that the others hide. Standing far away, you cannot see the nest. Standing at the leaf, you cannot tell whether the hedge runs east or west.
+
+A chart works exactly the same way, and the distance dial is called the <Term id="timeframe">timeframe</Term>. It decides how much time each candle summarises, and therefore how much detail survives. Choosing it badly is one of the most common and most expensive beginner mistakes, because every conclusion you draw is only valid at the zoom level you drew it on.
+
+## What a timeframe actually is
+
+A timeframe is simply the length of time each candle covers. On a 5-minute chart, a new candle begins every five minutes: its <Term id="open">open</Term> is the first trade of those five minutes, its <Term id="close">close</Term> is the last, and its high and low are the extremes reached in between.
+
+The common timeframes, from fastest to slowest, are 1-minute, 5-minute, 15-minute, 1-hour, 4-hour, daily, weekly and monthly. Your platform will let you switch between them with a click, and the underlying data never changes — only the size of the buckets it is poured into.
+
+## One daily candle contains 390 one-minute candles
+
+Here is the number worth memorising. A regular US stock market session runs from 9:30am to 4:00pm, which is six and a half hours, which is **390 minutes**.
+
+So one daily candle is built from 390 one-minute candles. Or 78 five-minute candles. Or 26 fifteen-minute candles. All of them describe the identical day; they just report it at different resolutions.
+
+<StatRow>
+<Stat value="390" label="1-minute candles in one US session" />
+<Stat value="78" label="5-minute candles in one session" />
+<Stat value="26" label="15-minute candles in one session" />
+<Stat value="1" label="daily candle covering all of it" />
+</StatRow>
+
+Now think about what that means for information. The daily candle keeps four numbers: open, high, low, close. The 1-minute chart of the same day keeps 1,560 numbers. The daily candle has thrown away 99.7% of the detail, and kept the 0.3% that describes the day's overall outcome.
+
+That is not a flaw. It is the entire point. Throwing away detail is how you see shape.
+
+## The same day, two zoom levels
+
+Imagine a share that opens at 100, falls to 96 by lunchtime, rallies all afternoon and closes at 101.
+
+<CandleFigure
+  title="The whole day as one daily candle"
+  bars={[
+    { o: 100, h: 101.3, l: 96, c: 101 }
+  ]}
+  annotations={[
+    { type: "label", index: 0, text: "one day, one candle" }
+  ]}
+  caption="A green day with a long lower wick. It says buyers won and the low was rejected, and it says nothing about when either thing happened."
+/>
+
+<CandleFigure
+  title="The same day, in hourly candles"
+  bars={[
+    { o: 100, h: 100.2, l: 98.4, c: 98.6 },
+    { o: 98.6, h: 98.9, l: 97.1, c: 97.3 },
+    { o: 97.3, h: 97.5, l: 96, c: 96.4 },
+    { o: 96.4, h: 98.2, l: 96.3, c: 98.1 },
+    { o: 98.1, h: 100.1, l: 98, c: 99.9 },
+    { o: 99.9, h: 101.3, l: 99.7, c: 101 }
+  ]}
+  annotations={[
+    { type: "label", index: 2, text: "the low, at lunchtime", position: "below" },
+    { type: "bracket", from: 0, to: 2, text: "three hours of selling" },
+    { type: "bracket", from: 3, to: 5, text: "three hours of buying" }
+  ]}
+  caption="Identical day, same open, same high, same low, same close. Now you can see the order of events: a slow morning slide, then a steady afternoon recovery."
+/>
+
+Both pictures are honest. The daily candle told you the verdict. The hourly chart told you the story. If you were holding through the morning, the difference between those two pictures is the difference between calm and panic.
+
+<Callout type="eli5">
+
+Imagine a school day. The daily candle is the one-line note your teacher sends home: "started fine, had a rough patch, ended the day happy." The hourly chart is the full timetable showing that the rough patch was double maths from 11 to 12. Same day, same truth, different amount of detail.
+
+</Callout>
+
+## Higher timeframes carry more weight
+
+There is a genuine reason traders respect bigger timeframes, and it is not superstition.
+
+A daily candle is the combined decision of everyone who traded that instrument all day: pension funds, algorithms, retail traders, hedge funds. A 1-minute candle is the decision of whoever happened to be active in those sixty seconds, which on a quiet instrument might be almost nobody.
+
+So the higher the timeframe, the more money and the more participants are baked into the shape, and the less of it is random noise. A support level that has held on the weekly chart has been respected by far more capital than one that has held on the 5-minute chart. This is why you will be told, over and over, to check the bigger picture before acting on a small one.
+
+<Callout type="warning" title="Noise looks exactly like signal when you zoom in">
+
+Drop to a 1-minute chart and you will see beautiful patterns everywhere: perfect little double tops, textbook hammers, crisp breakouts. Most of them are random wiggle. The lower the timeframe, the higher the proportion of movement that is noise, spread and single large orders rather than genuine crowd behaviour. Beginners lose money faster on 1-minute charts than anywhere else on the platform.
+
+</Callout>
+
+## Picking a timeframe for your life
+
+The right timeframe is not the one that looks most exciting. It is the one that matches how long you can actually pay attention.
+
+| Style | Main timeframe | You must watch | Trades per week |
+| --- | --- | --- | --- |
+| Scalping | 1m and 5m | Constantly, every second | Dozens |
+| Day trading | 5m and 15m | Whole session, no other job | Several per day |
+| Swing trading | 1h, 4h and daily | Once or twice a day | A few |
+| Position trading | Daily and weekly | A few times a week | A few a month |
+
+If you have a job, children, or a life, the honest answer is almost always the bottom two rows. A daily chart asks for about ten minutes of your evening. A 5-minute chart asks for your entire day and punishes every lapse in concentration.
+
+Whatever you pick, the professional habit is to use **two or three timeframes together**, not one. A common structure is: use a higher timeframe to decide the direction you are willing to trade, and a lower one to time the entry. If the daily chart is climbing and the hourly chart just pulled back to a level, those are two zoom levels agreeing. [Multi-timeframe analysis](/learn/m03-market-structure/10-multi-timeframe) covers this properly later.
+
+<PatternFigure name="uptrend" caption="This looks like a clean uptrend. Zoom into any one of those pullbacks on a 15-minute chart and it will look like a frightening collapse. Both views are real, which is why traders check more than one." />
+
+<Callout type="tip">
+
+A rule that saves beginners a lot of money: never change your timeframe because a trade is going against you. Zooming out to make a loss look smaller, or zooming in to find a reason to hold, is not analysis. Decide your timeframe before you enter and judge the trade on that chart only.
+
+</Callout>
+
+<TryIt to="/simulator">Open the simulator and load NOVA. Look at it on the 1D chart and write down one sentence about what it is doing. Now switch to 1h, then 15m, then 1m, without changing anything else. Notice how the same market can look calm, choppy and chaotic depending only on the button you pressed. Then step the clock forward and watch how many 5-minute candles it takes to build one hourly candle.</TryIt>
+
+<KeyTakeaways>
+- A timeframe is how much time each candle summarises, and it is the zoom dial on a chart.
+- One US daily candle contains 390 one-minute candles, 78 five-minute candles or 26 fifteen-minute candles of the identical day.
+- Lower timeframes keep more detail and more noise; higher timeframes throw detail away to reveal shape.
+- Higher timeframes carry more weight because more participants and more money contributed to each candle.
+- Choose a timeframe that matches the attention you can genuinely give, not the one that looks most exciting.
+- Decide your timeframe before you enter a trade, and never switch zoom levels to make a losing position feel better.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "How many 1-minute candles make up one regular-session US daily candle?", options: ["60", "240", "390", "1440"], answer: 2, explain: "A US session runs 9:30am to 4:00pm, which is 390 minutes, so one daily candle contains 390 one-minute candles." },
+  { q: "You compare the same trading day on a daily chart and an hourly chart. Which is true?", options: ["The daily open, high, low and close will differ from the hourly ones", "The daily candle shows the same four extremes but hides the order of events", "The hourly chart shows a different market", "The daily chart contains more information"], answer: 1, explain: "Both describe the identical day. The daily candle keeps the verdict; the hourly chart adds the sequence." },
+  { q: "Why do traders generally give more weight to higher timeframes?", options: ["The data is more accurate", "More participants and more capital contributed to each candle, so less of it is noise", "They update less often", "Brokers charge less to trade them"], answer: 1, explain: "A daily candle aggregates everyone who traded all day. A 1-minute candle may reflect just a handful of orders." },
+  { q: "You have a full-time job and can look at charts twice a day. Which timeframe suits you best?", options: ["1-minute", "5-minute", "Daily, with the 4-hour for timing", "Whichever has the most patterns"], answer: 2, explain: "Match the chart to the attention you really have. Daily and 4-hour charts suit someone checking once or twice a day." },
+  { q: "A trade is going against you on the 15-minute chart, so you switch to the daily chart where the loss looks small. What is wrong with this?", options: ["Nothing, zooming out is good practice", "You entered on one timeframe and are now judging it on another, which is not analysis", "Daily charts are less reliable", "You should switch to 1-minute instead"], answer: 1, explain: "Changing timeframe to feel better about a position is rationalising. Decide the timeframe before entering and judge the trade there." },
+  { q: "Why are 1-minute charts especially dangerous for beginners?", options: ["They load slowly", "A high proportion of the movement is noise that looks exactly like real patterns", "They do not show volume", "They only work for crypto"], answer: 1, explain: "At very low timeframes, spread, single large orders and randomness dominate, and the brain happily reads them as signals." }
+]} />

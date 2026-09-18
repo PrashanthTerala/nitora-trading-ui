@@ -1,0 +1,136 @@
+A shop puts a jacket on sale. At 10 percent off, the people who already wanted it shrug. At 40 percent off, a queue forms. At 70 percent off, everyone in town turns up and the rail is empty by lunchtime. Somewhere between "barely cheaper" and "absurdly cheap" there is a discount at which buyers reliably come back.
+
+Markets have the same problem. After a rally, price pulls back, and traders who missed the move are waiting for a discount. The question is how big a discount. <Term id="fibonacci">**Fibonacci retracement**</Term> is a way of putting standard price tags on that pullback: a set of horizontal lines at fixed percentages of the last swing, drawn so that you have specific places to watch instead of a vague feeling that it has fallen "enough".
+
+Fibonacci is the most divisive tool in this module. Some traders build whole systems on it; others think it is astrology with a ruler. By the end of this lesson you will know exactly what it computes, which parts of it are genuinely Fibonacci and which parts are not, and the honest reason it sometimes works.
+
+## Where the numbers come from
+
+Start with the Fibonacci sequence, where each number is the sum of the two before it: 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144.
+
+Divide any number by the one after it and, as the sequence goes on, the answer settles near **0.618**. Divide by the number two places ahead and you get about **0.382**. Three places ahead gives about **0.236**. Those three are the genuine Fibonacci ratios, and they are the ones charting software draws.
+
+Two more appear on most platforms. **0.786** is the square root of 0.618, and **1.272** is the square root of 1.618. They are derived from the ratios rather than taken from the sequence, which is a slightly different claim.
+
+And then there is **0.5**, which is not a Fibonacci number at all. It is included because halfway back is a meaningful level in its own right, an idea that predates Fibonacci charting by decades and comes from Dow theory and from the plain human habit of splitting things down the middle. It is arguably the most-watched line on the whole tool, and it has nothing to do with rabbits.
+
+## What the tool calculates
+
+Pick a swing low and a swing high. The distance between them is the range. Each level is that range multiplied by a ratio and subtracted from the high.
+
+<Callout type="math" title="The retracement formula with a worked example">
+
+For an upswing, level price = high − (high − low) × ratio.
+
+Take a swing that ran from a low of **$80.00** to a high of **$120.00**. The range is $120.00 − $80.00 = **$40.00**.
+
+- 23.6%: 120 − 40 × 0.236 = 120 − 9.44 = **$110.56**
+- 38.2%: 120 − 40 × 0.382 = 120 − 15.28 = **$104.72**
+- 50%: 120 − 40 × 0.5 = 120 − 20.00 = **$100.00**
+- 61.8%: 120 − 40 × 0.618 = 120 − 24.72 = **$95.28**
+- 78.6%: 120 − 40 × 0.786 = 120 − 31.44 = **$88.56**
+
+Ratios above 1 carry the same line past the other end of the swing:
+
+- 127.2%: 120 − 40 × 1.272 = **$69.12**
+- 161.8%: 120 − 40 × 1.618 = **$55.28**
+
+For a downswing you flip it: level price = low + (high − low) × ratio, so the levels sit above the low.
+
+</Callout>
+
+That is the whole calculation. There is no smoothing, no averaging and no data beyond two prices you chose yourself. Unlike [RSI](/learn/m05-indicators/04-rsi) or [ADX](/learn/m05-indicators/11-adx-and-trend-strength), which compute something from many candles, Fibonacci levels are arithmetic on two numbers. That makes them completely objective *once you have chosen the swing*, and completely subjective before that.
+
+<IndicatorFigure indicator="fibonacci" caption="Retracement levels drawn from the main swing low to the main swing high. The 61.8% line is highlighted; notice how price behaves in the zone between 38.2% and 61.8%." />
+
+## How to anchor it
+
+The anchor is the whole game, so do it deliberately.
+
+**For an uptrend,** anchor at the **swing low that started the move** and drag to the **swing high that ended it**. The levels then appear below the high, marking how far a pullback has gone.
+
+**For a downtrend,** anchor at the swing high and drag to the swing low. The levels appear above the low.
+
+Three rules keep it honest.
+
+1. **Use significant swings.** Use the pivot highs and lows you learned to mark in [swing highs and lows](/learn/m03-market-structure/02-swing-highs-and-lows), on the timeframe you are actually trading. If you cannot see the swing without zooming, it is too small to matter.
+
+2. **Use one swing, the most recent complete one.** The temptation is to try five different anchors until the levels line up with where price already turned. That is drawing a conclusion and calling it evidence.
+
+3. **Be consistent about wicks.** Anchor either high-to-low using wicks, or close-to-close using bodies, and do the same every time. Wicks are the more common choice. Switching between them to make a level fit is the same hindsight problem in a smaller costume.
+
+<Callout type="eli5">
+
+Imagine a ball bouncing down a staircase where the steps are always at the same fractions of the way down: a bit under a quarter, a bit under two-fifths, half, a bit under two-thirds. You do not know which step will catch the ball, but you know where all the steps are, so you can decide in advance what you will do at each one. Fibonacci levels are those steps drawn on the price axis.
+
+</Callout>
+
+## Extensions and targets
+
+Ratios above 1 are **extensions**. There are two common ways they are used, and platforms name them inconsistently, so it pays to be precise about which you mean.
+
+**Extension past the swing.** As in the math callout: 127.2% and 161.8% of the range carried beyond the far end. Using the example swing, if $80.00 breaks, the 127.2% and 161.8% projections sit at $69.12 and $55.28. These are used as downside targets when a swing fails completely.
+
+**Projection from the retracement.** The more common trading use. Price rallies $80.00 to $120.00, pulls back to the 61.8% level at $95.28, and turns up. You then project the original $40.00 range from that turning point:
+
+- 100%: 95.28 + 40.00 = **$135.28**
+- 127.2%: 95.28 + 40.00 × 1.272 = 95.28 + 50.88 = **$146.16**
+- 161.8%: 95.28 + 40.00 × 1.618 = 95.28 + 64.72 = **$160.00**
+
+This is the Fibonacci equivalent of the [measured move](/learn/m04-chart-patterns/09-measured-moves-and-targets) from the chart-patterns module: one leg used to estimate the size of the next.
+
+## Three ways traders use it
+
+**The pullback zone.** In a healthy trend, treat the band between **38.2% and 61.8%** as the area where pullbacks tend to end, and look for a reason to enter *inside* that band: a candle pattern, a bounce off a moving average, a prior support level. In practice the zone matters more than the individual lines. A pullback that stops at 38.2% signals a strong trend; one that reaches 78.6% is limping.
+
+**Invalidation.** The 78.6% level, and certainly the 100% level, is a natural place to say "the pullback has gone too far and this is no longer a pullback". Stops often go just beyond the 78.6% line or beyond the swing low itself, which gives a stop defined by structure rather than by a round number.
+
+**Confluence.** The most defensible use. When the 61.8% retracement lands on top of a prior resistance level that has flipped to support, and the 50-period moving average happens to be there too, you have three unrelated reasons pointing at the same price. Fibonacci is then one vote among several rather than the whole argument.
+
+## The honest caveats
+
+<Callout type="danger" title="Two things every Fibonacci user should admit">
+
+**50 percent is not a Fibonacci number.** It appears on every Fibonacci tool, it is watched more than most of the real ratios, and it comes from Dow theory and ordinary human halving, not from the sequence. If the sequence were the source of the tool's power, the most effective line on it would not be the one that is not from the sequence.
+
+**The levels work partly because everyone watches them.** Millions of traders use the default settings on the default tool. When a widely visible swing puts the 61.8% line at $95.28, a lot of buy orders get placed near $95.28, and price reacts because the orders are there. That is self-fulfilling, and self-fulfilling is a perfectly real reason for a level to work. It is just a completely different reason from "markets obey a natural constant", and it comes with a consequence: the effect is strongest on obvious swings that many people can see, and weakest on obscure ones only you have drawn.
+
+</Callout>
+
+## How it fails
+
+**Too many lines.** With seven levels on the chart, price is nearly always close to one of them. That guarantees you can point at a Fibonacci level after any turn, which feels like confirmation and is not. Reduce the number you display; many traders keep only 38.2, 50 and 61.8.
+
+**Anchor disagreement.** Two competent traders looking at the same chart will often choose different swings, producing different levels. There is no objectively correct anchor, which means there is no objectively correct level.
+
+**Ranges.** Retracement logic assumes there was a trend leg worth retracing. Inside a choppy sideways market the levels are noise, and price crosses all of them repeatedly.
+
+**Hindsight fitting.** Because the tool is drawn by hand, it is trivially easy to slide the anchors after the fact until the lines sit on turns. Every Fibonacci example you have ever seen in an advertisement was drawn this way. The only honest test is to draw the levels *before* the pullback happens and write down what you expect.
+
+## Combining with structure
+
+The rule is the same as for every tool in this module: structure first, indicator second.
+
+Mark the trend and the levels with your eyes. Then draw the retracement on the most recent complete swing. Then ask a single question: **does a Fibonacci level land on something that was already interesting?** If the 61.8% line sits on an old breakout level that should now act as support under [role reversal](/learn/m03-market-structure/07-role-reversal), that is a real setup and Fibonacci helped you find it. If the 61.8% line sits in empty space, it is a line in empty space, and trading it is trading a hope that other people are watching the same one.
+
+A practical routine for a trend pullback: identify the trend, draw the retracement, wait for price to enter the 38.2 to 61.8 zone, wait for a reversal candle or a momentum turn in that zone, enter, and put the stop beyond the 78.6 level. The Fibonacci part supplies the *where*. The candle and the structure supply the *why* and the *when*.
+
+<KeyTakeaways>
+- Fibonacci retracement draws horizontal lines at fixed fractions of a chosen swing: level = high minus range times ratio for an upswing.
+- The real ratios are 23.6, 38.2 and 61.8 percent; 78.6 is the square root of 61.8, 127.2 is the square root of 161.8, and 50 percent is not a Fibonacci number at all.
+- Anchor from the swing low to the swing high of one recent, significant, complete swing, and be consistent about using wicks or bodies.
+- The 38.2 to 61.8 band is the usual pullback zone, 78.6 is a common invalidation point, and 127.2 and 161.8 projections serve as extension targets.
+- The levels work partly because millions of traders draw the same ones, which makes them strongest on obvious swings and weakest on obscure ones.
+- With seven lines on a chart price is always near one, so use few levels, draw them before the pullback, and only act where a level agrees with real structure.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "A swing runs from a low of $50 to a high of $90. Where is the 38.2% retracement?", options: ["$74.72", "$70.00", "$65.28", "$84.72"], answer: 0, explain: "Range is $40. 90 minus 40 times 0.382 = 90 minus 15.28 = $74.72." },
+  { q: "Which of these levels is not derived from the Fibonacci sequence?", options: ["23.6%", "38.2%", "50%", "61.8%"], answer: 2, explain: "50% comes from Dow theory and ordinary halving. It appears on the tool but has no Fibonacci origin." },
+  { q: "For an uptrend, where do you anchor the retracement tool?", options: ["Swing high to swing low", "Swing low that started the move to the swing high that ended it", "Today's open to today's close", "Anywhere that makes the levels fit"], answer: 1, explain: "Anchoring low to high puts the levels below the high, marking how far the pullback has travelled." },
+  { q: "Price rallied from $80 to $120, pulled back to $95.28 and turned up. What is the 161.8% projection target from that turn?", options: ["$135.28", "$146.16", "$160.00", "$120.00"], answer: 2, explain: "The $40 range times 1.618 is $64.72, added to $95.28 gives $160.00." },
+  { q: "What is the most honest explanation for why Fibonacci levels sometimes hold?", options: ["Markets obey a natural mathematical constant", "A great many traders draw the same levels and place orders there, so the orders are genuinely present", "Exchanges enforce them", "They do not work at all under any circumstances"], answer: 1, explain: "Self-fulfilling is a real reason a level works, and it explains why obvious swings produce better levels than obscure ones." },
+  { q: "You are in a choppy sideways market with no clear swing. What should you do with the Fibonacci tool?", options: ["Draw it on the biggest visible wiggle and trade the 61.8% level", "Leave it off; retracement logic needs a trend leg worth retracing", "Add more levels for accuracy", "Switch to the 78.6% level only"], answer: 1, explain: "Without a real swing there is nothing to retrace, and the lines become noise that price crosses repeatedly." }
+]} />
+
+<TryIt to="/simulator">Open FXEU on the daily chart in bar replay and find a clean trend leg. Before stepping forward, draw the retracement from the swing low to the swing high, write down the 38.2, 50 and 61.8 prices, and mark which of them coincides with a level that already existed on the chart. Then step forward and record where the pullback actually stopped. Do this ten times before deciding what the tool is worth to you.</TryIt>

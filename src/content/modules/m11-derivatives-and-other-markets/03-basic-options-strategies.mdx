@@ -1,0 +1,96 @@
+You now own two building blocks, the call and the put, and you know what makes them expensive or cheap. Options strategies are just combinations of those blocks, sometimes with shares mixed in, arranged so that the risk looks the way you want it to.
+
+Think of Maya's coupons again. You could buy a coupon. You could sell one. You could own a crate of lemonade *and* sell a coupon against it, so that if prices spike you hand over your lemonade at the agreed price and keep the coupon money. You could own the crate and buy a guarantee that Maya will buy it back, so a price collapse cannot hurt you. Every one of those is a named options strategy.
+
+This lesson covers the five combinations every trader should recognise, gives you one table to compare them, and ends with the strongest warning on this site.
+
+## Long call and long put
+
+You met these in [Options: Calls and Puts](/learn/m11-derivatives-and-other-markets/01-options-basics). Buying a call is the simplest bullish bet; buying a put is the simplest bearish one. Maximum loss is the premium, and the position benefits from a fast move in your direction, rising implied volatility and plenty of time.
+
+They are the cleanest strategies and the ones most beginners lose money with, for the reasons the [Greeks lesson](/learn/m11-derivatives-and-other-markets/02-options-pricing-and-greeks) explained: time value bleeds daily, and you must beat the implied move, not just call the direction.
+
+## Covered call: renting out shares you own
+
+You own 100 shares at $50. You sell one $55 call expiring next month and collect $1.50, or $150. This is a **covered call**: "covered" because you already own the shares you might have to deliver.
+
+Three outcomes at expiry:
+
+- **Share stays below $55.** The call expires worthless. You keep the $150 and your shares. You can sell another call next month.
+- **Share finishes above $55.** You are assigned: your shares are sold at $55. You made $5 per share on the stock plus the $1.50 premium, $6.50 in total. But if the share went to $70, you still only get $55. You gave away the upside above the strike in exchange for the premium.
+- **Share falls.** You lose on the shares as usual, softened by the $1.50 you collected. The call does not protect you below $48.50.
+
+Covered calls are popular with long-term holders who want a little extra income and are happy to sell at the strike. They are not free money: over many months, the months you get called away just before a big rally cost more than the premiums earned in the quiet months.
+
+## Protective put: insurance on shares you own
+
+You own 100 shares at $50 and are worried about a fall over the next month, perhaps because of [earnings](/learn/m10-fundamentals-and-macro/08-news-catalysts-and-events). You buy one $45 put for $1.00. This is a **protective put**.
+
+If the share crashes to $30, your put is worth $15, so your total loss is capped at $5 on the shares plus $1 for the put: $6 per share, whatever happens. If the share rises, the put expires worthless and you lost $1 per share of insurance premium.
+
+<Callout type="eli5">
+
+A covered call is like renting out your bike. Someone pays you a small fee for the right to buy it at a fixed price. If the bike becomes a collector's item, they get it cheap and you keep only the fee. A protective put is like insuring your bike. You pay a small fee, and if it gets stolen, you get an agreed amount back. Renting out earns a little and gives up upside; insuring costs a little and removes downside.
+
+</Callout>
+
+## Vertical spreads: buying one, selling another
+
+A **vertical spread** means buying one option and selling another with the same expiry but a different strike. The sold option pays for part of the bought one, which lowers the cost and caps both the gain and the loss.
+
+**Bull call spread.** Share at $50. Buy the $50 call for $3.00, sell the $55 call for $1.20. Net cost: $1.80, or $180. If the share finishes at or above $55, the spread is worth its full width of $5, so you make $5.00 minus $1.80 = $3.20 per share, or $320. If the share stays below $50, you lose the $180. Breakeven is $51.80.
+
+**Bear put spread.** The mirror image for a bearish view: buy the $50 put, sell the $45 put. Same logic, same capped shape.
+
+Spreads sacrifice the unlimited upside of a plain call in exchange for a lower entry price, a lower breakeven and much less exposure to time decay and IV crush, because the option you sold suffers from those things too and offsets your losses. For a beginner with a directional view, a spread is usually a more forgiving instrument than a single option.
+
+## Comparing the five
+
+| Strategy | Built from | Outlook | Maximum profit | Maximum loss | Typical use |
+| --- | --- | --- | --- | --- | --- |
+| Long call | Buy call | Bullish, expecting a big move | Unlimited | Premium paid | Leveraged directional bet |
+| Long put | Buy put | Bearish, expecting a big move | Strike minus premium (share to zero) | Premium paid | Directional bet or portfolio hedge |
+| Covered call | Own 100 shares, sell call | Neutral to mildly bullish | Strike minus share cost, plus premium | Share cost minus premium (share to zero) | Income on shares you already hold |
+| Protective put | Own 100 shares, buy put | Bullish but worried | Unlimited on shares, minus premium | Share cost minus put strike, plus premium | Insurance through an event |
+| Vertical spread | Buy one option, sell another, same expiry | Moderately bullish or bearish | Width of strikes minus net cost | Net cost paid | Defined-risk directional trade |
+
+## Why selling premium is popular, and why it is dangerous
+
+You will hear that "most options expire worthless" and that sellers therefore have the edge. The first part is roughly true; the second part hides the catch. Sellers win small amounts often and lose large amounts rarely. A strategy that makes $200 nine times and loses $3,000 once has a 90% win rate and a negative [expectancy](/learn/m07-risk-management/05-expectancy). You learned in the risk module that win rate alone tells you nothing.
+
+There are careful, well-capitalised ways to sell premium: covered calls, cash-secured puts (selling a put while holding enough cash to buy the shares), and defined-risk spreads where the sold option is protected by a bought one. What they have in common is that the worst case is known in advance and can be paid.
+
+<Callout type="danger" title="Never sell naked options">
+
+A **naked** option is one you sell without owning the shares (for a call) or holding the cash (for a put), and without a bought option protecting it. A naked call has unlimited loss: if you sell a $55 call on a $50 share for $1.50 and the company is taken over at $90 the next morning, you owe $35 per share, $3,500 per contract, against $150 collected. A naked put on a share that collapses can cost the full strike. Brokers restrict these for good reason, and every year traders with small accounts end up owing money they do not have because of one overnight gap. There is no premium small enough to justify this as a beginner.
+
+</Callout>
+
+## Choosing between them
+
+A simple decision path:
+
+1. **Do you own the shares?** If yes and you want income, a covered call. If yes and you want protection, a protective put.
+2. **Do you have a directional view and no shares?** A vertical spread first, a single long option only when you expect a large, fast move and IV is low.
+3. **Is there an earnings report or major event inside the window?** Remember IV crush. Spreads suffer less than single options; consider waiting until after the event.
+4. **Can you state the maximum loss as a dollar figure before you enter?** If you cannot, you are not ready to place the trade.
+
+Every one of these strategies still needs the [position sizing](/learn/m07-risk-management/02-the-one-percent-rule) discipline you already know. A $180 spread that can lose $180 is a fine 1% risk on an $18,000 account and a reckless 18% risk on a $1,000 one.
+
+<KeyTakeaways>
+- Options strategies are combinations of calls, puts and shares arranged to shape risk; the five basic ones are long call, long put, covered call, protective put and vertical spread.
+- A covered call earns premium on shares you own in exchange for giving up upside above the strike.
+- A protective put caps the downside on shares you own for the cost of the premium, like insurance.
+- Vertical spreads lower the cost and cap both gain and loss, and are usually more forgiving for beginners than single options.
+- Selling premium wins often and loses big; a high win rate does not mean positive expectancy.
+- Never sell naked options: the loss on a naked call is unlimited and one overnight gap can exceed your whole account.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "You own 100 shares at $50 and sell a $55 call for $1.50. The share finishes at $70 at expiry. What is your total gain per share?", options: ["$20.00", "$21.50", "$6.50", "$1.50"], answer: 2, explain: "Your shares are called away at $55, a $5 gain, plus the $1.50 premium: $6.50. The rise above $55 belongs to the call buyer." },
+  { q: "Which strategy works like insurance on shares you already hold?", options: ["Covered call", "Protective put", "Bull call spread", "Naked call"], answer: 1, explain: "A protective put lets you sell your shares at the strike regardless of how far they fall, for the cost of the premium." },
+  { q: "You buy a $50 call for $3.00 and sell a $55 call for $1.20. What is your maximum profit per share?", options: ["$5.00", "$3.20", "$1.80", "Unlimited"], answer: 1, explain: "The spread is worth at most $5 (the width). Subtract the $1.80 net cost to get $3.20." },
+  { q: "A premium-selling strategy wins $200 nine times out of ten and loses $3,000 once. What is its expectancy per trade?", options: ["Positive, because the win rate is 90%", "Negative: it makes $1,800 and loses $3,000 over ten trades", "Zero", "Cannot be calculated"], answer: 1, explain: "Nine wins of $200 is $1,800; one loss of $3,000 exceeds that. High win rate, negative expectancy." },
+  { q: "Why is selling a naked call so dangerous?", options: ["The premium is taxed heavily", "The loss is unlimited if the share rises sharply, and a gap can exceed your entire account", "It expires faster than other options", "The broker charges double commission"], answer: 1, explain: "A naked call has no ceiling on loss. A takeover or earnings gap can create a loss many times the premium collected." },
+  { q: "You have a bullish view on a share, no shares owned, and earnings are two days away. Which is the most sensible option among these?", options: ["Buy a short-dated at-the-money call today", "Sell a naked put for income", "Consider a defined-risk spread or wait until after the event to avoid IV crush", "Buy ten cheap out-of-the-money calls"], answer: 2, explain: "Single options bought before earnings suffer IV crush. A spread suffers less, and waiting removes the event risk entirely." }
+]} />

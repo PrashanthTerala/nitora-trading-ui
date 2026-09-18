@@ -1,0 +1,87 @@
+Walk into a classroom and you can tell the mood in about two seconds, before anyone says a word. Are the kids bouncing off the walls, or sitting in silence, or huddled in worried groups? The mood does not tell you what will happen next, but it tells you what kind of day it is going to be.
+
+Markets have a mood too, and traders call it **sentiment**. It is the collective feeling of everyone with money at risk: greedy, fearful, bored or panicking. You cannot see it directly, but there are instruments that measure it, the way a thermometer measures a fever you cannot see.
+
+This lesson covers the three most common sentiment gauges, the <Term id="vix">VIX</Term>, the <Term id="put-call-ratio">put/call ratio</Term> and the Fear and Greed index, and the surprising way experienced traders use them: often by doing the opposite of what the crowd feels.
+
+## The VIX: the fear gauge
+
+The **VIX** is a number published by the Chicago Board Options Exchange. In plain words, it measures how much the market expects the S&P 500 to swing over the next 30 days. It is calculated from the prices of options, which you will meet properly in the [next module](/learn/m11-derivatives-and-other-markets/01-options-basics). For now, think of options as insurance policies on the index. When people are scared, they pay more for insurance, and the VIX rises. When people are relaxed, insurance is cheap and the VIX falls.
+
+Rough guide to the number:
+
+| VIX level | Mood | What it usually looks like |
+| --- | --- | --- |
+| Under 15 | Calm, sometimes complacent | Slow, grinding uptrends, small daily ranges |
+| 15 to 20 | Normal | Ordinary two-way trading |
+| 20 to 30 | Nervous | Sharper swings, gaps, news sensitivity |
+| 30 to 40 | Fear | Big red days, wide spreads, forced selling |
+| Over 40 | Panic | Crashes; historically reached in 2008, 2020 and a few other moments |
+
+The VIX has a long-run average around 19 to 20, and it does not stay high for long. Panic is exhausting. That is why the VIX tends to spike and then bleed back down, while the index does the mirror image.
+
+<Callout type="eli5">
+
+Imagine the price of umbrellas in a town. On a sunny week, umbrellas are cheap because nobody wants one. When dark clouds arrive, everyone rushes to buy, and the price shoots up. The VIX is the price of umbrellas for the stock market. A high VIX does not make it rain; it tells you a lot of people are scared it will.
+
+</Callout>
+
+## The put/call ratio: counting the bets
+
+Options come in two flavours. A **put** is a bet that price will fall, or insurance against it falling. A **call** is a bet that price will rise. The **put/call ratio** simply divides the number of puts traded by the number of calls traded on a given day.
+
+When the ratio is high, more people are buying protection or betting on a fall: the crowd is fearful. When it is low, the crowd is buying upside bets: greedy. Exact thresholds vary by which version you look at, but for the widely quoted equity-only ratio, readings above roughly 1.0 suggest fear and readings below roughly 0.6 suggest complacency.
+
+The ratio is noisy day to day, so most traders smooth it with a 10-day average and look for extremes rather than reading it every hour.
+
+## Fear and Greed: a composite
+
+The **Fear and Greed index** published by CNN combines seven inputs, including the VIX, put/call ratio, market breadth, momentum and demand for safe bonds, into a single dial from 0 (extreme fear) to 100 (extreme greed). It is not a scientific instrument, but it is a convenient summary and a useful reminder of which way the crowd is leaning.
+
+## The contrarian idea
+
+Here is the part that seems backwards at first. Sentiment gauges are most useful at their **extremes**, and at extremes they are used **against** the crowd.
+
+Why? Think about what extreme fear means in practice. If nearly everyone who was going to sell has already sold, who is left to push price lower? The fear has been converted into cash sitting on the sidelines, and that cash is future buying power. Likewise, when everyone is greedy and fully invested, there are few buyers left, and the smallest disappointment can start a fall.
+
+That is why the saying goes: *be fearful when others are greedy and greedy when others are fearful*. VIX spikes above 35 have historically coincided with, or come shortly before, significant market lows. Very low put/call ratios have often appeared near short-term tops.
+
+<Callout type="warning" title="Extremes can get more extreme">
+
+Contrarian signals are terrible at timing. A VIX at 30 can go to 45 while your "the crowd is too scared" long position gets crushed. Sentiment tells you the spring is compressed; it does not tell you when it releases. Never buy just because fear is high. Wait for the chart to confirm, a [bullish reversal](/learn/m02-candlestick-patterns/16-pattern-reliability) at a level, with volume, and then let the sentiment reading be one more reason rather than the only reason.
+
+</Callout>
+
+## Using sentiment in practice
+
+Sentiment is a filter and a context tool, like [sector rotation](/learn/m10-fundamentals-and-macro/06-sectors-and-rotation). Here is how it fits into a trading week.
+
+**Regime awareness.** A VIX above 25 tells you that stops need to be wider, position sizes smaller and targets reached faster. Your [ATR-based stops](/learn/m05-indicators/08-atr) will already be reflecting this, but the VIX gives you the warning a day earlier. A VIX under 14 tells you that breakouts may drift rather than explode, and patience is required.
+
+**Strategy selection.** [Mean reversion](/learn/m09-strategies/06-mean-reversion) tends to work better in calm regimes; [momentum](/learn/m09-strategies/07-momentum-and-news) trades tend to pay better in nervous ones. Knowing the regime helps you choose which playbook to open.
+
+**A check on yourself.** When you feel an urge to buy everything, glance at Fear and Greed. If it reads 85, your urge is the crowd's urge, and the crowd is usually late. The gauges are as much a mirror as a window.
+
+<Callout type="tip" title="Do not trade the VIX directly as a beginner">
+
+There are products that track the VIX, and they are among the most destructive instruments for retail traders. They lose value in calm periods through a mechanism you will meet in the [ETF lesson](/learn/m11-derivatives-and-other-markets/07-etfs-and-leveraged-products). Use the VIX as a thermometer, not as a trade.
+
+</Callout>
+
+<KeyTakeaways>
+- Sentiment is the collective mood of the market, measured indirectly through instruments like the VIX, the put/call ratio and the Fear and Greed index.
+- The VIX measures expected 30-day swings in the S&P 500 and rises when people pay more for protection; under 15 is calm, over 30 is fear.
+- The put/call ratio counts bearish bets against bullish ones; high readings mean fear, low readings mean complacency.
+- At extremes, sentiment is used as a contrarian signal, because the crowd is usually fully positioned by the time it feels certain.
+- Contrarian signals are poor at timing; wait for the chart to confirm before acting on them.
+- Use sentiment to set the regime for stops, sizes and strategy choice, and as a mirror for your own urges.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "What does the VIX measure?", options: ["The number of shares traded on the S&P 500", "How much the market expects the S&P 500 to swing over the next 30 days, derived from option prices", "The average P/E of the index", "The interest rate on Treasury bonds"], answer: 1, explain: "The VIX is built from option prices and reflects expected volatility, which rises when people pay more for protection." },
+  { q: "The equity put/call ratio has averaged 1.2 for the last ten days. What does that suggest?", options: ["The crowd is greedy", "The crowd is fearful", "The market is closed", "Volume is low"], answer: 1, explain: "More puts than calls means more people are betting on or insuring against a fall. That is a fearful crowd." },
+  { q: "Why can extreme fear be a bullish signal?", options: ["Fear makes companies more profitable", "Most people who wanted to sell have already sold, leaving cash that can become future buying", "The VIX pays a dividend", "Fear lowers interest rates"], answer: 1, explain: "When selling is exhausted, there are few sellers left and plenty of sidelined cash. That is the contrarian logic." },
+  { q: "The VIX has just spiked to 32. What is the best beginner response?", options: ["Buy immediately because the crowd is too scared", "Short immediately because panic is starting", "Widen stops, reduce size, and wait for a chart confirmation before any contrarian long", "Buy a VIX tracking product"], answer: 2, explain: "Sentiment says the spring is compressed but not when it releases. Adjust risk and let the chart confirm." },
+  { q: "The Fear and Greed index reads 88 and you feel a strong urge to buy everything. What does the reading tell you?", options: ["Your urge is well timed", "Your urge is the crowd's urge, and the crowd is usually late", "The market will crash tomorrow", "The index is broken"], answer: 1, explain: "Extreme greed means most buyers are already in. The gauge is a mirror for your own emotions." },
+  { q: "In which regime does mean reversion tend to work best?", options: ["High VIX, panicky markets", "Calm, low-VIX markets", "Only during earnings season", "Only when the put/call ratio is above 1"], answer: 1, explain: "Calm regimes tend to favour fading extremes; nervous regimes tend to favour momentum. Knowing the regime helps you choose a playbook." }
+]} />

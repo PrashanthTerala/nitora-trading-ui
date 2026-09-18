@@ -1,0 +1,91 @@
+Ask a sailor how rough the sea is and they will not say "up" or "down". They will tell you the height of the waves. A two-metre swell and a six-metre swell are different seas, and you would rig the boat differently for each, no matter which way the wind is blowing.
+
+The <Term id="atr">**Average True Range (ATR)**</Term> is the wave-height gauge for a chart. It tells you how much price typically moves in one candle, in actual price units, averaged over the last fourteen candles. It says nothing about direction. It only says how rough the sea is. And because your stop loss, your target and your position size all depend on how far price normally travels, ATR quietly becomes the most practical number in this whole module.
+
+Wilder introduced it in the same 1978 book as RSI. Unlike RSI, it has almost no controversy attached: it measures one thing, it measures it well, and traders who ignore it tend to place stops that are either far too tight or far too loose.
+
+## What ATR calculates
+
+The first step is the **true range** of a single candle. The obvious measure of a candle's size is its high minus its low. But that misses gaps. If a stock closes at 100 and opens the next day at 104 with a high of 105 and a low of 103, the high minus low is only 2, yet anyone holding the stock overnight experienced a 5-point move. True range fixes this by including the distance from the previous close.
+
+<Callout type="math" title="True range and ATR, with a worked example">
+
+True range = the largest of: (high − low), (high − previous close), (low − previous close), all as positive distances
+
+Example: previous close 100, today high 103, low 101.
+
+high − low = 2; high − previous close = 3; low − previous close = 1 (as a distance).
+
+True range = **3**. The gap is counted.
+
+ATR is then a Wilder-smoothed average of true range. The first ATR is a plain average of the first 14 true ranges. After that: ATR today = (ATR yesterday × 13 + true range today) / 14.
+
+If yesterday's ATR was 2.0 and today's true range is 3.0: ATR = (2.0 × 13 + 3.0) / 14 = 29 / 14 = **2.07**.
+
+</Callout>
+
+Notice how slowly it moves. A single candle 50% bigger than normal only nudged ATR up by about 4%. That is deliberate. ATR is meant to describe the typical candle, not the latest one. On the very first candle of a series there is no previous close, so its true range is just high minus low.
+
+<IndicatorFigure indicator="atr" caption="ATR 14 under a volatile market. It rises when candles get bigger and falls when they get smaller. It never tells you direction, only how much movement to expect." />
+
+## What ATR is trying to measure
+
+ATR measures **volatility**, meaning the typical size of a move over one bar, on whatever timeframe you are viewing. A daily ATR of $2 on a $100 stock means a normal day covers roughly $2 of range. That is 2% of price. If the ATR climbs to $4, the stock has become twice as rough. The number is always in the instrument's own price units, so a $2 ATR on a $20 stock is a wild market, and on a $2,000 stock it is nearly asleep. Divide by price to compare instruments.
+
+<Callout type="eli5">
+
+Imagine measuring how far a puppy wanders each minute you watch it. Some minutes it barely moves, some minutes it dashes across the garden. Average those distances over the last fourteen minutes and you get a good idea of how much room the puppy needs. ATR does that for price. It does not tell you which way the puppy will run next.
+
+</Callout>
+
+## Default settings and why
+
+Fourteen periods is Wilder's default and there is little reason to change it. Shorter periods make ATR react faster to a change in conditions but also let one wild candle distort it. Longer periods give a steadier baseline. Whatever you choose, use the same setting consistently, because the whole value of ATR is having one repeatable yardstick.
+
+## Three ways traders use ATR
+
+**Placing stops.** This is the big one. A stop placed a fixed number of cents away ignores whether the market moves ten cents a day or ten dollars. A stop placed at a multiple of ATR scales itself. A common rule is 1.5 to 2 times ATR below a long entry for swing trades. If ATR is $2 and you buy at $100, a 2-ATR stop sits at $96. That gives the trade room to breathe through normal noise without being so far away that a loss becomes large. You will meet this again in detail in [Where to Put Your Stop Loss](/learn/m07-risk-management/03-stop-loss-placement).
+
+**Sizing positions.** Once your stop distance is in ATR terms, your position size follows. If you risk $100 per trade and the stop is $4 away, you buy 25 shares. If ATR doubles and the stop becomes $8 away, you buy 12 shares. Same dollar risk, different share count, because the market got rougher. This is how a trader holds a wild biotech and a sleepy utility with the same risk on each.
+
+**Setting targets and reading regime.** A move of 1 ATR in a day is normal; 3 ATR is unusual and often exhausts short-term buyers. Targets are often expressed in ATR for the same scaling reason as stops. And a sudden expansion in ATR after a long quiet period is the volatility version of a Bollinger squeeze breaking: the market has changed character, and your stops and sizes need to change with it.
+
+A related tool is the **chandelier stop**, a trailing stop hung a fixed ATR multiple below the highest high since entry. It rises as the trend makes new highs and widens automatically when the market gets rougher.
+
+## How ATR fails
+
+<Callout type="warning" title="ATR is not a direction signal and not a reversal signal">
+
+Rising ATR does not mean price will fall. Falling ATR does not mean it will rise. Volatility rises in both crashes and euphoric rallies, and it falls in both healthy consolidations and dying markets. Traders who read "ATR spiked, sell" are inventing a signal that does not exist in the maths.
+
+</Callout>
+
+Because it is Wilder-smoothed, ATR lags. After a shock, it takes many candles for ATR to fully reflect the new conditions, and after the shock passes it stays elevated for a while. Stops sized from a post-crash ATR can be far too wide for the calm that follows.
+
+ATR also blends gaps with in-session moves. A stock that gaps every morning and then sits still has a high ATR but very little tradable intraday movement; day traders on that stock need to look at the intraday ATR on their own timeframe, not the daily one. ATR is always specific to the timeframe it was calculated on.
+
+## Combining with structure
+
+ATR and structure make the best stops in trading when used together. Structure says *where* a stop belongs: below the swing low, below the support level, below the pattern boundary. ATR says *how much extra room* to give it so that ordinary noise does not clip you. A stop just under a support level plus a fraction of an ATR is far harder to hunt than a stop placed exactly at the level, where every other trader's stop sits too.
+
+ATR also tells you when a structural level is even reachable. If a target is 1 ATR away it is a normal day's move; if it is 6 ATR away you are asking for a week or more, and your time-in-trade expectations should change accordingly. Structure draws the map. ATR sets the scale.
+
+<KeyTakeaways>
+- True range is the largest of high minus low, high minus previous close, and low minus previous close, so gaps are counted.
+- ATR is a Wilder-smoothed average of true range: ATR today = (ATR yesterday × 13 + true range today) / 14 for the default 14 periods.
+- ATR measures volatility in price units and says nothing about direction.
+- Its main job is scaling: stops at a multiple of ATR and position sizes that shrink when ATR grows.
+- ATR lags and stays elevated after shocks; it is specific to the timeframe it was computed on.
+- Use structure to decide where a stop belongs and ATR to decide how much breathing room to add.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "Previous close 100, today's high 103, today's low 101. What is the true range?", options: ["2", "3", "1", "4"], answer: 1, explain: "The candle itself is 2 wide, but the distance from the previous close to the high is 3, so true range is 3." },
+  { q: "Yesterday's ATR (14) was 2.0 and today's true range is 3.0. What is today's ATR?", options: ["2.5", "2.07", "3.0", "2.93"], answer: 1, explain: "(2.0 × 13 + 3.0) / 14 = 29 / 14 = 2.07. Wilder smoothing moves slowly." },
+  { q: "ATR on a stock has doubled from $2 to $4. You risk a fixed $100 per trade with a 2-ATR stop. What happens to your position size?", options: ["It doubles", "It halves", "It stays the same", "It goes to zero"], answer: 1, explain: "The stop distance doubles from $4 to $8, so $100 of risk buys half as many shares." },
+  { q: "ATR is rising sharply. What does that tell you about direction?", options: ["Price will fall", "Price will rise", "Nothing; volatility rises in both rallies and crashes", "A reversal is guaranteed"], answer: 2, explain: "ATR is a pure size measure. It carries no directional information at all." },
+  { q: "Where is the best place for a stop on a long trade at a support level?", options: ["Exactly at the level", "Just under the level plus a fraction of an ATR", "Ten ATR below", "At the entry price"], answer: 1, explain: "Structure picks the location and ATR adds breathing room, keeping the stop away from the crowd at the exact level." },
+  { q: "A stock gaps every morning then barely moves during the session. What should a day trader do about ATR?", options: ["Use the daily ATR", "Use the ATR on their own intraday timeframe", "Ignore ATR", "Double the daily ATR"], answer: 1, explain: "ATR is timeframe-specific. The daily value is inflated by gaps the day trader never trades through." }
+]} />
+
+<TryIt to="/simulator">Open the simulator on BIOX and then on IDX, both daily. Even without an ATR panel, look at the typical candle height on each and estimate the ATR by eye. Then place a paper trade on each with a stop you think is 2 ATR away, and write down how many shares you would buy for the same dollar risk. Notice how different the share counts are.</TryIt>

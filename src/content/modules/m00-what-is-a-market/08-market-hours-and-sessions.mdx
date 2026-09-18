@@ -1,0 +1,96 @@
+Think about a school day. The gates open, everyone arrives at once in a noisy rush, things settle into a quiet stretch around the middle of the day when half the school is half asleep, and then the last twenty minutes before the bell are chaos again as everybody decides what they are doing that evening.
+
+A trading day has exactly that shape, for exactly the same reason: it is made of people, and people cluster around the beginning and the end.
+
+Knowing the timetable matters more than beginners expect. The same chart pattern, the same news, the same instrument can behave completely differently at 9:35am and at 12:40pm. If you do not know what time it is in the market, you are reading a chart with one eye shut.
+
+## The main session
+
+Every exchange has a **regular trading session**: the hours when the full market is open, most participants are present, and the prices you see are the real ones.
+
+For US shares that session runs from 9:30am to 4:00pm New York time, Monday to Friday. London runs roughly 8:00am to 4:30pm local time, Tokyo splits its day into a morning and afternoon session with a lunch break, and every other exchange has its own timetable. If you trade something, look up its session once and write it down.
+
+Outside those hours, most of the machinery that makes prices sensible is switched off.
+
+<Callout type="eli5">
+
+A market is a shop. It has opening hours. You can sometimes slip something through the letterbox before opening or after closing, but the shelves are not stocked and the staff are not there, so you should not expect a normal price.
+
+</Callout>
+
+## The opening and closing auctions
+
+The session does not simply begin with trading. It begins with an **auction**.
+
+In the minutes before the open, orders pile up from anyone who wants to trade at the start of the day: overnight news reactions, fund rebalancing, and every order placed while the market was shut. The exchange collects them all, works out the single price at which the greatest number of shares can change hands, and then fills everybody at that one price in a single burst. That price becomes the day's **opening price**, the "O" in every candle you will meet in Module 1.
+
+The same thing happens in reverse at the end. The **closing auction** sets the official closing price, and it is a big deal: index funds, ETFs and valuation reports all use the official close, so enormous volumes go through in those last seconds. The closing auction is frequently the single busiest moment of the entire day.
+
+## Why the first and last hour are different
+
+Plot a typical day's volume and you get a U shape: heavy at the open, thin through the middle, heavy again into the close.
+
+**The first hour** absorbs everything that happened while the market was shut: earnings released after yesterday's close, overnight moves in Asia and Europe, economic data, overnight news. All of that information hits at once and the price hunts for a new level. Moves are fast and large, spreads start wide and narrow quickly, and reversals are common as the first wave of orders gets digested.
+
+**The middle of the day**, roughly late morning to early afternoon, is the quiet stretch. Professionals take lunch, volume drops, ranges contract and moves are more likely to fizzle. Many experienced day traders simply stop trading here.
+
+**The last hour** is when institutions finish working the large orders they have been feeding into the market all day, and when traders who refuse to hold overnight close their positions. Volume and volatility both pick up, culminating in the closing auction.
+
+<Callout type="warning" title="The open is not a beginner's playground">
+
+The first fifteen minutes look irresistible: huge moves, fast profits on the screen, everything happening at once. They are also where beginners lose money fastest. [Spreads](/learn/m00-what-is-a-market/07-bid-ask-spread) are at their widest of the day, orders get filled far from where you expected, and the direction reverses violently as the opening imbalance clears. A very common piece of advice, and a good one while you are learning, is to let the first fifteen to thirty minutes pass before you do anything.
+
+</Callout>
+
+## Pre-market and after-hours
+
+Between the auctions and the rest of the world, there are extended sessions where trading is still possible: **pre-market** before the open and **after-hours** after the close. In the US these run roughly 4:00am to 9:30am and 4:00pm to 8:00pm New York time, depending on your broker.
+
+Companies deliberately release earnings in these windows so the news has time to be digested, which is why you will often see a share quoted 8% higher at 7am than it closed at 4pm the previous afternoon.
+
+Trading in these sessions is legal, available at most brokers, and usually a bad idea early in your journey:
+
+- Volume is a small fraction of the regular session.
+- Spreads are much wider, so the cost of every trade rises sharply.
+- Prices can be unrepresentative, and the move often partly unwinds at the open.
+- Many brokers restrict order types, commonly accepting only limit orders.
+
+## Weekends, holidays and half days
+
+Share and futures markets close at weekends. They also close on public holidays, which differ by country, and they sometimes run shortened sessions, for example an early close the day after a major holiday.
+
+Two practical consequences. First, **news does not stop when the market does**. Something announced on a Saturday has nowhere to go until Monday, so it arrives all at once as a gap at the open. Second, **liquidity thins out around holidays**, so moves in a half-empty market can be larger and less meaningful than they look.
+
+## The markets that never sleep
+
+Two things break the timetable.
+
+**Forex** runs continuously from roughly Sunday evening to Friday evening, because it is not a single building but a network of banks that hands the baton around the globe: Sydney, then Tokyo, then London, then New York. The busiest and tightest-spread window is the London and New York overlap, early afternoon UK time.
+
+**Crypto** never closes at all. It trades 24 hours a day, 7 days a week, every day of the year. That sounds convenient and is mostly a trap: there is no forced break, no natural end to the session, and the thinnest, most violent moves tend to happen at 3am on a Sunday when almost nobody is around to absorb them.
+
+<Callout type="tip">
+
+Whatever you trade, invent your own closing bell. Decide the hours you will trade and stop when they end. Markets that never close punish people who never stop.
+
+</Callout>
+
+<TryIt to="/simulator">Load NOVA on the 5m chart and step the clock from the open through a full session. Watch the candle sizes: big at the start, small in the middle, big again at the end. That U shape is the school day.</TryIt>
+
+<KeyTakeaways>
+- Each exchange has a regular session, and prices outside it are much less reliable.
+- The opening and closing auctions gather orders and fill them at one price, setting the official open and close.
+- Volume follows a U shape: heavy at the open, thin at midday, heavy into the close.
+- The first fifteen to thirty minutes are the most dangerous part of the day for beginners because spreads are wide and reversals are violent.
+- Pre-market and after-hours trading has thin volume, wide spreads and often unrepresentative prices.
+- Forex runs around the clock on weekdays and crypto never closes, so you must set your own trading hours.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "What does the opening auction do?", options: ["Sells shares to the highest bidder only", "Collects the orders that built up while the market was shut and fills them all at one price", "Sets the price for the whole day", "Decides which companies may list"], answer: 1, explain: "The exchange finds the single price that trades the most shares and fills everyone there. That price becomes the official open." },
+  { q: "Why is the last hour of the session usually busy?", options: ["Because news is always released then", "Because institutions finish working large orders and day traders close positions before the close", "Because spreads are widest then", "Because the exchange lowers fees"], answer: 1, explain: "Large orders are completed and short-term traders flatten up, culminating in the closing auction." },
+  { q: "What is typically true of the middle of the trading day?", options: ["It is the busiest and most volatile period", "Volume drops, ranges contract and moves are more likely to fizzle", "Markets close for lunch everywhere", "Spreads are at their tightest of the week"], answer: 1, explain: "The midday lull is the quiet bottom of the U shape, and many experienced day traders simply stand aside." },
+  { q: "Why are pre-market and after-hours sessions risky for beginners?", options: ["They are illegal for retail traders", "Thin volume and wide spreads make prices unrepresentative and trades expensive", "No news is ever released then", "Brokers charge no commission"], answer: 1, explain: "Much lower volume, far wider spreads and restricted order types make these sessions an expensive place to learn." },
+  { q: "A major announcement is made on a Saturday about a listed company. What usually happens?", options: ["The price adjusts immediately over the weekend", "Nothing ever comes of weekend news", "The adjustment arrives all at once as a gap when the market next opens", "The exchange cancels Monday trading"], answer: 2, explain: "Closed markets cannot absorb news gradually, so it appears as a jump at the next open." },
+  { q: "What is the practical danger of a market that never closes, such as crypto?", options: ["It has no prices at night", "There is no forced break, and the thinnest most violent moves happen when almost nobody is around", "Spreads are always tight", "Weekends are always quiet"], answer: 1, explain: "Continuous markets remove the natural stopping point, so you have to impose your own trading hours." }
+]} />

@@ -1,0 +1,168 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-bg: #f6f7fb;
+  --color-surface: #ffffff;
+  --color-panel: #eef1f6;
+  --color-line: #dfe3ea;
+  --color-grid: #e9edf3;
+  --color-ink: #0f172a;
+  --color-ink-soft: #5b6478;
+  --color-accent: #2563eb;
+  --color-accent-soft: #dbeafe;
+  --color-up: #16a34a;
+  --color-down: #dc2626;
+  --color-warn: #d97706;
+}
+
+.dark {
+  --color-bg: #0b0f17;
+  --color-surface: #111827;
+  --color-panel: #161e2e;
+  --color-line: #263044;
+  --color-grid: #1b2435;
+  --color-ink: #e5e9f2;
+  --color-ink-soft: #94a0b8;
+  --color-accent: #60a5fa;
+  --color-accent-soft: #1e3a8a;
+  --color-up: #22c55e;
+  --color-down: #ef4444;
+  --color-warn: #f59e0b;
+}
+
+html {
+  color-scheme: light;
+}
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-bg text-ink antialiased;
+  font-family: var(--font-sans);
+}
+
+* {
+  border-color: var(--color-line);
+}
+
+.btn-primary {
+  @apply inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-110 active:scale-[0.98];
+}
+.btn-ghost {
+  @apply inline-flex items-center gap-2 rounded-lg border border-line bg-surface px-3 py-2 text-sm font-medium text-ink transition hover:border-accent/60 hover:bg-accent/5;
+}
+.btn-up {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg bg-up px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:brightness-110 active:scale-[0.98] disabled:opacity-40;
+}
+.btn-down {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg bg-down px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:brightness-110 active:scale-[0.98] disabled:opacity-40;
+}
+.input {
+  @apply rounded-lg border border-line bg-surface px-3 py-2 text-sm text-ink outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/20;
+  font-variant-numeric: tabular-nums;
+}
+.chip {
+  @apply inline-flex items-center rounded-full border border-line bg-surface px-2.5 py-0.5 text-xs font-medium text-ink-soft;
+}
+.chip-on {
+  @apply border-accent/60 bg-accent/10 text-accent;
+}
+
+/* ---------- lesson prose ---------- */
+.prose-lesson {
+  @apply text-[16.5px] leading-[1.75] text-ink;
+}
+.prose-lesson > p {
+  @apply my-4;
+}
+.prose-lesson h2 {
+  @apply mt-11 mb-4 text-2xl font-bold tracking-tight;
+}
+.prose-lesson h3 {
+  @apply mt-8 mb-3 text-lg font-bold;
+}
+.prose-lesson strong {
+  @apply font-semibold text-ink;
+}
+.prose-lesson a {
+  @apply text-accent underline decoration-accent/40 underline-offset-2 hover:decoration-accent;
+}
+.prose-lesson ul,
+.takeaways ul,
+.callout-body ul,
+.compare ul {
+  @apply my-4 list-disc space-y-1.5 pl-6;
+}
+.prose-lesson ol,
+.callout-body ol {
+  @apply my-4 list-decimal space-y-1.5 pl-6;
+}
+.takeaways ul {
+  @apply my-0;
+}
+.compare ul {
+  @apply my-0 text-[15px];
+}
+.callout-body p {
+  @apply my-2;
+}
+.callout-body p:first-child {
+  @apply mt-0;
+}
+.callout-body p:last-child {
+  @apply mb-0;
+}
+.prose-lesson blockquote {
+  @apply my-5 border-l-4 border-accent/40 pl-4 italic text-ink-soft;
+}
+.prose-lesson code {
+  @apply rounded bg-panel px-1.5 py-0.5 font-mono text-[0.9em];
+}
+.prose-lesson pre {
+  @apply my-5 overflow-x-auto rounded-xl bg-panel p-4 font-mono text-sm leading-relaxed;
+}
+.prose-lesson pre code {
+  @apply bg-transparent p-0;
+}
+.prose-lesson table,
+.callout-body table {
+  @apply my-6 w-full border-collapse overflow-hidden rounded-xl text-[15px];
+}
+.prose-lesson th,
+.callout-body th {
+  @apply border-b-2 border-line bg-panel px-3 py-2 text-left text-xs font-bold uppercase tracking-wide text-ink-soft;
+}
+.prose-lesson td,
+.callout-body td {
+  @apply border-b border-line px-3 py-2 align-top;
+}
+.prose-lesson hr {
+  @apply my-10 border-line;
+}
+.prose-lesson img {
+  @apply rounded-xl;
+}
+
+/* thin scrollbars for panels */
+.scroll-thin {
+  scrollbar-width: thin;
+}
+
+/* lightweight-charts container */
+.tv-chart {
+  @apply h-full w-full;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.live-dot {
+  animation: pulse-dot 1.2s ease-in-out infinite;
+}

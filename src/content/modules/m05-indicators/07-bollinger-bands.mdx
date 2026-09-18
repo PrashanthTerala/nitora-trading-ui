@@ -1,0 +1,97 @@
+Imagine walking a dog on a stretchy lead. Most of the time the dog trots near you, wandering a little left and right. Sometimes it lunges at a squirrel and the lead stretches to its limit, but it cannot go further than the lead allows, and it usually comes back. If you drew the dog's path, you would see a wobbly line inside a corridor that is roughly as wide as the lead.
+
+<Term id="bollinger-bands">**Bollinger Bands**</Term> draw that corridor around price. The middle line is a 20-period moving average: that is you, walking. The upper and lower bands are set a fixed number of standard deviations above and below it: that is the lead. Standard deviation is a measure of how much price has been wobbling lately, so the bands stretch wider when the market is wild and pull in tighter when it is calm. John Bollinger developed them in the 1980s precisely so the corridor would adapt to changing volatility instead of being a fixed width.
+
+They are one of the most beautiful indicators to look at, and one of the easiest to misread, because touching the band looks like a signal and often is not.
+
+## What Bollinger Bands calculate
+
+<Callout type="math" title="The Bollinger formula with a worked example">
+
+Middle band = SMA(N) of the close
+
+Standard deviation = square root of the average squared distance of each close from the middle band
+
+Upper band = middle + (multiplier × standard deviation)
+
+Lower band = middle − (multiplier × standard deviation)
+
+A tiny 3-period example to see the mechanics. Closes: 10, 11, 12. Middle = (10 + 11 + 12) / 3 = **11**.
+
+Distances from 11: −1, 0, +1. Squared: 1, 0, 1. Average of the squares: 2 / 3 = 0.667. Square root: **0.816**. That is the standard deviation.
+
+With a multiplier of 2: upper = 11 + 2 × 0.816 = **12.63**; lower = 11 − 1.63 = **9.37**.
+
+If tomorrow's closes are jumpier, say 9, 11, 13, the standard deviation grows to 1.63 and the bands widen to 14.27 and 7.73 around the same middle. The bands breathe with volatility.
+
+</Callout>
+
+The site divides by N (not N − 1) when averaging the squared distances, which is the population standard deviation and is what Bollinger himself specified. Some platforms use the sample version; the bands come out a hair wider. It does not matter for reading them.
+
+<IndicatorFigure indicator="bollinger" caption="Bollinger Bands (20, 2) in a range. Price tags a band and returns to the middle, over and over. The bands are a roughly constant width because volatility is steady." />
+
+## What the bands are trying to measure
+
+Two things at once. The **middle band** tells you the average price, the same trend reading you get from any 20 SMA. The **width** of the bands tells you the volatility: how far price has been scattering around that average.
+
+The standard-deviation choice matters. If price changes were random and bell-shaped, about 95% of closes would fall inside a two-standard-deviation band. Price is not that well behaved, so in practice the figure is a bit lower, roughly 88% to 90% by Bollinger's own tests. Still, a close outside the bands is genuinely unusual, and that is the fact every use of the indicator rests on.
+
+<Callout type="eli5">
+
+The bands are like the fences on a bowling lane that move. When the ball has been rolling straight, the fences move in close. When it has been bouncing all over the place, the fences move out. The ball can still hit a fence, and that tells you it went unusually far, but the fences do not tell you where it will roll next.
+
+</Callout>
+
+## Default settings and why
+
+Twenty periods and a multiplier of 2 are the standard. Twenty is about a month of daily bars and gives a middle line that tracks the medium-term trend. Two standard deviations wraps most of the closes without wrapping all of them, so the bands are touched often enough to be useful. Bollinger suggested that if you shorten the period to 10 you drop the multiplier to about 1.9, and if you lengthen it to 50 you raise it to about 2.1, to keep the same percentage of closes inside. Almost nobody bothers, and the defaults are fine.
+
+## Three ways traders use Bollinger Bands
+
+**Fading the bands in a range.** When price is clearly sideways, a tag of the upper band followed by a candle closing back inside is a candidate short toward the middle band; a tag of the lower band with a bullish reversal candle is a candidate long. The middle band is the natural first target. This works because in a range the average really is where price keeps returning to.
+
+**The squeeze.** When the bands pull in to their narrowest width in months, volatility is unusually low. Quiet markets tend to be followed by loud ones, so a squeeze is a warning that a big move is coming. It does not say which direction. Traders wait for the breakout candle that closes outside the squeezed bands and trade in that direction, ideally when it agrees with a structural [breakout](/learn/m03-market-structure/06-breakouts-and-fakeouts) of a range or a chart pattern.
+
+**Walking the band in a trend.** In a strong trend, price does not bounce off the outer band; it rides along it, close after close near or outside the upper band. This is called **walking the band**, and it is the single most important thing to recognise because it is where the range-fading habit gets destroyed. In a walk, the pullbacks tend to stop near the middle band, and that middle-band touch is the trend-following entry.
+
+<IndicatorFigure indicator="bollinger" regime="trend-up" caption="The same bands in a trend. Price walks up the upper band for stretches at a time. Selling each band touch here would have lost repeatedly; the pullbacks to the middle band were the opportunities." />
+
+## How Bollinger Bands fail
+
+<Callout type="danger" title="A band touch is not a signal">
+
+Bollinger has said it himself many times: a tag of the upper band is not a sell, and a tag of the lower band is not a buy. In a trend, price touches and exceeds the outer band precisely because the trend is strong. Traders who fade the bands blindly are trading against strength and get hurt most in exactly the moves that matter most.
+
+</Callout>
+
+The bands also lag, because the middle is a 20 SMA and the width is a 20-bar statistic. After a sudden volatility jump, the bands take several candles to widen, and by then the first move is over. After a crash they stay wide for weeks even once the market has calmed, muffling every signal.
+
+The squeeze is real but often fires early. Bands can stay squeezed for a long time, and the first "breakout" from a squeeze is frequently a head-fake in the wrong direction before the real move. Treat the first close outside as a warning and look for a retest or a structural confirmation.
+
+Finally, the bands say nothing about direction on their own. The middle band's slope is the only directional information in the whole indicator.
+
+## Combining with structure
+
+Bollinger Bands combine naturally with the [range versus trend](/learn/m03-market-structure/05-ranges-and-consolidation) distinction, because the two modes of the indicator map straight onto the two modes of the market. First decide from structure which one you are in. Flat middle band, price ping-ponging, horizontal highs and lows: range mode, fade the bands at the range edges. Rising middle band, higher highs and higher lows, closes hugging the upper band: trend mode, buy pullbacks to the middle band.
+
+A squeeze that forms right at the apex of a triangle from [Module 4](/learn/m04-chart-patterns/04-triangles), or just under a resistance level price has tested three times, is far more meaningful than a squeeze in the middle of nowhere. Volatility contraction plus a structural pressure point is the setup; the band expansion is the trigger; the pattern's measured move gives the target.
+
+<KeyTakeaways>
+- Bollinger Bands are a 20-period SMA with bands set 2 standard deviations above and below it.
+- Standard deviation measures how far closes have scattered from the average, so the bands widen in volatile markets and narrow in quiet ones.
+- Most closes, but not all, fall inside the bands, so a close outside is unusual but not automatically a reversal.
+- In ranges, band tags tend to revert to the middle; in trends, price walks the band and the middle band is the pullback entry.
+- A squeeze warns that a big move is coming without saying which way; wait for a close outside and structural confirmation.
+- Decide range or trend from structure first, then read the bands in the matching mode.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "The middle band is 11 and the standard deviation of the last N closes is 0.816. With a multiplier of 2, where is the upper band?", options: ["11.82", "12.63", "13.45", "9.37"], answer: 1, explain: "Upper = 11 + 2 × 0.816 = 12.63. The lower band is 11 − 1.63 = 9.37." },
+  { q: "What makes the bands widen?", options: ["Rising price", "Higher volume", "Closes scattering further from the average, raising the standard deviation", "A longer period"], answer: 2, explain: "Band width is proportional to standard deviation, which grows when recent closes are more spread out." },
+  { q: "Price has closed near or above the upper band for eight days in a row in a rising market. What is this called and what does it mean?", options: ["A squeeze; volatility is low", "Walking the band; the trend is strong and fading it is dangerous", "A double top; reversal likely", "Divergence"], answer: 1, explain: "Repeated closes along the outer band are the signature of a strong trend. The useful entries are pullbacks to the middle band." },
+  { q: "The bands are at their narrowest in six months. What does that tell you?", options: ["Buy now", "Sell now", "A large move is likely soon, direction unknown", "The trend has ended"], answer: 2, explain: "A squeeze means unusually low volatility, which tends to precede high volatility. It does not indicate direction." },
+  { q: "In a clearly sideways market, price tags the lower band and prints a bullish engulfing candle. What is a sensible first target?", options: ["The upper band immediately", "The middle band", "A new all-time high", "No target, hold forever"], answer: 1, explain: "In a range the middle band is where price keeps returning, so it is the natural first target for a band fade." },
+  { q: "Which part of Bollinger Bands carries information about direction?", options: ["The width of the bands", "The slope of the middle band", "The colour of the bands", "None of it"], answer: 1, explain: "The bands themselves describe volatility. Only the middle band, a 20 SMA, says anything about trend direction." }
+]} />
+
+<TryIt to="/simulator">Open the simulator, choose BIOX on the daily chart and switch on the Bollinger overlay. Find one stretch where the bands squeezed and note what happened in the ten candles after they expanded. Then find a strong trend and count how many candles closed outside the upper band without any meaningful pullback. That count is the number of times a blind band-fade would have lost.</TryIt>

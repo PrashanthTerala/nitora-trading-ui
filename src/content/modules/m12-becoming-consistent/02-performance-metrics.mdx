@@ -1,0 +1,147 @@
+A runner who only knows whether each run felt good will never get faster. The moment they start recording distance, time and heart rate, three things happen: they find out which sessions actually help, they stop trusting how a run felt, and they can prove progress to themselves on a day when they feel slow.
+
+Trading has exactly the same set of instruments, and almost nobody uses them. Most traders know one number, the balance at the bottom of the screen, which is the equivalent of a runner knowing only whether they are tired.
+
+This lesson introduces the eight numbers professionals actually use. To make sure you see how they fit together rather than memorising eight definitions, we will compute **every single one from the same ten trades**.
+
+## Ten trades to measure
+
+A $20,000 account, risking 1% per trade, so $200 of risk on each. Here is the record in order, straight out of [the journal](/learn/m12-becoming-consistent/01-the-trading-journal).
+
+| # | R result | Money | Equity after |
+| --- | --- | --- | --- |
+| 1 | +2.0R | +$400 | $20,400 |
+| 2 | -1.0R | -$200 | $20,200 |
+| 3 | -1.0R | -$200 | $20,000 |
+| 4 | -1.0R | -$200 | $19,800 |
+| 5 | +3.0R | +$600 | $20,400 |
+| 6 | +1.5R | +$300 | $20,700 |
+| 7 | -0.5R | -$100 | $20,600 |
+| 8 | -1.0R | -$200 | $20,400 |
+| 9 | +2.5R | +$500 | $20,900 |
+| 10 | -1.0R | -$200 | $20,700 |
+
+Four winners, six losers, and $700 of profit. Now measure it properly.
+
+## Win rate
+
+**Win rate** is simply the share of trades that made money.
+
+4 winners out of 10 is a **win rate of 40%**.
+
+Most beginners assume this is the headline number. It is the most overrated figure in trading. This account has a losing majority and still made money, because what it wins is bigger than what it loses. A strategy that wins 90% of the time and gives it all back on the tenth trade is a losing strategy with excellent optics, which is why win rate means nothing until you pair it with the next two numbers.
+
+## Average win and average loss
+
+Add up the winners: $400 + $600 + $300 + $500 = **$1,800 of gross profit**.
+
+Add up the losers: $200 + $200 + $200 + $100 + $200 + $200 = **$1,100 of gross loss**.
+
+So the **average win** is $1,800 ÷ 4 = **$450**, and the **average loss** is $1,100 ÷ 6 = **$183.33**.
+
+The ratio between them, $450 ÷ $183.33 = **2.45**, is the reward-to-risk your trading actually achieved, as opposed to the one you planned. Comparing planned to achieved is one of the most useful things a journal can show you: most people plan 2R targets and realise about 1.2R, because they take profits early.
+
+## Profit factor
+
+**Profit factor** is gross profit divided by gross loss. One number that asks: for every dollar this account lost, how many did it make?
+
+$1,800 ÷ $1,100 = **1.64**.
+
+So every $1.00 of losses was accompanied by $1.64 of gains. A profit factor of exactly 1.0 is breakeven before costs. Below 1.0 you are losing money. Above about 1.5 over a real sample is a genuinely good result, and anything above 3.0 in a small sample usually means one outlier trade rather than a discovery.
+
+<Callout type="eli5">
+
+Imagine a bucket with a leak. Profit factor is how many jugs of water you pour in for every jug that leaks out. Pour in 1.64 jugs for every 1 that escapes and the bucket slowly fills. Pour in 0.9 and you will be standing there all day wondering why it is empty.
+
+</Callout>
+
+## Expectancy
+
+**Expectancy** is the average profit you can expect per trade, and it is the number that actually pays your bills, because it multiplies by how often you trade.
+
+<Callout type="math" title="Expectancy from the same ten trades">
+
+The formula is (win rate × average win) minus (loss rate × average loss).
+
+(0.40 × $450) − (0.60 × $183.33)
+= $180.00 − $110.00
+= **$70 per trade**
+
+Check it the lazy way: total profit $700 divided by 10 trades is also **$70**. The formula and the arithmetic must agree, and if they do not, you have made a mistake somewhere.
+
+Now the useful part. $70 per trade, at 20 trades a month, is $1,400 a month from this process. Not from any single trade, and not from being right, but from repeating a small positive average enough times.
+
+</Callout>
+
+## Average R
+
+Expectancy in dollars depends on your account size, so it cannot be compared with anyone else's, including your own from last year. Expressing it in **R** fixes that.
+
+Add the R column: +2.0 −1.0 −1.0 −1.0 +3.0 +1.5 −0.5 −1.0 +2.5 −1.0 = **+3.5R** over ten trades.
+
+**Average R = +0.35R per trade.**
+
+And notice it matches: $70 of expectancy divided by $200 of risk per trade is 0.35. They are the same fact in two currencies. Average R is the version to write in your journal, because it still means something when your account doubles.
+
+## Max drawdown
+
+Every other number here describes profit. **Maximum drawdown** describes pain: the largest fall from an equity peak to the lowest point that follows, before a new peak is made.
+
+Walk the equity column. The account peaks at $20,400 after trade 1, then loses three in a row down to **$19,800** after trade 4, before recovering. That fall is $20,400 − $19,800 = **$600**, which is 2.94% of the peak, or **3.0R**.
+
+Later there is a smaller dip from $20,700 to $20,400, which is $300. The largest of all the dips is the max drawdown, so **$600 stands**.
+
+Drawdown is the number that decides whether you can actually run a strategy. A system with wonderful expectancy and a 45% drawdown is, for almost everybody, an unusable system, because the human operating it quits at 30%.
+
+## Sharpe, without the formula
+
+The **Sharpe ratio** asks a question the others do not: how much return did you get for how much wobble? Two traders who both end the year up 20% are not equal if one climbed smoothly and the other swung between plus 40% and minus 25% on the way.
+
+Formally it is your average return divided by the standard deviation of those returns, over the same period. Intuitively it is **reward per unit of uncertainty**, and higher is smoother.
+
+You can see the idea in our ten trades without any statistics software. The average result is +0.35R, and a typical result sits about 1.6R away from that average, because the trades range from −1.0R to +3.0R. That gives roughly 0.35 divided by 1.6, about **0.22 of reward for each unit of wobble**. If you halved the swings while keeping the same average, the ratio would double and the equity curve would be far easier to live with.
+
+Treat Sharpe as a comparison tool, not a grade. Its usual benchmarks, around 1.0 being decent and 2.0 being excellent, assume long annual histories of returns, not ten trades from a beginner.
+
+## What good enough looks like
+
+| Metric | From our ten trades | Rough guide over a real sample |
+| --- | --- | --- |
+| Win rate | 40% | Anything from 30% to 60% is normal; meaningless on its own |
+| Average win / average loss | 2.45 | Above 1.5 if your win rate is below half |
+| Profit factor | 1.64 | Below 1.0 loses money; above 1.5 is solid |
+| Expectancy | $70 per trade | Must be positive after all costs |
+| Average R | +0.35R | Above +0.2R is a real edge |
+| Max drawdown | $600, or 2.9% | Small enough that you never consider abandoning the plan |
+| Sharpe-style ratio | About 0.22 per trade | Higher means a smoother curve, not a bigger one |
+
+<Callout type="warning" title="Ten trades prove nothing at all">
+
+We just calculated every one of those metrics from ten trades. Each is real arithmetic, and each is statistically worthless.
+
+Look again at trade 5: it made $600 of the $700 total profit. Remove that single trade and this "profitable system" earned $100 across nine trades, which is noise. One lucky outlier can carry a whole small sample and make a bad process look like an edge.
+
+Treat 100 trades as the minimum before you believe any of these numbers, and treat 30 as enough only to spot something obviously broken. This is the same [sample size](/learn/m09-strategies/09-backtesting-and-forward-testing) problem that makes people abandon perfectly good strategies after four losses.
+
+</Callout>
+
+<KeyTakeaways>
+- Win rate alone is the most overrated metric; 40% winners made money here because the average win was 2.45 times the average loss.
+- Profit factor is gross profit divided by gross loss, 1,800 divided by 1,100 equals 1.64, meaning $1.64 earned for every $1.00 lost.
+- Expectancy is (win rate times average win) minus (loss rate times average loss), here $70 per trade, which equals total profit divided by trade count.
+- Average R is expectancy in risk units, here +0.35R, and stays comparable even as your account changes size.
+- Max drawdown is the largest peak-to-trough fall, here $600 or 3.0R, and it decides whether you can actually stay with a strategy.
+- Sharpe is reward per unit of wobble: two traders with the same return are not equal if one got there far more smoothly.
+- Aim for a profit factor above 1.5, a positive expectancy after costs, and a drawdown you can sit through, measured over at least 100 trades.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "A trader has gross profit of $4,500 and gross loss of $2,500. What is the profit factor?", options: ["0.56", "1.80", "2.00", "$2,000"], answer: 1, explain: "Profit factor is gross profit divided by gross loss: 4,500 divided by 2,500 is 1.8." },
+  { q: "Using our ten trades, what is the expectancy per trade?", options: ["$40", "$70", "$180", "$700"], answer: 1, explain: "(0.40 times $450) minus (0.60 times $183.33) is $180 minus $110, which is $70. Total profit $700 over 10 trades agrees." },
+  { q: "Why can a 40% win rate be perfectly healthy?", options: ["Because losses do not count", "Because the average win was 2.45 times the average loss, so the winners more than cover the losers", "Because 40% is above average", "Because commissions are ignored"], answer: 1, explain: "Win rate only matters alongside the size of wins versus losses. Small losses and large wins can carry a low win rate." },
+  { q: "The equity peaked at $20,400, fell to $19,800, then recovered and later dipped from $20,700 to $20,400. What is the max drawdown?", options: ["$300", "$600", "$900", "$200"], answer: 1, explain: "Max drawdown is the largest peak-to-trough fall, which is $600, not the sum of all dips." },
+  { q: "A strategy shows a profit factor of 4.0 across 12 trades. What is the most likely explanation?", options: ["It is an exceptional edge to trade immediately", "One outlier winner is carrying a tiny sample", "The calculation is impossible", "It has a high win rate"], answer: 1, explain: "Small samples are dominated by outliers. Our own set had one trade worth $600 of $700 in profit." },
+  { q: "What does the Sharpe ratio add that expectancy does not?", options: ["The number of trades", "How smooth or volatile the returns were on the way to that result", "The commission paid", "The win rate"], answer: 1, explain: "Sharpe is return per unit of variability. Two identical annual returns are not equal if one had far wilder swings." }
+]} />
+
+<TryIt to="/journal">The journal computes expectancy, profit factor, win rate and max drawdown from your simulated trades automatically. Take 20 trades, then open it and read the numbers before you read your balance. Recalculate one of them by hand from the trade list; doing the arithmetic once makes the metric yours forever.</TryIt>

@@ -1,0 +1,136 @@
+Go back to Maya's coupon from the [last lesson](/learn/m11-derivatives-and-other-markets/01-options-basics): 20 cents for the right to buy a $2 cup of lemonade at $2 any time this week. Why 20 cents? Why not 2 cents, or a dollar?
+
+Think about what could change the value of that coupon. If lemonade is already selling for $3, the coupon is obviously worth at least $1. If a heatwave is forecast, the chance of prices spiking is higher, so the coupon is worth more. If it is Sunday evening and the coupon dies at midnight, there is almost no time left for anything to happen, so it is worth almost nothing. Price, uncertainty and time: those three things set the value of every option in the world.
+
+Traders measure how an option responds to each of them with a set of numbers named after Greek letters. The **Greeks** sound intimidating, but each one answers a plain question, and this lesson goes through them one at a time.
+
+## Intrinsic and extrinsic value
+
+An option's premium has two parts.
+
+**Intrinsic value** is what the option would be worth if you exercised it this second. For a call, it is the share price minus the strike, if positive. For a put, the strike minus the share price, if positive. Out-of-the-money options have zero intrinsic value.
+
+**Extrinsic value** (also called time value) is everything else. It is the price of *possibility*: the chance that the option becomes more valuable before expiry.
+
+<Callout type="math" title="Splitting a premium">
+
+Share at $53. A $50 call is trading at $4.50.
+
+Intrinsic value: $53 minus $50 = **$3.00**.
+
+Extrinsic value: $4.50 minus $3.00 = **$1.50**.
+
+Now a $55 call on the same share trades at $1.20. It is out of the money, so intrinsic value is **$0**, and the whole $1.20 is extrinsic value: pure possibility.
+
+</Callout>
+
+Here is the rule that explains almost everything about options: **at expiry, extrinsic value is always zero.** Every cent of time value in an option melts away by the closing bell on expiry day. If you buy an option, you are buying something that is guaranteed to shrink in one dimension while you hope it grows in another.
+
+## Delta: how much the option moves when the share moves
+
+<Term id="delta">Delta</Term> tells you how much the option's price changes for a $1 move in the share. A call with a delta of 0.50 gains about 50 cents when the share rises $1. Puts have negative delta: a put with a delta of -0.40 gains 40 cents when the share *falls* $1.
+
+Delta runs from 0 to 1 for calls and 0 to -1 for puts. A deep in-the-money call behaves almost like the shares themselves, with a delta near 1. A far out-of-the-money call barely notices the share moving, with a delta near 0.05. At-the-money options sit near 0.50.
+
+Traders use delta a second way: as a rough **probability of finishing in the money**. A 0.30-delta call has roughly a 30% chance of expiring in the money. It is an approximation, not a law, but it is a useful sanity check when a cheap option looks tempting.
+
+## Gamma: how fast delta changes
+
+<Term id="gamma">Gamma</Term> measures how much delta changes when the share moves $1. It is the accelerator. An at-the-money option close to expiry has high gamma: a small move in the share can flip it from a coin toss to nearly certain, or the reverse, and its delta swings wildly.
+
+For a buyer, gamma is a friend: as the share moves your way, your option gets *more* sensitive, so gains accelerate. For a seller, gamma is the thing that turns a comfortable position into a catastrophe in an afternoon. This is a big part of why selling short-dated at-the-money options is so risky.
+
+<Callout type="eli5">
+
+Imagine walking toward a lemonade stand with a coupon. Delta is how much happier you get with every step closer to the stand. Gamma is how quickly your excitement grows: when you are far away, one step barely matters, but in the last few steps every stride changes everything. Theta, next, is the clock ticking toward closing time while you walk.
+
+</Callout>
+
+## Theta: the daily cost of owning time
+
+<Term id="theta">Theta</Term> is how much extrinsic value the option loses each day if nothing else changes. It is quoted as a negative number for buyers. A theta of -0.05 means the option loses about 5 cents a day, or $5 per contract, just from the calendar turning.
+
+Theta is not steady. It **accelerates** as expiry approaches, because possibility drains faster when there is less time left for surprises. Here is what that looks like for an at-the-money option that starts at $4.00 of pure extrinsic value with 30 days to go, assuming the share does not move.
+
+| Days to expiry | Approximate extrinsic value | Lost since previous row |
+| --- | --- | --- |
+| 30 | $4.00 | |
+| 20 | $3.27 | $0.73 over 10 days |
+| 10 | $2.31 | $0.96 over 10 days |
+| 5 | $1.63 | $0.68 over 5 days |
+| 2 | $1.03 | $0.60 over 3 days |
+| 1 | $0.73 | $0.30 in one day |
+| 0 | $0.00 | $0.73 in one day |
+
+The first ten days cost 73 cents. The last single day costs 73 cents on its own. Roughly speaking, an at-the-money option loses about half of its remaining time value in the final quarter of its life. Buying a short-dated option and waiting for a move is like paying rent that doubles every week.
+
+<Callout type="warning" title="Theta is why right-but-early loses">
+
+Suppose you buy a 30-day at-the-money call for $4 and the share drifts sideways for three weeks, then makes the move you expected in the final days. By then your option may be worth $1.50 before the move even starts. You were right about direction and still lost. Time value is the rent you pay for the possibility of being right, and it is due every day.
+
+</Callout>
+
+## Vega and implied volatility
+
+<Term id="vega">Vega</Term> measures how much an option's price changes when expected volatility changes by one percentage point. To understand it you need one more concept, and it is the most important one in the lesson.
+
+<Term id="implied-volatility">Implied volatility</Term>, or **IV**, is the market's guess about how much the share will move between now and expiry, backed out of the current option prices. High IV means options are expensive, because the market expects big swings. Low IV means options are cheap. The [VIX](/learn/m10-fundamentals-and-macro/07-sentiment-vix-put-call) you met earlier is simply the implied volatility of the S&P 500.
+
+Vega is why two identical options on two identical charts can cost wildly different amounts. If one share has a rumour of a takeover and the other does not, the first will have higher IV and pricier options, even though the strike, expiry and current price are the same.
+
+For a buyer, rising IV helps (the option you own gets more valuable) and falling IV hurts. For a seller, the reverse. And IV changes in a very predictable way around one event.
+
+## IV crush: the earnings trap
+
+Before an earnings report, nobody knows which way the share will jump, so IV climbs steadily for days. Option prices swell. Then the report lands, the share moves, and the uncertainty is gone. IV collapses in seconds. That collapse is called **IV crush**, and it is the single most common way beginners lose money on options.
+
+<Callout type="math" title="Right direction, lost money">
+
+Share at $100, earnings tonight. The $100 call expiring this week costs $6.00 with IV at 90%.
+
+Earnings beat. Next morning the share opens at $104, up 4%. You expected to make money; the call moved your way.
+
+But IV has collapsed to 35%. The call now has $4.00 of intrinsic value and almost no extrinsic value. It trades at about $4.20.
+
+You bought at $6.00 and can sell at $4.20. **A 4% rise in the share lost you 30% on the option.** The share had to move more than the option market had already priced in, which was about 6%, just for you to break even.
+
+</Callout>
+
+This is why experienced traders say that buying options into earnings is a bet against the *implied* move, not just a bet on direction. The options chain effectively tells you the size of move the market expects; you only profit if the actual move is larger.
+
+## The Greeks at a glance
+
+| Greek | Question it answers | Helps the buyer when | Typical size for an at-the-money option |
+| --- | --- | --- | --- |
+| Delta | How much does the option move per $1 in the share? | The share moves your way | About 0.50 |
+| Gamma | How fast does delta change? | The share moves sharply your way | Highest near expiry, at the money |
+| Theta | How much does the option lose per day? | Never; it always costs the buyer | Small far out, large near expiry |
+| Vega | How much does the option move per 1% change in IV? | IV rises after you buy | Largest for longer-dated options |
+
+There is a fifth, **rho**, for interest rate sensitivity. It is small for short-dated options and you can safely ignore it for now.
+
+## What to check before buying any option
+
+1. **IV rank**: is IV high or low compared with its own past year? Buying when IV is at the top of its range means paying peak prices for possibility.
+2. **Days to expiry**: enough time for your thesis to play out, plus a buffer, because theta eats fastest at the end.
+3. **The implied move** if an event is inside the window: does your expected move beat it?
+4. **Delta**: does the probability the market is quoting match how confident you actually are?
+5. **The spread**: as in [every market](/learn/m06-orders-and-execution/09-fees-commissions-settlement), a wide bid-ask spread is a cost paid twice.
+
+<KeyTakeaways>
+- An option's premium is intrinsic value (what exercising now would be worth) plus extrinsic value (the price of possibility), and extrinsic value is always zero at expiry.
+- Delta is the option's sensitivity to a $1 move in the share and doubles as a rough probability of finishing in the money.
+- Gamma is how fast delta changes; it accelerates gains for buyers and losses for sellers, especially near expiry.
+- Theta is the daily cost of time, and it accelerates sharply in the final days before expiry.
+- Implied volatility is the market's forecast of movement; vega measures how much an option gains or loses as IV changes.
+- IV crush after earnings can turn a correct directional call into a loss; you must beat the implied move, not just pick the direction.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "A share is at $62. A $60 call trades at $3.50. What is its extrinsic value?", options: ["$2.00", "$1.50", "$3.50", "$0"], answer: 1, explain: "Intrinsic value is $62 minus $60, which is $2.00. The remaining $1.50 of the premium is extrinsic value." },
+  { q: "A call has a delta of 0.40. The share rises $2. Roughly how much does the call gain per share?", options: ["$0.40", "$0.80", "$2.00", "$4.00"], answer: 1, explain: "Delta 0.40 means about 40 cents per $1 move, so a $2 move gives about 80 cents." },
+  { q: "Why does theta accelerate as expiry approaches?", options: ["Brokers charge more near expiry", "There is less time for surprises, so possibility drains faster", "Delta becomes negative", "Interest rates rise"], answer: 1, explain: "Time value is the price of possibility. With one day left there is very little possibility to sell, so what remains melts fast." },
+  { q: "You buy a call the day before earnings. The share rises 3% after the report but your call loses value. What most likely happened?", options: ["The broker made an error", "Implied volatility collapsed after the report, an IV crush, and the move was smaller than the market had priced in", "Delta went to zero", "The option expired"], answer: 1, explain: "Before earnings IV is high and options are expensive. After the report uncertainty vanishes, IV collapses, and a small move cannot compensate." },
+  { q: "Which Greek is the main reason selling short-dated at-the-money options is dangerous?", options: ["Rho", "Vega", "Gamma", "Delta"], answer: 2, explain: "High gamma near expiry means a small move in the share swings the option's delta violently, turning a small short position into a large loss quickly." },
+  { q: "What does a high IV rank tell you before buying an option?", options: ["The option is cheap relative to its history", "The option is expensive relative to its history, so you are paying peak prices for possibility", "The share will definitely move", "Theta is zero"], answer: 1, explain: "IV rank compares current implied volatility with the past year. High rank means expensive options and a bigger hurdle for buyers." }
+]} />

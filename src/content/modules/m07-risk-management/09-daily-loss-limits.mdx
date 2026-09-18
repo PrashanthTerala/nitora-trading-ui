@@ -1,0 +1,94 @@
+Every house has a fuse box. When too much current flows, a switch trips and the power goes off. The fuse does not consult you or ask whether you were in the middle of something important. It trips, because the alternative is a fire, and the decision about where to trip was made by an engineer long before the emergency, calmly, in an office.
+
+Exchanges have the same thing: when an index falls far enough in a day, trading halts for fifteen minutes, and nobody votes on it in the moment.
+
+You need a fuse box too, for the same reason. The moment you most need to stop trading is the moment you are least able to decide to.
+
+## The day that eats the month
+
+Nearly every account-destroying day has the same shape.
+
+Two losses before lunch: annoying but normal. Then a third, and the day is meaningfully red. The next trade is taken slightly larger, because getting back to flat with small size would take all afternoon. That one loses too. The size goes up again, the setup quality goes down, and by the close a trader with a 1% risk rule has lost eight percent of their account in trades they could not describe afterwards.
+
+Nothing about the strategy failed. The [expectancy](/learn/m07-risk-management/05-expectancy) was positive that morning and is still positive tomorrow. What failed was the assumption that you would keep obeying your own rules while losing.
+
+<Callout type="eli5">
+
+Imagine a jar of biscuits and a rule that you may have three. Once you have eaten three, someone takes the jar away and puts it on a high shelf until tomorrow. You do not have to fight yourself about the fourth biscuit, because the jar is gone. A daily loss limit is putting the jar on the shelf.
+
+</Callout>
+
+## The four circuit breakers
+
+**1. The daily loss limit.** Stop trading for the day when you are down **3R**, which on a 1% risk rule is 3% of the account. Three full stop-outs and the day is over. Not "one more to get back to flat". Over.
+
+Why 3R? Because three losses in a day is entirely normal at any reasonable win rate and four is where it starts being information, because 3% matches the total open risk cap from the [correlation lesson](/learn/m07-risk-management/08-correlation-and-diversification), and because twenty consecutive worst days at that size would still not end you.
+
+**2. The two-consecutive-losses rule.** After **two losses in a row**, stop for the day, regardless of the R total.
+
+The most useful and the most ignored rule here. Two in a row rarely means your strategy is broken; it usually means conditions are not what you thought, or you are not reading well today. Either way, the third trade taken immediately after two losses is statistically ordinary and psychologically terrible: taken faster, sized larger, justified less.
+
+**3. The weekly loss limit.** Stop for the week at **6R**, and do not return until you have done a review. Two bad days in a week is a run. Three is a signal.
+
+**4. The maximum trade count.** No more than **four trades per day**, win or lose.
+
+This surprises people because it caps your good days too, which is the point. Almost nobody has five A-quality setups in a day; what they have is three good ones and then boredom with a chart open, which the [overtrading lesson](/learn/m08-trading-psychology/05-overtrading-and-boredom) covers. A count limit makes you spend your trades on the best setups rather than the earliest ones.
+
+<StatRow>
+<Stat value="3R" label="daily loss limit" />
+<Stat value="2" label="losses in a row, then stop" />
+<Stat value="6R" label="weekly loss limit" />
+<Stat value="4" label="max trades per day" />
+</StatRow>
+
+## Setting your own numbers
+
+The figures above are a sensible default, not a law. Adjust them with these principles.
+
+- **Express limits in R, not dollars.** A dollar limit needs rewriting as your account changes and makes a bad day feel personal. "I am down 2R" is a measurement; "I am down $740" is an accusation.
+- **Set it where your strategy lands occasionally by pure chance.** A limit you have never reached is decoration. One you hit twice a week is too tight and is cutting off normal variance.
+- **Scale it to your win rate.** A [35% win rate system](/learn/m07-risk-management/06-win-rate-vs-rr) produces three-loss days constantly and may need 4R to breathe. A 60% system rarely does, and 2R is plenty.
+- **Add a drawdown brake.** At 10% below your account peak, halve risk per trade. At 15%, stop and review.
+- **Write what "stopped" means.** Close the platform, or at least every chart. A trader still watching the screen will find a reason.
+
+<Callout type="warning" title="A limit you can change is not a limit">
+
+The failure mode is never forgetting the rule. It is renegotiating it. "That last one was a technical stop, it does not really count." "The limit is for a normal day, and this is a news day." "I will restart the count after lunch."
+
+If your limits are adjustable in the moment, you do not have limits; you have suggestions that lose to whatever you are feeling. Write them down before the session, put the number where you can see it, and treat a breach as a rule violation in your journal even if the trade happened to win. A profitable rule-break is the most expensive outcome available, because it teaches you to do it again.
+
+</Callout>
+
+## Why they must be decided when calm
+
+Your judgement is not a constant. It is excellent before the open and steadily worse as losses accumulate, and the decline is invisible from the inside. Losses narrow your focus, speed up your decisions and make risk feel smaller: fine adaptations for escaping a predator, disastrous ones for placing orders.
+
+So you use the calm version of yourself to constrain the agitated version. That is the whole trick, and it is not specific to trading.
+
+Practically: write the limits into your [trading plan](/learn/m09-strategies/08-building-a-trading-plan), review them once a month, and change them only between sessions. If you want a wider daily limit, you may have it starting Monday, after writing down why.
+
+<Callout type="tip" title="The re-entry rule">
+
+Deciding to stop is easy compared with deciding when to start again, so make that explicit too. After a daily limit, return the next session at normal size. After a weekly limit, return only once you have written a review, and at half size for five trades. A defined path back stops a bad week becoming a month of hesitation.
+
+</Callout>
+
+<KeyTakeaways>
+- Circuit breakers exist because the moment you most need to stop is the moment you are least able to decide to.
+- A default set: stop at 3R for the day, stop after two consecutive losses, stop at 6R for the week, and never take more than four trades a day.
+- Express every limit in R rather than dollars so it scales with the account and stays a measurement rather than an accusation.
+- Add an account-level brake: halve risk at a 10% drawdown, stop and review at 15%.
+- Limits must be set when calm and changed only between sessions, never during one.
+- Log a breached limit as a rule violation in the journal even when the trade won, because a profitable rule-break teaches the wrong lesson.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "You are risking 1% per trade and have taken three full stop-outs today. What does the default daily loss limit say?", options: ["Take one more to get back to flat", "Halve your size and continue", "Stop trading for the day", "Switch to a lower timeframe"], answer: 2, explain: "Three stop-outs is 3R, the daily limit. The day is over regardless of what setups appear." },
+  { q: "You have had two losing trades in a row but are only down 2R. What does the two-loss rule say?", options: ["Continue, since you are under the daily limit", "Stop for the day", "Double the next position", "Trade only the opposite direction"], answer: 1, explain: "Two in a row usually means conditions or your reading are off, and the trade taken straight afterwards is the one most likely to be undisciplined." },
+  { q: "Why should loss limits be written in R rather than dollars?", options: ["Brokers require it", "R scales with the account and keeps the limit a measurement rather than an emotional number", "Dollars are more accurate", "R limits are easier to ignore"], answer: 1, explain: "A dollar figure needs rewriting as the account changes and makes a normal bad day feel personal." },
+  { q: "You break your daily limit and the extra trade happens to win. How should the journal record it?", options: ["As a win, since it made money", "As a rule violation", "It should not be recorded", "As a win with a note that limits are flexible"], answer: 1, explain: "A profitable rule-break is the most expensive outcome available because it trains you to break the rule again." },
+  { q: "When is the right time to widen your daily loss limit?", options: ["During a losing session, if the setups look good", "Right after a big win", "Between sessions, with a written reason", "Never, under any circumstances"], answer: 2, explain: "Limits may be revised, but only by the calm version of you, outside a live session, and with the reasoning recorded." },
+  { q: "What is the purpose of a maximum trades per day rule, given it also caps your good days?", options: ["To reduce commissions only", "To force you to spend limited trades on the best setups rather than the earliest ones", "Because platforms throttle order counts", "To guarantee a positive week"], answer: 1, explain: "Most traders do not have five A-quality setups in a day, so a count limit turns scarcity into selectivity." }
+]} />
+
+<TryIt to="/simulator">Before your next simulator session, write your four limits on a sticky note and put it on the screen: 3R daily, two losses in a row, 6R weekly, four trades maximum. Trade a full session and stop the instant any one of them trips, even if you are up on the day. Then check in the journal whether the trades you did not take would have helped.</TryIt>

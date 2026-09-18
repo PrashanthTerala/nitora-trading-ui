@@ -1,0 +1,141 @@
+Your friend has a rare trading card worth $20 today. You're convinced it'll be worth $10 next month. How could you make money from being right?
+
+You can't sell a card you don't own. But you *could* borrow it from your friend, sell it to someone else for $20 right now, wait for the price to drop, buy one back for $10, and hand that card back to your friend. You've returned exactly what you borrowed and kept the $10 difference.
+
+That's **short selling**, and it's how traders profit from falling prices. It's also the trade that can lose you more than you started with, so it deserves a careful look. First, though, the ordinary direction.
+
+## Going long: the direction you already know
+
+Being **long** simply means you own the thing and want the price to rise. You buy 100 shares at $20, you're long 100 shares. If it goes to $30 you make $1,000. If it goes to $0, which is the worst that can possibly happen to a share, you lose $2,000. Your loss has a floor: the price can't go below zero.
+
+That last point is the quiet superpower of being long. The most you can lose is what you paid. Remember that for a few paragraphs.
+
+## Going short: profiting from a fall
+
+<Term id="short-selling">Short selling</Term> is the card trick from the intro, done with shares and a broker. Step by step:
+
+1. **Borrow** the shares. Your broker lends you 100 shares from its own inventory or from another client's account (they've agreed to this in the fine print). You pay a small daily fee for the loan.
+2. **Sell** the borrowed shares at market. Cash comes in: 100 × $20 = $2,000.
+3. **Wait** for price to fall.
+4. **Buy back** the same number of shares, called **covering**, at the lower price: 100 × $10 = $1,000.
+5. **Return** the shares to the lender. You keep the difference: $1,000.
+
+Everything is reversed compared to a long. You sell first and buy second. Your stop-loss is a *buy* stop above your entry. Your take-profit is a *buy* limit below it.
+
+<CandleFigure
+  title="A short trade: sell high, cover lower"
+  bars={[
+    { o: 99, h: 100.4, l: 98.6, c: 100.1 },
+    { o: 100.1, h: 101.2, l: 99.5, c: 99.8 },
+    { o: 99.8, h: 100.3, l: 98.1, c: 98.4 },
+    { o: 98.4, h: 99.2, l: 97.3, c: 97.6 },
+    { o: 97.6, h: 98.8, l: 97.1, c: 98.5 },
+    { o: 98.5, h: 98.9, l: 96.4, c: 96.7 },
+    { o: 96.7, h: 97.3, l: 95.2, c: 95.5 },
+    { o: 95.5, h: 96, l: 93.8, c: 94.1 },
+    { o: 94.1, h: 95.1, l: 93.6, c: 94.8 }
+  ]}
+  annotations={[
+    { type: "hline", price: 100, text: "sell short 100", from: 0, to: 8 },
+    { type: "hline", price: 103, text: "stop loss 103 (buy stop)", from: 0, to: 8 },
+    { type: "hline", price: 94, text: "take profit 94 (buy limit)", from: 0, to: 8 },
+    { type: "arrow", index: 1, direction: "down", text: "short filled" },
+    { type: "arrow", index: 7, direction: "up", text: "covered" }
+  ]}
+  caption="On a short, the stop sits above the entry and the target below. Risk $3, reward $6."
+  showVolume={false}
+/>
+
+<Callout type="eli5">
+
+Going long is buying a toy now hoping to sell it for more later. Going short is borrowing a toy, selling it now, and promising to buy one back later to return. If toys get cheaper, you keep the change. If toys get pricier, you have to pay up to buy one back, and there's no limit to how pricey they might get.
+
+</Callout>
+
+## The unlimited-loss problem
+
+Here is the part that matters. When you're long, the worst case is the price going to zero and you losing 100% of what you put in. When you're short, the worst case is the price going *up*, and there is no ceiling on how high a price can go.
+
+Worked numbers. You short 100 shares at $20, taking in $2,000.
+
+| Price goes to | Cost to buy back 100 | Your result |
+| --- | --- | --- |
+| $10 | $1,000 | +$1,000 |
+| $0 | $0 | +$2,000 (the maximum possible gain) |
+| $30 | $3,000 | −$1,000 |
+| $50 | $5,000 | −$3,000 |
+| $100 | $10,000 | −$8,000 |
+| $200 | $20,000 | −$18,000 |
+
+Your maximum gain is capped at $2,000, because the stock can't fall below zero. Your maximum loss is *not capped*. A short position that goes badly wrong can cost more than everything in your account, and your broker will pursue you for the rest.
+
+<Callout type="danger" title="Never short without a stop, and never without size limits">
+
+A long with no stop can lose what you invested. A short with no stop can lose what you invested, plus your savings, plus money you don't have. Every short must have a buy stop above it from the moment it fills, and the position size must be small enough that even a violent gap is survivable. The [risk module](/learn/m07-risk-management/02-the-one-percent-rule) shows how to size it.
+
+</Callout>
+
+## The short squeeze
+
+Because shorts *must* buy back eventually, a crowd of short sellers is a crowd of future buyers. That creates a special kind of explosion.
+
+Suppose a stock is heavily shorted and starts to rise. Some shorts hit their stops and buy back. Their buying pushes price higher. That hits more stops, which triggers more buying, which pushes price higher still. Longs see the surge and pile in. This chain reaction is a **short squeeze**, and it can double or triple a price in hours. Nothing about the company has to change; the mechanics of forced buying are enough.
+
+Two numbers hint at squeeze risk. **Short interest** is the percentage of a company's shares that have been sold short; above 20% is high. **Days to cover** is short interest divided by average daily volume, and tells you how many days of normal trading it would take for all shorts to exit. High values on both mean the crowd is in a small room with one door.
+
+## The practical costs of shorting
+
+Shorting isn't a free mirror image of going long. There are frictions:
+
+- **Borrow fee.** You pay interest on the borrowed shares. For easy-to-borrow large stocks this can be under 1% a year. For hot, heavily shorted names it can exceed 100% a year, which means the fee alone eats your position.
+- **Hard-to-borrow.** Sometimes no shares are available to borrow at all, and you simply can't short.
+- **Dividends.** If the company pays a dividend while you're short, *you* pay it to the lender.
+- **Forced buy-in.** The lender can recall their shares at any time. If your broker can't find replacements, they close your short for you, at whatever the price is.
+- **Margin.** Shorting always happens in a margin account, which is the next lesson. The broker holds your sale proceeds plus extra collateral.
+
+## Long vs short at a glance
+
+<Compare left="Long" right="Short">
+
+- Buy first, sell later
+- Profit when price rises
+- Maximum loss: what you paid (price to zero)
+- Maximum gain: unlimited
+- Stop-loss is a sell stop below entry
+- Cash account is fine
+- Time is neutral or slightly on your side (dividends, drift)
+
+- Sell (borrowed) first, buy back later
+- Profit when price falls
+- Maximum loss: unlimited
+- Maximum gain: what you sold for (price to zero)
+- Stop-loss is a buy stop above entry
+- Margin account required, borrow fees apply
+- Time works against you (fees, dividends, recalls, squeezes)
+
+</Compare>
+
+## When shorting makes sense
+
+Markets fall faster than they rise, so a good short can pay quickly. Downtrends, failed breakouts and [distribution phases](/learn/m03-market-structure/09-market-cycles-wyckoff) all offer short setups. Shorting also lets you hedge: a trader long five stocks might short an index to soften a broad sell-off.
+
+But the honest advice for a beginner is this: learn to go long well first. Shorts add borrow costs, squeeze risk and unlimited downside on top of everything else. In the simulator you can practise both safely, and you should, so the mechanics are familiar before real money is involved.
+
+<KeyTakeaways>
+- Long means you own it and profit if it rises; the most you can lose is what you paid.
+- Short means you borrow, sell, and buy back later; you profit if it falls.
+- A short has capped gains (price to zero) and uncapped losses, because there is no ceiling on price.
+- Forced buying by trapped shorts creates squeezes that can double a price with no news.
+- Shorting costs borrow fees, dividends and margin, and the shares can be recalled at any time.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "You short 100 shares at $20 and cover at $30. What is your result?", options: ["+$1,000", "−$1,000", "+$2,000", "−$3,000"], answer: 1, explain: "You took in $2,000 and paid $3,000 to buy back, a loss of $1,000." },
+  { q: "What is the maximum possible gain on a short sold at $20 per share, 100 shares?", options: ["Unlimited", "$2,000", "$1,000", "$20"], answer: 1, explain: "Price cannot fall below zero, so the most you can make is the $2,000 you received." },
+  { q: "Where does the stop-loss sit on a short position?", options: ["A sell stop below entry", "A buy stop above entry", "A buy limit below entry", "There is no stop on shorts"], answer: 1, explain: "A short loses when price rises, so the protective order is a buy stop above the entry that closes the position." },
+  { q: "What drives a short squeeze?", options: ["The company announcing good news", "Shorts being forced to buy back, which pushes price up, which forces more buying", "Dividends being paid", "Low volume"], answer: 1, explain: "Every short is a future buyer; a rising price forces them to cover, and their buying feeds the rise." },
+  { q: "A stock you are short pays a $1 dividend while you hold the position. What happens?", options: ["You receive $1 per share", "Nothing", "You pay $1 per share to the lender", "Your broker cancels the short"], answer: 2, explain: "The lender still owns the shares and is owed the dividend, so the short seller pays it." },
+  { q: "Why is a short position considered riskier than a long of the same size?", options: ["Because shorts always lose", "Because losses are uncapped and there are borrow costs and squeeze risk", "Because you cannot use a stop on a short", "Because prices fall more slowly than they rise"], answer: 1, explain: "The loss has no ceiling, and frictions like borrow fees, dividends and recalls all work against you." }
+]} />
+
+<TryIt to="/simulator">Open the simulator and open a small short: sell first, then attach a buy stop above the entry and a buy limit below it as a bracket. Watch how the profit and loss moves opposite to price, then cover with a market order.</TryIt>

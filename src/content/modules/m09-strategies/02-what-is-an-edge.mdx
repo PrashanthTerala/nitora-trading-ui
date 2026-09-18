@@ -1,0 +1,112 @@
+A casino roulette wheel has 37 pockets: 18 red, 18 black, and one green zero. If you bet on red, you win 18 times out of 37, about 48.6%. The casino wins 51.4%. That tiny gap, less than 3%, is the entire reason casinos have marble floors and you do not.
+
+The casino does not win every spin. It loses to individual players all night long. But it plays millions of spins, and a 2.7% advantage repeated millions of times is a fortune. The casino has an **edge**. Every player who walks in without one is the casino's customer.
+
+In trading, you are trying to be the casino, not the customer. This lesson is about what that actually means, why it is smaller and harder than most people think, and how to know whether you have one.
+
+## The honest definition
+
+An <Term id="edge">edge</Term> is two things together, and you need both:
+
+1. **A statistical tendency.** A condition under which, over many occurrences, price has moved in a predictable direction often enough and far enough to cover your losses and your costs.
+2. **Disciplined execution.** Actually taking every occurrence of that condition, at the planned size, with the planned stop and target, for long enough for the tendency to show up in your results.
+
+The first without the second is a good idea you did not use. The second without the first is discipline applied to a coin flip. Neither makes money.
+
+<Callout type="eli5">
+
+Imagine a coin that lands heads 55 times out of 100. If you bet on heads every single time, you will slowly get richer. If you bet on heads only when you feel lucky, you have thrown the 55 away and are back to guessing. The coin is the tendency. Betting every time is the execution. You need both.
+
+</Callout>
+
+## Edges are small
+
+Beginners expect an edge to look like "this pattern works 80% of the time". Real edges do not look like that. A real edge looks like a 42% win rate with winners averaging 2.2R and losers averaging 1R, which gives an [expectancy](/learn/m07-risk-management/05-expectancy) of 0.34R per trade. Take 100 trades at 1% risk and that is roughly 34% before costs. Excellent. Also, invisible in any individual trade, and invisible across ten trades.
+
+This is why the [psychology module](/learn/m08-trading-psychology/06-process-over-outcome) spent so long on process over outcome. A small edge only appears at scale. In small samples it is completely buried by randomness, and a trader who judges by the last five results will abandon it before it ever shows.
+
+<Callout type="warning">
+
+Anyone selling you a strategy with a "90% win rate" is either measuring wrongly, hiding the size of the losses, or lying. High win rates are possible, but only with small winners and large losers, as you saw in [win rate versus reward-to-risk](/learn/m07-risk-management/06-win-rate-vs-rr). Ask for expectancy, sample size and maximum drawdown. If they cannot give all three, walk away.
+
+</Callout>
+
+## Where edges come from
+
+Edges exist because markets are made of people, and people behave predictably under stress. Some sources that have held up reasonably well over time:
+
+**Trend persistence.** Prices that have been moving in one direction tend to continue slightly more often than they reverse. This is the basis of [trend following](/learn/m09-strategies/03-trend-following), and it works partly because people are slow to update their views.
+
+**Mean reversion in ranges.** When nothing is happening, prices that stretch far from their average tend to snap back, because the stretch was noise rather than new information. This is the basis of [range trading](/learn/m09-strategies/06-mean-reversion).
+
+**Reaction to catalysts.** When genuine new information arrives, price often under-reacts at first and then drifts, because it takes time for everyone to process it. This is the basis of [momentum trading](/learn/m09-strategies/07-momentum-and-news).
+
+**Structural behaviour.** Stops cluster below obvious lows. Breakouts get bought. Round numbers attract orders. These predictable crowd behaviours create small, repeatable opportunities around [key levels](/learn/m03-market-structure/03-support-and-resistance).
+
+Notice what is *not* on this list: a secret indicator, a special candle, a chat room signal. An edge is a reason the crowd is predictably wrong, expressed as a rule you can test.
+
+## Edges decay
+
+Here is the uncomfortable part. Because edges come from crowd behaviour, and crowds learn, edges fade. A pattern that worked well in one decade works less well in the next, as more people trade it and the easy profit gets competed away. Markets change regime: a strategy tuned to a quiet trending market may lose money in a violent range.
+
+This means an edge is never "found" once and kept forever. It has to be *measured* continuously. Your journal is not a diary; it is the instrument that tells you whether the edge still exists.
+
+## Measuring an edge
+
+You cannot know you have an edge by feel. You know by numbers, and the numbers need a sample. Track these in the [journal](/journal) for every strategy:
+
+- **Win rate**: winners divided by total trades.
+- **Average winner and average loser**, in R.
+- **Expectancy**: win rate × average win minus loss rate × average loss, in R per trade.
+- **Profit factor**: total R won divided by total R lost. Above 1.0 is profitable; above 1.5 is healthy.
+- **Maximum drawdown**: the biggest peak-to-trough drop, in R or percent.
+- **Sample size**: how many trades these numbers rest on.
+
+<Callout type="math" title="How many trades is enough?">
+
+With 20 trades, a real 45% win rate can show up anywhere from 25% to 65% just by chance. With 100 trades, the range narrows to roughly 35% to 55%. With 300, it is about 40% to 50%. Small samples lie in both directions: a good strategy can look terrible and a bad one can look brilliant. Treat anything under 100 trades as a hint, not a conclusion. The [backtesting lesson](/learn/m09-strategies/09-backtesting-and-forward-testing) covers this properly.
+
+</Callout>
+
+## The execution half
+
+Suppose you have a tested tendency with a 0.3R expectancy. Now the discipline half decides whether you keep it.
+
+Skip 20% of the setups because they "look wrong", and if the ones you skip are random, you keep 80% of the edge. But they are never random; you skip the scary ones, which are often the best ones, and the expectancy drops further.
+
+Move stops wider on a third of your losers, and the average loss grows from 1R to 1.4R. Your 0.3R edge is now about 0.1R.
+
+Take profit early on half your winners, and the average winner drops from 2.2R to 1.6R. The edge is now negative.
+
+Three ordinary human habits, and a good strategy becomes a losing one without a single rule of the strategy changing. This is why the [pre-trade checklist](/learn/m08-trading-psychology/07-routines-and-discipline) exists. The checklist is not separate from the edge. It *is* half of it.
+
+<Callout type="story" title="Two traders, one strategy">
+
+Priya and Leo both trade the same tested pullback plan. Over 100 trades, Priya takes every setup that qualifies and never touches an order once placed. Leo takes about 75 of them, moves stops on a dozen, and closes early on some winners. Priya's expectancy comes out at 0.28R. Leo's comes out at minus 0.05R. Same strategy. Only one of them has an edge.
+
+</Callout>
+
+## What an edge is not
+
+- It is not being right about direction. You can be right 40% of the time and rich, or 70% and broke.
+- It is not confidence. Confidence is a feeling; an edge is a number.
+- It is not an indicator. Indicators are tools for expressing a rule, not sources of edge on their own.
+- It is not permanent. It is a measured advantage that you re-measure until it stops being one.
+
+<KeyTakeaways>
+- An edge is a statistical tendency plus disciplined execution; either one alone does not make money.
+- Real edges are small, often a 40% to 50% win rate with winners about twice the size of losers, and are invisible in small samples.
+- Edges come from predictable crowd behaviour: trend persistence, mean reversion, reaction to news and structural order clustering.
+- Edges decay as crowds learn and regimes change, so they must be measured continuously with expectancy, profit factor and drawdown.
+- Ordinary execution habits like skipping setups, widening stops and cutting winners can turn a positive edge negative without changing a rule.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "A casino wins 51.4% of red-or-black bets. Why does it still lose money to individual players on many nights?", options: ["The wheel is rigged against the casino", "A small edge only shows up over a very large number of spins", "Players cheat", "The casino does not really have an edge"], answer: 1, explain: "A 2.7% edge is buried by randomness in small samples and only becomes visible across thousands of spins." },
+  { q: "A strategy has a 42% win rate, average winner 2.2R, average loser 1R. What is its expectancy per trade?", options: ["Negative, because it loses more often than it wins", "About 0.34R", "About 1.2R", "About 2.2R"], answer: 1, explain: "0.42 times 2.2 equals 0.924; 0.58 times 1 equals 0.58; the difference is about 0.34R per trade." },
+  { q: "Someone offers you a strategy with a 90% win rate and no other statistics. What should you ask for?", options: ["Nothing, 90% is enough", "Expectancy, sample size and maximum drawdown", "The name of the indicator", "A screenshot of a winning trade"], answer: 1, explain: "High win rates usually hide large losers. Without expectancy, sample size and drawdown, the number is meaningless." },
+  { q: "Leo trades a tested strategy but skips a quarter of the setups and widens stops on some losers. His expectancy comes out negative while Priya's on the same rules is positive. Why?", options: ["Leo picked worse symbols", "Execution is half of the edge; his habits destroyed it", "The strategy only works for some people", "Priya was lucky"], answer: 1, explain: "The statistical tendency was identical. Skipping, widening and cutting early are enough to turn a positive edge negative." },
+  { q: "Why do edges decay over time?", options: ["Brokers ban them", "Crowds learn and regimes change, competing away the easy profit", "Indicators stop calculating", "They do not; a real edge is permanent"], answer: 1, explain: "Edges come from predictable crowd behaviour. As more traders exploit a behaviour, it weakens. Continuous measurement is the only defence." }
+]} />
+
+<TryIt to="/journal">Open the journal and look at your statistics so far: win rate, average winner and loser in R, expectancy and profit factor. Then look at the sample size. If it is under 100, write in the notes: hint, not conclusion. That sentence will save you from both false hope and false despair.</TryIt>

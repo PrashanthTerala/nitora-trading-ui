@@ -1,0 +1,138 @@
+A roulette wheel has 37 pockets. Bet $1 on a single number and you win $35 about one time in 37. The casino does not watch each spin and worry. It knows that for every $1 wagered it keeps about 2.7 cents, and it knows that if the wheel spins often enough, that 2.7 cents is as certain as gravity.
+
+The casino's 2.7 cents has a name. It is **expectancy**: the average amount you win or lose per bet, over many bets. Every game has one. Every trading strategy has one. Yours has one right now, whether you have measured it or not.
+
+This is the number the last four lessons were building towards. Win rate alone is meaningless. Reward to risk alone is meaningless. Expectancy is the single number that combines them and tells you whether the thing you are doing makes money.
+
+## The formula
+
+<Callout type="math" title="Expectancy">
+
+**expectancy = (win rate × average win) − (loss rate × average loss)**
+
+Loss rate is simply 1 minus the win rate. Average win and average loss are both positive numbers; the minus sign in the formula does the subtracting.
+
+</Callout>
+
+Read it as a sentence: *what you usually get when you are right, weighted by how often you are right, minus what you usually give back when you are wrong, weighted by how often you are wrong.*
+
+If the answer is positive, the strategy makes money over enough trades. If it is negative, it loses money over enough trades, and no amount of discipline, conviction or screen time will change that. It is arithmetic, not opinion.
+
+<Callout type="eli5">
+
+You have a game where you flip a coin. Heads, your friend gives you 3 sweets. Tails, you give your friend 1 sweet. Half the time you gain 3, half the time you lose 1. On average each flip gains you 1 sweet. That average is expectancy, and it is why you should play this game all day even though you lose half the flips.
+
+</Callout>
+
+<ExpectancyCalc />
+
+## A worked example over 100 trades
+
+Numbers pulled from an imaginary but plausible trend-following journal. Account $10,000, risking 1% per trade, so 1R is $100.
+
+- 100 trades taken.
+- 42 were winners, averaging **$260** each.
+- 58 were losers, averaging **$105** each.
+
+The average loss is $105 rather than $100 because of slippage on the stops, exactly as the [1% rule lesson](/learn/m07-risk-management/02-the-one-percent-rule) warned.
+
+**Expectancy** = (0.42 × $260) − (0.58 × $105) = $109.20 − $60.90 = **$48.30 per trade**.
+
+Check it the long way. Total won: 42 × $260 = $10,920. Total lost: 58 × $105 = $6,090. Net: $4,830 over 100 trades, which is $48.30 each. The two methods agree, as they must.
+
+| | Count | Average | Total |
+| --- | --- | --- | --- |
+| Winners | 42 | $260 | $10,920 |
+| Losers | 58 | $105 | $6,090 |
+| **Net** | **100** | **$48.30** | **$4,830** |
+
+Note that this trader lost 58 trades out of 100 and made almost half their account. They were wrong more often than they were right, and it did not matter.
+
+While we are here: **profit factor** is the other common way to say the same thing. It is gross profit divided by gross loss, here $10,920 ÷ $6,090 = **1.79**. Anything above 1 is profitable. Anything above 1.5 sustained over hundreds of trades is genuinely good.
+
+## Expectancy in dollars and expectancy in R
+
+The same journal, measured in [R](/learn/m07-risk-management/04-risk-reward-ratio). With 1R equal to $100, the average win of $260 is 2.6R and the average loss of $105 is 1.05R.
+
+**Expectancy in R** = (0.42 × 2.6) − (0.58 × 1.05) = 1.092 − 0.609 = **0.483R per trade**.
+
+Which, at $100 per R, is $48.30. Of course it is.
+
+So why keep both? Because they answer different questions.
+
+<Compare left="Expectancy in R" right="Expectancy in dollars">
+
+- Is the *strategy* any good?
+- Unchanged when your account grows.
+- Comparable to other people's strategies and to your own past.
+- The right number for judging a setup or a backtest.
+
+- Is this *worth my time*?
+- Grows as your account grows.
+- Tells you what a month of trading pays.
+- The right number for planning, and for deciding whether to trade at all.
+
+</Compare>
+
+A quick sanity check on the dollar side. 0.483R per trade at $100 per R, twenty trades a month, is about $966 a month on a $10,000 account. That is an excellent result. On a $1,000 account the identical strategy makes about $97 a month, which is not a living. The strategy is the same; only the arithmetic of scale differs.
+
+<StatRow>
+<Stat value="0.48R" label="expectancy per trade" />
+<Stat value="42%" label="win rate" />
+<Stat value="1.79" label="profit factor" />
+<Stat value="9%" label="of months still lose" />
+</StatRow>
+
+## Why a good system still has losing months
+
+Expectancy is an *average*, and averages say nothing about any particular stretch. This is the part beginners refuse to believe until it happens to them.
+
+Take the system above: 42% win rate, wins of 2.6R, losses of 1.05R. Suppose you take twenty trades in a month. How many wins do you need just to finish flat? Solve w × 2.6 = (20 − w) × 1.05, which gives w = 5.75, so you need **6 wins out of 20**.
+
+Your expected number of wins is 8.4, comfortably above 6. But the number of wins is a coin-flip-like quantity, and it varies. The chance of getting 5 or fewer wins in a twenty-trade month is about **9%**. Roughly one month in eleven loses money, with nothing wrong at all.
+
+Now take a gentler system: 55% win rate, wins of 1.2R, losses of 1R, which is an expectancy of 0.21R. It needs 10 wins out of 20 to finish flat, and the chance of getting 9 or fewer is about **25%**. One month in four is red.
+
+<Callout type="warning" title="The losing month is not evidence">
+
+A losing month tells you almost nothing about whether your strategy works. Neither does a winning one. Both are inside the normal range of a positive-expectancy system, and the smaller your expectancy, the wider that range. The only honest response to a red month is to check whether you followed your rules. If you did, the month is weather, not climate.
+
+This is also why traders abandon working systems. They hit the one-in-eleven month, conclude the edge is gone, switch to something new, hit that system's bad stretch, switch again, and spend years never staying anywhere long enough for the arithmetic to show up.
+
+</Callout>
+
+## The high win rate trap
+
+Expectancy immediately exposes a strategy beginners fall in love with: take tiny profits, hold losers until they come back, and enjoy an 80% win rate.
+
+Say the wins average 0.5R and the losses, taken reluctantly and late, average 3R.
+
+Expectancy = (0.80 × 0.5) − (0.20 × 3) = 0.40 − 0.60 = **−0.2R per trade**.
+
+Eighty percent right, and it bleeds 0.2R every trade. The account goes up gently for weeks and then gives it all back in an afternoon. The win rate was never the problem to solve; the [next lesson](/learn/m07-risk-management/06-win-rate-vs-rr) is about the trade-off it hides.
+
+## How many trades before you trust the number
+
+Not ten. Not thirty. A rough working minimum is **100 trades** taken under the same rules, and even then your measured expectancy has real uncertainty around it. With 30 trades you effectively know nothing; the range of plausible true win rates is enormous. This matters so much that [backtesting and sample size](/learn/m09-strategies/09-backtesting-and-forward-testing) gets its own lesson later.
+
+Until you have the sample, judge yourself on whether you followed the plan, not on the money.
+
+<KeyTakeaways>
+- Expectancy is win rate times average win, minus loss rate times average loss, and it is the one number that decides whether a strategy makes money.
+- A positive expectancy makes money over enough trades; a negative one cannot be rescued by discipline or conviction.
+- Expectancy in R judges the strategy; expectancy in dollars tells you whether it is worth your time.
+- A 42% win rate with 2.6R winners is strongly profitable, because being right often is not the goal.
+- Averages say nothing about any single month, so even a good system loses roughly one month in eleven.
+- An 80% win rate with small wins and large losses has negative expectancy, which is why win rate alone proves nothing.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "A strategy wins 40% of the time, averaging $300 per win and $150 per loss. What is the expectancy per trade?", options: ["$30", "$60", "$120", "$150"], answer: 0, explain: "0.40 times 300 is 120, and 0.60 times 150 is 90. 120 minus 90 equals 30." },
+  { q: "Over 100 trades a journal shows 42 wins totalling $10,920 and 58 losses totalling $6,090. What is the profit factor?", options: ["0.56", "1.24", "1.79", "4.83"], answer: 2, explain: "Profit factor is gross profit divided by gross loss: 10,920 divided by 6,090 is about 1.79." },
+  { q: "A strategy wins 80% of the time with average wins of 0.5R and average losses of 3R. Is it profitable?", options: ["Yes, the win rate is very high", "No, expectancy is minus 0.2R per trade", "Yes, but only on large accounts", "It cannot be calculated"], answer: 1, explain: "0.8 times 0.5 is 0.4, and 0.2 times 3 is 0.6, giving minus 0.2R per trade." },
+  { q: "Your system has a positive expectancy and you have just had a losing month while following every rule. What should you do?", options: ["Switch to a new strategy", "Double your position size to recover", "Carry on, and check only that you followed the rules", "Stop trading permanently"], answer: 2, explain: "A losing month is inside the normal range of a positive-expectancy system. Judge the process, not the month." },
+  { q: "Which expectancy figure is the right one for comparing your strategy against a friend's?", options: ["Expectancy in dollars", "Expectancy in R", "Total profit", "Win rate"], answer: 1, explain: "R removes account size and instrument, so it is the comparable unit. Dollars depend on how much capital each of you has." },
+  { q: "Roughly how many trades under the same rules before you should trust a measured expectancy?", options: ["10", "30", "100 or more", "It never matters"], answer: 2, explain: "Under 100 trades the uncertainty around the number is larger than the number itself." }
+]} />
+
+<TryIt to="/journal">Open the journal and read the expectancy it has already computed from your simulated trades. Note the trade count next to it. If it is under 100, treat the figure as a rough hint rather than a fact, and go take more trades in the simulator under exactly the same rules.</TryIt>

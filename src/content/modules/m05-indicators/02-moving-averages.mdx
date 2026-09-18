@@ -1,0 +1,134 @@
+Stand on a beach and watch the waves. Each one runs up the sand a different distance, and if you only look at single waves you cannot tell whether the tide is coming in or going out. But if you note where the last ten waves reached and take the average, the tide becomes obvious. The average removes the noise of individual waves and leaves the slow movement underneath.
+
+A **moving average** does the same thing to price. Each candle is a wave: noisy, jumpy, easily influenced by one big order. Averaging the last twenty closes gives you the tide. As each new candle arrives you drop the oldest close, add the newest, and the average "moves" along with price. That is where the name comes from.
+
+Moving averages are the oldest and most widely used indicator family. They are also the simplest, which is exactly why you should learn the formulas. Once you can compute one by hand, you will never again mistake it for anything clever.
+
+## The simple moving average
+
+The <Term id="sma">**simple moving average (SMA)**</Term> is precisely what it sounds like: add up the last N closing prices and divide by N.
+
+<Callout type="math" title="SMA formula and a worked example">
+
+SMA(N) = (close 1 + close 2 + ... + close N) / N
+
+Take three closes: 10, 11, 12. The 3-period SMA is (10 + 11 + 12) / 3 = 33 / 3 = **11**.
+
+Now a fourth close arrives at 14. Drop the 10, add the 14: (11 + 12 + 14) / 3 = 37 / 3 = **12.33**. The average moved up, but only by 1.33 even though price jumped by 2. That is the smoothing.
+
+</Callout>
+
+Every close inside the window gets the same weight. The close from twenty days ago matters exactly as much as yesterday's. That is both the SMA's strength and its weakness: it is calm and hard to fool, but it is slow to notice that something has changed.
+
+<IndicatorFigure indicator="sma" caption="A 20-period SMA. Price is noisy; the average is a smooth ribbon that follows the tide. Notice how price crosses back and forth across it during pauses." />
+
+One quirk worth knowing: because an old close drops out of the window every bar, the SMA can move even on a day when price barely changes. If a very high close from 20 days ago falls out of a 20-period window, the average drops today regardless of what today's candle did. Traders call this the "drop-off effect".
+
+## The exponential moving average
+
+The <Term id="ema">**exponential moving average (EMA)**</Term> fixes the slowness by giving more weight to recent closes and less to old ones. Instead of a window that treats every day equally, it blends today's close with yesterday's EMA using a fixed fraction called the smoothing constant.
+
+<Callout type="math" title="EMA formula and a worked example">
+
+k = 2 / (N + 1)
+
+EMA today = (close today × k) + (EMA yesterday × (1 − k))
+
+For N = 3, k = 2 / 4 = **0.5**. The first EMA value is seeded with a plain SMA. Using the same closes 10, 11, 12, the seed is 11.
+
+The fourth close is 14: EMA = (14 × 0.5) + (11 × 0.5) = 7 + 5.5 = **12.5**.
+
+Compare with the SMA of the same data, which was 12.33. The EMA moved further toward the new price because it weights the newest close more. For a 20-period EMA, k = 2 / 21 ≈ 0.095, so each new close gets about 9.5% of the say and the accumulated past gets 90.5%.
+
+</Callout>
+
+The word "exponential" comes from how the old prices fade: each day back gets multiplied by (1 − k) again, so the influence shrinks exponentially but never quite reaches zero. In practice a close from 50 days ago barely registers on a 20 EMA.
+
+<IndicatorFigure indicator="sma-vs-ema" caption="SMA and EMA of the same 20-period length. The EMA hugs price more tightly and turns a little earlier at every bend. That earlier turn is the whole reason people use it." />
+
+## The weighted moving average
+
+The **weighted moving average (WMA)** is a middle path. It uses a fixed window like the SMA, but weights the newest close the most and the oldest the least, in a straight line: for a 3-period WMA the newest close gets weight 3, the next 2, the oldest 1.
+
+<Callout type="math" title="WMA worked example">
+
+WMA(3) = (newest × 3 + middle × 2 + oldest × 1) / (3 + 2 + 1)
+
+Closes 10, 11, 12 with 12 the newest: (12 × 3 + 11 × 2 + 10 × 1) / 6 = (36 + 22 + 10) / 6 = 68 / 6 = **11.33**.
+
+The SMA of the same data was 11. The WMA is higher because it leans toward the most recent close.
+
+</Callout>
+
+WMA is the least used of the three. Most platforms and most traders pick between SMA and EMA, so that is where we will spend our time.
+
+## Which one should you use?
+
+<Compare left="SMA" right="EMA">
+- Equal weight to every close in the window
+- Smoother, slower, fewer false turns
+- Widely watched at 50, 100 and 200 periods, so it acts like a shared landmark
+- Suffers from the drop-off effect when an old outlier leaves the window
+- More weight to recent closes, fading older ones
+- Reacts sooner, hugs price tighter, more false turns
+- Popular for shorter lengths such as 9, 20 and 21
+- No drop-off effect; old prices fade gradually
+</Compare>
+
+There is no right answer. A faster average gets you into trends earlier and also whipsaws you more in ranges. A slower one keeps you out of chop and also keeps you out of the first part of every move. Pick one, learn how it behaves, and stop swapping.
+
+<Callout type="eli5">
+
+Imagine three friends guessing tomorrow's weather. One friend averages the last twenty days equally. Another pays most attention to the last few days. The second friend notices a change in the weather faster, but also panics over one odd day. Neither friend actually knows tomorrow's weather. They are just describing the recent past in two different ways.
+
+</Callout>
+
+## Default settings and why
+
+You will see the same numbers everywhere: 9, 20, 50, 100 and 200. There is nothing magical in them. They are convenient round numbers that happen to line up with the calendar: about 20 trading days in a month, about 50 in a quarter, about 200 in a year. Because so many traders and funds watch the 50-day and 200-day SMA, price often reacts near them simply because people expect it to. That is a real effect, but it is a crowd effect, not a mathematical one.
+
+Short averages (9 to 21) describe the swing you are in. Medium averages (50) describe the trend of the last few months. Long averages (200) describe the big picture. Which one you use depends on how long you plan to hold, which links back to [choosing your timeframe](/learn/m01-reading-price/05-timeframes).
+
+## Three ways traders use moving averages
+
+**As a trend filter.** The simplest rule in trading: only look for longs when price is above the 200 SMA, only look for shorts when it is below. It is crude and it is late, but it keeps you on the right side of the big [higher highs and higher lows](/learn/m03-market-structure/01-trends) most of the time.
+
+**As dynamic support and resistance.** In a healthy uptrend, pullbacks often pause near a rising 20 or 50 EMA before continuing. Traders treat the average as a moving floor, the way you learned to treat a horizontal level in [Support and Resistance](/learn/m03-market-structure/03-support-and-resistance). It works partly because so many people watch it and buy there.
+
+**As a slope reader.** Do not just ask whether price is above or below the line. Ask which way the line is pointing. A rising average with price above it is a clean uptrend. A flat average with price weaving through it is a range, and moving-average signals in a range are mostly noise.
+
+## How moving averages fail
+
+<Callout type="warning" title="The lag is not a bug you can tune away">
+
+Every moving average turns after price turns. By the time a 50 SMA rolls over, the drop that caused it has already happened. Shortening the period makes it turn sooner but also makes it turn on every wobble. There is no setting that is both early and reliable, because the average only contains past prices.
+
+</Callout>
+
+In a sideways market, price crosses the average again and again. Each cross looks like a signal and almost none of them lead anywhere. This is the **whipsaw**, and it is the number one way moving-average traders lose money. The fix is not a better average; it is recognising a [range](/learn/m03-market-structure/05-ranges-and-consolidation) and switching tools.
+
+Averages also say nothing about *how far* a move might go, and they cannot tell a healthy pullback from the start of a reversal until well after the fact.
+
+## Combining with structure
+
+The best use of a moving average is as a second opinion for a structural read you have already made. Price makes a higher low at an old resistance level that has flipped to support, and that level happens to sit on a rising 50 EMA: now you have a horizontal level, a trend definition and an average all agreeing. That stack of reasons is worth far more than any one of them alone.
+
+<KeyTakeaways>
+- A moving average is the average of the last N closes, recalculated on every new candle to smooth out noise.
+- The SMA weights every close equally; the EMA weights recent closes more using k = 2 / (N + 1); the WMA weights them in a straight line.
+- Faster averages react sooner but whipsaw more; slower averages are calmer but later. No setting is both.
+- Common lengths such as 20, 50 and 200 are calendar conveniences that became self-fulfilling landmarks.
+- Traders use averages as a trend filter, as dynamic support and resistance, and by reading the slope.
+- Averages lag by design and fail in ranges; use them to confirm structure, not replace it.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "What is the 3-period SMA of the closes 10, 11 and 12?", options: ["10", "11", "12", "33"], answer: 1, explain: "Add them (33) and divide by 3 to get 11." },
+  { q: "For a 3-period EMA, what is the smoothing constant k?", options: ["0.33", "0.5", "0.66", "3"], answer: 1, explain: "k = 2 / (N + 1) = 2 / 4 = 0.5." },
+  { q: "Yesterday's 3-period EMA was 11 and today's close is 14. What is today's EMA?", options: ["12.33", "12.5", "13", "14"], answer: 1, explain: "14 × 0.5 + 11 × 0.5 = 7 + 5.5 = 12.5. The SMA of the same data would be 12.33." },
+  { q: "Why does an EMA turn sooner than an SMA of the same length?", options: ["It uses fewer bars", "It gives more weight to the most recent closes", "It uses highs instead of closes", "It ignores volume"], answer: 1, explain: "Recent closes get a bigger share of the calculation, so a change in price shows up in the average faster." },
+  { q: "Price is weaving back and forth across a flat 20 EMA for weeks. What should you conclude?", options: ["Each cross is a strong signal", "The market is ranging and moving-average signals are mostly noise right now", "The EMA is broken", "You should switch to a 5 EMA"], answer: 1, explain: "A flat average with price crossing repeatedly is the signature of a range. Whipsaws follow. Change tools, not settings." },
+  { q: "Why does price often react near the 200-day SMA?", options: ["The maths forces it", "Because so many traders watch that line, their orders cluster there", "Because 200 is a Fibonacci number", "It never does"], answer: 1, explain: "The effect is a crowd effect: widely watched levels attract orders. It is real but not magical." }
+]} />
+
+<TryIt to="/simulator">Open the simulator, choose BLUE on the daily chart and switch on both the SMA and EMA overlays. Find a sharp turn in price and count how many candles it takes each line to change direction. Then switch to IDX during a quiet sideways stretch and count how many times price crosses the average without going anywhere.</TryIt>

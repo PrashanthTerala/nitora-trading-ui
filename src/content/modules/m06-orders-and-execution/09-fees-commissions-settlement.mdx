@@ -1,0 +1,124 @@
+Imagine a game where you flip a fair coin, win $1 on heads and lose $1 on tails. Play it forever and you break even. Now imagine the dealer charges 10 cents per flip. Suddenly you *lose* 10 cents per flip on average, and playing forever is the worst thing you could do. The coin didn't change. The fee did.
+
+Trading costs work the same way. Commissions, spreads, financing and settlement rules don't sound exciting, but they are the difference between a strategy that works on paper and one that quietly drains an account. This lesson puts numbers on each cost and shows, with arithmetic, how a $1 round trip can kill an edge that looked real.
+
+## The four costs
+
+**1. Commissions.** A fixed fee per trade, per share or per contract. Many stock brokers now charge zero; futures brokers charge per contract; crypto exchanges charge a percentage. "Zero commission" is never zero cost, as the next three items show.
+
+**2. The spread.** You buy at the ask and sell at the bid. If the spread is 4 cents, a round trip costs 4 cents a share even if price never moves. On 100 shares that's $4. This cost is invisible on the statement and is the biggest cost most retail traders pay.
+
+**3. Financing.** Borrowed money costs interest daily, as the [margin lesson](/learn/m06-orders-and-execution/06-margin-and-leverage) showed. Short positions add borrow fees. Crypto perpetuals add funding.
+
+**4. Slippage.** Covered in [the previous lesson](/learn/m06-orders-and-execution/07-slippage-and-liquidity). Not a fee anyone charges, but a cost you pay all the same.
+
+<Callout type="eli5">
+
+Every trade is like buying and then selling a sweet at a shop. The shop buys from you for a little less than it sells to you (the spread). Sometimes there's a fee to walk in (the commission). If you borrowed money for the sweet, you pay interest. And if the shop is busy, the price changes while you wait (slippage). None of these feel big, but do it a thousand times and they add up to a mountain.
+
+</Callout>
+
+## Round-trip cost
+
+A **round trip** is one entry plus one exit. Add up everything it costs:
+
+| Cost item | Example (100 shares of a $50 stock) |
+| --- | --- |
+| Commission in | $0.50 |
+| Commission out | $0.50 |
+| Spread (4 cents × 100) | $4.00 |
+| Average slippage (1 cent each way × 100) | $2.00 |
+| **Round-trip cost** | **$7.00** |
+
+Seven dollars on a $5,000 position is 0.14%. If your typical winner is 3% and your typical loser is 1%, $7 barely matters. If your typical winner is 0.1%, it's fatal. Cost only makes sense as a fraction of what you're trying to capture.
+
+## How a $1 round trip destroys a scalping edge
+
+Let's build a scalping strategy that genuinely works before costs, then charge it a modest $1 per round trip, and watch.
+
+**The strategy.** Trade 100 shares. Win 55% of the time. Wins are 5 cents a share (+$5), losses are 5 cents a share (−$5). This is a real edge: a 55% coin at even money.
+
+**Expected profit per trade before costs:**
+
+0.55 × $5 − 0.45 × $5 = $2.75 − $2.25 = **+$0.50 per trade**
+
+Over 200 trades that's +$100. Small but positive, and 55% at even odds is a genuinely good edge.
+
+**Now add a $1 round-trip cost** (say 50 cents commission each way, and let's be generous and ignore the spread for a moment):
+
+$0.50 − $1.00 = **−$0.50 per trade**
+
+Over 200 trades: **−$100**. The identical strategy, with the identical 55% win rate, is now a loser. The cost was twice the edge.
+
+**Add the spread back in.** A 1-cent spread on 100 shares is another $1 per round trip. Now the expectation is $0.50 − $2.00 = **−$1.50 per trade**, or −$300 over 200 trades. The strategy needs to be *three times better* than it is just to break even.
+
+<Callout type="math" title="The break-even win rate after costs">
+
+With equal wins and losses of W dollars and a cost of C per round trip, you break even when: p × W − (1 − p) × W = C, which gives p = (W + C) ÷ (2W).
+
+With W = $5 and C = $2: p = 7 ÷ 10 = **70%**. A scalper capturing 5 cents on 100 shares with $2 of costs needs to win 70% of the time just to stay flat. Very few strategies do that.
+
+With W = $50 (a 50-cent move on 100 shares) and the same $2 cost: p = 52 ÷ 100 = **52%**. Now the same costs barely matter. Bigger targets dilute fixed costs.
+
+</Callout>
+
+This is the single most important thing about costs: **they are a fixed tax on a variable edge.** The smaller the move you're hunting, the larger that tax is as a share of your profit. It's why most beginners who scalp lose even when their idea is sound, and why swing traders can survive sloppier execution.
+
+## Financing on leveraged positions
+
+From the margin lesson: a $10,000 loan at 8% a year is $2.19 a day. Here's what that does to a 2x swing trade that expects a 4% gain over 20 days.
+
+- Position $20,000, expected gain 4% = $800.
+- Financing: 20 days × $2.19 = **$43.80**.
+- Net expected: $756. Financing ate 5.5% of the expected profit.
+
+Hold the same trade for 90 days and financing is $197, a quarter of the expected gain. A leveraged position that goes sideways for months isn't "flat"; it's bleeding.
+
+## Settlement: when the money actually moves
+
+When you sell a share, the cash doesn't legally become yours instantly. <Term id="settlement">Settlement</Term> is the process where the exchange, the clearing house and the brokers finalise the transfer of shares and cash. US stocks settle on **T+1**: one business day after the trade date. Sell on Monday, the cash settles Tuesday. Most major markets are now T+1 or T+2.
+
+Why it matters to you:
+
+- **Cash accounts.** If you sell on Monday and buy something else with the *unsettled* cash, then sell that on the same day, you've committed a **good-faith violation**. Do it a few times and the broker restricts your account. Wait for settlement, or use a margin account, which fronts the cash.
+- **Withdrawals.** You usually can't withdraw the proceeds of a sale until it settles.
+- **Day-trading rules.** In the US, a margin account under $25,000 that makes four or more day trades in five business days is flagged as a **pattern day trader** and restricted. This is a separate rule from settlement but trips up the same people.
+
+Crypto settles almost instantly on the exchange's internal ledger. Futures settle daily through a process called marking to market, where gains and losses are moved between accounts every night.
+
+<Callout type="warning" title="Zero commission is not zero cost">
+
+Brokers that charge no commission still earn from the spread, from payment for order flow, from financing, and from your idle cash. That's fine, but it means the cost lives in your fills rather than on your statement. Measure your real cost by comparing your fills to the mid-price, not by reading the commission line.
+
+</Callout>
+
+## The cost checklist
+
+Before adopting any strategy, do this once:
+
+1. Estimate the full round-trip cost: commission + spread + typical slippage + financing if held overnight.
+2. Divide it by your average winning trade. If costs exceed 20% of an average win, the strategy is fragile.
+3. Compute the break-even win rate with costs, and be honest about whether you can beat it.
+4. Rerun the numbers every time your broker, instrument or holding period changes.
+
+The [journal](/journal) tracks fees and slippage per trade, so after a few dozen trades you can replace estimates with your own real numbers.
+
+<KeyTakeaways>
+- Trading costs are commissions, spread, financing and slippage; the spread is usually the largest and never appears on a statement.
+- A round trip is entry plus exit; measure its full cost as a fraction of your average winning trade.
+- Costs are a fixed tax on a variable edge, so small-target strategies like scalping are hit hardest.
+- A 55% edge capturing 5 cents on 100 shares turns negative with just $1 of round-trip cost.
+- Financing on leveraged positions accrues daily and can eat a quarter of a slow trade's expected gain.
+- Stocks settle T+1; spending unsettled cash in a cash account causes violations.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "A scalper wins 55% of trades, with wins and losses of $5 each. What is the expected profit per trade before costs?", options: ["$5.00", "$2.75", "$0.50", "$0.00"], answer: 2, explain: "0.55 × 5 minus 0.45 × 5 equals 2.75 minus 2.25, or 50 cents." },
+  { q: "Same scalper now pays $1 per round trip. What is the expected result per trade?", options: ["+$0.50", "−$0.50", "+$1.50", "−$1.50"], answer: 1, explain: "The 50-cent edge minus the $1 cost leaves a 50-cent loss per trade." },
+  { q: "Which cost is usually the largest for a retail stock trader and never shows on the statement?", options: ["Commission", "Exchange fees", "The spread", "Withdrawal fees"], answer: 2, explain: "Buying at the ask and selling at the bid costs the spread on every round trip, silently." },
+  { q: "Why do costs hurt scalping more than swing trading?", options: ["Scalpers pay higher commissions", "Costs are roughly fixed while the target profit is much smaller, so they are a bigger fraction of each win", "Swing traders never pay spreads", "Scalpers cannot use limit orders"], answer: 1, explain: "A fixed tax on a small target is a large percentage; the same tax on a large target is negligible." },
+  { q: "You sell shares on Monday in a cash account. Under T+1 settlement, when does the cash settle?", options: ["Immediately", "Tuesday", "Wednesday", "The following Monday"], answer: 1, explain: "T+1 means one business day after the trade date." },
+  { q: "A 2x position borrows $10,000 at 8% a year and is held 90 days. Roughly what is the financing cost?", options: ["$20", "$66", "$197", "$800"], answer: 2, explain: "$800 a year is about $2.19 a day; 90 days is about $197." }
+]} />
+
+<TryIt to="/journal">Open the journal after a handful of simulator trades and look at the fee and slippage columns. Add them up, divide by your average winning trade, and see what fraction of your edge is going to costs.</TryIt>

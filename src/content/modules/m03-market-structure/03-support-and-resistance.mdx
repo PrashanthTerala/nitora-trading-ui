@@ -1,0 +1,101 @@
+Picture a ball bouncing in a room. It can't go through the floor, and it can't go through the ceiling. It might hit either one hard or soft, but it turns around. Now imagine the floor and ceiling were not solid at all, just places where a crowd of people was waiting to push the ball back.
+
+That is what a price chart is doing when it bounces off the same level over and over. There is no physical wall at $50. There are people who remember $50. Some bought there and want to buy again. Some sold there and regret it. Their memories create the bounce.
+
+These remembered levels are called **support** and **resistance**, and they are the most practical concept in all of technical analysis. Every entry, every stop and every target you ever place will refer to one.
+
+## Floors and ceilings
+
+<Term id="support">Support</Term> is a price area below the current price where buying has repeatedly shown up and stopped the fall. It is a floor. <Term id="resistance">Resistance</Term> is a price area above the current price where selling has repeatedly shown up and stopped the rise. It is a ceiling.
+
+Back in [why prices move](/learn/m00-what-is-a-market/03-why-prices-move) you learned that price rises when buyers outnumber sellers. Support is simply a place where, historically, buyers have outnumbered sellers. Resistance is where sellers have won. The chart is a map of where each team has been strong before.
+
+<PatternFigure name="support-resistance" />
+
+## Why levels are zones, not lines
+
+Notice the figure draws shaded bands, not thin lines. That is deliberate. Price does not turn at exactly $94.50 every time. One bounce might come at $94.20, the next at $95.10, the next might poke to $93.80 and then reverse. The buyers are not a single person with a single price; they are a crowd with a spread of opinions.
+
+If you draw a single line, you will constantly be wrong by a few cents. You will place a stop just under the line and get hit by a wick that reached the zone but no further. You will place a buy order at the line and watch price turn a dollar above it without you.
+
+Draw a **zone**. A good starting rule: the zone stretches from the lowest wick in the cluster to the highest close in the cluster (for support) or from the highest wick to the lowest close (for resistance). The zone's thickness tells you how sloppy that level is. Tight zones are more precise but easier to break; wide zones are messier but more robust.
+
+<Callout type="eli5">
+
+A goalkeeper doesn't stand on a single blade of grass. They guard an area. If the ball comes anywhere near the goal, the keeper is in play. Support is a goalkeeper for the buyers and resistance is a goalkeeper for the sellers. Draw the goal, not a dot.
+
+</Callout>
+
+## What makes a level strong
+
+Not all levels are equal. Four things make one matter more.
+
+**Touches.** A zone that has turned price three times has proven itself more than one that has done it once. But there is a twist: every touch also uses up some of the orders sitting there. A level tested five or six times in quick succession is often getting weaker, not stronger, because the defenders are running out of ammunition. Two or three clean touches spaced well apart is the sweet spot.
+
+**Reaction size.** How far did price move away after touching the zone? A bounce of 0.5% says the level was politely acknowledged. A bounce of 8% says a lot of money was waiting there. Big reactions mean big participants.
+
+**Volume.** From [the volume lesson](/learn/m01-reading-price/06-volume), volume is how many people showed up. A level where price reversed on heavy volume is a level where many people made decisions. Those people remember. They will act again.
+
+**Round numbers.** Humans anchor to $50, $100, $1,000 and to any number with a lot of zeros. Orders cluster there because people think in round numbers. On the simulator you will notice IDX often reacts around big round levels for no reason other than psychology.
+
+Add to that list: the age of the level (recent levels are fresher in memory, but very old levels from major tops and bottoms can still matter years later) and whether the level is visible on a higher timeframe.
+
+## How to actually draw them
+
+Here is a repeatable process. Do it on a clean chart with no indicators.
+
+1. Zoom out further than feels natural, so the last few hundred candles are visible.
+2. Find the obvious swing highs and swing lows using the [3-bar pivot rule](/learn/m03-market-structure/02-swing-highs-and-lows).
+3. Look for places where two or more of those swings line up at roughly the same price. Draw a zone covering them.
+4. Draw only the levels closest to the current price above and below. You rarely need more than three each way.
+5. Delete anything you had to squint to justify.
+
+The last step is the hardest. Beginners draw thirty lines and then every candle is "at a level." A chart with three zones that each mean something is worth far more than a chart papered with lines.
+
+<Callout type="warning" title="A level is where price might react, not where it will">
+
+Support is not a guarantee. It is a place where buyers have won before. Sometimes they don't show up, and the level breaks. If you buy at support you must have a plan for the break, usually a stop-loss a little beyond the zone. Treat every level as a hypothesis.
+
+</Callout>
+
+## What happens when a level breaks
+
+When price closes decisively through a support zone, a very interesting thing happens: all the people who bought there are now losing. Some of them will sell on any bounce back to the zone just to get out flat. That means the old support becomes a place where selling appears, which is to say it becomes resistance.
+
+The reverse is true for a broken ceiling. This flip is called **role reversal** and it gets its own lesson shortly. For now, keep in mind: levels do not disappear when broken. They swap jobs.
+
+## Horizontal levels versus everything else
+
+This lesson has only discussed horizontal levels, drawn at a fixed price. Sloping levels (trendlines), moving averages and other tools can also act as support or resistance. Horizontal levels are the most reliable of the group because they are the easiest for everyone to agree on. A moving average is a level only because many people watch it; a horizontal level at an old high is a level because real people made real decisions there.
+
+Start with horizontal levels. Add other kinds later, only if they earn their place.
+
+## Using a level in a trade
+
+A level answers three questions for you.
+
+*Where might I enter?* Near support in an uptrend, or near resistance in a downtrend, usually after some sign that the level is holding, such as a hammer or engulfing candle from [Module 2](/learn/m02-candlestick-patterns/06-engulfing).
+
+*Where am I wrong?* Beyond the far side of the zone. If you buy at support and price closes below the whole zone, the reason for the trade is gone.
+
+*Where might I take profit?* At the next level in the direction of the trade. If support is at $94 and resistance is at $106, a long from $95 has a natural target near $105. That also tells you the trade's risk-to-reward before you enter, an idea that will become central in the risk module.
+
+<KeyTakeaways>
+- Support is a price area where buyers have repeatedly stopped a fall; resistance is where sellers have repeatedly stopped a rise.
+- Draw levels as zones, not lines, because the crowd reacts across an area.
+- Strong levels have clean touches, big reactions, high volume at the turn, and often sit at round numbers.
+- Too many touches in quick succession can weaken a level by using up the orders defending it.
+- Keep only the two or three nearest levels each way; delete anything you had to squint to see.
+- A level is a hypothesis about where price might react, so always plan for the break.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "Why should support and resistance be drawn as zones rather than single lines?", options: ["Because charts are inaccurate", "Because the crowd defending a level has a spread of prices, not one exact price", "Because zones look nicer", "Because lines are only for trendlines"], answer: 1, explain: "Buyers and sellers are a crowd. Their orders cluster across an area, so the reaction happens in an area." },
+  { q: "A level has been tested six times in the last two weeks. Compared with a level tested twice over two months, it is probably...", options: ["Much stronger", "Getting weaker, because the defending orders are being used up", "Exactly the same", "Not a level at all"], answer: 1, explain: "Every touch consumes some of the orders sitting at the level. Rapid repeated tests often precede a break." },
+  { q: "Which of these makes a level more significant?", options: ["A small reaction on low volume", "A large reaction on high volume", "Being drawn with a thicker pen", "Being far from any round number"], answer: 1, explain: "A big move away from the level on heavy volume means many participants made decisions there and will remember it." },
+  { q: "You buy near a support zone at $95. Where is the logical place to decide you are wrong?", options: ["At $95 exactly", "Just above the zone", "Beyond the far side of the zone, with a close below it", "You should never be wrong at support"], answer: 2, explain: "The trade idea is that the zone holds. A close through the whole zone means the idea has failed." },
+  { q: "Support at $94 breaks and price falls to $88. What is the old $94 zone now most likely to act as?", options: ["Still support", "Resistance", "Nothing, broken levels vanish", "A round number"], answer: 1, explain: "Trapped buyers from $94 will sell on a return to get out flat, turning the old floor into a ceiling. This is role reversal." },
+  { q: "What is the best first step when drawing levels on a new chart?", options: ["Add three indicators", "Draw every line you can see", "Zoom out and find where swing highs and lows line up", "Draw levels only at round numbers"], answer: 2, explain: "Zooming out first shows the levels that matter across the whole picture, and swing clusters are where the crowd has already reacted." }
+]} />
+
+<TryIt to="/simulator">Open AURM on the daily chart. Draw no more than three support zones and three resistance zones. Then switch on bar replay and watch whether price respects them, breaks them, or ignores them completely. Keep a tally.</TryIt>

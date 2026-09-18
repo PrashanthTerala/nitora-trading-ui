@@ -1,0 +1,103 @@
+In the [crossover lesson](/learn/m05-indicators/03-ma-crossovers) you watched two moving averages race and cared only about the moment one overtook the other. But there is more information in that race than the overtake. How far apart are the runners? Is the gap growing or shrinking? A gap that is widening means the leader is pulling away; a gap that is closing means the chaser is catching up, even before any overtake happens.
+
+<Term id="macd">**MACD**</Term>, which stands for Moving Average Convergence Divergence, is a way to draw that gap. Instead of putting two averages on the price chart and squinting at the space between them, it subtracts one from the other and draws the result in its own panel. Then it adds two more pieces to make the gap easier to read. Gerald Appel built it in the late 1970s and it has been on nearly every charting platform since.
+
+The name sounds intimidating. The maths is three subtractions and an average. Let's do it.
+
+## What MACD calculates
+
+MACD has three parts, and each is built from the one before.
+
+The **MACD line** is a fast EMA minus a slow EMA. With the standard settings that is the 12-period EMA minus the 26-period EMA of the close. When the fast average is above the slow one, the line is positive; when below, negative. When the averages cross, the MACD line crosses zero.
+
+The **signal line** is a 9-period EMA of the MACD line itself. It is an average of an average difference, which makes it smoother and slower than the MACD line.
+
+The **histogram** is the MACD line minus the signal line, drawn as bars above and below zero. It shows whether the MACD line is above or below its own average, and by how much.
+
+<Callout type="math" title="MACD worked example">
+
+Suppose today's 12 EMA is 102.0 and the 26 EMA is 100.5.
+
+MACD line = 102.0 − 100.5 = **+1.5**
+
+Suppose the 9-period EMA of recent MACD-line values is 1.2. That is the signal line.
+
+Histogram = 1.5 − 1.2 = **+0.3**
+
+Tomorrow the 12 EMA rises to 102.6 and the 26 EMA to 100.8. MACD line = 1.8. The signal line moves toward it: k for 9 periods is 2 / 10 = 0.2, so signal = 1.8 × 0.2 + 1.2 × 0.8 = 0.36 + 0.96 = 1.32. Histogram = 1.8 − 1.32 = **+0.48**. The bar grew, meaning the MACD line is pulling away from its signal.
+
+</Callout>
+
+Because MACD is a difference in price units, it has no fixed limits. It is not a 0 to 100 scale like RSI. A MACD of 1.5 on a $100 stock is a different thing from 1.5 on a $10 stock, and you cannot compare the number across instruments. You read it relative to its own recent history and relative to zero.
+
+<IndicatorFigure indicator="macd" caption="MACD 12, 26, 9 through a reversal. The histogram shrinks before the MACD line crosses the signal line, and the signal cross comes before the zero cross. Each step is later and more reliable than the one before." />
+
+## What MACD is trying to measure
+
+MACD measures **trend momentum**: both the direction of the trend (sign of the MACD line) and whether that trend is speeding up or slowing down (slope of the line and size of the histogram). It is a lagging indicator dressed up to give a slightly earlier read.
+
+The layered design is the clever bit. The zero cross of the MACD line is just a 12/26 EMA crossover, and it is late. The signal-line cross happens earlier, because the MACD line turns before it reaches zero. And the histogram peaks earlier still, because it shrinks as soon as the MACD line stops pulling away from the signal. So you get three signals of increasing speed and decreasing reliability, all from the same two averages.
+
+<Callout type="eli5">
+
+Think of a car speeding up. The speedometer needle (MACD line) is climbing. The histogram is like watching how fast the needle itself is moving: when the needle keeps climbing but more slowly, the histogram shrinks even though speed is still rising. It tells you the acceleration is fading before the speed actually drops.
+
+</Callout>
+
+## Default settings and why
+
+12, 26 and 9 came from a time when markets traded six days a week: roughly two weeks, one month and a week and a half of sessions. They stuck because everyone uses them, which makes MACD signals somewhat self-fulfilling on daily charts. Faster settings such as 5, 13, 6 give more and earlier signals with more noise; slower ones such as 19, 39, 9 are calmer. As with every indicator, changing settings moves you along the same trade-off; it does not remove it.
+
+## Three ways traders use MACD
+
+**Signal-line crossovers.** The MACD line crossing above the signal line is a bullish signal; crossing below is bearish. This is the most common use and it is essentially a faster, smoother version of an EMA crossover. It works in trending markets and whipsaws in ranges, for the same reasons.
+
+**Zero-line position as a trend filter.** MACD above zero means the 12 EMA is above the 26 EMA, so the medium-term trend is up. Some traders only take bullish signal crosses when MACD is above zero (a pullback in an uptrend) and ignore bullish crosses below zero (a bounce in a downtrend). This one rule removes a lot of bad trades.
+
+**Histogram divergence.** Price makes a higher high but the histogram makes a lower peak: the second push had less momentum than the first. This is the same idea as RSI divergence and it is covered properly in the [divergence lesson](/learn/m05-indicators/14-divergence). Histogram divergence is popular because the histogram turns earliest of the three parts.
+
+A quieter but valuable use is watching the histogram shrink toward zero while you are in a trade. It does not mean exit, but it means the acceleration is gone and you should manage the position more tightly.
+
+## How MACD fails
+
+<Callout type="warning" title="It is still two moving averages">
+
+Every weakness of moving averages lives inside MACD. It lags: the zero cross can arrive after most of a move is done. It whipsaws: in a range the line and signal cross constantly and the histogram flips sign every few bars. And a strong, steady trend can keep MACD far from zero and rising for months, so "MACD is very high" is not a reason to sell any more than a high RSI is.
+
+</Callout>
+
+MACD has no fixed scale, so there is no "overbought" level. Traders who try to invent one by eyeballing the panel are fooling themselves; a reading that looked extreme last year can be ordinary this year if volatility has doubled.
+
+The histogram is the twitchiest part. It changes sign on tiny wobbles. Trading histogram flips alone produces a stream of signals that mostly cancel out. It is a warning gauge, not a trigger.
+
+On low-priced or slow-moving instruments the whole panel can look like a flat line with a few blips, and the crosses become meaningless. Zoom the price chart first and check there is a trend worth measuring.
+
+## Combining with structure
+
+The most productive MACD habit is to let structure choose the direction and MACD choose the moment.
+
+An uptrend with [higher highs and higher lows](/learn/m03-market-structure/01-trends) has just pulled back to a prior breakout level that has flipped to support, as in [Role Reversal](/learn/m03-market-structure/07-role-reversal). MACD is above zero, the histogram has been shrinking during the pullback and now prints its first bar that is less negative than the one before. That combination, a level plus a trend filter plus a momentum turn, is a real setup with a place for a stop just under the level.
+
+A break above a range high on rising volume with MACD crossing above zero at the same time is a breakout with momentum confirmation. A break above the same high while MACD is falling and below zero is a breakout to be suspicious of, and suspicion is cheap.
+
+Remember the point of the exercise. Structure gives you the where and the stop. MACD adds a vote on the when. Neither one should trade alone.
+
+<KeyTakeaways>
+- The MACD line is the 12 EMA minus the 26 EMA; the signal line is a 9 EMA of the MACD line; the histogram is MACD minus signal.
+- MACD is measured in price units with no fixed limits, so there is no true overbought level and readings cannot be compared across instruments.
+- The histogram turns first, the signal cross second and the zero cross last; each later signal is slower but more reliable.
+- Above zero the medium-term trend is up, below zero it is down; many traders only take crosses that agree with the zero-line side.
+- MACD inherits every weakness of moving averages: lag, whipsaws in ranges, and staying extreme in strong trends.
+- Use structure for direction and stop placement, and MACD for timing and momentum confirmation.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "The 12 EMA is 102.0 and the 26 EMA is 100.5. What is the MACD line?", options: ["−1.5", "+1.5", "202.5", "0"], answer: 1, explain: "MACD line = fast EMA − slow EMA = 102.0 − 100.5 = 1.5." },
+  { q: "The MACD line is 1.5 and the signal line is 1.2. What is the histogram?", options: ["+0.3", "−0.3", "2.7", "1.25"], answer: 0, explain: "Histogram = MACD line − signal line = 1.5 − 1.2 = 0.3." },
+  { q: "What is the signal line?", options: ["A 9-period EMA of the MACD line", "The 26 EMA of price", "The difference between two SMAs", "A fixed line at zero"], answer: 0, explain: "The signal line smooths the MACD line itself with a 9-period EMA." },
+  { q: "Which part of MACD usually turns first when a move is losing steam?", options: ["The zero cross", "The signal-line cross", "The histogram", "They all turn together"], answer: 2, explain: "The histogram shrinks as soon as the MACD line stops pulling away from its signal, before either cross happens." },
+  { q: "MACD is below zero and the MACD line crosses above the signal line. A trader who filters by the zero line would...", options: ["Buy immediately", "Treat it as a bounce inside a downtrend and probably skip it", "Short it", "Switch to RSI"], answer: 1, explain: "Below zero the 12 EMA is under the 26 EMA, so the trend is down. A bullish cross there is counter-trend and the filter says skip." },
+  { q: "Why is there no overbought level on MACD?", options: ["Because it is measured in price units and has no fixed scale", "Because it only uses volume", "Because it is always between 0 and 100", "There is: 70"], answer: 0, explain: "MACD is a difference of prices, so an extreme reading on one instrument or year can be ordinary on another." }
+]} />
+
+<TryIt to="/simulator">Open the simulator on NOVA, daily chart, and switch on the MACD panel. Find a clean reversal and note the order of events: the histogram peaking, the signal-line cross, then the zero cross. Count how many candles separate each step. Then find a sideways stretch and count how many crosses happened with no follow-through.</TryIt>

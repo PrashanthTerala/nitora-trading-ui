@@ -1,0 +1,102 @@
+Ask five people to mark the "turning points" on the same chart and you will get five different drawings. One person circles every tiny wobble. Another only marks the giant peaks. A third changes their mind depending on whether they own the stock. None of them is lying; they simply never agreed on a rule.
+
+The last lesson defined a trend as higher highs and higher lows. That definition is only as good as your ability to say *which* highs and lows count. If the swings are fuzzy, the trend is fuzzy, and every decision built on top of it wobbles.
+
+This lesson gives you a mechanical rule for marking swings. It is boring on purpose. Boring rules are the ones you can follow at 3pm on a losing day.
+
+## What a swing actually is
+
+A **swing high** is a peak: a candle whose high is taller than the candles around it, so price went up into it and came down out of it. A **swing low** is the opposite: a trough where price fell into it and rose out of it.
+
+The trouble is the phrase "the candles around it." How many? If you say one, every little bump is a swing and your chart becomes a porcupine. If you say twenty, you miss most of the action. You need a fixed number, and you need to stick to it.
+
+## The 3-bar pivot rule
+
+The most common rule is the **3-bar pivot**. A candle is a swing high if its high is higher than the highs of the three candles to its left *and* the three candles to its right. A candle is a swing low if its low is lower than the lows of the three candles on each side.
+
+<CandleFigure
+  title="A 3-bar pivot high"
+  bars={[
+    { o: 100, h: 101.5, l: 99.2, c: 101 },
+    { o: 101, h: 102.4, l: 100.6, c: 102 },
+    { o: 102, h: 103.2, l: 101.5, c: 102.8 },
+    { o: 102.8, h: 105, l: 102.5, c: 104.2 },
+    { o: 104.2, h: 104.4, l: 102.6, c: 103 },
+    { o: 103, h: 103.4, l: 101.4, c: 101.8 },
+    { o: 101.8, h: 102.2, l: 100.3, c: 100.7 }
+  ]}
+  annotations={[
+    { type: "label", index: 3, text: "swing high at $105" },
+    { type: "bracket", from: 0, to: 2, text: "3 lower highs to the left" },
+    { type: "bracket", from: 4, to: 6, text: "3 lower highs to the right" }
+  ]}
+  caption="The middle candle's high ($105) is above the three highs on each side, so it qualifies as a swing high. Nothing else on this chart does."
+  showVolume={false}
+/>
+
+Some traders use two bars, some use five. The number itself is less important than using the same number every time. Three is a sensible default: it filters out single-candle noise without hiding real turns.
+
+<Callout type="eli5">
+
+Imagine a row of children standing in line. To be called the tallest, a child needs to be taller than the three kids on their left and the three kids on their right. If a taller kid is standing right next to them, they don't get the title. The rule is simple enough that everyone in the line agrees who wins.
+
+</Callout>
+
+## The rule has a delay, and that is fine
+
+Here is the catch: you cannot confirm a swing high until three more candles have closed after it. At the moment the tall candle prints, you have no idea whether the next three will be lower. So a swing is always confirmed *late*, by three bars.
+
+Beginners hate this. They want to know the top the instant it happens. But the delay is the price of certainty. A rule that confirms swings instantly would also confirm a lot of fake ones. Three bars of patience is cheap compared with the cost of trading imaginary structure.
+
+On a daily chart, three bars is three days. On a 5-minute chart, it is fifteen minutes. The rule is the same; only the clock changes.
+
+## Alternating highs and lows
+
+Swings should alternate: high, low, high, low. You should never have two swing highs in a row without a swing low between them. If the rule seems to give you two in a row, keep only the more extreme one (the higher high, or the lower low).
+
+This keeps your structure clean and makes the trend definition work. Higher highs and higher lows only make sense if there is exactly one low between every pair of highs.
+
+## Major swings and minor swings
+
+Once you can mark swings mechanically, you'll notice they come in sizes. A **minor swing** is a small turn inside a larger move. A **major swing** is a turn that changes the direction of the larger move.
+
+One practical way to tell them apart: a major swing is a swing that is *itself* a pivot on the next timeframe up. A swing low on the hourly chart that is also a swing low on the daily chart matters far more than one that vanishes when you zoom out. This idea returns in the [multi-timeframe lesson](/learn/m03-market-structure/10-multi-timeframe).
+
+When you define a trend, use swings of one size at a time. Mixing a major swing high with a minor swing low gives you a structure that is neither one thing nor the other.
+
+<Callout type="warning" title="Do not move the goalposts">
+
+The most common mistake is changing the rule after you have a position. You are long, price is falling, and suddenly you decide the "real" swing low is the bigger one further down, so your stop is safe after all. That is not analysis. Pick the rule before the trade and let the chart tell you what it says.
+
+</Callout>
+
+## Why wicks count, not bodies
+
+The 3-bar rule uses the candle's high and low, meaning the tips of the wicks, not the open or close. From the [anatomy lesson](/learn/m01-reading-price/03-anatomy-of-a-candle) you know a wick shows where price went and was rejected. That rejection point is exactly the place where sellers overwhelmed buyers, so it is the true turning point even if the body closed lower.
+
+Some traders prefer closes because wicks can be extreme. That is a legitimate choice, but it changes every level you draw. Whichever you pick, use it everywhere: for swings, for support and resistance, and for stops.
+
+## Putting it to work
+
+Mark swings on a clean chart with the 3-bar rule. Label each one HH, HL, LH or LL relative to the previous swing of the same kind. Now the trend definition from the last lesson practically reads itself off the chart.
+
+You will be surprised how often a chart that "obviously" looked like an uptrend turns out to have an equal low or a lower low hiding in it. That surprise is the whole point. The rule sees what your hopes do not.
+
+<KeyTakeaways>
+- A swing high is a peak, a swing low is a trough, and you need a fixed rule to mark them the same way every time.
+- The 3-bar pivot rule: a swing high has a higher high than the three candles on each side; a swing low has a lower low than the three on each side.
+- Swings are confirmed three bars late. That delay is the price of not chasing noise.
+- Swings must alternate high, low, high, low; if two of the same kind appear together, keep the more extreme one.
+- Major swings are the ones that also show up on the next timeframe; use one size at a time when defining a trend.
+- Choose the rule before you trade and never change it to rescue an open position.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "Under the 3-bar pivot rule, when is a candle a swing high?", options: ["When it is green", "When its high is above the highs of the three candles on each side", "When its close is the highest of the day", "When volume is highest"], answer: 1, explain: "The rule compares the candle's high with three neighbours on the left and three on the right." },
+  { q: "A tall candle just printed. Can you confirm it as a swing high right now?", options: ["Yes, immediately", "Only after three more candles close lower", "Only if it has a long wick", "Only on the daily chart"], answer: 1, explain: "The right-hand side of the rule needs three more bars, so the swing is confirmed three bars late." },
+  { q: "Your rule produces two swing highs in a row with no swing low between them. What do you do?", options: ["Keep both", "Keep only the higher of the two", "Delete both", "Switch to a 5-bar rule for that section"], answer: 1, explain: "Swings must alternate. When two of the same kind appear together, keep the more extreme one." },
+  { q: "You are long and price is falling toward your stop under the swing low you marked. You notice a bigger swing low further down. What is the disciplined action?", options: ["Move the stop to the bigger low, it is more important", "Keep the rule you chose before the trade", "Close the trade and re-mark all swings", "Switch timeframes until the trade looks safe"], answer: 1, explain: "Changing the rule to rescue an open position is the classic mistake. The rule was chosen before the trade for exactly this reason." },
+  { q: "Why does the 3-bar rule use the candle's high and low rather than the open and close?", options: ["Because bodies are unreliable", "Because the wick tip is where price was actually rejected", "Because it makes more swings", "There is no reason; it is tradition"], answer: 1, explain: "The extreme of the wick is where the other side took control, which is the true turning point." }
+]} />
+
+<TryIt to="/simulator">Load BLUE on the 1-hour chart in bar replay. Step forward one bar at a time and mark every 3-bar pivot as it confirms. Notice how often the swing you expected never qualifies.</TryIt>

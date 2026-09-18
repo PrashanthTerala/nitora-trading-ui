@@ -1,0 +1,94 @@
+Here's a puzzle. You have $100. You lose half of it, so you have $50. Now you make 50% on that $50. Are you back to $100?
+
+No. 50% of $50 is $25, so you have $75. You lost 50% and gained 50%, and you're still down a quarter of your money. To get back to $100 from $50 you don't need a 50% gain. You need a **100%** gain. You have to *double* your money just to undo one halving.
+
+That single piece of arithmetic is why every professional trader thinks about losing before they think about winning. It's not caution for its own sake. It's that losses and gains are not symmetric, and the hole you dig is always deeper than it looks from the top.
+
+## The asymmetry of losses
+
+If you lose a fraction *x* of your account, the gain needed to recover is *x* ÷ (1 − *x*). Small losses need slightly bigger gains to repair. Big losses need enormous ones.
+
+<RecoveryTable />
+
+Read the table with a finger. A 10% loss needs 11% to recover, which is an inconvenience. A 30% loss needs 43%, which is a very good year. A 50% loss needs 100%, which most traders never achieve in their lives. A 90% loss needs 900%, which means it's over.
+
+The curve isn't a straight line. It bends upward, gently at first and then like a wall. The whole art of risk management is staying on the gentle part of the curve, where losses are repairable inconveniences, and never touching the wall.
+
+<Callout type="eli5">
+
+Imagine climbing a hill with a bag of marbles. If you drop one marble, you bend down and pick it up. If you drop half the bag, they roll all the way to the bottom and you have to walk back down and climb the whole hill again with a heavier load. Losing a little costs a little. Losing a lot costs everything you did before, too.
+
+</Callout>
+
+## Why the maths punishes big losses
+
+Gains and losses multiply; they don't add. If your account goes up 20% then down 20%, you don't end where you started. You end at 1.20 × 0.80 = 0.96, down 4%. Down 20% then up 20% gives 0.80 × 1.20 = 0.96, the same 4% hole. Order doesn't matter; the pair always leaves you poorer.
+
+Make the swings bigger and the hole grows fast:
+
+| Swing | Up then down | Ending balance on $10,000 |
+| --- | --- | --- |
+| ±10% | 1.10 × 0.90 = 0.99 | $9,900 |
+| ±20% | 1.20 × 0.80 = 0.96 | $9,600 |
+| ±30% | 1.30 × 0.70 = 0.91 | $9,100 |
+| ±50% | 1.50 × 0.50 = 0.75 | $7,500 |
+
+This is called **volatility drag**. Two traders can have the same average return and end up in very different places, because the one with wilder swings loses more to this drag. Smooth beats spectacular over time, and smoothness comes from small losses.
+
+## Two traders, one year
+
+Let's watch it happen. Both start with $10,000 and make the same twelve trades, each a 5% gain except one. Trader A caps every loss at 5%. Trader B "gives the trade room" once and takes a 40% hit.
+
+- **Trader A:** eleven gains of 5% and one loss of 5%. Balance = 10,000 × 1.05¹¹ × 0.95 ≈ **$16,250**.
+- **Trader B:** eleven gains of 5% and one loss of 40%. Balance = 10,000 × 1.05¹¹ × 0.60 ≈ **$10,260**.
+
+Eleven identical winning trades. One bad loss. Trader A made 62%; Trader B made 2.6%. The one big loss didn't just cost 40%; it cost almost the entire year's work, because every gain that followed was multiplied on a smaller base.
+
+<Callout type="danger" title="The blow-up is always one trade">
+
+Nobody loses an account through a hundred small losses; the 1% rule in the next lesson makes that nearly impossible. Accounts die from one, two or three enormous losses: the trade held without a stop, the position doubled into as it fell, the leveraged bet through earnings. Every rule in this module exists to make that one trade impossible.
+
+</Callout>
+
+## Survival is the first job
+
+There's a deeper reason risk comes first, beyond the arithmetic. Trading skill takes a long time to build. You need hundreds of trades to learn what your edge is, thousands to refine it. If you lose your capital in month three, you never get to do the learning. The most valuable thing you own as a new trader isn't your strategy; it's the ability to still be trading a year from now.
+
+Think of it as a game with two scores. Score one is profit. Score two is "am I still in the game?" Score two must be protected first, because the moment it hits zero, score one stops mattering. Professionals are often quite mediocre at score one and superb at score two, and they're the ones who are still around after twenty years.
+
+## What "risk first" means in practice
+
+For the rest of this module, every lesson answers a specific question in this order:
+
+1. **How much can I lose on this trade?** Decided before entry, in dollars, and small. ([The 1% rule](/learn/m07-risk-management/02-the-one-percent-rule))
+2. **Where exactly am I wrong?** The stop-loss level, from the chart, not from hope. ([Stop placement](/learn/m07-risk-management/03-stop-loss-placement))
+3. **Is the reward worth that risk?** ([Risk to reward](/learn/m07-risk-management/04-risk-reward-ratio))
+4. **Does my whole approach make money on average?** ([Expectancy](/learn/m07-risk-management/05-expectancy))
+5. **How bad will the bad stretches be, and can I survive them?** ([Drawdown and ruin](/learn/m07-risk-management/07-drawdown-and-risk-of-ruin))
+
+Notice that "how much will I make?" isn't on the list until question three, and even then it's phrased as a ratio to the loss. That's the whole mindset shift. You don't hunt for winners; you build a process in which losses are small, and then let the winners take care of themselves.
+
+<Callout type="tip" title="Say it out loud before every trade">
+
+"If this goes wrong, I lose X dollars, which is Y percent of my account, and I'm fine with that." If you can't say the sentence calmly, the trade is too big. It's the simplest risk test there is and it catches most disasters.
+
+</Callout>
+
+<KeyTakeaways>
+- Losses and gains are asymmetric: a loss of x needs a gain of x ÷ (1 − x) to recover, so 50% down needs 100% up.
+- Gains and losses multiply, so equal up and down swings always leave you poorer, and bigger swings cost more.
+- One large loss can erase a year of good trades because every later gain compounds on a smaller base.
+- Accounts are destroyed by a few huge losses, never by many small ones.
+- Your first job is to still be trading next year; profit is the second job.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "You lose 50% of your account. What gain do you need to get back to where you started?", options: ["50%", "75%", "100%", "150%"], answer: 2, explain: "From half your money you must double it: 0.5 divided by (1 minus 0.5) equals 1, or 100%." },
+  { q: "A trader gains 20% then loses 20%. Where do they end relative to the start?", options: ["Exactly even", "Down 4%", "Up 4%", "Down 20%"], answer: 1, explain: "1.20 × 0.80 = 0.96, a 4% loss; equal swings always leave you slightly poorer." },
+  { q: "What gain repairs a 30% loss?", options: ["30%", "35%", "43%", "60%"], answer: 2, explain: "0.30 divided by 0.70 is about 0.43, so a 43% gain is needed." },
+  { q: "Two traders make eleven identical 5% winners. One takes a single 5% loss, the other a single 40% loss. Roughly how do they finish on $10,000?", options: ["About the same", "$16,250 versus $10,260", "$16,250 versus $6,000", "$11,000 versus $10,000"], answer: 1, explain: "The 40% loss slashes the base that every subsequent gain compounds on, wiping out almost the whole year." },
+  { q: "What is the most common way trading accounts are destroyed?", options: ["Hundreds of small 1% losses", "Commissions", "A few very large losses from oversized or unprotected trades", "Taking profits too early"], answer: 2, explain: "Small capped losses cannot kill an account quickly; a handful of huge losses can." },
+  { q: "Which question should come first before any trade?", options: ["How much could I make?", "How much can I lose, and am I fine with that?", "What is the price target?", "How fast will it move?"], answer: 1, explain: "Risk is defined before reward because survival is the precondition for everything else." }
+]} />
+
+<TryIt to="/journal">Open the journal and look at the max drawdown figure on your simulator account. Use the recovery table above to work out what gain you would need to erase it. Then decide whether your position sizes have been keeping you on the gentle part of the curve.</TryIt>

@@ -1,0 +1,137 @@
+Every market you have met so far has a caretaker. The stock exchange rings a bell, runs a closing auction, halts trading when something goes mad, and keeps a register showing that the shares are yours. Crypto has none of that. It is a market with the lights permanently on, no bell, no halt, no auction, and in many venues no regulator either.
+
+That is genuinely new, and it is not all bad. A market that never closes cannot gap over your stop at an opening bell, and anyone with a phone can access it. But the missing caretaker means that several risks you never had to think about in shares, such as whether the venue holding your money still exists on Monday, are now yours to manage.
+
+This lesson is not about whether crypto is a good investment. It is about the mechanics: how these markets are structured, what a perpetual future and a funding rate actually are, why liquidation cascades happen, and the scams that concentrate here more than anywhere else in finance.
+
+## The market that never closes
+
+Crypto trades 24 hours a day, 7 days a week, including Christmas. There is no pre-market, no after-hours and, crucially, **no closing auction**, which means there is no single official daily close. Different exchanges use different cut-offs, so two charts of the same coin can show different daily candles.
+
+There are also, on most venues, no circuit breakers. When the US stock market falls 7% in a day, trading pauses for fifteen minutes so people can breathe. When Bitcoin falls 7%, nothing happens except that it keeps falling if it wants to.
+
+<Callout type="eli5">
+
+Imagine a shop that never shuts, has no security guard, and where the till is run by the shopkeeper's cousin in a country you have never visited. The goods might be excellent. The shop might be fine. But you would still count your change, and you would not leave your wallet on the counter overnight.
+
+</Callout>
+
+The always-on clock has a practical consequence: it is very hard to stop. Stock traders get forced breaks. Crypto traders have to schedule their own, and a market that is open at 2am is a market that will happily let you [revenge trade](/learn/m08-trading-psychology/03-revenge-trading) at 2am.
+
+## Where your coins actually live
+
+When you buy a share, a registry somewhere records that you own it. When you buy a coin on an exchange, in most cases the exchange records that it owes you one. Those are very different things.
+
+| | Coins on an exchange | Coins in self-custody |
+| --- | --- | --- |
+| Who holds the keys | The exchange | You |
+| If the venue fails | You are an unsecured creditor | Unaffected |
+| If you lose your password | Support can reset it | Gone permanently |
+| Convenience | Trade instantly | Must transfer in to trade |
+| Main risk | The venue | Yourself |
+
+Hence the phrase you will hear everywhere: **not your keys, not your coins**. Self-custody means holding the private keys yourself, usually as a seed phrase of twelve or twenty-four words backed by a hardware wallet. Those words *are* the money. There is no reset, no helpline and no chargeback.
+
+The warning is not theoretical. Mt. Gox, once the largest Bitcoin exchange in the world, collapsed in 2014 with roughly 850,000 coins missing. FTX, valued in the tens of billions, failed in November 2022 with a multi-billion dollar hole in customer funds, and its founder was later convicted of fraud. In both cases, users who could see a balance on a screen discovered that a balance on a screen is a promise, not an asset.
+
+The sane compromise for most people is simple: keep on an exchange only what you are actively trading, and move the rest out.
+
+## Spot, and the thing most people actually trade
+
+**Spot** is the straightforward version. You buy the coin, you own the coin, and nothing is borrowed. If Bitcoin halves, you have half as much money, and that is the worst that can happen.
+
+Most crypto volume, though, is not spot. It is **perpetual futures**, usually called perps. A perp is a futures contract with no expiry date. It works like the [futures](/learn/m11-derivatives-and-other-markets/04-futures) you met two lessons ago, with margin, leverage and daily settlement, except that it never rolls over and never delivers anything.
+
+That raises an obvious problem. A normal future is pulled towards the spot price by its expiry date, because on that date the two must meet. A contract with no expiry has no such anchor. So exchanges invented one.
+
+## Funding rates: the rent on a perpetual
+
+The **funding rate** is a payment exchanged directly between longs and shorts, typically every eight hours, that drags the perp price back towards spot.
+
+If the perp trades above spot, there are too many eager longs, so **longs pay shorts**. If the perp trades below spot, shorts pay longs. Nobody pays the exchange; the money moves between traders, which is what makes it self-correcting. Paying rent to stay long eventually persuades some longs to leave.
+
+<Callout type="math" title="What funding actually costs">
+
+You are long $10,000 of a Bitcoin perp. Funding is paid three times a day.
+
+**Calm market.** The rate is the common baseline of 0.01% per 8 hours. You pay 0.01% × $10,000 = $1 each time, so $3 a day. Annualised that is about 11%, which is real but survivable.
+
+**Hot market.** Everyone is bullish and the rate runs at 0.1% per 8 hours. Now you pay $10 three times a day, so $30 a day, or roughly 110% a year.
+
+Hold that position for a week and funding alone costs 7 × $30 = **$210**.
+
+Now add leverage. If that $10,000 position is 10x, only $1,000 is your money. So $210 of funding is **21% of your capital in a week**, before price has done anything at all. The trade has to be right, and right quickly.
+
+</Callout>
+
+A high positive funding rate is also a crowding signal. When it stays extreme, it means the long side is packed and paying through the nose to stay there, which is exactly the setup for what comes next.
+
+## Liquidation cascades
+
+In a leveraged position, the exchange closes you out automatically once your losses eat your margin. This is not a courtesy; it is how the exchange protects itself.
+
+<Callout type="danger" title="How a 9% move erases 100% of your money">
+
+You post $1,000 of margin and open a 10x long on Bitcoin at $60,000, which is a $10,000 position, about 0.167 coins.
+
+A 9% fall to $54,600 is a $900 loss. Your margin is now $100, below the maintenance requirement, so the exchange **liquidates you**: it market-sells your position, and you keep almost nothing.
+
+Bitcoin falls 9% in a day several times a year. It has fallen 9% in an hour.
+
+Now notice the part that makes crypto different. Every liquidation is a forced market sell. Those sells push the price lower. A lower price liquidates the traders whose stops were slightly further away, producing more forced sells, which push the price lower again. That feedback loop is a **liquidation cascade**, and it is why crypto charts have long, near-vertical wicks that appear out of nothing. On the worst days, more than a billion dollars of positions are liquidated across exchanges in 24 hours.
+
+If you must use leverage here, use very little, and remember that a stop-loss order does not save you from a cascade that gaps straight through it.
+
+</Callout>
+
+## How violent is it, really
+
+Honest numbers help more than adjectives. Bitcoin's annualised volatility has typically run three to four times that of the S&P 500. Its drawdowns are on a different scale from anything in the equity module.
+
+| Peak to trough | Roughly | Decline |
+| --- | --- | --- |
+| Dec 2017 to Dec 2018 | $19,800 to $3,200 | About 84% |
+| Mar 2020, in 24 hours | Halved and partly recovered | About 50% in a day |
+| Nov 2021 to Nov 2022 | $69,000 to $15,500 | About 77% |
+
+Smaller coins routinely fall 95% and never come back. Applying a [1% risk rule](/learn/m07-risk-management/02-the-one-percent-rule) here is not timidity; it is the only thing that lets you still be trading after one of those years.
+
+One more structural quirk: because crypto trades all weekend while related markets do not, a large Saturday move shows up as a **gap** when CME bitcoin futures reopen on Sunday evening, and again in crypto-linked shares and ETFs on Monday morning. Holding those over a weekend means holding an instrument whose underlying is moving while you cannot trade.
+
+## The part nobody sells you
+
+Crypto's openness is real, and so is its consequence: anyone can create a token in an afternoon, and there is no gatekeeper to stop them.
+
+- **Rug pulls.** Developers launch a token, provide the liquidity that lets people buy it, market it hard, then withdraw that liquidity and vanish. The chart goes to zero in one candle. Some tokens are written so that only the creator can sell at all.
+- **Pump groups.** A coordinated group buys a thin coin, hypes it to a larger audience, and sells into the buying. The audience is the exit.
+- **Fake volume and fake exchanges.** Unregulated venues can print any volume number they like, and some exist only to take deposits.
+- **Romance and "investment adviser" scams.** A long, friendly relationship online leads to a tip about a platform. The platform shows your balance rising beautifully. The balance is a web page. Withdrawals fail, or require a "tax" payment first.
+- **Seed phrase phishing.** A support agent, an airdrop claim page, a wallet-connect prompt. Signing the wrong approval can drain a wallet in seconds.
+
+<Callout type="warning" title="Three rules that prevent most of it">
+
+**Nobody legitimate will ever ask for your seed phrase.** Not support, not a developer, not a recovery service. Anyone who asks is stealing.
+
+**If withdrawals are blocked or need a fee first, the money is already gone.** Do not send more chasing it.
+
+**Anyone promising a return is selling something.** That rule is general, and it gets a lesson of its own in [scams and red flags](/learn/m12-becoming-consistent/05-scams-and-red-flags).
+
+</Callout>
+
+<KeyTakeaways>
+- Crypto trades 24 hours a day with no closing auction and usually no circuit breakers, so there is no official close and nothing pauses a crash.
+- Coins on an exchange are an IOU from that exchange; self-custody means holding the keys yourself, with no password reset and no chargeback.
+- Perpetual futures have no expiry, so a funding rate paid between longs and shorts every eight hours keeps them tied to spot.
+- Funding of 0.1% per 8 hours is about 110% a year, which can eat a fifth of a 10x position's margin in a week.
+- At 10x leverage a 9% move liquidates you, and forced liquidations trigger more liquidations, producing the cascades that make crypto wicks so long.
+- The venues are largely unregulated, so rug pulls, pump groups and seed-phrase phishing are ordinary rather than exceptional.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "What does the phrase not your keys, not your coins mean?", options: ["You need a password to trade", "Coins held on an exchange are the exchange's promise to you, not assets you control", "Private keys expire", "Exchanges charge for withdrawals"], answer: 1, explain: "If the venue fails, you become an unsecured creditor. Self-custody means you hold the private keys yourself." },
+  { q: "What is a funding rate on a perpetual future?", options: ["A fee paid to the exchange for leverage", "A payment between longs and shorts that keeps the perp price near spot", "The interest on a margin loan", "The cost of withdrawing coins"], answer: 1, explain: "Perps have no expiry to anchor them, so funding is exchanged between traders every few hours to pull the price back to spot." },
+  { q: "You hold a $20,000 long perp position and funding is 0.01% every 8 hours. Roughly what does one day cost?", options: ["$2", "$6", "$20", "$60"], answer: 1, explain: "0.01% of $20,000 is $2 per payment, and there are three payments a day, so about $6." },
+  { q: "You open a 10x leveraged long. Roughly how far can price move against you before liquidation?", options: ["About 1%", "About 9% to 10%", "About 25%", "About 50%"], answer: 1, explain: "At 10x, a 10% adverse move wipes the margin, and the exchange closes you slightly earlier to protect itself." },
+  { q: "Why do liquidation cascades make crypto wicks so long?", options: ["Exchanges widen spreads deliberately", "Each forced liquidation is a market order that pushes price further, triggering more liquidations", "Volume dries up at night", "Circuit breakers reset the price"], answer: 1, explain: "Liquidations sell into a falling market, which liquidates the next layer of traders. The loop runs until the leverage is gone." },
+  { q: "An exchange support agent messages you asking for your seed phrase to restore your account. What should you do?", options: ["Send it, since it is official support", "Send only the first six words", "Never send it; no legitimate party ever needs it", "Change it and then send it"], answer: 2, explain: "The seed phrase is the money. Anyone asking for it is stealing, and seed phrases cannot be changed." }
+]} />

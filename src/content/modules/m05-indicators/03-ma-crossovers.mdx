@@ -1,0 +1,94 @@
+Picture two runners on a track. One is a sprinter who reacts to every change in pace. The other is a long-distance runner who keeps a steady rhythm. When the sprinter overtakes the steady runner, something has changed: the recent pace is faster than the long-run pace. When the sprinter falls behind, the recent pace has slowed.
+
+A **moving average crossover** is exactly this race. You draw a fast average and a slow average on the same chart. When the fast one crosses above the slow one, recent prices are running ahead of older prices, which is what an uptrend looks like from the inside. When it crosses below, the opposite. It is the simplest trend-following rule there is, and it has been tested more than any other idea in trading.
+
+That testing tells a clear story: crossovers catch every big trend, and they also produce a stream of small losses in between. This lesson is about both halves of that story.
+
+## What a crossover calculates
+
+There is no new formula here. You compute two moving averages from the [previous lesson](/learn/m05-indicators/02-moving-averages), one with a short period and one with a long period, and watch the difference between them.
+
+<Callout type="math" title="The crossover is just a sign change">
+
+Difference = fast average − slow average
+
+Yesterday: fast EMA 100.4, slow EMA 100.9, difference = −0.5 (fast below slow).
+
+Today: fast EMA 101.3, slow EMA 101.0, difference = +0.3 (fast above slow).
+
+The difference flipped from negative to positive, so today is a **bullish crossover**. A flip from positive to negative is a **bearish crossover**. That sign flip is the entire signal.
+
+</Callout>
+
+<IndicatorFigure indicator="crossover" caption="A 9 EMA (fast) and 21 EMA (slow). Arrows mark each crossover. Notice the bull cross comes several candles after the low, and any crosses inside a sideways patch lead nowhere." />
+
+## The famous pairs
+
+Any two lengths work, but some pairs have names because so many people watch them.
+
+The **golden cross** is the 50-day SMA crossing above the 200-day SMA. The **death cross** is the 50-day crossing below the 200-day. These are slow, big-picture signals that appear a handful of times per decade on an index. They get headlines, and because they get headlines, they nudge behaviour.
+
+Faster pairs such as 9 and 21 EMA, or 10 and 20 EMA, are used by swing traders and day traders for signals on the timeframe they trade. Faster pairs give more signals, earlier, with more false ones. Slower pairs give fewer signals, later, with fewer false ones. It is the same trade-off as with a single average, doubled.
+
+| Pair | Speed | Typical user | Signals per year (daily chart) |
+|---|---|---|---|
+| 9 / 21 EMA | Fast | Swing and day traders | Dozens |
+| 20 / 50 | Medium | Swing traders | Several |
+| 50 / 200 SMA | Slow | Position traders, funds | Roughly one or two |
+
+## What the crossover is measuring
+
+A crossover is a rough answer to the question "has the recent average price moved above or below the longer-run average price?". That is a reasonable definition of a trend beginning, and it lines up with the structural definition you learned in [Trends](/learn/m03-market-structure/01-trends): when price starts making higher highs and higher lows, the recent average will climb above the older one.
+
+The difference is timing. Structure lets you see the first higher low as it forms. The crossover waits until enough closes have piled up to drag the whole fast average across the slow one. That wait is the lag, and it can be a lot of candles.
+
+<Callout type="eli5">
+
+Think of two buckets. The small bucket holds the last 9 prices, the big bucket holds the last 21. When new high prices pour in, the small bucket's average rises quickly, but the big bucket still has a lot of old low prices in it, so it rises slowly. The small bucket overtaking the big bucket is the crossover. It only happens once the new prices have been coming in for a while, which is why the signal is always a bit late.
+
+</Callout>
+
+## How traders use crossovers
+
+**As a trend-following entry and exit.** Buy the bull cross, sell the bear cross, repeat. Tested over long periods on trending markets, this crude rule often makes money because the few big trends it catches pay for the many small whipsaws it suffers. It usually has a low win rate, sometimes under 40%, with a few large winners. That profile is hard to sit through emotionally, which is why most people abandon it right before the big trade.
+
+**As a bias filter.** Rather than trading the cross itself, many traders use it to decide which direction to look. Fast above slow: only take long setups from structure. Fast below slow: only take shorts. The cross tells you the tide; your pullback and level analysis tells you when to enter.
+
+**As a trend-health check.** When the two averages are far apart and both sloping the same way, the trend is strong. When they flatten and braid together, the trend is tired and a range is likely, which is your cue to stop taking crossover signals altogether.
+
+## How crossovers fail
+
+<Callout type="danger" title="Whipsaw: the crossover's natural enemy">
+
+In a sideways market the fast average crosses the slow one again and again, each cross a few candles after a swing that has already finished. A trader who buys every bull cross and sells every bear cross in a range buys the top and sells the bottom of every wobble. Ten small losses in a row is normal for this method in chop, and that streak is what wipes out most crossover traders.
+
+</Callout>
+
+The lag cuts both ways. You miss the first chunk of every move, and you give back a chunk at the end before the exit cross fires. On a sharp V-shaped reversal, a slow pair can signal the entry near the top of the bounce.
+
+Crossovers also cannot tell you where to put a stop or how big the move might be. They are a direction signal only. Everything else must come from structure and from the risk rules you will learn in [Risk Management](/learn/m07-risk-management/01-why-risk-first).
+
+## Combining with structure
+
+The crossover works best as the last checkmark on a list, not the first. Suppose price has broken out of a range, retested the breakout level, and held, exactly the sequence from [Breakouts, Retests and Fakeouts](/learn/m03-market-structure/06-breakouts-and-fakeouts). If the 9 EMA is also crossing above the 21 EMA at that moment, the average is confirming what the structure already said. Take the trade because of the structure, and let the cross give you a little extra confidence.
+
+The reverse is also useful. A bull cross that happens while price is stuck in the middle of a well-defined range, with no breakout, is a cross you ignore. The structure vetoes the indicator.
+
+<KeyTakeaways>
+- A crossover fires when the difference between a fast and a slow average changes sign.
+- The golden cross (50 over 200) and death cross (50 under 200) are slow, widely watched big-picture signals.
+- Faster pairs signal earlier with more false alarms; slower pairs signal later with fewer.
+- Crossovers catch every big trend late and lose money steadily in ranges; the few large wins must pay for many small losses.
+- Use crossovers as a bias filter or a confirmation of a structural setup, not as a stand-alone trigger.
+- Braided, flat averages mean a range: stop taking crossover signals until they separate again.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "Yesterday the fast EMA was 0.5 below the slow EMA. Today it is 0.3 above. What just happened?", options: ["A bearish crossover", "A bullish crossover", "Nothing, the gap is too small", "A golden cross"], answer: 1, explain: "The difference flipped from negative to positive. That sign change is a bullish crossover regardless of size." },
+  { q: "What is a golden cross?", options: ["The 9 EMA crossing above the 21 EMA", "The 50-day average crossing above the 200-day average", "Price crossing above any average", "RSI crossing above 50"], answer: 1, explain: "The golden cross is specifically the 50-day SMA crossing above the 200-day SMA. The reverse is a death cross." },
+  { q: "Why does a crossover always fire after the trend has begun?", options: ["Because exchanges delay the data", "Because enough new closes must accumulate to drag the fast average across the slow one", "Because it uses volume", "It does not, crossovers lead price"], answer: 1, explain: "Averages contain old prices. It takes time for new prices to outweigh them, so the cross lags the turn." },
+  { q: "You are in a clearly sideways range and the 9/21 EMA pair has crossed four times in three weeks. What should you do?", options: ["Trade every cross, the next one will work", "Stop taking crossover signals until price leaves the range", "Switch to a 5/8 pair to get faster signals", "Double position size"], answer: 1, explain: "Repeated crosses in a range are whipsaws. The fix is recognising the range, not tuning the averages." },
+  { q: "Price breaks out of a range, retests the level and holds, and the fast EMA crosses above the slow EMA at the same time. Which is the reason to take the trade?", options: ["The crossover alone", "The structural breakout and retest, with the crossover as confirmation", "Neither, wait for a golden cross", "The volume"], answer: 1, explain: "Structure gives the setup and the stop location; the crossover is a supporting vote." }
+]} />
+
+<TryIt to="/simulator">Open the simulator on AURM, daily chart, and turn on two EMA overlays with different lengths if the platform allows, or an EMA and an SMA. Scroll back and mark every crossover you see. Sort them into two piles: crosses that led to a move of at least several candles, and crosses that reversed within a few bars. Notice where on the chart the second pile clusters.</TryIt>

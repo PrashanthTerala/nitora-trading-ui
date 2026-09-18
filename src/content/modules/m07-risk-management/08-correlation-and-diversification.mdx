@@ -1,0 +1,103 @@
+A ship is built with watertight compartments so a hole in one does not sink the vessel. The trick only works if the walls reach the ceiling. If they stop halfway, water pours over the top and the five compartments behave, at the worst possible moment, like one.
+
+Traders build the same illusion. They open five positions, feel diversified because there are five tickers on the screen, and find on a bad morning that all five stops were hit within twenty minutes. The compartments were never separate.
+
+If you followed the [1% rule](/learn/m07-risk-management/02-the-one-percent-rule) on each of those five trades, you believed you were risking 1%. You were risking closer to 5% on a single idea, split into five tickets.
+
+## Correlation in one paragraph
+
+**Correlation** measures how much two instruments move together, on a scale from plus 1 to minus 1. At **plus 1** they move in lockstep: when one rises 2%, so does the other. At **zero**, knowing one tells you nothing about the other. At **minus 1** they move exactly opposite. Most things you will trade sit between plus 0.3 and plus 0.9 against the broad market, far higher than beginners assume.
+
+<Callout type="eli5">
+
+You have five piggy banks so that losing one does not ruin you. But all five are on the same shelf, in the same room, in the same house. A flood does not care that there are five of them. Spreading your money out only helps if the things you spread it into can actually have different days.
+
+</Callout>
+
+## Five hats, one trade
+
+Suppose you go long five technology stocks, each sized to risk exactly 1% of a $10,000 account, so $100 each.
+
+If they were truly independent, a bad day for one would usually be an ordinary day for the others, and the chance of all five stopping out together would be tiny. At a correlation near plus 0.9 they are the same instrument bought five times. One sector-wide selloff takes out all five stops in a session and you lose $500: **5% of the account in a single event**. That is not a 1% risk strategy. It is a 5% risk strategy with extra commission.
+
+| What you think you have | What you actually have |
+| --- | --- |
+| Five positions at 1% risk | One position at 5% risk |
+| Five chances to be right | One idea, tested once |
+| Diversification | Concentration, disguised by ticker count |
+
+The test is not "how many positions do I have?" It is **"how many distinct ways can I be wrong?"** Five tech longs is one way. A tech long, a gold long and a short in energy is three, and even those are not fully independent.
+
+## The layers of correlation
+
+Correlation stacks, and most traders only notice the top layer.
+
+**Sector correlation.** Two semiconductor companies share a demand story, a supply chain and customers. Typical correlations of plus 0.7 to plus 0.9.
+
+**Market correlation.** Almost every stock has a component that is simply "the market went up today", which is why a basket of ten stocks from ten sectors is still largely one bet on the index.
+
+**Theme correlation.** The sneaky one. An airline, a hotel chain and an oil producer sit in three sectors and can still be one trade on fuel prices or travel demand. The sector label does not always describe the actual driver.
+
+**Direction correlation.** Five longs are correlated by being longs. Genuinely separate compartments need some shorts, or instruments with different drivers entirely.
+
+The simulator makes this easy to feel. NOVA, IDX and BIOX all follow broad risk appetite, so holding all three long is close to one large position. AURM behaves like gold and often moves against them, PETR follows energy, and FXEU has its own rhythm.
+
+## In a crisis, correlation goes to one
+
+Here is the part that matters most and is forgotten most.
+
+The correlations you measure on calm days are not the ones you get on the day you need them. When markets fall hard, investors do not sell selectively; they sell whatever they can, to raise cash. Assets unrelated for two years suddenly drop together.
+
+So carefully constructed diversification works fine during the periods when you did not need it and thins out exactly when the losses arrive. That is not a flaw you can engineer away. It is a reason to keep total exposure modest rather than to trust a clever mix.
+
+<Callout type="danger" title="Leverage plus correlation is how accounts disappear">
+
+With [margin](/learn/m06-orders-and-execution/06-margin-and-leverage), five correlated 1% positions can be a much larger fraction of your buying power than the risk numbers suggest. When they move together against you, the position values fall together, and a margin call can force all five closed at the worst prices of the day, turning a planned 5% loss into something considerably worse. Correlation and leverage are individually survivable and jointly not.
+
+</Callout>
+
+## Capping total open risk
+
+The fix is simple to state and requires no correlation maths at the desk.
+
+<Callout type="math" title="The portfolio heat rule">
+
+**Total open risk across all positions: 3% maximum.**
+
+Total open risk is the sum of what you would lose if every open stop were hit at once. Three positions at 1% each. Or six at 0.5%. Or one at 1% and four at 0.5%. When you are at the cap, no new trade until one closes or a stop moves to breakeven.
+
+</Callout>
+
+Then add the correlation adjustment:
+
+- **Positions in the same sector, theme or direction count as one slot.** If you want two semiconductor longs, they get 0.5% each, not 1% each.
+- **One full-size position per idea.** The second expression of the same idea is half size.
+- **Once a stop is at breakeven, that position no longer counts** towards the 3%, because it can no longer lose you anything.
+
+A worked case. You hold NOVA long at 1% and now like BIOX long. Both rise with the same risk appetite, so they share a slot: take BIOX at 0.5%, and 0.5% for NOVA if you have not already entered. You still have 2% of heat available, and it should go to a different driver, such as AURM or a PETR short, not a third growth-tech long.
+
+<StatRow>
+<Stat value="3%" label="max total open risk" />
+<Stat value="1 slot" label="per correlated group" />
+<Stat value="0%" label="counted once at breakeven" />
+</StatRow>
+
+<KeyTakeaways>
+- Correlation runs from plus 1 to minus 1 and measures how much two instruments move together.
+- Five correlated longs at 1% each are one idea risked at 5%, not five separate 1% risks.
+- Correlation stacks across sector, broad market, theme and simple direction, so a ticker count is not a diversification measure.
+- In a sharp selloff correlations rise towards one, so diversification thins out exactly when you need it.
+- Cap total open risk across all positions at about 3%, and count correlated positions as a single slot.
+- Ask how many distinct ways you can be wrong, not how many positions you hold.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "You hold five technology longs, each risking 1% of the account. A sector selloff hits every stop. What did you actually risk?", options: ["1%", "2%", "5%", "It cannot be calculated"], answer: 2, explain: "Highly correlated positions fail together, so the five 1% risks behave as one 5% risk." },
+  { q: "What does a correlation of plus 0.9 between two instruments mean?", options: ["They move in opposite directions", "They usually move together closely", "One always leads the other by a day", "They are unrelated"], answer: 1, explain: "Close to plus 1 means near-lockstep movement, so holding both is close to holding one twice." },
+  { q: "What typically happens to correlations during a sharp market selloff?", options: ["They fall towards zero", "They rise towards one", "They become negative", "They stay exactly the same"], answer: 1, explain: "Investors sell whatever they can to raise cash, so unrelated assets fall together." },
+  { q: "Under a 3% total open risk cap, you already hold three positions at 1% each. A good setup appears. What do you do?", options: ["Take it at 1%, good setups are rare", "Take it at 2% since it looks strong", "Take no new trade until a position closes or a stop reaches breakeven", "Cancel one of the existing stops"], answer: 2, explain: "The cap is the cap. A position whose stop has moved to breakeven frees a slot because it can no longer lose money." },
+  { q: "Which basket in the simulator gives you the most genuinely separate compartments?", options: ["NOVA, IDX and BIOX long", "NOVA, AURM and FXEU", "Five different technology names", "CRYP long twice at half size"], answer: 1, explain: "NOVA, AURM and FXEU are driven by different things, whereas NOVA, IDX and BIOX all follow broad risk appetite." },
+  { q: "An airline long, a hotel long and an oil producer long are in three different sectors. Are they diversified?", options: ["Yes, different sectors always means diversified", "Not necessarily; they can share a travel and fuel theme", "Yes, as long as each risks 1%", "Only if they are all shorts"], answer: 1, explain: "Theme correlation cuts across sector labels, and the actual driver is what matters." }
+]} />
+
+<TryIt to="/simulator">Open the simulator and put NOVA, IDX and AURM on the screen together over the same period. Watch which two rise and fall in step and which one goes its own way. Then open three positions totalling 3% of risk and check that no more than one slot went to a single driver.</TryIt>

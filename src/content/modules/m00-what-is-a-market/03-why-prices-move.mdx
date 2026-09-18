@@ -1,0 +1,108 @@
+Picture a rope with a knot tied in the middle and a chalk line on the ground under the knot. On the left, a team of buyers. On the right, a team of sellers. Nobody blows a whistle and nobody wins permanently. The knot just slides one way, then the other, all day long, depending on who is pulling harder at that second.
+
+The chalk line under the knot is the price. That is the whole mechanism. When people say "the market went up today", what happened is that buyers pulled slightly harder than sellers for a few hours, and the knot drifted left.
+
+This lesson is about who is pulling, what makes them pull harder, and one uncomfortable idea that explains why prices so often move in the opposite direction to the news you just read.
+
+## The tug of war is made of orders
+
+In a real market nobody is holding a rope. What they are holding is orders.
+
+At any moment there is a queue of people willing to buy at various prices, and a queue of people willing to sell at various prices. The highest price anyone is currently willing to pay is the <Term id="bid">bid</Term>. The lowest price anyone is currently willing to accept is the <Term id="ask">ask</Term>. You will meet both properly in [Bid, Ask and the Spread](/learn/m00-what-is-a-market/07-bid-ask-spread); for now just hold the picture of two queues facing each other.
+
+Say a share has sellers offering at $50.00 and slightly more expensive sellers waiting at $50.01, $50.02 and so on. A buyer arrives who wants shares *now* and does not care much about a cent. They buy everything on offer at $50.00. Those sellers are gone. The cheapest remaining seller is now at $50.01.
+
+The price just moved up. Not because of an announcement, not because anyone decided the company was worth more, but because eager buyers **ate through the sellers standing in front of them**. Traders call that being lifted: an impatient buyer lifts the ask.
+
+Run it the other way and you get the same thing in reverse. An eager seller hits the bid, clears out the buyers waiting at $50.00, and the best remaining buyer is at $49.99. Price falls.
+
+<Callout type="eli5">
+
+Think of price as a stack of shelves with things for sale, cheapest at the bottom. If a hungry crowd clears out the bottom shelf, the next thing anyone can buy costs a bit more. The price went up because the cheap stuff got eaten, not because anyone changed the labels.
+
+</Callout>
+
+## Urgency is what actually moves price
+
+Here is a subtlety that the phrase "more buyers than sellers" hides. Every trade has exactly one buyer and one seller. They are always equal in number. So what is unequal?
+
+**Urgency.** Price moves toward the side that is less willing to wait.
+
+A patient buyer posts an order saying "I will pay $49.90 and I am happy to wait". They do not move the price; they just join the queue. An impatient buyer says "give me shares at whatever the cheapest seller wants". They cross the gap, clear a shelf, and the price ticks up.
+
+So the honest version of the rule is: **price rises when buyers are more impatient than sellers, and falls when sellers are more impatient than buyers.** If you remember one sentence from this lesson, make it that one.
+
+<Callout type="story" title="The concert ticket queue">
+
+A thousand tickets go on resale for a sold-out concert. Ten thousand people want them, but only a few hundred are desperate enough to pay whatever it takes tonight. Those few hundred are the ones who clear out the cheap listings and drag the asking price up, while nine thousand patient people sit watching and complaining about the price they helped create by refusing to be the ones who wait.
+
+</Callout>
+
+## What makes people urgent: news and expectations
+
+People become impatient because something changed their mind. That something is usually **news**: an earnings report, a product launch, an interest rate decision, a war, a supply problem, a rumour on a forum.
+
+<CandleFigure
+  title="A quiet drift, then news"
+  bars={[
+    { o: 50.0, h: 50.4, l: 49.8, c: 50.2 },
+    { o: 50.2, h: 50.6, l: 50.1, c: 50.5 },
+    { o: 50.5, h: 50.7, l: 50.2, c: 50.3 },
+    { o: 50.3, h: 50.5, l: 50.0, c: 50.4 },
+    { o: 50.4, h: 54.2, l: 50.3, c: 53.8 },
+    { o: 53.8, h: 54.0, l: 52.9, c: 53.2 }
+  ]}
+  annotations={[
+    { type: "bracket", from: 0, to: 3, text: "patient two-way trading" },
+    { type: "arrow", index: 4, direction: "up", text: "earnings beat: buyers turn impatient" },
+    { type: "label", index: 5, text: "settles down", position: "above" }
+  ]}
+  caption="Four quiet sessions where both sides were happy to wait, then one session where the news made buyers unwilling to wait at all."
+  showVolume={false}
+/>
+
+Notice the shape of that. Four ordinary bars where the tug of war is balanced, then one bar where it is not. Most of the time markets drift. Occasionally, briefly, they lurch.
+
+But news alone does not explain the direction. Companies announce record profits and their shares drop by 8% the same morning. That happens constantly, and it confuses every beginner, because it looks insane.
+
+The explanation is **expectations**. The market is not reacting to the news. It is reacting to the difference between the news and what everyone already assumed.
+
+If a company was widely expected to earn $2.00 per share and it earns $1.80, that is a great year by any human standard and a disaster in market terms, because thousands of people had already bought at prices that assumed $2.00. When reality lands below the assumption, those people become impatient sellers and the price drops.
+
+The shorthand traders use is: **"buy the rumour, sell the news"**. By the time an event is confirmed, everyone who was going to act on the expectation has already acted.
+
+## Why the price already knows most of what you know
+
+Follow that logic one step further and you get the most important idea in this lesson.
+
+Every person looking at a market is doing the same thing: forming a view and then acting on it by buying or selling. The act of acting is what moves the price. So the current price is, roughly, a summary of every opinion that anyone has cared enough to back with money.
+
+That is why traders say **the price already reflects what people know**. If you read a headline on a news site at 9am, you are reading it alongside millions of other people, and an army of professionals read it at 8:59. The easy part of that information is already in the number.
+
+<Callout type="warning" title="The obvious trade is usually already priced">
+
+"This company is doing well, so I will buy" is not an edge, because everyone can see the company is doing well and has already bought. The price you are being offered already includes that fact. Any edge has to come from something less obvious: a different interpretation, a different time horizon, better discipline, or better risk management. Never assume you are the first person to notice something.
+
+</Callout>
+
+This is not a counsel of despair. Markets are made of humans, humans overreact and panic, and prices routinely overshoot in both directions. But you should start from the assumption that the price is reasonable and then ask what you know that the crowd does not, rather than the other way round.
+
+<TryIt to="/simulator">Load BIOX on the 1D chart and step the clock forward bar by bar. BIOX is designed to be gappy, like a biotech waiting on trial results: long quiet stretches and then one bar that changes everything. Watch how much of the year's movement happens in three or four bars.</TryIt>
+
+<KeyTakeaways>
+- Price is a tug of war between buyers and sellers, and the price is where the knot currently sits.
+- Every trade has one buyer and one seller, so what is unequal is urgency, not headcount.
+- Price rises when impatient buyers clear out the cheapest sellers, and falls when impatient sellers clear out the highest buyers.
+- News moves price only to the extent that it differs from what people already expected.
+- Good news can send a price down if the news is worse than the assumption already baked into the price.
+- The current price already reflects most public information, so obvious conclusions rarely make money.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "What makes a price tick upward in a real market?", options: ["More buyers than sellers exist", "Impatient buyers clear out the cheapest sellers, so the next cheapest is higher", "The exchange raises the price", "The company announces a higher value"], answer: 1, explain: "Every trade has one buyer and one seller. Price moves when one side is unwilling to wait and eats through the orders in front of it." },
+  { q: "Why is the phrase more buyers than sellers slightly wrong?", options: ["Because there are never any buyers", "Because every trade has exactly one buyer and one seller, so the numbers are always equal", "Because sellers always outnumber buyers", "Because only professionals can buy"], answer: 1, explain: "The counts are always equal. What differs is how urgent each side is." },
+  { q: "A company reports record profits and the share price falls 8%. What is the most likely explanation?", options: ["The report was a lie", "The market is broken", "The profits were lower than what people already expected and had priced in", "Nobody read the report"], answer: 2, explain: "Prices react to the gap between the news and the expectation. Good but worse-than-expected is bad news in market terms." },
+  { q: "A patient buyer posts an order well below the current price. What effect does that have right now?", options: ["It pushes the price down immediately", "It pushes the price up immediately", "It joins the queue and does not move the price", "It cancels other orders"], answer: 2, explain: "Resting orders add depth to the queue. Only orders that cross the gap and trade move the price." },
+  { q: "What does buy the rumour, sell the news describe?", options: ["Only trading on social media", "People act on the expectation, so by the time the event is confirmed the move has often already happened", "Never trading around news", "A rule that news is always fake"], answer: 1, explain: "The anticipation is what moved the price. Confirmation often removes the reason to keep buying." },
+  { q: "You read a positive headline about a company on a news site. What should you assume?", options: ["You are the first to know and should buy immediately", "Millions of people, including professionals, saw it at the same time or earlier, so it is largely in the price", "The headline will have no effect", "Headlines never matter"], answer: 1, explain: "Public information reaches everyone at once. Start from the assumption that the easy part is already reflected in the price." }
+]} />

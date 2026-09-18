@@ -1,0 +1,117 @@
+A river flows downhill. You can paddle against it and get somewhere, slowly, exhausted. Or you can point the boat downstream and let the water do most of the work. You still have to steer around rocks, and sometimes the river bends unexpectedly, but the current is your friend.
+
+<Term id="trend-following">Trend following</Term> is paddling with the current. The idea is old and almost embarrassingly simple: markets that are going up tend to keep going up for a while, and markets going down tend to keep going down. You buy strength, sell weakness, and hold on while the trend lasts.
+
+It is one of the few approaches with decades of evidence behind it, and it is also one of the most psychologically difficult, because it asks you to do two things humans hate: buy things that have already gone up, and sit through many small losses waiting for the big win.
+
+## Why trends persist
+
+Trends exist because information spreads slowly and people update slowly. A company's prospects improve; a few people notice and buy; price rises; more people notice; they buy; price rises more. Each step attracts the next. The [Wyckoff cycle](/learn/m03-market-structure/09-market-cycles-wyckoff) you studied is this process drawn as a picture.
+
+The trend follower does not try to predict where the trend starts. They wait until it is *already visible*, join it, and stay until it is *visibly over*. They give up the first part and the last part of every move in exchange for the reliable middle.
+
+<PatternFigure name="uptrend" caption="Higher highs and higher lows. The trend follower enters once this structure is established and stays until it breaks." />
+
+<Callout type="eli5">
+
+Imagine a game of follow-the-leader in the playground. You do not need to guess where the leader is going. You just watch which way they are heading and go the same way. You will be a step behind, and you will overshoot when they turn. But you will be in the right place most of the time.
+
+</Callout>
+
+## Market conditions it suits
+
+Trend following works when markets *trend*: clear directional moves lasting many bars, with pullbacks that are shallow relative to the move. It struggles badly in ranges, where every entry is at the edge of the box and every stop gets hit by the bounce.
+
+Ways to check the condition before trading:
+
+- **Structure**: a clear sequence of [higher highs and higher lows](/learn/m03-market-structure/01-trends) (or lower for a downtrend) on the timeframe you trade.
+- **Moving averages**: price above a rising 50 EMA, and the 20 EMA above the 50, for a long. Both sloping the same way.
+- **[ADX](/learn/m05-indicators/11-adx-and-trend-strength)**: above 25 suggests a trend with enough strength to follow; below 20 suggests a range.
+
+In the simulator, NOVA, PETR and CRYP tend to produce the longest trends. AURM and BLUE spend more time in ranges and will punish a pure trend approach.
+
+## The core strategy: moving average crossover with trend filter
+
+There are many trend strategies. Here is the foundational one, with every rule spelled out. It is not the most profitable version; it is the one you can understand completely and build on.
+
+<IndicatorFigure indicator="crossover" caption="A fast EMA crossing above a slow EMA marks the trend turning up. Entries come on the cross; exits come on the reverse cross or a trailing stop." />
+
+**Setup (the condition that must be true):**
+
+- Timeframe: 1h for the trade, 1D for the filter.
+- Filter: on the daily chart, price is above the 50 EMA (for longs). No longs if it is below.
+- Indicators on the 1h: 20 EMA and 50 EMA.
+
+**Entry trigger:**
+
+- Long when the 20 EMA crosses above the 50 EMA on the 1h *and* the daily filter is bullish.
+- Enter at the close of the bar where the cross completes. Not before.
+
+**Stop:**
+
+- Initial stop below the most recent swing low on the 1h, or 2 × ATR(14) below entry, whichever is *wider*. Trend trades need room.
+
+**Target:**
+
+- No fixed target. Trend following makes its money on the rare trades that run a very long way, and a fixed target caps exactly those.
+
+**Management:**
+
+- Trailing stop: once price is 1R in profit, move the stop to breakeven. After that, trail the stop 2 × ATR below the highest close since entry, updated once per bar close.
+- Exit on the trailing stop, or when the 20 EMA crosses back below the 50 EMA, whichever comes first.
+
+**Size:** 1% of account risk, from entry to initial stop, as always.
+
+## What the results look like
+
+Be prepared for this, because it surprises everyone: a classic trend strategy has a **win rate around 30% to 40%**. Most trades are small losses or small wins. A minority run for 5R, 8R, even 15R, and those few trades produce all the profit.
+
+<Callout type="math" title="A typical hundred trades">
+
+Say 35 winners and 65 losers. Losers average 0.9R (some stopped near breakeven). Of the winners, 25 average 1.5R and 10 average 6R. Total won: 25 × 1.5 + 10 × 6 = 97.5R. Total lost: 65 × 0.9 = 58.5R. Net: 39R over 100 trades, expectancy 0.39R. Profitable. And yet you lost 65 times out of 100, and if you had cut any of those ten big winners early, the whole thing would have collapsed.
+
+</Callout>
+
+This is why trend following is hard to *do* even though it is easy to *understand*. Sixty-five losses. Streaks of eight or nine losses in a row are routine. Everything in the [losing streaks lesson](/learn/m08-trading-psychology/08-handling-losing-streaks) applies with extra force.
+
+## Known weaknesses
+
+**Whipsaws in ranges.** The strategy generates crosses constantly in a sideways market, each one a small loss. Extended ranges produce long strings of losses. The daily filter and ADX help but do not eliminate this.
+
+**Late entries.** By the time a cross confirms, a good chunk of the move has happened. You are always buying higher than the low. This is the price of confirmation, and it is why the win rate is low.
+
+**Giving back open profit.** A trailing stop 2 ATR wide means a trade that peaks at 10R might exit at 7R. That feels awful. It is also necessary: tighten the trail and you exit the big winners early, which destroys the strategy.
+
+**Drawdowns.** Because the profit comes in clumps, the equity curve is jagged. A 15% to 25% drawdown between big wins is normal for trend approaches.
+
+<Callout type="warning">
+
+The single most common way traders break a trend strategy is by taking profit at 2R or 3R because it feels like a lot. The strategy's entire expectancy lives in the trades that go past 5R. Cap the winners and you have a 35% win rate with 2R winners, which loses money. Do not add a target.
+
+</Callout>
+
+## Variations you will see
+
+- **Breakout entries**: instead of a cross, enter on a close above the highest high of the last 20 bars. The famous Turtle system used 20-day and 55-day breakouts.
+- **Pullback entries**: wait for the trend to be established, then enter on a pullback to the 20 EMA. Better entry price, higher win rate, and its own lesson next.
+- **Multiple timeframes**: filter on weekly, trade on daily, for slower, larger moves.
+
+All of them share the DNA: enter with the trend, cut losses small, let winners run without a cap.
+
+<KeyTakeaways>
+- Trend following joins a move once it is visible and stays until the structure breaks, giving up the start and end for the reliable middle.
+- It suits markets with clear higher highs and higher lows, rising averages and ADX above 25, and fails badly in ranges.
+- The core strategy is a 20/50 EMA cross on the 1h with a daily 50 EMA filter, a wide structural or 2 ATR stop, and a 2 ATR trailing stop with no fixed target.
+- Win rates of 30% to 40% are normal; all the profit comes from the few trades that run past 5R, so capping winners destroys the edge.
+- Whipsaws, late entries, giving back open profit and jagged drawdowns are the known costs, and they cannot be removed without removing the edge.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "The 20 EMA crosses above the 50 EMA on the 1h chart, but on the daily chart price is below the 50 EMA. What does the strategy say?", options: ["Enter long, the 1h cross is enough", "No trade; the daily filter is bearish", "Enter short", "Wait for RSI confirmation"], answer: 1, explain: "The daily filter must agree. A 1h cross against the daily trend is exactly the whipsaw the filter exists to avoid." },
+  { q: "A trend trade is up 3R and you are tempted to take profit. What does the strategy say?", options: ["Take it; 3R is a good win", "Hold; the trailing stop manages the exit and the big winners fund the strategy", "Take half now", "Move the stop to 2.9R"], answer: 1, explain: "Trend following earns its expectancy from trades that go past 5R. A fixed target at 3R turns a winning strategy into a losing one." },
+  { q: "Why is the win rate of a trend-following strategy typically only 30% to 40%?", options: ["Because the entries are bad", "Because confirmation means entering late, and many trends fail soon after a cross", "Because the stops are too tight", "It is not; trend following wins most of the time"], answer: 1, explain: "Waiting for a cross to confirm means paying for certainty with a worse price and frequent small failures." },
+  { q: "Which market condition breaks trend following most reliably?", options: ["Strong uptrends", "Extended sideways ranges", "High volume", "Gaps"], answer: 1, explain: "Ranges generate constant crosses, each a small loss. Filters reduce this but cannot eliminate it." },
+  { q: "The initial stop rule says to use the swing low or 2 ATR, whichever is wider. Why wider?", options: ["To risk more money", "Trend trades need room to survive normal pullbacks; a tight stop gets hit before the trend resumes", "Because ATR is unreliable", "To make the position bigger"], answer: 1, explain: "A wider stop means fewer shares at the same 1% risk, and a better chance of staying in a trend through its noise." }
+]} />
+
+<TryIt to="/simulator">Open the simulator on PETR, 1h, and add a 20 EMA and 50 EMA. Switch to 1D and add a 50 EMA as the filter. Replay at high speed and take every valid cross, using a bracket with the initial stop only, then manually trail it 2 ATR below the highest close each bar. Aim for 20 trades. Check the win rate and the size of your biggest winner in the journal.</TryIt>

@@ -1,0 +1,135 @@
+You are trying to decide whether to take an umbrella. You ask five friends. All five say yes, so you take it. Then you find out that all five of them read the same weather app that morning.
+
+You did not get five opinions. You got one opinion, five times, and the repetition made you feel certain in a way a single glance at the app never would have. That is the most common mistake in technical analysis, and it is the subject of this final lesson in the module.
+
+Most indicators are calculated from the same input: the closing price. Adding more of them does not add more information. It adds more *confidence*, which is worse than useless, because confidence is what decides your position size.
+
+## What indicator overload looks like
+
+<IndicatorFigure indicator="overload" caption="Three moving averages, Bollinger Bands, VWAP, RSI, MACD, Stochastic and volume. Every one of these is a real indicator taught in this module. Together they are almost unreadable, and the candles have disappeared." />
+
+Look at what happened to the price. The candles, the only thing on the chart that is not a derivative of something else, are now hidden behind six coloured lines, and the panels beneath take up more screen than the market does.
+
+Two of the three problems here are obvious: it is cluttered, and it is slow to read when a decision has to be made in seconds. The third problem is the one that actually costs money.
+
+## Correlated indicators are not confirmation
+
+Here is the uncomfortable arithmetic. Take five closing prices: **100, 102, 104, 106, 108**.
+
+<Callout type="math" title="Four indicators, one piece of information">
+
+Using the formulas from earlier lessons, all on those same five closes.
+
+**SMA(3)** = (104 + 106 + 108) / 3 = **106**. Price at 108 is above it. Reading: bullish.
+
+**RSI(3)**: the changes are +2, +2, +2, +2. Every one is a gain, so the average loss is **0**. When the average loss is zero the formula sets RSI to **100**. Reading: maximum bullish, and overbought.
+
+**Stochastic %K(5)** = (close − lowest low) / (highest high − lowest low) × 100 = (108 − 100) / (108 − 100) × 100 = **100**. Reading: maximum bullish, and overbought.
+
+**MACD line** = fast EMA − slow EMA. With prices rising steadily, the fast EMA sits above the slow one, so the line is positive and rising. Reading: bullish.
+
+Four indicators. Four "confirmations". **One** piece of information: price went up four candles in a row by the same amount each time.
+
+</Callout>
+
+Nothing in that example is a trick. The indicators are behaving correctly. The problem is that RSI, Stochastic, MACD and a moving average are four different arrangements of the same input, so when price does something clear, they all say the same thing, and when price does something ambiguous, they all flicker together.
+
+A useful way to say it: **agreement between correlated indicators carries almost no information, but it feels like a lot.** That feeling is what turns a 1 percent risk into a 3 percent risk.
+
+<Callout type="eli5">
+
+Imagine weighing a bag of apples on four scales that are all the same model, all wired to the same sensor. When they all read 2 kilograms you feel very sure. But you have not weighed the apples four times. You have weighed them once and read the number four times. To actually check, you need a different kind of measurement, like counting the apples.
+
+</Callout>
+
+## The independence test
+
+Before adding any indicator to a chart, ask one question: **what does this read that nothing else on my chart reads?**
+
+The tools in this module fall into a small number of families by input.
+
+| Family | Input | Examples |
+| --- | --- | --- |
+| Trend and smoothing | closing price | SMA, EMA, WMA, MACD, Ichimoku lines |
+| Momentum oscillators | closing price, relative to recent closes or range | RSI, Stochastic, MACD histogram |
+| Volatility | high-low range and deviation | ATR, Bollinger Band width |
+| Participation | volume | volume bars, OBV, VWAP, volume profile |
+| Structure | price levels and swings | support and resistance, trendlines, chart patterns, pivots, Fibonacci |
+
+Two tools from the same row are near-duplicates. RSI and Stochastic will agree at extremes almost every time, because both are asking a version of "where is the close relative to recent closes?" Adding both is the weather-app problem.
+
+Two tools from *different* rows genuinely add something. Price making a new high while volume shrinks is a real conflict, because volume is not derived from the closes at all. Price at a support level while ATR says today's range is twice normal is real information about how wide your stop needs to be.
+
+That is the whole principle: **confirmation only counts when it comes from a different input.**
+
+## What a chart actually needs
+
+There are four questions a chart has to answer before you trade.
+
+1. **Which way?** The trend, read from structure and, if you like, one moving average.
+2. **Where?** The levels, ranges and patterns. This is where the setup lives.
+3. **How hard?** Momentum, from at most one oscillator.
+4. **How wide?** Volatility, for stop distance and position size, from ATR.
+
+Plus one more that is not an indicator at all: **who showed up?** That is volume.
+
+Notice that questions 1 and 2 are answered by [market structure](/learn/m03-market-structure/01-trends), not by indicators. The indicators are answering the two smaller questions. If your chart has six indicators and no marked levels, you have spent all your attention on the small questions.
+
+## Building a clean chart
+
+<IndicatorFigure indicator="clean" caption="Price, one moving average and volume. The candles are the largest thing on the screen, which is how it should be." />
+
+The recommended default, and the one used in most of the examples across this site:
+
+- **Candlesticks**, drawn large enough to read individual wicks.
+- **One moving average**, typically a 20 or 50 EMA, as a visual trend reference and a dynamic level.
+- **Volume**, at the bottom.
+- **At most one oscillator**, and only if it does a job you can name. RSI for divergence and pullback timing is the usual choice.
+- **Your own drawn levels**: the two or three horizontal lines that actually matter on this instrument.
+- **ATR as a number**, not a panel. You need today's ATR to size a stop; you do not need to watch it wiggle.
+
+That is four things plus your own lines, and every one of them answers a different question. Compare it with the overload figure above: the clean chart contains less, and tells you more, because you can see the candles.
+
+<Callout type="warning" title="The real cost is cherry-picking">
+
+Cluttered charts do not usually cause bad trades by being confusing. They cause bad trades by offering choice. With seven indicators on screen, at any moment at least one of them supports whatever you already want to do. You will find it, quote it to yourself as the reason, and take the trade.
+
+This is [confirmation bias](/learn/m08-trading-psychology/04-cognitive-biases) with maths bolted on, and it is invisible from the inside, because every trade genuinely had an indicator-based reason. The defence is mechanical: decide which indicators you use **before** the session, write the rule down, and do not consult anything else.
+
+</Callout>
+
+## How to cut down
+
+If your chart is already crowded, use the **removal test**. For each indicator, ask honestly: *has this ever changed a decision I made?* Not "has it agreed with a decision", but changed one. Anything that has only ever agreed is decoration, and decoration on a trading chart is expensive.
+
+Then do it properly rather than by feeling. Trade your normal setup for a month with the indicator on and log the results in your [journal](/learn/m12-becoming-consistent/01-the-trading-journal). Trade the next month without it. If your results and your decision speed are the same, it was never contributing.
+
+There is a second reason to keep the list short that has nothing to do with the charts. **You cannot attribute results to a system you cannot describe.** If your entry rule is "several indicators lined up and it looked right", there is nothing to review, nothing to improve and nothing to test. Two named tools with written rules can be measured. Seven cannot.
+
+## Combining what is left
+
+The finished routine is short.
+
+Structure first: mark the trend and the levels with your own eyes, before any indicator loads. Ask what the market is doing. Then, and only then, bring in the two or three tools you kept, each with a specific job: the moving average for trend context, volume for participation, one oscillator for timing, ATR for the stop. If the structure says nothing, no combination of indicators will rescue the situation, and the correct trade is no trade.
+
+Every indicator in this module is a way of summarising price. None of them knows anything price did not already tell you. The skill this module has been building is not collecting tools; it is knowing what each one measures well enough to leave most of them switched off.
+
+<KeyTakeaways>
+- Most indicators are transformations of the same closing prices, so their agreement is one opinion repeated, not independent confirmation.
+- On four rising closes, SMA, RSI, Stochastic and MACD all read bullish at once because there is only one piece of information there.
+- Before adding a tool, ask what input it reads that nothing else on the chart reads; real confirmation comes from a different family.
+- A chart needs to answer direction, location, momentum and volatility, and the first two are answered by structure rather than indicators.
+- A clean chart is candlesticks, one moving average, volume, at most one oscillator, your own levels, and ATR as a number.
+- Clutter costs money mainly through cherry-picking: with seven indicators, one of them always agrees with what you already wanted to do.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "Why is it misleading when RSI, Stochastic and MACD all agree?", options: ["They are calculated wrongly", "They are all derived from the same closing prices, so it is one opinion repeated", "They use different data sources", "They lag by different amounts"], answer: 1, explain: "Correlated indicators agree by construction when price is clear, which feels like confirmation but adds almost no information." },
+  { q: "Closes are 100, 102, 104, 106, 108. What does a 3-period RSI read, and why?", options: ["50, because price is average", "100, because there were no down-moves so the average loss is zero", "0, because it is overbought", "It is undefined"], answer: 1, explain: "Every change was a gain, so the average loss is zero and the formula sets RSI to 100." },
+  { q: "Which pair genuinely adds independent information?", options: ["RSI and Stochastic", "SMA 20 and EMA 20", "Price making a new high and volume shrinking", "MACD and a moving average crossover"], answer: 2, explain: "Volume is not derived from the closes, so a conflict between price and volume is real evidence rather than an echo." },
+  { q: "What belongs on a clean chart according to this lesson?", options: ["Five moving averages and three oscillators", "Candlesticks, one moving average, volume, at most one oscillator and your own levels", "Only indicators, no candles", "Bollinger Bands plus RSI plus Stochastic plus MACD"], answer: 1, explain: "Four things plus your own lines, each answering a different question, with the candles as the largest element on screen." },
+  { q: "What is the main way a cluttered chart actually causes losses?", options: ["It slows the computer down", "It offers so many readings that one always supports what you already wanted to do", "Indicators become inaccurate when stacked", "It uses too much data"], answer: 1, explain: "Confirmation bias with maths bolted on. Every trade appears to have an indicator-based reason, which makes the problem invisible from the inside." },
+  { q: "You want to decide whether to keep an indicator. What is the removal test?", options: ["Ask whether it has ever agreed with you", "Ask whether it has ever changed a decision you made, then trade a month with and a month without and compare the journal", "Ask whether other traders use it", "Count how many signals it produced"], answer: 1, explain: "Agreement is decoration. Only a tool that has changed a decision is doing work, and the journal is what settles the question." }
+]} />
+
+<TryIt to="/simulator">Open NOVA in the simulator and switch on everything: SMA, EMA, Bollinger, VWAP, plus the RSI and MACD panels. Step through twenty bars and note how long each decision takes you. Then switch off everything except one moving average and volume and step through the next twenty. Compare your decision speed, and count how many times in the first run two indicators disagreed and you picked the one you preferred.</TryIt>

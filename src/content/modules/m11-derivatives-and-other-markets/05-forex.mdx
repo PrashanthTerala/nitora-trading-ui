@@ -1,0 +1,143 @@
+At the airport there is a booth with a board on it: EUR 1.0842. Hand over 1,084.20 dollars and you walk away with 1,000 euros. Nobody thinks of that as a trade, but it is one. You just sold dollars and bought euros, and if euros get more expensive tomorrow you are richer in dollar terms without lifting a finger.
+
+That is the whole of the **foreign exchange market**, usually shortened to <Term id="forex">forex</Term> or FX. It is the largest market on earth by a wide margin, trading around the clock from Sunday evening to Friday evening, and unlike shares there is no exchange in the middle. Banks quote prices to each other, brokers pass a version of those prices to you, and the whole thing runs on a network rather than in a building.
+
+Forex is also where more beginners blow up faster than anywhere else, and it is not because currencies are wild. It is because currencies are *calm*, and brokers respond to that calm by offering enormous leverage. This lesson gives you the units, the clock and the costs, and then shows you exactly how the leverage kills people.
+
+## Every price is a ratio
+
+Currencies are never priced on their own. A euro is not worth "1.08"; it is worth 1.08 *of something*. So forex quotes always come in **pairs**.
+
+In EUR/USD, the first currency is the **base currency** and the second is the **quote currency**. The number tells you how many units of the quote currency one unit of the base currency costs.
+
+So **EUR/USD at 1.0842 means one euro costs 1.0842 US dollars.** Buying the pair means buying euros and paying with dollars. Selling the pair means the reverse. There is no "going short" problem here: every trade is already long one currency and short another, so selling is as natural as buying.
+
+<Callout type="eli5">
+
+Think of a see-saw with a euro on one end and a dollar on the other. The price is just how high one end is compared to the other. When you buy EUR/USD, you are betting the euro end goes up. You cannot make the see-saw go up on both ends at once, which is why currencies always come in twos.
+
+</Callout>
+
+Pairs come in three rough groups. **Majors** all include the US dollar: EUR/USD, USD/JPY, GBP/USD, USD/CHF, AUD/USD, USD/CAD, NZD/USD. **Crosses** skip the dollar: EUR/GBP, EUR/JPY, GBP/JPY. **Exotics** pair a major with a smaller economy, like USD/TRY or USD/ZAR, and they are thin, jumpy and expensive to trade. Beginners should live in the majors.
+
+## Pips: the unit of movement
+
+Currency moves are tiny in percentage terms, so forex uses its own unit. A **pip** is one unit of the fourth decimal place, or `0.0001`.
+
+If EUR/USD goes from 1.0842 to 1.0867, that is 0.0025, which is **25 pips**. Many brokers also quote a fifth decimal, called a *pipette* or fractional pip, so you may see 1.08425. The fifth digit is a tenth of a pip and is mostly there to advertise tighter spreads.
+
+The exception is any pair with the Japanese yen. Because one dollar buys around 150 yen rather than around 1 euro, yen pairs are quoted to two decimals and **a pip is `0.01`, the second decimal**. USD/JPY moving from 149.35 to 149.60 is also 25 pips.
+
+## Lots: the unit of size
+
+Position size in forex is measured in **lots**, which are fixed numbers of units of the base currency.
+
+| Lot name | Units of base currency | Pip value on a USD-quoted pair |
+| --- | --- | --- |
+| Standard | 100,000 | About $10 per pip |
+| Mini | 10,000 | About $1 per pip |
+| Micro | 1,000 | About $0.10 per pip |
+| Nano (some brokers) | 100 | About $0.01 per pip |
+
+The pip values fall out of simple multiplication, not from a table you need to memorise.
+
+<Callout type="math" title="Working out pip value and a trade result">
+
+One standard lot of EUR/USD is 100,000 euros. A pip is 0.0001 dollars per euro.
+
+100,000 × 0.0001 = **$10 per pip**. A mini lot is a tenth of that, $1 per pip. A micro lot is $0.10 per pip.
+
+Now a whole trade. You buy one standard lot of EUR/USD at 1.0842 and close at 1.0867.
+
+That is 25 pips. 25 × $10 = **$250 profit**, before costs.
+
+Yen pairs need one extra step because the pip is in yen. One standard lot of USD/JPY moves 100,000 × 0.01 = ¥1,000 per pip. At 149.35 yen to the dollar, ¥1,000 ÷ 149.35 = **about $6.70 per pip**. Same idea, different currency to convert out of.
+
+</Callout>
+
+## Leverage is the real product
+
+A standard lot of EUR/USD at 1.0842 is $108,420 of currency. You obviously do not have that, so the broker lets you control it with a deposit. This is the same [margin and leverage](/learn/m06-orders-and-execution/06-margin-and-leverage) machinery you met in module 6, dialled up much further.
+
+Typical retail caps are 50:1 on majors in the United States and 30:1 on majors in the UK and EU. Some offshore brokers advertise 500:1 or even 1000:1, which should be read as a warning label rather than a feature.
+
+<Callout type="danger" title="The arithmetic that empties accounts">
+
+You deposit $2,000 with a broker offering 50:1 on majors. That means you can control up to $100,000 of currency, which is nine mini lots of EUR/USD at 1.0842 (about $97,578 of notional, needing about $1,952 of margin).
+
+Nine mini lots is $9 per pip.
+
+EUR/USD moves 50 to 80 pips on an ordinary day and can move 150 pips on a US inflation release. At $9 per pip, a 100-pip move against you is $900, which is **45% of your account gone in a session**.
+
+And $2,000 ÷ $9 = about 222 pips. A single bad day and a half is the whole account. Nothing unusual has to happen. The currency moved 2%.
+
+Now size it properly instead. Risk 1% of $2,000, so $20. Your stop is 25 pips away, so you can afford $20 ÷ 25 = $0.80 per pip, which is **eight micro lots**. Same trade idea, same stop, and a bad day costs you $20 instead of your account.
+
+</Callout>
+
+The lesson is not that leverage is evil. It is that leverage is a *setting*, and the broker sets it high by default. Your position size must come from your stop and [the 1% rule](/learn/m07-risk-management/02-the-one-percent-rule), never from how many lots the platform will let you click.
+
+## The 24-hour clock
+
+Forex has no opening bell because somewhere a bank is always open. The week runs from Sunday evening to Friday evening New York time, and within it four regional sessions hand over to each other.
+
+| Session | Approximate hours (UTC) | Character |
+| --- | --- | --- |
+| Sydney | 22:00 to 07:00 | Thin and quiet; ranges, small moves |
+| Tokyo | 00:00 to 09:00 | JPY, AUD and NZD pairs most active |
+| London | 08:00 to 17:00 | The largest single share of volume; EUR and GBP come alive |
+| New York | 13:00 to 22:00 | US data, then a slow fade into the evening |
+
+Those hours shift by an hour when countries change their clocks, so treat them as a shape rather than a timetable.
+
+The window that matters most is **13:00 to 17:00 UTC**, when London and New York are both open. That is roughly 8am to noon in New York and 1pm to 5pm in London, and it carries the heaviest volume of the day. Spreads are tightest, moves are largest, and almost every big US release lands inside it. If you have a normal job and can only trade for two hours, those are usually the two hours, and you can plan around them with the [economic calendar](/learn/m10-fundamentals-and-macro/05-economic-calendar).
+
+The flip side is that the Asian session on a quiet Tuesday can drift 20 pips in six hours. Trading a breakout strategy at 3am UTC is fighting the clock.
+
+## What it costs: spread and swap
+
+Most retail forex brokers charge nothing that is labelled commission. They are paid through [the spread](/learn/m00-what-is-a-market/07-bid-ask-spread) instead.
+
+EUR/USD typically shows 0.6 to 1.5 pips of spread at a retail broker during the London session. On one standard lot, a 1-pip spread is $10 that you lose the instant you enter. That sounds trivial until you notice what it does to short targets: if you are scalping for 5 pips, a 1-pip spread is 20% of the prize, paid up front, on every single trade. Exotic pairs can show 20 pips or more, which makes most short-term strategies mathematically impossible before you start.
+
+The second cost is **swap**, also called rollover. Currencies pay interest, so holding a pair overnight means you earn interest on the one you are long and pay it on the one you are short. The difference is credited or debited to your account at 5pm New York time, and the broker takes a margin on both directions.
+
+<Callout type="math" title="A swap charge">
+
+You are long one standard lot of EUR/USD, so you are long euros and short dollars. Suppose euro rates are 2% and dollar rates are 4%.
+
+You are financing a $108,420 position at a 2% disadvantage: 108,420 × 0.02 = $2,168 a year, or about **$5.94 a night**, plus the broker's markup.
+
+Hold that position for a month and you have paid roughly $180 in swap, which is 18 pips of your profit, before you have been right or wrong about anything.
+
+</Callout>
+
+One quirk worth knowing: because currency trades settle two business days later, most brokers charge or pay **triple swap on Wednesday** to cover the coming weekend. A strategy that looks fine on Tuesday can look silly on Wednesday night.
+
+<Callout type="warning" title="Two things beginners get wrong">
+
+**Treating forex as calmer than stocks.** In percentage terms it is. In *account* terms it usually is not, because the leverage is ten to fifty times higher. Judge risk in dollars lost, not in percent moved.
+
+**Trusting an unregulated broker because the leverage is bigger.** A firm offering 1000:1 from an address you cannot find on a map is not being generous. Check the regulator before you check the spreads, using the method in [the scams lesson](/learn/m12-becoming-consistent/05-scams-and-red-flags).
+
+</Callout>
+
+<KeyTakeaways>
+- A forex quote is a ratio: EUR/USD at 1.0842 means one euro costs 1.0842 US dollars, so buying the pair buys euros and sells dollars.
+- A pip is the fourth decimal (0.0001) on most pairs, but the second decimal (0.01) on yen pairs.
+- Lots are fixed unit sizes: standard 100,000, mini 10,000, micro 1,000, giving about $10, $1 and $0.10 per pip on USD-quoted pairs.
+- Leverage of 30:1 or 50:1 means a normal 100-pip day can take half an account, so size from your stop, not from what the broker allows.
+- The market runs 24 hours across Sydney, Tokyo, London and New York, and the London and New York overlap carries the most volume and the tightest spreads.
+- Costs are the spread on every trade and swap interest every night, with triple swap usually charged on Wednesdays.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "EUR/USD is quoted at 1.0842. What does that mean?", options: ["One US dollar costs 1.0842 euros", "One euro costs 1.0842 US dollars", "The spread is 1.0842 pips", "A standard lot costs $1,084.20"], answer: 1, explain: "The first currency is the base and the second is the quote. The number is how many quote units one base unit costs." },
+  { q: "GBP/USD moves from 1.2650 to 1.2683. How many pips is that?", options: ["3.3 pips", "33 pips", "330 pips", "0.33 pips"], answer: 1, explain: "A pip is the fourth decimal. 1.2683 minus 1.2650 is 0.0033, which is 33 pips." },
+  { q: "USD/JPY moves from 149.20 to 149.90. How many pips is that?", options: ["7 pips", "70 pips", "700 pips", "0.7 pips"], answer: 1, explain: "Yen pairs are the exception: a pip is the second decimal, 0.01. A 0.70 move is 70 pips." },
+  { q: "Your account is $2,000 and you want to risk 1% on a trade with a 25-pip stop. What size fits?", options: ["Nine mini lots", "One standard lot", "Eight micro lots, about $0.80 per pip", "Two mini lots"], answer: 2, explain: "1% of $2,000 is $20. Divided by a 25-pip stop that is $0.80 per pip, which is eight micro lots at $0.10 each." },
+  { q: "Which window usually has the heaviest volume and the tightest spreads?", options: ["The Sydney session", "The Tokyo session alone", "The London and New York overlap", "Sunday evening"], answer: 2, explain: "Roughly 13:00 to 17:00 UTC both London and New York are open, and most major US releases land inside it." },
+  { q: "What is swap in forex?", options: ["A commission charged per lot", "The interest difference on the two currencies, credited or debited each night", "The gap between bid and ask", "A fee for closing early"], answer: 1, explain: "You earn interest on the currency you are long and pay it on the one you are short. Most brokers charge triple swap on Wednesday to cover the weekend." }
+]} />
+
+<TryIt to="/simulator">The simulator trades shares rather than currency pairs, but the sizing habit is identical. Take a trade, write down the stop distance, and work out the size that risks exactly 1% before you click. Doing that arithmetic every time is the single skill that makes forex survivable.</TryIt>

@@ -1,0 +1,119 @@
+Drop a stone in a pond. The splash is instant. But the ripples spread outward for a long time afterwards, reaching the edges well after the stone has sunk.
+
+News is the stone. When a company reports earnings, a central bank changes rates, or a drug trial succeeds, price reacts instantly: the splash, often a [gap](/learn/m01-reading-price/07-gaps). But the ripples take longer. It takes hours or days for every fund, analyst and retail trader to absorb what the news means, update their view, and act. During that time, price tends to keep drifting in the direction of the initial reaction.
+
+**Momentum trading**, or **catalyst trading**, rides the ripples. You are not predicting the news. You are trading the *reaction* to it, after it has happened, in the direction it pushed.
+
+## Why the drift exists
+
+Markets are supposed to price news instantly. In practice they under-react. Some reasons that have held up across decades of study:
+
+- **Anchoring.** People stay attached to the old price and are slow to accept a new one, so they sell into the rally too early and buy into the drop too early, which slows the move down and stretches it out.
+- **Institutional size.** A fund that wants to build a large position after good news cannot buy it all at once without moving the price. It buys over days. That steady buying is the drift.
+- **Attention.** Not everyone sees the news at once. Coverage spreads, and each new wave of attention brings new buyers.
+
+The result is a well-documented tendency for stocks with big positive earnings surprises to keep outperforming for weeks, and for big negative ones to keep underperforming. The effect is not huge and it is not reliable on any single stock. But it is real enough to build on.
+
+<PatternFigure name="bull-flag" caption="A sharp catalyst move, then a tight sideways pause as the market digests, then continuation. The flag is the momentum trader's entry." />
+
+<Callout type="eli5">
+
+When a popular new toy comes out, the first shop sells out in an hour. But kids keep asking for it for weeks, and every shop that gets stock sells out too. Trading momentum is not guessing which toy will be popular. It is noticing that one already is, and betting the queue lasts a while longer.
+
+</Callout>
+
+## Market conditions it suits
+
+You need a genuine **catalyst**: a piece of news that changes what the instrument is worth. Not a rumour, not a chart pattern, not an analyst opinion. Earnings, guidance changes, regulatory decisions, major contracts, rate decisions, economic data surprises. The [economic calendar](/learn/m10-fundamentals-and-macro/05-economic-calendar) and [catalyst lesson](/learn/m10-fundamentals-and-macro/08-news-catalysts-and-events) in the next module cover what counts.
+
+Then you need an **outsized reaction**. A gap of at least 2 ATR, or a single bar with volume 3× the average. If the news was big but price barely moved, the market had already priced it in, and there is nothing to ride.
+
+And you need the reaction to *hold*. A gap that fills within the first hour was not a catalyst move; it was a knee-jerk.
+
+In the simulator, BIOX is designed around gappy catalyst-style behaviour, and NOVA produces sharp momentum bursts. Use those.
+
+## The core strategy: gap-and-go with a first-pullback entry
+
+Trading the first minute after news is a fast, dangerous game with wide spreads and huge slippage. This strategy skips it and enters on the first pause, when the direction has been established and the risk can be defined.
+
+**Setup:**
+
+- Timeframe: 5m for entry, 1h for context.
+- A catalyst has occurred and price has gapped or spiked at least 2 ATR (measured on the 1h) in one direction, on volume at least 3× the 20-bar average.
+- The move holds: 30 minutes after the news, price is still at least 60% of the way from the pre-news level to the post-news extreme. If it has retraced more than 40%, the reaction has failed and there is no trade.
+
+**Entry trigger (long; mirror for short):**
+
+- After the initial burst, wait for the first consolidation: at least 3 and at most 12 candles on the 5m in which price moves sideways in a range narrower than the burst. This is the flag.
+- Enter on the first 5m close above the high of that consolidation.
+- Place a buy stop 1 tick above the consolidation high so you enter on the break rather than watching it.
+
+**Stop:**
+
+- Below the low of the consolidation. If the consolidation is very tight, at least 1 ATR (5m) below entry.
+
+**Target:**
+
+- First target: a measured move equal to the initial burst (from pre-news level to the post-news extreme), projected from the consolidation low. If this is less than 2R away, skip.
+- Take half at the first target, move the stop to breakeven, and trail the rest with a 2 ATR (5m) stop or exit at the end of the session.
+
+**Management:**
+
+- Do not hold through the next scheduled news event.
+- If the consolidation breaks *downward* first, the setup is void. Do not flip short; the risk is undefined.
+- Hard exit at 15 minutes before the close if still open and the plan is intraday.
+
+**Size:** 1% risk from entry to stop. On gappy names, consider 0.5% until you have a sample.
+
+## A worked example
+
+BIOX closed yesterday at $38. Overnight, positive trial data. It opens at $46, a $8 gap, with 1h ATR of $1.20, so the gap is over 6 ATR. First 5m candle volume is 5× average.
+
+Thirty minutes in, price is at $47.20, above the 60% hold level ($42.80). The move has held. From 10:05 to 10:35, price consolidates between $46.60 and $47.40 over six candles. At 10:40, a 5m candle closes at $47.55.
+
+- **Entry**: buy stop at $47.45, filled.
+- **Stop**: consolidation low $46.60. Risk: $0.85.
+- **Measured move**: initial burst from $38 to $47.40 is $9.40. Projected from the consolidation low: $56. That is far more than 2R. Use a conservative first target of half the burst, $4.70 from $46.60 = $51.30. Reward: $3.85, which is 4.5R.
+- **Size**: $10,000 account, 0.5% on a gappy name = $50, divided by $0.85 = 58 shares.
+
+At $51.30, sell 29 shares, move the stop to $47.45, trail the rest.
+
+## Known weaknesses
+
+**Slippage and spreads.** Right after news, the spread on BIOX-style names can be ten times normal. Even the first-pullback entry sees worse fills than a calm market. Budget for it; assume you lose 0.2R per trade to execution.
+
+**Reversals.** Some catalyst moves are fully reversed within a day, especially when the news was ambiguous or the pre-news positioning was extreme. The 60% hold rule filters the worst of these but not all.
+
+**Overreaction.** Sometimes the initial move *was* the whole move, and the drift is in the opposite direction. This is more common with widely anticipated news, where the reaction is "sell the fact".
+
+**Emotional intensity.** Fast, volatile, exciting. Every bias from the [psychology module](/learn/m08-trading-psychology/02-fomo-and-chasing) is amplified. FOMO is constant. This is a poor strategy for anyone who has not first proven discipline on slower setups.
+
+<Callout type="warning">
+
+Never enter in the first five minutes after news. The spread is wide, the fills are terrible, and the direction is not yet clear. The consolidation entry gives up some of the move in exchange for a defined risk. That trade is worth making every time.
+
+</Callout>
+
+<Callout type="story" title="Leo and the headline">
+
+Leo sees a headline, sees BIOX up 20%, and buys at market within thirty seconds. His fill is $0.60 above the quote. Price spikes another dollar, then drops three. He has no stop because "it was moving too fast". He exits down $2.40 a share, having correctly identified the direction of a move that ended the day up 24%. Being right about the news is not the same as trading it well.
+
+</Callout>
+
+<KeyTakeaways>
+- Momentum trading rides the drift after a catalyst, because markets under-react to news and take hours or days to fully absorb it.
+- It needs a genuine catalyst, an outsized reaction of at least 2 ATR on heavy volume, and a move that holds 60% of its ground after 30 minutes.
+- The entry is the first consolidation after the burst, on a break of its high, with the stop below its low and a measured move target requiring at least 2R.
+- Never trade the first five minutes; wide spreads and undefined risk make it a losing game for almost everyone.
+- Slippage, reversals, overreaction and emotional intensity are the costs, and this strategy should come after discipline is proven on slower setups.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "A stock gaps up 8% on earnings but retraces 60% of the gap within the first 30 minutes. What does the strategy say?", options: ["Buy the dip", "No trade; the reaction has failed the 60% hold test", "Short it", "Wait for a second gap"], answer: 1, explain: "A move that gives back more than 40% of its ground quickly was a knee-jerk, not a catalyst drift. The setup requires the move to hold." },
+  { q: "Why does the strategy skip the first five minutes after news?", options: ["Because it is illegal to trade then", "Because spreads are wide, fills are poor and direction is not yet clear", "Because volume is too low", "Because the platform is slow"], answer: 1, explain: "The first minutes are the most expensive and least defined part of a catalyst move. The consolidation entry trades some upside for controlled risk." },
+  { q: "Where does the stop go on a gap-and-go entry?", options: ["At the pre-news price", "Below the low of the consolidation, or at least 1 ATR below entry if it is very tight", "At breakeven immediately", "There is no stop; the move is too strong"], answer: 1, explain: "The consolidation low defines where the momentum thesis is wrong. A tight consolidation gets an ATR floor so noise does not stop you out." },
+  { q: "Leo bought BIOX at market thirty seconds after the headline with no stop and lost money on a day it closed up 24%. What was his error?", options: ["He picked the wrong direction", "He traded the splash instead of the ripple, with terrible fills and undefined risk", "He used too small a size", "He should have shorted"], answer: 1, explain: "Being right about direction is not the same as trading it well. Entering without a defined stop in a wide-spread moment is not a strategy." },
+  { q: "What explains why price keeps drifting after news instead of jumping straight to the right level?", options: ["Markets are always wrong", "Anchoring, institutions buying over days, and attention spreading slowly", "Brokers delay orders", "News is always fake"], answer: 1, explain: "Under-reaction is driven by human anchoring, the mechanics of large orders, and the gradual spread of attention." }
+]} />
+
+<TryIt to="/simulator">Open the simulator on BIOX, 5m, and replay until you find a gap of at least 2 ATR on heavy volume. Pause 30 minutes after the open and check the 60% hold rule. If it passes, wait for the first 3-to-12 candle consolidation and place a buy stop above its high with a bracket. Log whether the move continued or reversed.</TryIt>

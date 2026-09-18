@@ -1,0 +1,116 @@
+Picture a rope with a red ribbon tied at the middle and a team pulling at each end. The referee marks where the ribbon starts, and marks it again when the whistle blows. But he also pushes two pins into the ground: one at the furthest point the ribbon ever reached towards the left team, one at the furthest it reached towards the right.
+
+When the match ends you can read the whole contest from four marks. Where it started. Where it finished. How far each side ever got. You were not there, and you still know whether it was a rout, a nail-biter, or a comeback.
+
+A **candlestick** is that referee's report. Four numbers, drawn as one small shape, summarising a battle between buyers and sellers over one period of time. This is the most important lesson in the module, because every pattern in the next sixteen lessons is just candles like these arranged in a row. Read this one slowly.
+
+## The four prices
+
+Every candle is built from exactly four numbers, always in this order. Traders say them as "OHLC", and as you saw in [Line, Bar and Candlestick Charts](/learn/m01-reading-price/02-line-bar-candle), an OHLC bar carries the identical four.
+
+**Open.** The <Term id="open">open</Term> is the price of the first trade of the period. On a daily candle that is the first print at the opening bell. On a 5-minute candle it is the first trade in those five minutes.
+
+**High.** The <Term id="high">high</Term> is the highest price anyone paid at any moment during the period. It may have happened in the first second or the last.
+
+**Low.** The <Term id="low">low</Term> is the lowest price anyone paid during the period. Same deal: no information about when.
+
+**Close.** The <Term id="close">close</Term> is the price of the final trade of the period. It is the most important of the four, because it is the price both sides were willing to live with when the period ran out.
+
+Three of those four are facts about the journey. Only one, the close, is the verdict.
+
+## The parts of the drawing
+
+Those four numbers become two visible parts: a fat rectangle and one or two thin lines.
+
+<PatternFigure name="anatomy-bullish" caption="A bullish candle. The body runs from the open at the bottom to the close at the top. The upper wick reaches the high, the lower wick reaches the low." />
+
+**The body** is the rectangle between the open and the close. Its top and bottom are those two prices, and nothing else. The <Term id="body">body</Term> tells you the *net result* of the period: how far price travelled from start to finish, and in which direction.
+
+**The upper wick** is the thin line poking out of the top of the body, running up to the high. It measures the ground buyers took and then gave back. If the high equals the top of the body, there is no upper wick at all.
+
+**The lower wick** is the thin line below the body, running down to the low. It measures the ground sellers took and then gave back. <Term id="wick">Wicks</Term> are also called shadows, or tails, depending on the book.
+
+Now here is the bearish version, where the same four labels sit in different places.
+
+<PatternFigure name="anatomy-bearish" caption="A bearish candle. The open is now at the TOP of the body and the close at the bottom, because price finished lower than it started. The wicks still reach the high and the low." />
+
+Compare the two figures carefully. In the bullish candle the open is the *bottom* of the body and the close is the *top*. In the bearish candle they swap: the open is the *top* and the close is the *bottom*. The high is always the very top of the whole shape and the low is always the very bottom, no matter the colour. Getting this swap into your bones is the single most valuable thirty seconds of this module.
+
+<Callout type="eli5">
+
+Imagine a swimmer in a lane. She starts at one end (the open) and finishes somewhere (the close) — that stretch is the body, the part that counts on the scoreboard. But during the race she also drifted to the deep end and to the shallow end for a moment. Those two furthest points are the wicks. They happened, but they are not where she ended up.
+
+</Callout>
+
+## What each part tells you about the battle
+
+Now for the useful part. Every piece of the candle is evidence about who was in control and how hard the fight was.
+
+### The total height: how violent the period was
+
+From the low to the high is the period's **range**. A tall candle means price covered a lot of ground; a lot of people disagreed strongly about value. A short candle means everyone roughly agreed and the period was quiet. Before you read anything else, notice whether this candle is taller or shorter than its neighbours.
+
+### The body: who won
+
+A long body means one side dominated. The period opened, one side pushed, and price never really came back. A long green body says buyers took the period and kept it.
+
+A tiny body means the fight ended roughly where it began. Whatever happened in the middle, neither side could bank a result. That is why a candle with almost no body has a special name, the doji, and a whole lesson devoted to it later.
+
+### The wicks: where price was rejected
+
+This is the part beginners skip, and it is the part professionals stare at. **A wick is a record of a failed attempt.** Price got there, and could not stay.
+
+A long **lower** wick means sellers dragged price well down during the period, and buyers bought it all back before the close. The low was rejected. Whoever sold near the bottom is now looking at a worse price.
+
+A long **upper** wick means buyers pushed price well up, and sellers sold it all back before the close. The high was rejected. The people who bought up there are underwater.
+
+<CandleFigure
+  title="Three candles, three different stories"
+  bars={[
+    { o: 100, h: 106.2, l: 99.7, c: 105.9 },
+    { o: 106, h: 107, l: 100.4, c: 106.4 },
+    { o: 106.3, h: 112, l: 105.9, c: 106.6 }
+  ]}
+  annotations={[
+    { type: "label", index: 0, text: "long body, buyers ran it" },
+    { type: "label", index: 1, text: "long lower wick, low rejected", position: "below" },
+    { type: "label", index: 2, text: "long upper wick, high rejected" }
+  ]}
+  caption="Same instrument, three consecutive periods. The first was a clean win for buyers. The second was a scare that got bought back. The third was a push that failed. Each finished near 106, but they are not the same news."
+/>
+
+Look at that figure again. All three candles close at almost the same price. If you were reading a line chart, all three would be nearly identical dots. The candle tells you that one was a steady advance, one was a violent dip that got rescued, and one was a failed breakout. That difference is the entire reason candles exist.
+
+<Callout type="warning" title="A candle hides the order of events">
+
+A candle tells you the high and the low happened. It never tells you *when*. A candle with wicks on both ends could have gone up then down then back to the middle, or down then up then back. Two completely different stories produce the identical picture. If the order matters to your decision, you must drop to a smaller timeframe to see it.
+
+</Callout>
+
+## Reading a candle out loud
+
+Build this habit now and it will pay you for years. When you look at a candle, narrate it in one sentence with real numbers.
+
+"It opened at 100, sellers dragged it to 97, buyers took it all the way back and closed it at 104, above the open. Sellers tried and lost."
+
+Notice the structure: open, worst point, best point, close, verdict. If you cannot say that sentence about a candle, you have not read it yet — you have only glanced at its colour.
+
+<TryIt to="/simulator">Open the simulator, pick BLUE on the 5-minute chart, and use the clock control to step forward one candle at a time. Watch a single candle build: the open locks in immediately, the body stretches and shrinks as price moves, the wicks record every failed push, and only at the end of the five minutes does the close lock in and the candle finish. Do this for ten candles. It makes everything above concrete in a way reading cannot.</TryIt>
+
+<KeyTakeaways>
+- Every candle is built from exactly four prices: open, high, low and close.
+- The body is the rectangle between the open and the close, and it shows the net result of the period.
+- On a bullish candle the open is the bottom of the body and the close is the top; on a bearish candle they swap.
+- The high is always the very top of the shape and the low is always the very bottom, whatever the colour.
+- Wicks are records of failed attempts: a long lower wick means the low was rejected, a long upper wick means the high was rejected.
+- A candle never reveals the order in which the high and low happened, so two very different sessions can look identical.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "Which four prices build every candlestick?", options: ["Open, high, low, close", "Open, average, volume, close", "Bid, ask, high, low", "High, low, volume, range"], answer: 0, explain: "Open, high, low and close, usually said as OHLC. Nothing else goes into the shape." },
+  { q: "On a bearish (red) candle, where is the opening price?", options: ["At the bottom of the body", "At the top of the body", "At the tip of the upper wick", "At the tip of the lower wick"], answer: 1, explain: "A bearish candle finished below where it started, so the open is the top of the body and the close is the bottom." },
+  { q: "What does a long lower wick tell you?", options: ["Volume was unusually low", "Buyers gave up near the end of the period", "Sellers pushed price well down but buyers bought it back before the close", "The period had no trading for a while"], answer: 2, explain: "A wick is a failed attempt. A long lower wick means the low was tested and rejected by buyers." },
+  { q: "A candle opens at 50, trades as high as 56 and as low as 49, and closes at 50.2. What does the body look like?", options: ["Very tall and green", "Very tall and red", "Very small, with a long upper wick", "Very small, with a long lower wick"], answer: 2, explain: "The body spans only 50 to 50.2, so it is tiny. The high at 56 leaves a long upper wick: buyers pushed hard and lost it all." },
+  { q: "Which of the four prices is generally considered the most important?", options: ["The open", "The high", "The low", "The close"], answer: 3, explain: "The close is the price both sides accepted when the period ran out. The other three describe the journey; the close is the verdict." },
+  { q: "Two traders see the same daily candle with wicks on both ends. One says price rose then fell; the other says it fell then rose. Who is right?", options: ["The first", "The second", "The candle cannot tell you, so you need a smaller timeframe", "Whoever checks volume"], answer: 2, explain: "A candle records that the high and low happened, never in what order. Only a lower timeframe reveals the sequence." }
+]} />

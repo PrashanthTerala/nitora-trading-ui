@@ -1,0 +1,127 @@
+You are at an airport with £100 in your pocket, standing in front of a currency booth. The board above the counter shows two numbers for euros: **we buy at 1.12**, **we sell at 1.18**. Two prices, for the same currency, at the same second, one metre apart.
+
+If you change your pounds to euros and then immediately change them straight back, you will walk away with noticeably less than £100. You did not make a bad prediction. You did not wait for the market to move. You simply crossed the gap between the booth's two numbers, twice.
+
+Every market in the world works like that booth. There is never one price. There are always two, and which one you get depends entirely on whether you are the one buying or the one selling. Understanding this properly is the first genuine edge a beginner can pick up, because it changes how you place orders forever.
+
+## The two prices
+
+At any instant, for any instrument, there are two numbers that matter.
+
+The **bid** is the highest price that somebody is currently willing to *pay*. It is what you receive if you want to sell right now. Say it to yourself as: the bid is what buyers bid for your shares.
+
+The **ask** (also called the offer) is the lowest price at which somebody is currently willing to *sell*. It is what you pay if you want to buy right now.
+
+The ask is always higher than the bid. If it were not, the two orders would have matched each other and traded instantly.
+
+The gap between them is the **spread**.
+
+Suppose a share is quoted like this:
+
+| | Price |
+| --- | --- |
+| <Term id="ask">Ask</Term> (you buy here) | $50.04 |
+| <Term id="bid">Bid</Term> (you sell here) | $50.00 |
+| <Term id="spread">Spread</Term> | $0.04 |
+
+The single price your app shows you, "$50.02", is usually just the midpoint, or the last traded price. You cannot trade at it. It is a convenient fiction that sits between the two prices you can actually get.
+
+<Callout type="eli5">
+
+Think of a second-hand bookshop. The shop will buy your book for £2 and sell you the same book for £5. There is no single "price of the book". There is a price if you are selling and a different price if you are buying, and the shop keeps the difference for standing there all day.
+
+</Callout>
+
+## The spread is a real, immediate cost
+
+Here is the worked example every beginner should do once, on paper, before they do it with money.
+
+You decide to buy 100 shares right now, at the market. You pay the ask.
+
+- 100 shares times $50.04 = **$5,004 out of your account**.
+
+You immediately change your mind, one second later, with the market completely unchanged. You sell 100 shares right now, at the market. You receive the bid.
+
+- 100 shares times $50.00 = **$5,000 into your account**.
+
+<StatRow>
+<Stat value="$5,004" label="paid at the ask" />
+<Stat value="$5,000" label="received at the bid" />
+<Stat value="-$4" label="cost of the round trip" />
+<Stat value="0.08%" label="lost before commission" />
+</StatRow>
+
+You lost $4 in one second, having predicted nothing and waited for nothing. Add your broker's commission and it is worse.
+
+That $4 is not a fee your broker itemises. It is not a mistake. It is the toll you pay for demanding immediacy, and it is collected by whoever was standing there willing to take the other side, usually a [market maker](/learn/m00-what-is-a-market/05-the-players).
+
+Now scale it. Four dollars on a $5,000 position is 0.08%. If you place six such round trips a day, you are paying roughly half a percent of your position size every day in spread alone, before you have had a single opinion about direction. A strategy aiming for 0.3% per trade is dead on arrival in that instrument.
+
+<Callout type="warning" title="You start every trade at a loss">
+
+The moment you buy at the ask, your position is already showing a small loss, because it is valued at what you could sell it for: the bid. This is normal and not a glitch. It also means the market has to move in your favour by at least the spread before you break even. Every trade begins slightly underwater, and the wider the spread, the deeper the hole you start in.
+
+</Callout>
+
+## Why some spreads are tiny and others are enormous
+
+The size of the spread is a direct measurement of how crowded and competitive the market is. Traders call that <Term id="liquidity">liquidity</Term>.
+
+In a very liquid instrument, a large well-known share or a major currency pair, dozens of market makers and thousands of traders are competing to post the best bid and the best ask. If one market maker quotes a 4-cent spread, a rival quotes 3 cents and gets the business. Competition grinds the gap down to a cent or less.
+
+In an illiquid instrument, a tiny company, an obscure ETF, a share at 4am, almost nobody is quoting. The one firm willing to stand there takes on real risk: they might buy from you and then be unable to sell for an hour, during which the price could fall. They demand compensation for that risk, and the compensation is a fat spread.
+
+Roughly, spreads widen when:
+
+- **Volume is low**, such as tiny companies or thin ETFs.
+- **The time is odd**, such as pre-market, after-hours or lunchtime lulls.
+- **Volatility spikes**, because holding inventory is suddenly risky.
+- **News is imminent**, because nobody wants to be caught quoting a stale price.
+
+<CandleFigure
+  title="A thinly traded instrument"
+  bars={[
+    { o: 20.0, h: 20.6, l: 19.4, c: 19.6 },
+    { o: 20.1, h: 20.9, l: 19.9, c: 20.7 },
+    { o: 20.2, h: 20.4, l: 19.2, c: 19.4 },
+    { o: 19.9, h: 21.0, l: 19.8, c: 20.8 },
+    { o: 20.3, h: 20.5, l: 19.3, c: 19.5 }
+  ]}
+  annotations={[
+    { type: "zone", from: 0, to: 4, priceFrom: 19.4, priceTo: 20.4, text: "prices bounce between a wide bid and a wide ask" }
+  ]}
+  caption="In a thin market, consecutive trades hop between a low bid and a high ask, so the chart looks jumpy even when nothing is happening. Much of that movement is the spread, not opinion."
+  showVolume={false}
+/>
+
+That jumpiness has a name, bid-ask bounce, and it is why illiquid charts look dramatic while being almost untradeable.
+
+## What to do about it
+
+Three practical habits, starting today.
+
+**Check the spread before you check the chart.** If the spread is a meaningful fraction of the move you are hoping to catch, there is no trade there, however pretty the setup.
+
+**Prefer liquid instruments while learning.** A penny share with a 6% spread will punish good analysis. A large-cap share with a 0.02% spread will not.
+
+**Understand that you can choose which price you take.** Demanding immediacy means paying the spread. Posting a patient order at the bid and waiting means you might avoid it, at the cost of possibly not being filled at all. That trade-off is the subject of market orders versus limit orders in Module 6, and the spread is the reason the choice exists.
+
+<TryIt to="/simulator">Open the simulator and look at FXEU on the 1m chart, then CRYP on the same timeframe. FXEU moves smoothly, tick by tick, the way a tight-spread instrument does. CRYP jumps in chunks. Ask yourself, on each candle, how much of that movement you would actually have captured after crossing the spread twice.</TryIt>
+
+<KeyTakeaways>
+- There are always two prices: the bid is what you receive when selling, the ask is what you pay when buying.
+- The ask is always higher than the bid, and the gap between them is the spread.
+- Buying and instantly selling loses you the spread, so the spread is an immediate and unavoidable cost of demanding speed.
+- Every position starts slightly underwater, because you buy at the ask and it is valued at the bid.
+- Liquid, heavily traded instruments have tight spreads because market makers compete; thin ones have wide spreads.
+- Spreads widen at odd hours, in low volume, in high volatility and around news.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "You want to sell shares immediately. Which price do you receive?", options: ["The ask", "The bid", "The midpoint", "The previous close"], answer: 1, explain: "Sellers who demand immediacy hit the bid, which is the highest price anyone is currently willing to pay." },
+  { q: "A stock is quoted with a bid of $20.00 and an ask of $20.10. What is the spread?", options: ["$20.05", "$0.10", "$0.05", "$40.10"], answer: 1, explain: "The spread is the gap between the two prices: 20.10 minus 20.00 equals 10 cents." },
+  { q: "You buy 200 shares at an ask of $30.05 and instantly sell at a bid of $30.00, with no market movement. What happens?", options: ["You break even", "You make $10", "You lose $10", "You lose $6,010"], answer: 2, explain: "200 shares times the 5-cent spread equals $10 lost, before any commission, purely for crossing the gap twice." },
+  { q: "Why does a large, heavily traded share usually have a very tight spread?", options: ["Exchanges cap the spread by law", "Many market makers compete to post the best price", "Large companies pay to keep it tight", "Its price never moves"], answer: 1, explain: "Competition between quoting firms grinds the gap down. Where nobody competes, the gap widens." },
+  { q: "When is the spread most likely to widen?", options: ["Mid-morning on a busy day in a large-cap share", "In pre-market trading, in low volume, or just before a big announcement", "When many market makers are competing", "When volatility is unusually low"], answer: 1, explain: "Thin volume, odd hours, high volatility and imminent news all make quoting riskier, so quotes widen." },
+  { q: "You buy at the ask and the market does not move. Why does your position show a small loss?", options: ["Your broker charged a hidden fee", "The position is valued at the bid, which is lower than the ask you paid", "The price fell", "Positions always show a loss on day one"], answer: 1, explain: "You paid the ask but could only sell at the bid, so the position starts down by the spread. The market must move at least that far to break even." }
+]} />

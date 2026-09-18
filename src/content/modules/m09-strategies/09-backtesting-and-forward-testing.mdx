@@ -1,0 +1,130 @@
+No medicine reaches a pharmacy because someone had a good feeling about it. It goes through the lab, then a small trial, then a larger one, and at every stage it can be killed. The process is slow and unglamorous and it exists because human beings are extraordinarily good at believing things that are not true.
+
+Strategies deserve the same suspicion. You have a plan now, from the [last lesson](/learn/m09-strategies/08-building-a-trading-plan), and it feels right. Feeling right is worth nothing. This lesson is the three stages that turn a plan into something you can rely on, and the four ways a test lies while looking perfect.
+
+## Backtesting: what it is and what it is for
+
+**Backtesting** means applying your rules to historical price data, trade by trade, recording every result as if you had taken it. In the simulator you do this with bar-by-bar replay: one candle at a time, using only information that existed at that candle.
+
+The output is not a profit figure. It is a *list of trades*, from which you compute win rate, average win in R, average loss in R and [expectancy](/learn/m07-risk-management/05-expectancy).
+
+A backtest cannot tell you a strategy will work. It can only tell you it has not yet been shown not to work, which is a weaker and much more honest claim. Its real value is elimination: most ideas die in a backtest, cheaply, before they cost you anything.
+
+<Callout type="eli5">
+
+Before you cycle down a big hill for the first time, you test the brakes at the top of your street. Passing the test does not prove the brakes will hold on the hill. Failing it absolutely proves you should not go down the hill. Testing is much better at saying no than at saying yes.
+
+</Callout>
+
+## Sample size: why 100 is the floor
+
+Suppose you test thirty trades and get sixteen winners, a 53% win rate. How much do you now know?
+
+Almost nothing. Uncertainty around a measured win rate shrinks only with the square root of the number of trades. At 30 trades the standard error is about 9 percentage points, so the plausible range stretches from roughly 35% to 71%. Your 53% is consistent with a superb strategy and with a losing one. At 100 trades the standard error falls to about 5 points and the range narrows to roughly 40% to 60%. Better, and still wide.
+
+Expectancy is worse, because it depends on the *size* of results as well as their direction. A typical strategy has a per-trade standard deviation near 1.5R, giving a standard error over 100 trades of about 0.15R. So a measured expectancy of **0.26R** has a plausible range of roughly **−0.03R to 0.55R**: a hundred trades can show a good result for a strategy that is actually break-even.
+
+| Trades tested | Roughly how much you know |
+| --- | --- |
+| 10 | Nothing at all |
+| 30 | Whether the rules can be followed mechanically |
+| 100 | Whether the strategy is probably not terrible |
+| 300 | A usable estimate of expectancy |
+| 1,000 | A real measurement |
+
+So: **100 trades is the minimum before you form an opinion**, and it should be a cautious one. And they must be 100 trades of the *same* rules. Changing a parameter resets the count to zero.
+
+## The four ways a test lies
+
+### Look-ahead bias
+
+Using information that was not available at the moment of the decision. It is the easiest mistake to make and the hardest to notice.
+
+Examples: marking support at a level that only became obvious after the bounce. Using a daily indicator value mid-session, when it is not final until the close. Skipping a trade in replay because you happen to remember what happened next.
+
+The cure is mechanical: replay bar by bar and write the order down before you advance the candle. The simulator does this for you as long as you resist scrolling forward.
+
+### Survivorship bias
+
+Testing only on instruments that still exist and still matter. Backtest a buy-the-dip rule on a company that grew tenfold over ten years and it works beautifully, because the sample was chosen *after* you knew the outcome. The companies that dipped and never recovered are not on your list, because nobody charts them any more. The same applies to indices, which quietly drop their failures, and to strategies found online, where the ones that stopped working were never published.
+
+### Overfitting and curve fitting
+
+This is the big one, because it produces the most beautiful results.
+
+Suppose you test 8 moving average lengths, 5 stop multiples and 4 target multiples. That is 160 combinations. Even if your idea has no edge at all, one of those 160 will have performed wonderfully on your sample, purely by chance. You will find it, because you are looking, and it will have a clean equity curve and a story you can tell.
+
+**Curve fitting** is the same failure in a different costume: adding conditions until the losing trades disappear. Skip Mondays. Skip low-volume days. Skip December. Each filter removes real losses from the sample and removes nothing from the future.
+
+<Callout type="danger" title="Signs you have overfitted">
+
+- More than about four or five parameters in the whole strategy.
+- Rules with oddly specific numbers: a 23-period EMA, a 1.37 ATR stop.
+- Conditions that exclude a time of day, a weekday or a month with no mechanical reason.
+- Performance that collapses when you nudge a parameter slightly. A real edge is a broad plateau, not a spike: if a 20 EMA works and a 19 or 21 EMA does not, you have found noise.
+- A result that is far better than anything a professional fund reports.
+
+</Callout>
+
+### Ignoring costs and fills
+
+A backtest fills every order at the exact price, instantly. Reality charges you the [spread](/learn/m00-what-is-a-market/07-bid-ask-spread), commission and [slippage](/learn/m06-orders-and-execution/07-slippage-and-liquidity).
+
+Put a number on it. If your 1R is $100 and round-trip costs are $12, every trade loses 0.12R, so a strategy showing 0.25R gross is really doing 0.13R: half the edge. For a scalper with a 0.3R average win, costs can remove the whole thing. Subtract costs *before* deciding whether an idea is worth anything.
+
+## Walk-forward testing
+
+The fix for overfitting is to insist your strategy prove itself on data it has never seen.
+
+Split your history in two. Use the first portion, the **in-sample** data, to develop and tune the rules. Then freeze them completely and run them once on the second portion, the **out-of-sample** data. That result is your honest estimate, and you get one shot: tweak after seeing it and the data is now in-sample too.
+
+**Walk-forward testing** repeats this. Tune on a window, test on the period straight after it, then slide both forward. Stitching those out-of-sample periods together gives a realistic equity curve, and it shows whether the parameters need constant refitting, which is itself a warning sign.
+
+A simple version for the simulator: develop your rules on one replay period, then test them unchanged on a different period and a *different symbol* of similar character. If BLUE-tuned rules also work on IDX, you probably have something. If they only work on the data you built them on, you have an expensive memory.
+
+<Callout type="warning" title="A perfect backtest is a broken backtest">
+
+An equity curve that rises smoothly with no meaningful drawdown has not found a market inefficiency. It has found a mistake in your testing: look-ahead, survivorship, curve fitting or unmodelled costs.
+
+Real edges are modest and uncomfortable. They show expectancy in the 0.1R to 0.4R range, win rates between 35% and 65%, and drawdowns that make you question everything. If your test contains no stretch that looks awful, you have not tested it properly, and the first awful stretch will arrive with real money instead.
+
+</Callout>
+
+## The progression
+
+Three stages, and you do not skip any of them.
+
+**1. Backtest.** At least 100 trades, bar-by-bar replay, costs included, one set of rules, no peeking. Cost: a weekend. Purpose: kill bad ideas cheaply.
+
+**2. Forward test on paper.** Trade the [simulator](/simulator) in real time, or in replay you have never seen, for at least 50 trades and several weeks. This stage tests something the backtest cannot: whether *you* can execute the rules, in sequence, under mild pressure, without improvising. Most strategies that die here die of the trader, not the strategy.
+
+**3. Tiny real size.** Then, and only then, real money at a size where a full loss is trivial to you: roughly a tenth of your intended risk. You are not trying to make money here. You are testing whether your execution survives real consequences, which change fills, emotions and hesitation in ways paper trading cannot reproduce.
+
+| Stage | Minimum trades | What it actually tests |
+| --- | --- | --- |
+| Backtest | 100 | Whether the rules have any edge at all |
+| Forward test on paper | 50 | Whether you can execute them |
+| Tiny real size | 50 | Whether you can execute them with money at stake |
+
+If expectancy falls sharply between stages, the problem is almost always execution rather than the strategy. That gap is exactly what the [journal](/journal) is for, and the [graduation checklist](/learn/m12-becoming-consistent/07-from-simulator-to-real) covers when to scale up.
+
+<KeyTakeaways>
+- A backtest can only fail a strategy, never prove one, and its main value is killing bad ideas cheaply.
+- One hundred trades of identical rules is the minimum before forming an opinion, and even then expectancy carries wide uncertainty.
+- Look-ahead bias, survivorship bias, overfitting and unmodelled costs are the four ways a test lies while looking convincing.
+- Overfitting shows up as too many parameters, oddly specific numbers, and results that collapse when a setting is nudged.
+- Walk-forward testing tunes on one window and tests on the next, and a rule change after seeing out-of-sample data destroys the estimate.
+- Go backtest, then paper trade for at least 50 trades, then real money at roughly a tenth of your intended size.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "You backtest 30 trades and get a 53% win rate. What can you conclude?", options: ["The strategy is profitable", "Very little; the plausible range is roughly 35% to 71%", "The strategy is a coin flip", "You need a higher reward to risk"], answer: 1, explain: "The standard error at 30 trades is about 9 percentage points, so the result is consistent with both a great strategy and a losing one." },
+  { q: "You test 8 moving average lengths, 5 stop multiples and 4 targets and pick the best combination. What have you probably found?", options: ["The optimal settings", "The best of 160 combinations, which will look good by chance even with no edge", "A walk-forward result", "A survivorship-free sample"], answer: 1, explain: "Searching a large parameter space guarantees that something performs well on the sample regardless of whether there is any real edge." },
+  { q: "Marking a support level on a replay chart because you can see price bounced from it later is an example of what?", options: ["Survivorship bias", "Look-ahead bias", "Curve fitting", "Slippage"], answer: 1, explain: "You used information that did not exist at the moment of the decision." },
+  { q: "Your 1R is $100 and round-trip costs are $12. A backtest shows 0.25R gross expectancy. What is the net?", options: ["0.25R", "0.13R", "0.12R", "Negative"], answer: 1, explain: "Costs of $12 are 0.12R, so 0.25 minus 0.12 leaves 0.13R, roughly half the apparent edge." },
+  { q: "Your strategy works with a 20 EMA but performs badly with a 19 or 21 EMA. What does that suggest?", options: ["The 20 EMA is a special number", "You have fitted to noise rather than found a real edge", "You need more parameters", "The test period was too long"], answer: 1, explain: "A genuine edge is a broad plateau across nearby settings, not a single spike." },
+  { q: "What does the paper trading stage test that a backtest cannot?", options: ["Whether the rules have an edge", "Whether you can execute the rules in sequence under mild pressure", "Whether the data is clean", "Whether costs are modelled"], answer: 1, explain: "Most strategies that fail at this stage fail because of the trader rather than the rules." },
+  { q: "A backtest produces a smooth rising equity curve with almost no drawdown. What is the most likely explanation?", options: ["You have found a rare inefficiency", "The test contains an error such as look-ahead, survivorship or curve fitting", "The market was unusually kind", "The sample was too large"], answer: 1, explain: "Real edges are modest and uncomfortable; a flawless curve is nearly always a testing mistake." }
+]} />
+
+<TryIt to="/simulator">Pick one strategy and test it properly. Use bar-by-bar replay on BLUE, write each order down before advancing the candle, and record 100 trades in the journal with costs included. Then freeze the rules and run the identical test on IDX. If the second test falls apart, you fitted the first one.</TryIt>

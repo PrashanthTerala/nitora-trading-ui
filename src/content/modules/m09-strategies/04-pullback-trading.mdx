@@ -1,0 +1,119 @@
+Think about getting on a moving train. You do not try to jump aboard while it is racing through the station at full speed. You wait for it to slow down at the platform, step on, and let it accelerate again with you inside.
+
+<Term id="pullback">Pullback</Term> trading is boarding a trend at the platform. The trend is the train. Every trend pauses and dips before it continues, and those dips are where the pullback trader steps on: with the trend, at a better price, with a tighter stop than the trend follower who jumped on during the sprint.
+
+It is the most popular way to trade trends for a reason. It fixes the trend follower's biggest complaint, the late entry, and it puts your stop behind a level that has a real reason to hold.
+
+## Why pullbacks happen
+
+A trend does not go up in a straight line. After each push, some early buyers take profit, some short sellers try their luck, and price dips. If the trend is healthy, that dip finds new buyers at a level that makes sense: a moving average, a previous resistance now acting as support, a Fibonacci retracement. Then the trend resumes.
+
+The dip is not a sign of weakness. It is the trend catching its breath. The key skill is telling the difference between a pullback (temporary, shallow, low volume) and a reversal (deep, breaks structure, high volume).
+
+<PatternFigure name="breakout-retest" caption="After a breakout, price often returns to the broken level and holds. That retest is a pullback and one of the highest-quality entries in trading." />
+
+<Callout type="eli5">
+
+A bouncy ball rolling down a hill does not roll smoothly. It bounces. Each bounce goes up a bit, then keeps going down the hill. The pullback trader waits for the ball to reach the top of a bounce and then bets it will keep going downhill. Trying to catch it mid-air is much harder.
+
+</Callout>
+
+## Market conditions it suits
+
+You need an established trend. Not the start of one, and not a range. The checks:
+
+- **Structure**: at least two higher highs and two higher lows on your trading timeframe (or lower for shorts).
+- **Averages**: price above a rising 20 EMA, which is above a rising 50 EMA. The order and the slope both matter.
+- **Higher timeframe agreement**: the next timeframe up is also trending the same way. This is the [multi-timeframe](/learn/m03-market-structure/10-multi-timeframe) principle: zoom out for the trend, zoom in for the entry.
+
+Pullbacks are useless when the trend is exhausted. Late in a trend, pullbacks get deeper and bounces get weaker, until one pullback simply becomes the reversal. Watch for that pattern: three shallow pullbacks that hold, then a deeper one that barely bounces, is the trend telling you it is tired.
+
+## The core strategy: 20 EMA pullback
+
+Every rule, in order.
+
+**Setup:**
+
+- Timeframe: 15m for the trade, 1h for the filter.
+- Filter: on the 1h, price is above the 50 EMA and the 20 EMA is above the 50 EMA.
+- On the 15m, price has made at least two higher highs and two higher lows, and the 20 EMA is rising.
+- Price pulls back to *touch or slightly pierce* the 20 EMA. A wick through it is fine; a close more than 0.5 ATR below it is not, and the setup is void.
+
+**Entry trigger:**
+
+- A 15m candle closes back above the 20 EMA with a bullish body. Ideally a [hammer or bullish engulfing](/learn/m02-candlestick-patterns/06-engulfing), but any bullish close counts.
+- Enter at the open of the next candle, or place a buy stop 1 tick above the trigger candle's high.
+
+**Stop:**
+
+- Below the low of the pullback (the lowest low since the last higher high), plus a small buffer of 0.2 ATR. This is a structural stop: if that low breaks, the pullback has become a reversal and you want out.
+
+**Target:**
+
+- Primary target: the most recent higher high (the swing high before the pullback). If that is less than 1.5R away, skip the trade.
+- Extended target: a measured move equal to the previous leg, projected from the pullback low. Take half at the first target, move the stop to breakeven, and let the rest run to the extended target.
+
+**Management:**
+
+- No adjustment until the first target. Then breakeven stop on the remainder.
+- Time stop: if the trade has gone nowhere for 12 candles (three hours on the 15m), close it. A good pullback resumes quickly.
+
+**Size:** 1% risk from entry to stop. See the [position sizer](/learn/m07-risk-management/02-the-one-percent-rule).
+
+<Callout type="tip">
+
+The best pullbacks have three things in common: low volume on the dip, a touch of a level that has held before (the EMA, a prior resistance now support, a demand zone), and a decisive bullish candle off it. If all three line up, the setup is A quality. If only one does, skip it. Being fussy is the edge.
+
+</Callout>
+
+## A worked example
+
+NOVA on the 15m. The 1h chart shows price at $126 above a rising 50 EMA at $119; the 1h 20 EMA is above the 50. On the 15m, NOVA has printed higher highs at $124, $127 and $129.50, with higher lows at $121 and $124.50. The 20 EMA is rising, currently at $126.80.
+
+Price pulls back from $129.50 over five candles. The fifth candle wicks to $126.40, just under the EMA, and closes at $127.20 with a bullish body. That is the trigger.
+
+- **Entry**: $127.30, one tick above the trigger candle's high.
+- **Stop**: pullback low $126.40 minus 0.2 ATR (ATR is $0.80, so $0.16) = $126.24. Risk per share: $1.06.
+- **First target**: the previous high at $129.50. Reward: $2.20, which is 2.07R. Above the 1.5R minimum, so the trade is valid.
+- **Extended target**: the previous leg ran from $124.50 to $129.50, $5. Projected from $126.40, that is $131.40.
+- **Size**: $10,000 account, 1% = $100 risk, divided by $1.06 = 94 shares.
+
+If price hits $129.50, sell 47 shares for a gain of $103, move the stop on the remaining 47 to $127.30, and hold for $131.40.
+
+## Known weaknesses
+
+**Catching the reversal.** The pullback that turns into a reversal looks identical to a normal pullback until the trigger candle fails. Your structural stop handles this, but it will be hit often. Expect a win rate around 45% to 55%.
+
+**Trends that do not pull back.** A very strong trend may run without ever touching the 20 EMA. The pullback trader watches from the sidelines. That is acceptable; it is the price of a better entry when one does come.
+
+**Chop around the average.** In a weakening trend, price can cross the EMA repeatedly, generating several small losses. The higher-timeframe filter and the "two higher highs" rule reduce this.
+
+<Callout type="warning">
+
+Do not "anticipate" the trigger by buying when price first touches the EMA. The touch is the setup; the bullish close is the trigger. Buying the touch means buying while sellers are still in control, and it is the most common way pullback traders turn a 50% win rate into 35%.
+
+</Callout>
+
+## Variations
+
+- Use the 50 EMA for deeper, slower pullbacks on the same timeframe. Fewer trades, bigger moves.
+- Use a [Fibonacci](/learn/m05-indicators/12-fibonacci) 38.2% to 61.8% zone instead of the EMA. Same logic, different level.
+- Use a [supply and demand zone](/learn/m03-market-structure/08-supply-and-demand-zones) as the target for the pullback instead of a moving average.
+
+<KeyTakeaways>
+- Pullback trading enters an established trend during a dip, getting a better price and a tighter, structural stop than trend following.
+- It requires a confirmed trend on two timeframes: higher highs and lows, rising 20 EMA above a rising 50 EMA.
+- The core rules are a touch of the 20 EMA on the 15m, a bullish close back above it, a stop below the pullback low, and a first target at the previous high requiring at least 1.5R.
+- Take half at the first target, move to breakeven, and run the rest to a measured move; close after 12 candles if nothing happens.
+- The main failure is the pullback that becomes a reversal; buying the touch instead of the close, and trading tired trends, make it worse.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "Price in an uptrend touches the 20 EMA on the 15m but has not yet closed back above it. What does the strategy say?", options: ["Buy now, the touch is the entry", "Wait for a bullish close back above the EMA", "Sell short", "Move to the 5m chart"], answer: 1, explain: "The touch is the setup; the bullish close is the trigger. Entering on the touch means buying while sellers still control the candle." },
+  { q: "A pullback setup has an entry at $50.00, stop at $49.20 and the previous high at $51.00. Is the trade valid?", options: ["Yes, any target above entry is fine", "No; the reward is $1.00 against risk of $0.80, only 1.25R, below the 1.5R minimum", "Yes, because the stop is structural", "Only if volume is high"], answer: 1, explain: "The first target must be at least 1.5R away. Here it is 1.25R, so the trade is skipped." },
+  { q: "Where does the strategy place the initial stop?", options: ["A fixed 1% below entry", "Below the low of the pullback plus a small ATR buffer", "At the 50 EMA", "At breakeven"], answer: 1, explain: "The stop is structural: if the pullback low breaks, the dip has become a reversal and the thesis is wrong." },
+  { q: "The 15m trend looks clean but on the 1h chart price is below the 50 EMA. What does the strategy say?", options: ["Take the trade, the 15m is what matters", "No trade; the higher-timeframe filter has failed", "Take it at half size", "Wait for the 1h to cross and then enter immediately"], answer: 1, explain: "Pullbacks against the higher-timeframe trend are the ones most likely to become reversals. The filter is not optional." },
+  { q: "Why does the strategy include a 12-candle time stop?", options: ["To reduce commissions", "Because a healthy pullback resumes quickly; one that stalls is more likely to fail", "Because the platform requires it", "To force more trades per day"], answer: 1, explain: "A pullback that does not resume within a few hours has lost its momentum, and holding it ties up risk in a weakening setup." }
+]} />
+
+<TryIt to="/simulator">Open the simulator on NOVA, 15m, with a 20 EMA and 50 EMA. Check the 1h filter first. Replay at moderate speed and take only pullbacks that meet every rule, using a bracket order with the first target. Tag each in the journal as pullback and note whether the dip had all three quality signs.</TryIt>

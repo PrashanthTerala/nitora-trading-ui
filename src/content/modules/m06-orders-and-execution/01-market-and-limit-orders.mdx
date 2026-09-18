@@ -1,0 +1,125 @@
+Imagine you're at a busy fruit stall. You can shout "I'll take a kilo of apples, whatever they cost today!" and walk away with apples in ten seconds. Or you can say "I'll pay two dollars a kilo, not a cent more" and wait, maybe for an hour, maybe forever, for the seller to agree.
+
+That's the whole choice on every trade you will ever make: **do you want it now, or do you want it at your price?** You can rarely have both. The first shout is a **market order**. The second, patient offer is a **limit order**.
+
+Every other order type in this module is built on top of these two. Get them right and the rest is easy.
+
+## Two prices, remember?
+
+Back in [Bid, Ask and the Spread](/learn/m00-what-is-a-market/07-bid-ask-spread) you learned that a market never has one price. It has a <Term id="bid">bid</Term> (the highest price anyone is offering to pay right now) and an <Term id="ask">ask</Term> (the lowest price anyone will sell for right now). The gap is the <Term id="spread">spread</Term>.
+
+Let's use one quote for the whole lesson so the numbers stay familiar:
+
+| Side | Price | Shares available |
+| --- | --- | --- |
+| Best bid | $49.98 | 500 |
+| Best ask | $50.02 | 300 |
+
+The spread is 4 cents. The "last price" on the screen might say $50.00, but nobody is actually selling at $50.00 right now. That's the first thing to unlearn.
+
+## The market order: speed
+
+A <Term id="market-order">market order</Term> says: "fill me immediately at the best price available." You choose the quantity. You do not choose the price. The exchange matches you against whoever is waiting.
+
+**Worked example.** You send a market order to buy 200 shares. The best ask is $50.02 with 300 shares waiting. You get all 200 at $50.02. Cost: $10,004. Done in a fraction of a second.
+
+Notice you paid the ask, not the "last price". If you immediately turned round and sold with a market order, you'd hit the bid at $49.98 and lose 4 cents a share, $8 in total, without the market moving at all. That is the spread cost, and market orders pay it every time.
+
+**What if you want more than is waiting?** Send a market order for 500 shares. Only 300 are available at $50.02. The next best ask, say, is $50.05 with 1,000 shares. Your order eats 300 at $50.02 and 200 at $50.05.
+
+<Callout type="math" title="Average fill price">
+
+300 shares × $50.02 = $15,006
+200 shares × $50.05 = $10,010
+Total $25,016 ÷ 500 shares = **$50.032 average**
+
+You wanted $50.02. You got $50.032. That extra 1.2 cents per share is called <Term id="slippage">slippage</Term>, and we'll spend a whole lesson on it later.
+
+</Callout>
+
+The bigger your order compared to what's waiting, the worse this gets. In a thin market a market order can "walk the book" a long way.
+
+## The limit order: price
+
+A <Term id="limit-order">limit order</Term> says: "buy (or sell) at this price or better, and if you can't, wait." You choose the price. You do not get a guarantee of a fill.
+
+**Worked example.** Same quote. You place a limit order to buy 200 shares at $50.00. The lowest ask is $50.02, so nobody is willing to sell at your price yet. Your order sits in the queue as a new bid. Now the quote looks like this:
+
+| Side | Price | Shares |
+| --- | --- | --- |
+| Best bid (yours) | $50.00 | 200 |
+| Best ask | $50.02 | 300 |
+
+Two things can happen. A seller might come along and hit your bid, and you get filled at exactly $50.00. Or price might drift up to $51 and never come back, and you sit there with no shares while the stock runs without you.
+
+"Or better" matters. If you place a limit buy at $50.10 while the ask is $50.02, you don't pay $50.10. You pay $50.02, because that's better. A limit order priced across the spread like this is called a **marketable limit order** and fills instantly, but with a ceiling on how bad it can get. Many experienced traders use this instead of a pure market order.
+
+<Callout type="eli5">
+
+A market order is shouting "I'll take it!" at the fruit stall. You get the apples right now, but at whatever the seller says.
+
+A limit order is holding out a two-dollar coin and saying "this much, no more." You might get a great deal. You might also go home with no apples.
+
+</Callout>
+
+## Side by side
+
+| | Market order | Limit order |
+| --- | --- | --- |
+| You control | Quantity | Quantity **and** price |
+| Fill guaranteed? | Almost always (if the market is open and liquid) | No |
+| Price guaranteed? | No | Yes, at your limit or better |
+| Pays the spread? | Yes, every time | Not if you sit on the bid/ask and wait |
+| Risk of slippage | High in thin or fast markets | None on price; the risk is missing the trade |
+| Best for | Getting out of a bad trade *now*; very liquid instruments | Entering at a planned level; illiquid instruments; anything in pre-market |
+
+## When each one is the right tool
+
+**Use a market order when being in (or out) matters more than a few cents.** The classic case is exiting. If your trade has gone wrong and you decide to leave, you do not want to be haggling over two cents while the loss grows. Most stop-losses, which you'll meet next lesson, convert into market orders for exactly this reason.
+
+**Use a limit order when the price matters more than the timing.** If your plan says "buy the pullback to $98 support", then $98 is the plan. A limit order at $98 either fills at your level or it doesn't fill, and both outcomes are fine because you only wanted that trade at that price.
+
+Limit orders are also how you avoid paying the spread. If you rest on the bid and a seller comes to you, you bought at the bid. Over hundreds of trades that saves real money, which the [fees lesson](/learn/m06-orders-and-execution/09-fees-commissions-settlement) will make painfully clear.
+
+<Callout type="warning" title="The limit-order trap">
+
+A limit order that gets filled is often a limit order that price *went through*. If you bid $98 and get filled, it's because someone was willing to sell to you at $98, which usually means price was falling. Sometimes it keeps falling.
+
+That's not a reason to avoid limit orders. It's a reason to always pair them with a stop-loss, which is the next lesson.
+
+</Callout>
+
+<Callout type="danger" title="Never market-order in pre-market or after-hours">
+
+Outside the main session the spread can be dollars wide and the book can be nearly empty. A market order for 500 shares of something quoted $49 by $53 might fill at $53 or worse. Use a limit order, always, when the market is thin. [When Markets Are Open](/learn/m00-what-is-a-market/08-market-hours-and-sessions) covers those sessions.
+
+</Callout>
+
+## A tiny mental checklist
+
+Before every order, ask three questions:
+
+1. Do I need this fill *right now*? If yes, market (or a marketable limit).
+2. Is there a specific price my plan depends on? If yes, limit at that price.
+3. How many shares are waiting at the best price? If far fewer than my order, expect slippage or split the order.
+
+That's it. Two order types, one decision: speed or price.
+
+<KeyTakeaways>
+- There are always two prices; a market buy pays the ask and a market sell hits the bid.
+- A market order guarantees a fill but not a price; it can walk through several price levels if the order is big.
+- A limit order guarantees a price (or better) but not a fill; it can sit unfilled forever.
+- A limit priced across the spread (a marketable limit) fills immediately with a worst-case ceiling.
+- Use market orders to get out fast, limit orders to get in at a planned level, and never market orders in thin sessions.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "The best bid is $49.98 and the best ask is $50.02. You send a market order to buy. What price do you get?", options: ["$49.98", "$50.00", "$50.02", "Whatever the last trade printed"], answer: 2, explain: "A market buy takes the lowest price anyone will sell at, which is the ask." },
+  { q: "300 shares are offered at $50.02 and 1,000 at $50.05. You market-buy 500 shares. What is your average price?", options: ["$50.02", "$50.032", "$50.035", "$50.05"], answer: 1, explain: "300 × 50.02 + 200 × 50.05 = 25,016, divided by 500 shares = 50.032." },
+  { q: "You place a limit buy at $50.10 while the ask is $50.02. What happens?", options: ["You pay $50.10", "You pay $50.02 immediately", "The order is rejected", "The order waits until price rises to $50.10"], answer: 1, explain: "A limit means that price or better. $50.02 is better than $50.10, so it fills right away at $50.02." },
+  { q: "Your plan is to buy a pullback to $98 support. Which order type fits the plan?", options: ["Market order now at $101", "Limit buy at $98", "Market order once price touches $98 and you notice", "A limit buy at $101"], answer: 1, explain: "A limit at $98 either fills at your level or does nothing, and both are consistent with the plan." },
+  { q: "Which is the main risk of a limit order?", options: ["Paying more than your limit", "Slippage", "Missing the trade because it never fills", "Getting a partial refund"], answer: 2, explain: "Limit orders control price but give up any guarantee of being filled." },
+  { q: "You need to exit a losing trade in a fast market during the main session. What do you use?", options: ["A limit order far away from price", "A market order", "Wait for price to come back", "A limit order above the current ask"], answer: 1, explain: "When getting out matters more than a few cents, a market order is the right tool." }
+]} />
+
+<TryIt to="/simulator">Open the simulator, pick any instrument, and place a limit buy 1% below the current price. Watch it sit in the queue. Then place a market buy for one share and compare the fill price to the bid and ask shown on the ticket.</TryIt>

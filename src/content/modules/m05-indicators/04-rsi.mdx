@@ -1,0 +1,103 @@
+Imagine keeping score in a playground tug of war, but instead of asking who is winning, you ask a subtler question: over the last fourteen pulls, how much ground did the blue team gain on the pulls they won, compared with how much the red team gained on the pulls they won? If blue's winning pulls were big and red's were tiny, blue has the momentum, even if the rope is still near the middle.
+
+The <Term id="rsi">**Relative Strength Index (RSI)**</Term> asks that question about price. It compares the average size of recent up-days with the average size of recent down-days and squashes the answer onto a scale from 0 to 100. High readings mean the up-days have been dominating; low readings mean the down-days have. It was published by J. Welles Wilder in 1978 and is probably the most-used oscillator in the world.
+
+It is also probably the most misused, because the words "overbought" and "oversold" sound like instructions. They are not. By the end of this lesson you will know exactly what RSI computes, which will make it much harder to be fooled by it.
+
+## What RSI calculates
+
+RSI is built in three steps. First, for each candle, work out the change from the previous close and split it into a gain (if positive) or a loss (if negative). Second, average the gains and average the losses over the period, using a particular smoothing method. Third, turn the ratio of those averages into a 0 to 100 number.
+
+<Callout type="math" title="The RSI formula with a tiny worked example">
+
+Step 1. Gains and losses. Closes: 10, 11, 10.5, 12. The changes are +1, −0.5 and +1.5. Gains: 1, 0, 1.5. Losses: 0, 0.5, 0.
+
+Step 2. Average them. Using a 3-period RSI for the example, the first average is a plain mean: average gain = (1 + 0 + 1.5) / 3 = 0.833; average loss = (0 + 0.5 + 0) / 3 = 0.167.
+
+Step 3. RS = average gain / average loss = 0.833 / 0.167 = **5**.
+
+RSI = 100 − 100 / (1 + RS) = 100 − 100 / 6 = 100 − 16.67 = **83.3**.
+
+After the first value, each new average uses Wilder's smoothing: new average = (previous average × (N − 1) + today's value) / N. If the average loss is zero, RSI is set to 100.
+
+</Callout>
+
+Two details matter. The smoothing is Wilder's, which is a slow kind of exponential average: for a 14-period RSI, each new day contributes only one-fourteenth of the average. That makes RSI calmer than a simple average would. And the final step is a squash: as RS grows from 1 toward infinity, RSI climbs from 50 toward 100 but never reaches it. RS of exactly 1, meaning gains and losses balanced, gives RSI of exactly 50.
+
+<IndicatorFigure indicator="rsi" caption="RSI 14 in a ranging market. It swings between the 30 and 70 lines and turns near them. This is the environment where the textbook reading works best." />
+
+## What RSI is trying to measure
+
+RSI measures **momentum**: not where price is, but how hard it has been pushing recently and in which direction. A reading of 75 says the average up-day over the last 14 candles has been about three times the size of the average down-day. A reading of 25 says the reverse. A reading around 50 says the two sides have been roughly even.
+
+That is all. RSI does not know about support, resistance, trend, news or value. It is a rolling scoreboard of who has been winning the daily tug of war and by how much.
+
+<Callout type="eli5">
+
+Picture a see-saw with a number painted along it from 0 to 100. Every day the market pushes it a little toward "buyers" or "sellers", and the push wears off slowly. When it is tipped far toward buyers, that only tells you buyers have been strong lately. It does not tell you they are about to stop.
+
+</Callout>
+
+## Default settings and why
+
+Wilder chose 14 periods and the 70 and 30 lines, and most charts have used them ever since. Fourteen was a compromise between too jumpy and too sluggish on daily charts of the commodities he traded. There is nothing sacred about it. Shorter periods such as 7 or 9 make RSI swing wider and hit the extremes more often; longer periods such as 21 make it calmer and keep it nearer 50.
+
+The levels are conventions too. Many trend traders use 80 and 20 to reduce false extremes, or shift the whole scale in a strong trend: in an uptrend, RSI often bottoms near 40 rather than 30 and tops above 70, while in a downtrend it tops near 60 and bottoms below 30. Reading where RSI *turns*, rather than a fixed number, is a more useful habit than memorising 70 and 30.
+
+## Three ways traders use RSI
+
+**Overbought and oversold in a range.** When price is bouncing inside a clear [range](/learn/m03-market-structure/05-ranges-and-consolidation), RSI near 70 while price is near the top of the range, then turning down, is a reasonable signal that the bounce is running out. Same at the bottom with 30. The key words are "in a range". This is a mean-reversion tool and it needs a mean to revert to.
+
+**Pullbacks in a trend.** In an uptrend, traders wait for RSI to dip toward 40 or 50 during a pullback and then turn back up. They are not buying weakness; they are buying a pause in strength, ideally at a structural level such as a rising trendline or a prior breakout level. The RSI dip is the timing tool, the level is the reason.
+
+**Divergence.** When price makes a new high but RSI makes a lower high, the push that made the new high was weaker than the previous push. That is bearish <Term id="divergence">divergence</Term>, and the mirror image is bullish divergence. It is one of the most useful things RSI does and it gets its own lesson later in this module: [Divergence](/learn/m05-indicators/14-divergence).
+
+Some traders also read the **50 line** as a trend gauge: RSI holding mostly above 50 suggests an uptrend, mostly below suggests a downtrend. It is crude but consistent with the maths, since 50 is exactly where gains and losses balance.
+
+## How RSI fails
+
+<Callout type="danger" title="Overbought can stay overbought for a very long time">
+
+In a strong trend RSI pins above 70 and stays there while price keeps climbing. Every "overbought, sell" signal loses. A stock in a runaway rally can print RSI readings above 70 for weeks; short sellers who used RSI as their reason get run over. High RSI in a trend is not a warning, it is a description of a strong trend. The same is true of oversold readings in a crash.
+
+</Callout>
+
+<IndicatorFigure indicator="rsi" regime="trend-up" caption="The same RSI 14 in a strong uptrend. It spends most of its time above 50, touches 70 repeatedly and rarely reaches 30. Selling every visit to 70 here would have been a disaster." />
+
+RSI also lags, though less than a moving average. Because of Wilder's smoothing, a sudden reversal takes several candles to show up, and by the time RSI has moved from 80 to 60 much of the initial drop has already happened.
+
+RSI can also be distorted by a single huge candle. One 10% gap day sits in the average gain for many periods, propping RSI up while price drifts. And on very short periods it becomes so jumpy that it reads overbought and oversold on the same day, which is noise, not information.
+
+Finally, RSI knows nothing about scale. A reading of 70 on a sleepy utility stock and 70 on a volatile biotech mean the same thing mathematically, but the price move behind them can differ ten times over.
+
+## Combining with structure
+
+RSI is at its best as a timing filter on top of a structural setup, never as the setup itself. Three combinations do most of the work:
+
+Price arrives at a well-tested support level from [Support and Resistance](/learn/m03-market-structure/03-support-and-resistance), RSI is below 30 and starts to turn up, and a bullish candle such as a hammer from [Module 2](/learn/m02-candlestick-patterns/03-hammer-hanging-man) forms. Three independent things agree: a level, a momentum reading and a candle.
+
+Price makes a higher low in an uptrend, RSI dips to the mid-40s and turns. The trend structure says buy pullbacks, RSI says the pullback is easing.
+
+Price pokes above a range high on a spike, RSI is above 70 and then price closes back inside the range. That is a [fakeout](/learn/m03-market-structure/06-breakouts-and-fakeouts) with a momentum warning attached.
+
+In every case, ask "what does the structure say?" before you look at the RSI panel. If the structure says nothing, RSI on its own is a coin flip with extra steps.
+
+<KeyTakeaways>
+- RSI compares the average size of recent up-moves with recent down-moves and squashes the result onto a 0 to 100 scale.
+- RS = average gain / average loss, and RSI = 100 − 100 / (1 + RS); RS of 1 gives RSI of 50.
+- Averages use Wilder's smoothing, so a 14-period RSI reacts slowly and each new day counts for one-fourteenth.
+- 70 and 30 are conventions, not laws; in trends RSI shifts its whole range upward or downward.
+- Overbought readings in a strong uptrend describe strength, they do not predict a top; the same applies to oversold in a crash.
+- Use RSI to time entries at structural levels and to spot divergence, not as a stand-alone reason to trade.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "Over the period the average gain is 0.833 and the average loss is 0.167. What is RSI?", options: ["50", "16.7", "83.3", "100"], answer: 2, explain: "RS = 0.833 / 0.167 = 5. RSI = 100 − 100 / (1 + 5) = 100 − 16.67 = 83.3." },
+  { q: "What does an RSI reading of exactly 50 mean?", options: ["Price is at its average", "Average gains and average losses over the period are equal", "The market is closed", "Price is halfway between its high and low"], answer: 1, explain: "RS of 1 means gains equal losses, and 100 − 100 / 2 = 50." },
+  { q: "In a strong uptrend RSI has been above 70 for three weeks. What is the best interpretation?", options: ["A top is imminent, go short", "It describes a strong trend; overbought can stay overbought", "The indicator is broken", "Volume must be falling"], answer: 1, explain: "High RSI in a trend is a description of persistent buying, not a reversal signal. Selling into it is a classic way to lose." },
+  { q: "Which smoothing does the site use for the average gain and loss?", options: ["A simple average recomputed each day", "Wilder's smoothing, where each new value counts one-Nth", "The median", "No smoothing"], answer: 1, explain: "After the first plain average, each new average = (previous × (N − 1) + today) / N. That is Wilder's method." },
+  { q: "Price is in a clear range, sits near the range low, RSI is under 30 and turning up, and a hammer candle prints. What do you have?", options: ["Nothing useful", "A structural level, a momentum reading and a candle all agreeing", "A guaranteed winner", "A bearish divergence"], answer: 1, explain: "Three independent pieces of evidence line up. It is still not certain, but it is a proper setup rather than an indicator alone." },
+  { q: "Where does RSI tend to bottom during pullbacks in a healthy uptrend?", options: ["Near 10", "Near 40 to 50 rather than 30", "Exactly 30", "Above 70"], answer: 1, explain: "In trends the whole RSI range shifts. Uptrend pullbacks often stop near 40 to 50 without ever reaching the oversold line." }
+]} />
+
+<TryIt to="/simulator">Open the simulator, load CRYP on the daily chart and enable the RSI panel. Find a stretch where price trended hard and note how long RSI stayed above 70 or below 30. Then load IDX during a sideways period and count how often RSI turned within a few candles of touching 70 or 30. Write down which market type made the textbook reading work.</TryIt>

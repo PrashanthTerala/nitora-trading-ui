@@ -1,0 +1,117 @@
+Before a pilot takes off, they file a flight plan: where they're going, how much fuel they have, and where they'll divert if the weather turns. They do this on the ground, calm, with a coffee. Nobody wants to invent a plan at 30,000 feet with an engine on fire.
+
+A **bracket order** is a flight plan for a trade. You decide the entry, the point where you admit you're wrong, and the point where you'll take your profit, all before you click. Then the orders sit in the market and execute the plan for you, whether you are watching or not, whether you are calm or not.
+
+This lesson explains take-profit orders, the "one cancels the other" mechanism, and how brackets glue everything together.
+
+## The take-profit order
+
+You already know the <Term id="stop-loss">stop-loss</Term> from the last lesson: a sell order below your long entry that limits the damage. Its mirror image is the <Term id="take-profit">take-profit</Term>: a sell order *above* your entry that banks the gain when price reaches your target.
+
+Mechanically a take-profit on a long is just a **limit sell** at the target. You bought at $98 and your target is $104, so you place a limit sell at $104. If price gets there, you're out with $6 a share. If it never does, the order waits.
+
+Why bother planning the exit? Because the moment price is up $6 you will feel two things at once: greed ("it could go to $110") and fear ("it could give it all back"). Neither feeling has any information in it. A target chosen in advance, from the chart, beats a target chosen while your pulse is racing.
+
+## OCO: one cancels the other
+
+Now you have two exit orders resting on the same position: a stop-loss at $96 and a take-profit at $104. Picture what happens if price hits $104 and your 100 shares are sold. Great. But your sell stop at $96 is still sitting there. If price later drops to $96, that stop fires and *sells 100 shares you no longer own*, which means you are now short 100 shares by accident.
+
+<Term id="oco">OCO</Term> stands for **one cancels the other**. It links two orders so that when one of them fills, the other is cancelled automatically. Stop hits, target is cancelled. Target hits, stop is cancelled. No accidental positions, no forgotten orders.
+
+<Callout type="eli5">
+
+Imagine you leave two notes for a babysitter: "if the baby cries, call me" and "if the baby sleeps through, don't call." Only one of those can come true tonight. OCO is a rule that says the moment one note is used, the other one goes in the bin.
+
+</Callout>
+
+## The bracket: entry plus OCO exits
+
+A <Term id="bracket-order">bracket order</Term> puts it all together:
+
+1. An **entry** order (market, limit or stop).
+2. A **stop-loss** that becomes active once the entry fills.
+3. A **take-profit** that becomes active once the entry fills.
+4. The two exits are linked OCO.
+
+The exits "bracket" the entry, one above and one below. Here it is on a chart.
+
+<CandleFigure
+  title="A bracket on a long: limit entry, stop below, target above"
+  bars={[
+    { o: 100.5, h: 101, l: 99.2, c: 99.6 },
+    { o: 99.6, h: 100, l: 98.3, c: 98.7 },
+    { o: 98.7, h: 99.1, l: 97.7, c: 98.1 },
+    { o: 98.1, h: 99.4, l: 96.8, c: 99.2 },
+    { o: 99.2, h: 100.6, l: 98.9, c: 100.3 },
+    { o: 100.3, h: 101.4, l: 99.9, c: 101.1 },
+    { o: 101.1, h: 102.2, l: 100.7, c: 101.9 },
+    { o: 101.9, h: 102.6, l: 101.2, c: 102.4 },
+    { o: 102.4, h: 103.5, l: 102.1, c: 103.2 },
+    { o: 103.2, h: 104.3, l: 102.9, c: 104.1 },
+    { o: 104.1, h: 104.6, l: 103.1, c: 103.4 },
+    { o: 103.4, h: 103.8, l: 102.5, c: 102.8 }
+  ]}
+  annotations={[
+    { type: "hline", price: 98, text: "limit buy 98", from: 0, to: 11 },
+    { type: "hline", price: 96, text: "stop loss 96", from: 0, to: 11 },
+    { type: "hline", price: 104, text: "take profit 104", from: 0, to: 11 },
+    { type: "zone", from: 2, to: 9, priceFrom: 96, priceTo: 98, text: "risk $2" },
+    { type: "zone", from: 2, to: 9, priceFrom: 98, priceTo: 104, text: "reward $6" },
+    { type: "arrow", index: 2, direction: "up", text: "entry fills" },
+    { type: "arrow", index: 9, direction: "down", text: "target fills, stop cancelled" }
+  ]}
+  caption="Risk $2 to make $6. Once the target fills at bar 9, OCO cancels the stop automatically. If the stop had fired at bar 3 instead, the target would have been cancelled."
+  showVolume={false}
+/>
+
+Look at the two shaded zones. The lower one, $96 to $98, is what you can lose. The upper one, $98 to $104, is what you hope to make. That is a 1-to-3 relationship, and it is visible *before* you trade. The [risk module](/learn/m07-risk-management/04-risk-reward-ratio) turns this picture into a number, and it will run your whole trading life.
+
+## Why brackets beat willpower
+
+| Without a bracket | With a bracket |
+| --- | --- |
+| Stop placed "when I get round to it" (often never) | Stop live the instant the entry fills |
+| Target decided while up money and excited | Target decided from the chart, in advance |
+| Forgot to cancel the other order, accidental short | OCO cancels the leftover exit |
+| Must watch the screen | Can walk away |
+| Every exit is an emotional decision | Exits are mechanical |
+
+A bracket doesn't make the trade a good one. It makes the trade the one you *planned*, which is the most a tool can do.
+
+<Callout type="warning" title="Brackets are not set-and-forget on long horizons">
+
+A bracket's stop and target are usually GTC orders, which the next lesson explains. That means they can live for weeks. If the chart changes shape, your levels might stop making sense. Review open brackets at least once a day; adjusting a stop upward as a trade works is fine, moving it *down* to avoid a loss is the beginning of every blow-up.
+
+</Callout>
+
+## Common variations
+
+**Scaling out.** Instead of one take-profit at $104, you might place two: sell half at $102 and half at $105. The stop stays for the full size until the first target hills, then many traders move it to breakeven. Brokers differ in how they let you set this up.
+
+**Bracket on a short.** Everything flips. The entry is a sell, the stop-loss is a *buy* stop above, and the take-profit is a *buy* limit below. Same logic, mirror image, and we'll cover shorts properly in [Going Long and Going Short](/learn/m06-orders-and-execution/05-going-long-and-short).
+
+**Trailing bracket.** Some platforms let the stop leg be a trailing stop. The target stays fixed while the stop follows price up. This is a decent compromise between "let winners run" and "protect what I have".
+
+<Callout type="tip" title="Type the plan, then read it back">
+
+Before you submit a bracket, say the whole thing out loud: "Buy 50 at 98, out at 96 if wrong, out at 104 if right." If any part of that sentence makes you wince, you've found the problem before the market did.
+
+</Callout>
+
+<KeyTakeaways>
+- A take-profit on a long is a limit sell at your target, decided before the trade, not during it.
+- OCO links two orders so that when one fills the other is cancelled, preventing forgotten orders and accidental positions.
+- A bracket order is an entry plus an OCO pair of stop-loss and take-profit that activate when the entry fills.
+- The gap between entry and stop is your risk; the gap between entry and target is your reward, and you can see both before trading.
+- Brackets make exits mechanical, but you still need to review them and never lower a stop to dodge a loss.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "You are long 100 shares with a stop-loss at $96 and a take-profit at $104 that are NOT linked. Price hits $104, then later falls to $96. What is your position?", options: ["Flat", "Long 100", "Short 100", "Long 200"], answer: 2, explain: "The target sold your 100 shares, then the forgotten stop sold another 100 you did not own, leaving you short 100." },
+  { q: "What does OCO do?", options: ["Opens a second position when the first closes", "Cancels the other order in the pair when one of them fills", "Converts a stop into a limit", "Closes a position at the end of the day"], answer: 1, explain: "One cancels the other: whichever exit fills first, the remaining one is removed." },
+  { q: "A bracket has a limit buy at $98, stop at $96 and target at $104. What is the reward-to-risk relationship?", options: ["1 to 1", "2 to 1", "3 to 1", "6 to 1"], answer: 2, explain: "Risk is $2 (98 minus 96), reward is $6 (104 minus 98), so reward is three times risk." },
+  { q: "Which of these is a sensible adjustment to an open bracket on a winning long trade?", options: ["Lowering the stop so it is less likely to hit", "Raising the stop toward breakeven as price moves up", "Deleting the stop to give the trade room", "Doubling the position because it is working"], answer: 1, explain: "Moving a stop in the direction of the trade reduces risk; moving it away increases risk and is how blow-ups start." },
+  { q: "On a short position, what does the take-profit leg of a bracket look like?", options: ["A sell limit above entry", "A buy limit below entry", "A buy stop above entry", "A sell stop below entry"], answer: 1, explain: "Shorts profit when price falls, so the target is a buy limit below the entry that closes the position." }
+]} />
+
+<TryIt to="/simulator">Open the simulator and place a bracket: a limit entry a little below the current price, a stop-loss below that, and a take-profit above. Then open the /journal after it closes and see how the trade is recorded as a multiple of the risk you set.</TryIt>

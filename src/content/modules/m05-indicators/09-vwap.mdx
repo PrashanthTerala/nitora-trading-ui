@@ -1,0 +1,86 @@
+Suppose a school sells lemonade all day. In the morning it sells 100 cups at $1. At lunch, when everyone is thirsty, it sells 300 cups at $2. In the afternoon it sells 50 cups at $1.50. What was the average price of a cup? Not the simple average of $1, $2 and $1.50, which is $1.50. Most cups sold at $2, so the average cup actually cost more: $1.72, once you weight each price by how many cups changed hands at it.
+
+<Term id="vwap">**VWAP**</Term>, the Volume-Weighted Average Price, is that calculation applied to a trading session. It is the average price at which shares actually traded today, weighted by how many shares traded at each price. A big trade at $50 counts more than a small trade at $52. The result is a single line that answers the question: "what has the market paid, on average, since the open?"
+
+Big institutions care about this number enormously, because it is how their trading is judged. That is why VWAP behaves differently from every other overlay in this module: it is not just a description of price, it is a target that large players are actively trying to hit.
+
+## What VWAP calculates
+
+<Callout type="math" title="The VWAP formula with a worked example">
+
+Typical price of a bar = (high + low + close) / 3
+
+VWAP = (sum of typical price × volume, since the session opened) / (sum of volume, since the session opened)
+
+First bar: high 101, low 99, close 100. Typical price = 100. Volume 1,000. Running price × volume = 100,000. Running volume = 1,000. VWAP = 100,000 / 1,000 = **100**.
+
+Second bar: high 103, low 101, close 102. Typical price = 102. Volume 3,000. Running price × volume = 100,000 + 306,000 = 406,000. Running volume = 4,000. VWAP = 406,000 / 4,000 = **101.5**.
+
+The simple average of the two typical prices would be 101. VWAP is 101.5 because three times as many shares traded near 102.
+
+</Callout>
+
+The critical word is *cumulative*. VWAP does not use a window of the last N bars. It starts fresh at the open and accumulates every bar until the close, then resets the next day. Early in the session it is jumpy because a few bars dominate. Late in the session it is heavy and slow because hundreds of bars are already baked in. A bar with zero volume is treated as if it had a volume of 1 so the calculation never breaks.
+
+<IndicatorFigure indicator="vwap" caption="VWAP through one intraday session, with volume below. It starts with price at the open and settles as volume accumulates. Price oscillates around it, and each pullback toward it is a candidate for a fill near the average." />
+
+## What VWAP is trying to measure
+
+VWAP measures the **fair average price of the day** as judged by where the volume actually happened. If price is above VWAP, the average buyer today is in profit; if below, the average buyer is under water. That framing is why it acts as intraday support and resistance: traders who bought near the average defend it, and traders who missed the move wait for price to come back to it.
+
+<Callout type="eli5">
+
+If you asked every single person who traded a stock today what they paid, and you counted the big buyers many times because they bought many shares, the answer you would get is VWAP. Price above VWAP means today's crowd is mostly winning. Price below means they are mostly losing.
+
+</Callout>
+
+## Default settings and why
+
+There are no settings. VWAP has no period. The only real choice is the anchor, and the default anchor is the session open. Some platforms offer **anchored VWAP**, which starts the calculation from any bar you choose, such as an earnings gap or a major low. The maths is identical; only the start point changes. Bands around VWAP, usually at one or two standard deviations, are an optional extra that some traders add to see how far price has stretched from the average.
+
+## Three ways traders use VWAP
+
+**Intraday bias.** The simplest rule in day trading: above VWAP, look for longs; below VWAP, look for shorts. It is crude, but it lines up with the fact that institutions execute buy programmes when price is below VWAP (they are getting a better-than-average fill) and sell programmes when it is above. Trading against VWAP means trading against that flow.
+
+**Pullback entries.** In a trending session, price runs away from VWAP and then drifts back to it. The first touch of VWAP after a strong open is one of the most watched intraday entries there is, because both the trend-followers and the institutions filling orders want to buy there. A bullish candle at VWAP with rising volume is the classic version.
+
+**Execution benchmark.** A fund manager who must buy a million shares does not want to push price up. They spread the order across the day and try to average below VWAP. Their performance is literally graded against it. As a retail trader you do not need to beat VWAP, but knowing that large orders are being worked around it explains why price so often stalls, bounces or gets absorbed there.
+
+## How VWAP fails
+
+<Callout type="warning" title="VWAP is a one-day tool">
+
+Because it resets at every open, VWAP means nothing on a daily or weekly chart. A "VWAP" drawn on daily candles is just the running average of all the days shown, which changes when you scroll. It is designed for intraday charts: 1-minute, 5-minute, 15-minute. On any other timeframe use a moving average instead.
+
+</Callout>
+
+VWAP gets heavier as the day goes on. By the last hour it barely moves, so a late-day trend can carry price far away from a VWAP that is still reporting the morning's average. A "return to VWAP" trade at 3:30 pm is a very different bet from the same trade at 10:00 am.
+
+In a strong one-directional session, price never comes back to VWAP at all, and traders waiting for the pullback entry sit out the whole move. And around the open, before enough volume has printed, VWAP is not yet meaningful; the first few bars can whip it around wildly.
+
+Volume data also matters. On instruments where volume is unreliable or fragmented across venues, such as some forex feeds or thinly traded stocks, VWAP is computed from a partial picture and should be trusted less.
+
+## Combining with structure
+
+VWAP is at its most useful when it coincides with a level you already care about. Yesterday's high, the pre-market high, the opening range, a daily support level from [Support and Resistance](/learn/m03-market-structure/03-support-and-resistance): when one of these lines up with VWAP, you have a horizontal level and a volume-weighted average in the same place, and the reaction there is worth watching closely.
+
+VWAP also clarifies the [multi-timeframe](/learn/m03-market-structure/10-multi-timeframe) picture for a day trader. A daily uptrend says buy pullbacks; VWAP tells you where the intraday pullback has reached the day's fair price. A daily downtrend with price stuck below VWAP all morning is a day to look for shorts on bounces into it, not longs.
+
+<KeyTakeaways>
+- VWAP is the volume-weighted average of typical price, (high + low + close) / 3, accumulated from the session open.
+- It resets every session and has no period; the anchor point is the only choice.
+- It represents the average price paid today, so above it the average buyer is winning and below it they are losing.
+- Traders use it for intraday bias, pullback entries and as the benchmark institutions are graded against.
+- It is meaningless on daily or higher timeframes, unstable in the first minutes and sluggish in the last hour.
+- It is strongest when it coincides with a structural level such as yesterday's high or a daily support zone.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "Bar one: typical price 100, volume 1,000. Bar two: typical price 102, volume 3,000. What is VWAP after bar two?", options: ["101", "101.5", "102", "100.5"], answer: 1, explain: "(100 × 1,000 + 102 × 3,000) / (1,000 + 3,000) = 406,000 / 4,000 = 101.5." },
+  { q: "How is the typical price of a bar defined for VWAP?", options: ["The close", "(open + close) / 2", "(high + low + close) / 3", "The average of the high and low"], answer: 2, explain: "VWAP uses the typical price, the mean of the high, low and close." },
+  { q: "Why does VWAP barely move in the last hour of the session?", options: ["Volume stops", "It is cumulative, so hundreds of earlier bars outweigh any new one", "It switches to a moving average", "Exchanges freeze it"], answer: 1, explain: "The running sums are large by late in the day, so a single new bar has little influence." },
+  { q: "You see a VWAP line on a daily chart. What should you make of it?", options: ["Trade it like intraday VWAP", "Ignore it; VWAP is designed to reset each session and has no meaning across days", "It is the 200 SMA", "It marks the yearly average"], answer: 1, explain: "VWAP is an intraday tool. On daily bars it is just an arbitrary running average that changes as you scroll." },
+  { q: "It is 10:15 am, the stock opened strong, and price is pulling back to VWAP for the first time with a bullish candle on rising volume. What is this?", options: ["A short signal", "A widely watched intraday pullback entry in the direction of the trend", "A reversal", "Noise"], answer: 1, explain: "The first return to VWAP after a strong open is a classic trend-continuation entry because both trend traders and institutions want to buy near the average." }
+]} />
+
+<TryIt to="/simulator">Open the simulator on NOVA, switch to the 5-minute chart, and enable the VWAP overlay. Watch how it settles after the first few bars and how price returns to it during the morning. Then scroll to the last hour and notice how far price can drift from a VWAP that has stopped moving. Try one paper trade at a pullback to VWAP with a stop just under the pullback low.</TryIt>

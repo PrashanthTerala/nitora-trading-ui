@@ -1,0 +1,112 @@
+A cook makes a stew that comes out bland. So next time they add more salt, swap the stock, and cook it forty minutes longer. The stew is delicious. What fixed it?
+
+Nobody knows. Three things changed at once, so the cook has learned nothing except that this particular Tuesday worked, and next week they will be guessing again. Traders do this constantly, usually after a bad week, usually with three changes and a new indicator.
+
+The weekly review is the loop that stops the guessing. It takes about twenty minutes, it runs once a week on a day when markets are closed, and it has four steps and one hard rule.
+
+## Step 1: sort every trade by R
+
+Open the week's trades and sort them from best to worst by R. Not by money, not by date. R puts every trade on the same scale, so the sort is honest.
+
+| Rank | Setup | R |
+| --- | --- | --- |
+| 1 | Pullback | +3.0R |
+| 2 | Pullback | +2.5R |
+| 3 | Pullback | +2.0R |
+| 4 | Pullback | +1.5R |
+| 5 | Range fade | -0.5R |
+| 6 | Breakout | -1.0R |
+| 7 | Breakout | -1.0R |
+| 8 | Range fade | -1.0R |
+| 9 | Breakout | -1.0R |
+| 10 | Range fade | -1.0R |
+
+You do not need statistics to read that. The top four trades are all the same setup, and that setup does not appear once in the bottom six. The eye finds this in five seconds when the list is sorted, and never finds it at all when the trades sit in date order.
+
+## Step 2: name your best setup and add it up
+
+Now group the same trades by setup name and total the R in each group.
+
+| Setup | Trades | Wins | Total R | Average R |
+| --- | --- | --- | --- | --- |
+| Pullback | 4 | 4 | +9.0R | +2.25R |
+| Breakout | 3 | 0 | -3.0R | -1.00R |
+| Range fade | 3 | 0 | -2.5R | -0.83R |
+| **All** | **10** | **4** | **+3.5R** | **+0.35R** |
+
+This is the single most valuable table a trader ever produces. The account made +3.5R, but the *process* made +9.0R and gave 5.5R of it back through two setups that lost every trade they took.
+
+<Callout type="eli5">
+
+A shop sells cakes, candles and umbrellas. At the end of the month the owner has made a little money and assumes business is fine. Then they split the till by product and discover cakes made everything, candles broke even, and umbrellas lost money on every single sale. They did not need a better month. They needed to stop selling umbrellas.
+
+</Callout>
+
+<Callout type="warning" title="Do not fire a setup after three trades">
+
+Three losing breakouts is not evidence that breakouts do not work. It is evidence of nothing at all, as [the sample size problem](/learn/m12-becoming-consistent/02-performance-metrics) showed with these very trades.
+
+What a weekly review produces is a **hypothesis**, not a verdict. Write it down, keep trading the setup at normal size, and revisit it when that setup has thirty entries behind it. The traders who blow up are rarely the ones who kept a mediocre setup too long; they are the ones who rebuilt their whole method every Sunday.
+
+</Callout>
+
+## Step 3: count your mistake tags, not your losses
+
+Losses are not mistakes. A trade that followed every rule and lost is a good trade, as [process over outcome](/learn/m08-trading-psychology/06-process-over-outcome) argued. So the review does not count losers. It counts the mistake tags in your journal.
+
+Suppose this week's tags read:
+
+- Entered on thin volume: 3
+- Traded outside my planned hours: 2
+- Moved my stop: 1
+
+Now put them side by side with the sorted list and something uncomfortable usually appears: the tagged trades and the bottom of the R list are mostly the same trades. Your worst habit is rarely subtle once you count it.
+
+Pick the tag with the highest count. That is your worst habit this week, and it is the only one you are allowed to work on.
+
+## Step 4: exactly one change
+
+Write one sentence, in the present tense, that could be checked by a stranger. Not "be more patient". Something like:
+
+**"I do not take a breakout unless volume on the breakout bar is above the session average."**
+
+Then add it to your written plan, and for the next week it is a rule rather than an intention. At the following review, the question is simply whether you followed it, and whether the tag count fell.
+
+## Why three changes at once teach you nothing
+
+Say you change three things: the volume filter, your trading hours, and your stop distance. Next week is better. Which change did it?
+
+You cannot know, and the consequences are worse than they sound.
+
+- **You cannot keep the good change**, because you cannot identify it, so all three stay, including the two that did nothing or quietly hurt.
+- **You cannot undo the bad one**, for the same reason.
+- **Your sample resets.** Every change makes a new strategy, so the thirty trades you had collected now describe a system you no longer trade.
+- **It hides randomness.** A better week after three changes feels caused. Usually it is just a better week.
+
+One change, held for a few weeks, is slow. It is also the only version of this that compounds: fix a real habit every month and in a year you have removed twelve leaks and you know exactly which ones mattered.
+
+## The number that tracks all of it
+
+Finish the review with one figure: **rules followed, as a percentage**. If you took forty trades this month and broke a rule on four of them, that is 90%. That single number, tracked weekly, matters more than your profit and loss during the learning phase, and you will meet it again as part of the [graduation checklist](/learn/m12-becoming-consistent/07-from-simulator-to-real).
+
+Profit is partly the market's decision. Rule-following is entirely yours.
+
+<KeyTakeaways>
+- Run the review weekly, when markets are closed, in about twenty minutes, from the journal rather than from memory.
+- Sorting the week's trades by R instantly reveals which setup is carrying you and which is leaking.
+- Grouping by setup and totalling R is the most valuable table in trading, but treat the result as a hypothesis until a setup has around thirty trades.
+- Count mistake tags rather than losses, because a rule-following loss is a good trade and a tagged winner is still a bad one.
+- Make exactly one change a week, written as a checkable rule in the present tense.
+- Three simultaneous changes make the result unattributable, reset your sample and disguise ordinary randomness as improvement.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "Why sort the week's trades by R rather than by profit in money?", options: ["R is easier to calculate", "R puts trades of different sizes on the same scale, so the comparison is honest", "Money is not recorded", "Brokers report in R"], answer: 1, explain: "A $40 trade and a $400 trade are not comparable in money, but both can be measured as multiples of the risk taken." },
+  { q: "Your pullback trades made +9.0R and your breakouts lost 3.0R over three trades. What should you do?", options: ["Stop trading breakouts immediately", "Double the size on pullbacks", "Note it as a hypothesis and keep trading breakouts at normal size until you have around thirty of them", "Change all your rules"], answer: 2, explain: "Three trades is not a sample. Weekly reviews generate hypotheses to test, not verdicts to act on." },
+  { q: "The review counts mistake tags rather than losing trades. Why?", options: ["Losses are rare", "A loss that followed every rule is a good trade, while a rule break is a fixable problem even on a winner", "Tags are easier to count", "Losses are not recorded in the journal"], answer: 1, explain: "You can only improve decisions. Outcome and decision quality are different things." },
+  { q: "You change your entry filter, your trading hours and your stop distance in the same week, and results improve. What have you learned?", options: ["All three changes work", "The stop change worked", "Nothing you can attribute, and you have also reset your sample", "That the market got easier"], answer: 2, explain: "Three simultaneous changes make the cause unidentifiable, so you can neither keep the good one nor remove the bad one." },
+  { q: "Which of these is a properly written weekly change?", options: ["Be more disciplined", "Stop losing money", "Do not take a breakout unless the breakout bar's volume is above the session average", "Trade better setups"], answer: 2, explain: "A rule must be checkable by a stranger reading your journal. Intentions are not rules." },
+  { q: "What single number best tracks progress during the learning phase?", options: ["Account balance", "Win rate", "The percentage of trades where you followed every rule", "Number of trades taken"], answer: 2, explain: "Profit is partly the market's decision; rule-following is entirely yours, and it is the input that eventually produces the profit." }
+]} />
+
+<TryIt to="/journal">Open the journal and use the setup tags to group your simulated trades, then read the total R for each group. If one group is carrying everything, you have found your best setup. If a tag keeps reappearing on your worst trades, you have found next week's single change.</TryIt>

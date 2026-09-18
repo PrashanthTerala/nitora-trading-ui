@@ -1,0 +1,126 @@
+Maya's lemonade stand sells a cup for $2. One hot morning she offers you a deal: for 20 cents, she will give you a coupon that lets you buy one cup for $2 any time this week, no matter what she charges everyone else. If a heatwave hits and she raises the price to $4, your coupon is worth $2. If it rains all week and she cuts the price to $1, you throw the coupon away and you have lost 20 cents.
+
+You just bought a **call option**. You paid a small amount for the *right*, not the obligation, to buy something at a fixed price before a deadline. That single idea, the right without the obligation, is the whole foundation of options. Everything else is detail.
+
+Options are the most flexible instruments in trading and also the ones that ruin the most beginners, because the same flexibility that lets you cap your risk also lets you take on unlimited risk without noticing. This lesson gives you the vocabulary, the two basic contracts and the payoff tables, so you can read an options screen and know exactly what you are looking at.
+
+## The vocabulary
+
+Every option has four things printed on it.
+
+- The **underlying**: the share (or index, or future) the option is about.
+- The <Term id="strike-price">strike price</Term>: the fixed price at which the option lets you buy or sell. Maya's coupon had a strike of $2.
+- The <Term id="expiry">expiry</Term>: the date the option dies. After expiry it is worthless paper. Maya's coupon expired at the end of the week.
+- The <Term id="premium">premium</Term>: the price you pay for the option. Maya charged 20 cents.
+
+In stock markets, one **contract** controls **100 shares**. If an option is quoted at $2.50, one contract costs $2.50 × 100 = $250. This multiplier trips up beginners constantly, so say it out loud: quoted price times one hundred.
+
+## Calls and puts
+
+A <Term id="call-option">call</Term> is the right to **buy** the underlying at the strike price before expiry. You buy a call when you think price will go up. Maya's coupon was a call.
+
+A <Term id="put-option">put</Term> is the right to **sell** the underlying at the strike price before expiry. You buy a put when you think price will go down, or when you own the shares and want insurance against a fall.
+
+<Callout type="eli5">
+
+A call is like a coupon to *buy* lemonade at a fixed price: great if lemonade gets expensive. A put is like a guarantee from Maya to *buy your lemonade back* at a fixed price: great if lemonade becomes worthless, because you can still sell it to her for the agreed amount. Calls protect you from prices going up; puts protect you from prices going down.
+
+</Callout>
+
+## Buyers have rights, sellers have obligations
+
+For every option bought, someone sold it. The two sides are not symmetrical, and this is the most important safety fact in the lesson.
+
+| | Buyer (long the option) | Seller (short the option, also called the writer) |
+| --- | --- | --- |
+| Pays or receives premium | Pays it | Receives it |
+| Has | The right to exercise | The obligation to deliver if exercised |
+| Maximum loss | The premium paid | Can be very large (call) or large (put) |
+| Maximum gain | Unlimited (call) or large (put) | The premium received |
+| Time | Works against them | Works for them |
+
+The buyer of Maya's coupon can lose at most 20 cents. Maya, who sold it, has promised to sell lemonade at $2 even if it costs her $4 to make during the heatwave. Her loss is open-ended. The person collecting the small premium is the one carrying the big risk.
+
+## In, at and out of the money
+
+Options are described by where the strike sits relative to the current price.
+
+- **In the money (ITM)**: exercising would make sense right now. A $50 call when the share is at $55; a $50 put when the share is at $45.
+- **At the money (ATM)**: strike roughly equals the current price.
+- **Out of the money (OTM)**: exercising makes no sense right now. A $50 call when the share is at $45. Cheap, and worthless unless price moves.
+
+## Payoff at expiry: the long call
+
+Let us make this concrete. The share is at $50. You buy one $50 call expiring in a month for a premium of $2, so the contract costs $200. What happens at expiry?
+
+| Share price at expiry | Option value per share | Profit or loss per share | Profit or loss per contract |
+| --- | --- | --- | --- |
+| $40 | $0 | -$2 | -$200 |
+| $45 | $0 | -$2 | -$200 |
+| $50 | $0 | -$2 | -$200 |
+| $52 | $2 | $0 | $0 |
+| $55 | $5 | +$3 | +$300 |
+| $60 | $10 | +$8 | +$800 |
+| $70 | $20 | +$18 | +$1,800 |
+
+Three things to notice. Below the strike, you lose the whole premium and not a penny more. Your **breakeven** is strike plus premium, $52, not $50: the share has to rise 4% just for you to get your money back. And above breakeven, the gains grow dollar for dollar with the share, with no ceiling.
+
+<Callout type="math" title="Compare with just buying the shares">
+
+100 shares at $50 costs $5,000. If the share goes to $60, you make $1,000, a 20% return. The call made $800 on $200, a 400% return. That is the leverage that makes options exciting.
+
+But if the share sits at $50 for a month, the shares are worth exactly $5,000 and you have lost nothing. The call is worth $0 and you have lost 100%. That is the leverage that makes options dangerous. You are not just betting on direction; you are betting on direction *within a deadline*.
+
+</Callout>
+
+## Payoff at expiry: the long put
+
+Same share at $50. You buy one $50 put for $2.
+
+| Share price at expiry | Option value per share | Profit or loss per share | Profit or loss per contract |
+| --- | --- | --- | --- |
+| $30 | $20 | +$18 | +$1,800 |
+| $40 | $10 | +$8 | +$800 |
+| $45 | $5 | +$3 | +$300 |
+| $48 | $2 | $0 | $0 |
+| $50 | $0 | -$2 | -$200 |
+| $55 | $0 | -$2 | -$200 |
+| $60 | $0 | -$2 | -$200 |
+
+The mirror image. Breakeven is strike minus premium, $48. Maximum loss is the premium. Maximum gain is capped only because a share cannot fall below zero, so the most this put can ever be worth is $50 per share.
+
+## Exercise, assignment and simply selling
+
+You rarely need to actually use the option. Before expiry, an option is a tradeable thing with its own bid and ask, so most traders simply sell the option back to the market when they want out. That is called **closing** the position.
+
+If you do hold to expiry and the option is in the money, most brokers will **exercise** it automatically: you buy (call) or sell (put) 100 shares at the strike. The seller on the other side gets **assigned** and must deliver. If you do not have the cash or the shares, this can create a surprise position you did not intend. Know your broker's expiry rules before you hold anything into the final day.
+
+<Callout type="danger" title="Two beginner traps">
+
+**Cheap out-of-the-money options.** A $0.10 option looks like a lottery ticket for $10. It is priced at $0.10 because it almost never pays. Buying handfuls of these is a slow, steady way to donate money.
+
+**Selling options for "free income".** Collecting $200 for selling a call feels like getting paid for nothing. You are being paid to carry a risk that can be many times $200. Do not sell an option you would not be able to honour if the share moved 30% overnight, and, as a beginner, do not sell options at all until you have finished the next two lessons and practised for months.
+
+</Callout>
+
+## The chain
+
+Your broker shows options in a **chain**: a table with strikes down the middle, calls on one side, puts on the other, and one tab per expiry date. Each cell shows the bid, the ask and the volume. Reading a chain is like reading a [Level 2 screen](/learn/m06-orders-and-execution/08-order-book-and-level-2): the same instrument, just many prices at once. Spend a few minutes with one before you ever trade, and check that the bid-ask spread is tight; options on quiet shares can have spreads that eat 10% of the premium on the way in and again on the way out.
+
+<KeyTakeaways>
+- An option is the right, not the obligation, to buy (call) or sell (put) an underlying at a strike price before an expiry, for a premium.
+- One stock option contract controls 100 shares, so multiply the quoted price by 100 to get the cost.
+- Buyers risk only the premium and have unlimited (call) or large (put) upside; sellers collect the premium and carry the large risk.
+- Breakeven for a long call is strike plus premium; for a long put it is strike minus premium.
+- Options add a deadline to a directional bet: right about direction but wrong about timing still loses everything.
+- Cheap out-of-the-money options and selling options for income are the two classic beginner traps.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "An option quoted at $3.20 costs how much for one contract?", options: ["$3.20", "$32", "$320", "$3,200"], answer: 2, explain: "One stock option contract controls 100 shares, so $3.20 times 100 equals $320." },
+  { q: "You buy a $50 call for $2. The share finishes the expiry day at $51. What is your result per share?", options: ["+$1", "-$1", "-$2", "+$3"], answer: 1, explain: "The call is worth $1 at expiry ($51 minus $50), but you paid $2, so you lose $1 per share. Breakeven was $52." },
+  { q: "Which side of an option trade carries the obligation?", options: ["The buyer", "The seller", "Both equally", "The exchange"], answer: 1, explain: "The buyer has a right and can walk away. The seller must deliver if the buyer exercises." },
+  { q: "A $50 put when the share is trading at $45 is described as what?", options: ["Out of the money", "At the money", "In the money", "Expired"], answer: 2, explain: "A put is in the money when the share is below the strike, because you could sell at $50 something worth $45." },
+  { q: "You think a share will rise, but you are not sure when. What is the specific danger of expressing that with a one-month call?", options: ["The call cannot be sold before expiry", "You could be right on direction but lose everything if the rise comes after the deadline", "Calls only pay if the share falls", "The premium is refunded if you are wrong"], answer: 1, explain: "Options add a clock. Right direction, wrong timing still loses the whole premium." },
+  { q: "Why is a $0.10 out-of-the-money option a poor beginner trade?", options: ["It is too expensive", "It is priced low precisely because it almost never finishes in the money", "It has no expiry", "Brokers do not allow it"], answer: 1, explain: "The market prices options by probability. A ten-cent option is a very low probability bet, and buying many of them is a slow drain." }
+]} />

@@ -1,0 +1,95 @@
+Look at a car's dashboard. The speedometer tells you how fast you are going right now. The trip counter tells you how far you have come. The fuel gauge tells you how much is left. Every dial is useful, and not one of them can see the road ahead. They are all built from things that have already happened.
+
+A technical indicator is a dial on a trader's dashboard. It takes the price history you already learned to read in [Reading a Price Chart](/learn/m01-reading-price/01-what-is-a-chart), runs it through a small piece of maths, and draws the answer as a line or a bar. That is the whole trick. There is no secret data feed, no crystal ball, no insider knowledge hidden inside an RSI.
+
+This module will teach you the most-used indicators one at a time: what each one calculates, what it is trying to measure, where it helps and where it lies. Before any of that, you need three ideas that apply to every indicator ever invented.
+
+## Idea one: indicators are maths applied to price
+
+Take the last five closing prices of a stock: 10, 11, 12, 11, 13. Add them up and divide by five and you get 11.4. Congratulations, you just calculated a five-period **simple moving average**. Draw that number under every candle and you have an indicator.
+
+Every indicator works like that. Some use the close, some use the high and low, some add volume. Some do simple averages, some do more elaborate smoothing. But the input is always the same: the candles already on your chart. An indicator can only rearrange information you already have. It can make a trend easier to see, or turn "price has gone up a lot recently" into a single number, but it cannot add knowledge that is not in the price.
+
+<Callout type="eli5">
+
+Imagine you write down your marks from your last five spelling tests and work out the average. That average is useful: it tells you roughly how you have been doing. But it does not know what score you will get next week. An indicator is exactly that kind of average, done on prices instead of test scores.
+
+</Callout>
+
+This leads to the most important sentence in the module: **because indicators are derived from price, they cannot know the future.** They describe what has happened and, at best, what is happening. The trader still has to decide what it means.
+
+<IndicatorFigure indicator="sma" caption="A 20-period simple moving average drawn over price. Notice it turns after price turns, never before. It is a summary of the last 20 closes, nothing more." />
+
+## Idea two: lagging versus leading
+
+Traders sort indicators into two families based on *when* they speak.
+
+A <Term id="lagging-indicator">**lagging indicator**</Term> confirms something after it has begun. Moving averages are the classic example. Because an average blends many old prices with the newest one, it takes time to catch up when price changes direction. You get a smoother, calmer picture, and you pay for that calm with delay.
+
+A <Term id="leading-indicator">**leading indicator**</Term> tries to speak earlier, usually by measuring how stretched or how fast a move is. Oscillators such as RSI and Stochastic are the usual examples. They can flag that a rally is running hot before the rally actually ends. The price of that early warning is false alarms: a leading indicator will often shout "too far" while price keeps going for weeks.
+
+Be careful with the word "leading". It does not mean the indicator sees ahead. It means it reacts to the *speed* of recent moves rather than their *level*, and speed often changes before direction does. A ball thrown upward slows down before it turns around; the slowing is measurable, the exact top is not.
+
+| | Lagging | Leading |
+|---|---|---|
+| What it measures | Direction and level of a trend | Speed, stretch, momentum |
+| Examples | SMA, EMA, MACD, ADX | RSI, Stochastic, some volume tools |
+| Strength | Fewer false signals | Earlier warnings |
+| Weakness | Late entries and exits | Many false warnings |
+| Best in | Trending markets | Ranging markets |
+
+## Idea three: overlays versus oscillators
+
+The second way to sort indicators is by *where they are drawn*.
+
+An **overlay** sits on top of the candles, in the same price scale. Moving averages, Bollinger Bands, VWAP and Fibonacci levels are overlays. They answer questions like "is price above or below its average?" or "how far from normal is this?". You read them by looking at where price is relative to the line.
+
+An **oscillator** lives in its own panel underneath the chart and usually moves between fixed limits, such as 0 to 100, or swings around a zero line. RSI, Stochastic, MACD and ADX are oscillators. They answer questions like "how strong was the recent push?" or "is this a trend or a chop?". You read them by their level and their shape, not by comparing them to price.
+
+<IndicatorFigure indicator="rsi" caption="RSI is an oscillator: it lives in its own panel and stays between 0 and 100. You do not compare its value to price, you compare it to its own scale." />
+
+Neither type is better. Overlays are good at showing *where*; oscillators are good at showing *how hard*. A clean chart, which we will build in the [last lesson of this module](/learn/m05-indicators/15-indicator-overload), typically has one of each.
+
+## What indicators are good for
+
+Used honestly, indicators do three jobs well.
+
+They **summarise**. A 200-period average condenses a year of daily closes into one line. Glancing at whether price is above or below it tells you the long-term bias in a second, without counting swing highs and lows.
+
+They **make rules testable**. "Buy when it looks strong" cannot be checked. "Buy when the 20 EMA crosses above the 50 EMA" can be tested on years of data and shown to be good, bad or indifferent. That is a huge advantage when you reach [backtesting](/learn/m09-strategies/09-backtesting-and-forward-testing).
+
+They **measure things eyes are bad at**. Volatility is a good example: humans are poor at judging whether today's candles are twice as wide as last month's. ATR gives you the number.
+
+## What indicators are bad for
+
+<Callout type="warning" title="The trap that catches almost every beginner">
+
+An indicator cannot turn a bad trade location into a good one. If price is slamming into the resistance level you learned to spot in [Support and Resistance](/learn/m03-market-structure/03-support-and-resistance), an RSI reading of 45 does not make buying there sensible. Structure first, indicator second. Indicators confirm and filter; they should not be the reason you trade.
+
+</Callout>
+
+Indicators are also bad at being combined carelessly. Five indicators built from the same closing prices are not five opinions, they are one opinion drawn five ways. Stacking them creates a false sense of confidence. And indicators are bad at regime changes: every setting has a market it suits and a market it fails in, and the market changes without telling you.
+
+## How to read the rest of this module
+
+Each lesson follows the same shape: what the indicator calculates, with the real formula and a tiny worked example; what it is trying to measure; the default settings and why; two or three concrete ways traders use it; the ways it fails; and how it fits with the market structure you already know. Learn the formula every time. Once you know an indicator is just an average or a ratio, it loses its magic, and that is exactly the point.
+
+<KeyTakeaways>
+- Every indicator is a calculation applied to price data you already have on the chart.
+- Because indicators are derived from past prices, none of them can know the future.
+- Lagging indicators like moving averages confirm late but with fewer false signals; leading indicators like RSI warn early but cry wolf often.
+- Overlays draw on the price chart; oscillators draw in their own panel with their own scale.
+- Indicators summarise, make rules testable and measure what eyes miss, but they cannot fix a bad trade location.
+- Structure first, indicator second.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "What data does a technical indicator use to compute its values?", options: ["Company earnings reports", "The price and volume history already on the chart", "News headlines", "Analyst forecasts"], answer: 1, explain: "Indicators are maths applied to the existing price history. They add no outside information." },
+  { q: "Why can no indicator know the future?", options: ["Because indicators are illegal in some countries", "Because they are derived only from prices that have already happened", "Because they only work on daily charts", "Because they need volume data"], answer: 1, explain: "An indicator can only rearrange past prices. It describes what has happened, not what will." },
+  { q: "A moving average turns down a few candles after price has already turned down. Which family is it in?", options: ["Leading", "Lagging", "Overlay-free", "Fundamental"], answer: 1, explain: "Averages blend old prices with new ones, so they confirm a change after it has started. That delay is lag." },
+  { q: "RSI is drawn in a separate panel and stays between 0 and 100. What kind of indicator is it?", options: ["An overlay", "An oscillator", "A candlestick pattern", "A trendline"], answer: 1, explain: "Oscillators live in their own panel with fixed limits. Overlays sit on the price chart in the price scale." },
+  { q: "Price is pushing into a strong resistance level. RSI reads 45, which is neutral. What is the sensible reading?", options: ["RSI is neutral, so buying at resistance is fine", "Structure comes first: resistance is the important fact, the RSI reading does not make buying there a good idea", "RSI overrides resistance", "You should add more indicators until one says buy"], answer: 1, explain: "Indicators confirm and filter. They do not turn a poor location into a good one." },
+  { q: "You add five different oscillators all computed from closing prices and they all say overbought. How many independent opinions do you have?", options: ["Five", "Roughly one, drawn five ways", "Ten, because each confirms the others", "None, oscillators cancel out"], answer: 1, explain: "Indicators built from the same input are not independent. Agreement between them proves little." }
+]} />
+
+<TryIt to="/simulator">Open the simulator, pick NOVA on the daily chart and turn on the SMA overlay and the RSI panel. Watch how the SMA sits on the price chart while RSI has its own 0 to 100 panel underneath. Then scroll back and find a moment where price turned: notice which one reacted first, and how many candles later the SMA caught up.</TryIt>

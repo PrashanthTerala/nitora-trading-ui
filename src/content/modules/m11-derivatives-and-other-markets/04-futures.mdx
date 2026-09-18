@@ -1,0 +1,100 @@
+A farmer plants wheat in spring and will not have any to sell until autumn. A bakery needs wheat in autumn and worries the price will be sky-high by then. So in spring they shake hands: the farmer will deliver 5,000 bushels in September at $6 a bushel, whatever the price is on the day. Both sides have given up the chance of a better price in exchange for certainty.
+
+That handshake is a **futures contract**, and it is one of the oldest financial instruments there is. Today, the same idea covers oil, gold, stock indices, interest rates, currencies and even Bitcoin. Most people trading <Term id="futures">futures</Term> have no intention of delivering a single bushel of anything; they trade the contract itself, the way you trade a share.
+
+This lesson explains what a futures contract actually is, how ticks and margin work, and the two things that catch beginners: expiry and leverage.
+
+## What a futures contract is
+
+A futures contract is an agreement to buy or sell a fixed quantity of something at a fixed price on a fixed future date. Unlike an option, it is an **obligation** for both sides. The buyer must buy; the seller must sell. There is no premium and no walking away.
+
+The contracts are **standardised** by the exchange: quantity, quality, delivery month and the minimum price step are all fixed. That is what makes them tradeable. When you buy one crude oil contract, everyone knows it means exactly 1,000 barrels of a specific grade, delivered in a specific month.
+
+Because both sides have an obligation, the exchange stands in the middle as guarantor, and it requires both sides to post a deposit. That deposit is where the leverage comes from.
+
+## Contract specs: the numbers that matter
+
+Every contract has a **multiplier** (how much one point is worth), a **tick size** (the smallest price move allowed) and a **tick value** (how much money one tick is worth). Here are four contracts you will hear about constantly.
+
+| Contract | Symbol | What it tracks | One contract equals | Tick size | Tick value | One point is worth |
+| --- | --- | --- | --- | --- | --- | --- |
+| E-mini S&P 500 | ES | The S&P 500 index | $50 × the index | 0.25 points | $12.50 | $50 |
+| E-mini Nasdaq-100 | NQ | The Nasdaq-100 index | $20 × the index | 0.25 points | $5.00 | $20 |
+| Crude Oil | CL | WTI crude oil | 1,000 barrels | $0.01 per barrel | $10.00 | $1,000 |
+| Gold | GC | Gold | 100 troy ounces | $0.10 per ounce | $10.00 | $100 |
+
+Most of these now have **micro** versions at one tenth the size: MES, MNQ, MCL and MGC. A micro E-mini S&P tick is worth $1.25 instead of $12.50. If you ever trade futures with real money, micros are where a beginner belongs.
+
+<Callout type="math" title="Working out a profit or loss">
+
+You buy one ES contract at 5,000.00. It rises to 5,004.50.
+
+That is 4.50 points. Each point is worth $50, so the gain is 4.50 × $50 = **$225**.
+
+In ticks: 4.50 points is 18 ticks of 0.25, and 18 × $12.50 = $225. Same answer.
+
+Now suppose instead it fell 20 points to 4,980.00. That is 20 × $50 = **a $1,000 loss** on one contract. A 0.4% move in the index just cost you $1,000, because one ES contract controls about $250,000 of index exposure.
+
+</Callout>
+
+## Margin: a deposit, not a purchase
+
+To hold that ES contract, you do not pay $250,000. You post a deposit called **margin**, which the exchange sets at perhaps $12,000 to $15,000 for one ES contract, and which brokers may reduce to a few hundred dollars for day trades. This is not the same as the [margin in a stock account](/learn/m06-orders-and-execution/06-margin-and-leverage). Stock margin is a loan. Futures margin is a **performance bond**: a good-faith deposit proving you can cover losses.
+
+Every evening the exchange **marks to market**: your account is credited or debited with the day's gain or loss in cash. If losses shrink your deposit below the **maintenance margin**, you get a margin call and must add funds or the broker closes your position.
+
+The consequence is leverage of 20 to 50 times or more. A 2% move against you on a fully-margined position can wipe out the deposit. Futures do not forgive sloppy [position sizing](/learn/m07-risk-management/02-the-one-percent-rule); they punish it faster than any other instrument on this site.
+
+<Callout type="eli5">
+
+Renting a car, you leave a deposit. You do not buy the car, but if you scratch it, the repair comes out of your deposit, and if the damage is worse than the deposit, you owe the rest. Futures margin is that deposit. The car is a $250,000 slice of the stock market, and the road is bumpy.
+
+</Callout>
+
+## Expiry and rollover
+
+Every futures contract has an expiry month. Index futures expire quarterly: March, June, September, December, with symbols like ESZ5 for December 2025 (H is March, M is June, U is September, Z is December). Oil and gold expire monthly.
+
+As expiry approaches, trading moves from the current contract to the next one. This is called **rollover**, and it happens over a few days about a week before expiry. The contract with the most volume is called the **front month**. If you are still holding the old contract near expiry, you must close it or roll it yourself, or your broker will close it for you, sometimes at an awful price in a thin market.
+
+Physically delivered contracts like crude oil are the ones to respect most. In April 2020, the expiring oil contract briefly traded *below zero* because holders with no storage were paying people to take the barrels. Retail traders who did not understand expiry lost fortunes in an afternoon. Always know your contract's last trading day, and never hold a physically delivered contract into it.
+
+## Contango and backwardation
+
+Because contracts exist for many months, you can see the price for each. When later months are more expensive than nearer ones, the market is in <Term id="contango">contango</Term>; that is normal for things that cost money to store, like oil and gold, because the later price includes storage and financing. When later months are cheaper, the market is in **backwardation**, which usually signals a shortage right now.
+
+Why should a beginner care? Because anything that holds futures over time, such as a commodity ETF, has to keep rolling from the cheap near contract to the expensive far one in contango, and that slowly bleeds value. You will meet this again in the [ETF lesson](/learn/m11-derivatives-and-other-markets/07-etfs-and-leveraged-products).
+
+## Why traders like futures anyway
+
+Given all that, why are futures so popular with day traders? Because they solve several problems at once.
+
+- **One instrument for the whole market.** ES lets you trade the entire S&P 500 with one click and one tight spread.
+- **Nearly 23-hour trading.** Index futures trade from Sunday evening to Friday afternoon with short daily breaks, so reactions to overnight news are visible and tradeable.
+- **Easy shorting.** Selling a future is as simple as buying one; there are no shares to borrow.
+- **Deep liquidity.** ES trades over a million contracts a day, so [slippage](/learn/m06-orders-and-execution/07-slippage-and-liquidity) is usually one tick.
+- **Central clearing.** The exchange guarantees every trade, so counterparty risk is minimal.
+
+<Callout type="danger" title="Leverage is the whole risk">
+
+Futures themselves are simple. The danger is that a broker will let you control $250,000 of index with a $500 day-trading deposit. Trade by the risk rules you already know: decide the stop in points, multiply by the point value, and choose the number of contracts (probably one micro) that makes that loss 1% of your account. If the maths says zero contracts, the answer is zero contracts.
+
+</Callout>
+
+<KeyTakeaways>
+- A futures contract is a standardised obligation to buy or sell a fixed quantity at a fixed price on a fixed date; both sides are bound, unlike options.
+- Tick size is the smallest price step and tick value is what it is worth: ES is 0.25 points for $12.50, CL is $0.01 for $10, GC is $0.10 for $10.
+- Margin is a performance bond, not a loan, and daily marking to market means losses are taken from it every evening.
+- Contracts expire; rollover moves trading to the next month, and physically delivered contracts must never be held to the last day.
+- Contango means later months cost more, backwardation means they cost less, and rolling in contango bleeds value over time.
+- Leverage of 20 to 50 times is the whole danger: size by points times point value, and start with micro contracts.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "You buy one ES contract at 5,200.00 and sell it at 5,196.00. What is the result?", options: ["-$4", "-$100", "-$200", "-$400"], answer: 2, explain: "A 4-point move at $50 per point is $200. In ticks: 16 ticks at $12.50 is also $200." },
+  { q: "Crude oil (CL) moves from $80.00 to $80.50 per barrel. How much is that on one contract?", options: ["$0.50", "$50", "$500", "$5,000"], answer: 2, explain: "A $0.50 move is 50 ticks of $0.01, and each tick is $10, so $500. One contract is 1,000 barrels." },
+  { q: "How does futures margin differ from stock margin?", options: ["It is a loan with interest", "It is a performance bond, a good-faith deposit against losses, marked to market daily", "It cannot be lost", "There is no difference"], answer: 1, explain: "Stock margin is borrowed money. Futures margin is a deposit that the exchange debits or credits each evening." },
+  { q: "What does rollover mean?", options: ["Closing your account", "Moving from the expiring contract to the next month's contract", "A margin call", "Reversing from long to short"], answer: 1, explain: "As a contract nears expiry, volume and open positions move to the next contract. Traders must close or roll." },
+  { q: "The December contract is priced higher than the October contract. What is this called?", options: ["Backwardation", "Contango", "A margin call", "Delivery"], answer: 1, explain: "Later months more expensive than nearer months is contango, normal for commodities with storage costs." },
+  { q: "You have a $5,000 account and a strategy with a 10-point stop on ES. Using a 1% risk rule, how many full ES contracts should you trade?", options: ["One", "Two", "Zero; the $500 loss on one contract is 10% of the account, so consider a micro instead", "Five"], answer: 2, explain: "10 points times $50 is $500 per contract, far above the $50 allowed by a 1% rule. One micro contract risks $50, which fits." }
+]} />

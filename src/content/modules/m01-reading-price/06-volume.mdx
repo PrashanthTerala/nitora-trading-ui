@@ -1,0 +1,95 @@
+Two shops on the same street both put a sign in the window saying "prices up 10%". At the first, one customer wandered in all morning and shrugged. At the second, there was a queue out of the door and they sold out by noon.
+
+The price change is identical. The meaning is not. The second shop has discovered something real about what people will pay; the first has discovered nothing at all.
+
+**Volume** is the queue. It counts how many shares, contracts or coins actually changed hands during a period. Price tells you *what* people agreed on. <Term id="volume">Volume</Term> tells you *how many* of them were involved in the agreement. That is why traders say price without volume is a rumour.
+
+## What volume counts
+
+Volume is the total quantity traded during the period, and the period is whatever [timeframe](/learn/m01-reading-price/05-timeframes) your chart is set to. On a daily chart, a volume of 4.2 million means 4.2 million shares changed hands that day. It is drawn as a bar chart in a panel beneath the price, with one bar per candle, lining up with the candle above it.
+
+Two things catch people out.
+
+**Every trade has a buyer and a seller.** Volume is not "how many people bought". If 500 shares trade, somebody bought 500 and somebody sold 500. Volume never tells you which side was more eager — it only tells you how much business got done. Anyone who says "volume was high so buyers were in control" is skipping a step; you need the price action to say who won.
+
+**The number alone means nothing.** Four million shares is enormous for a small company and a quiet afternoon for a giant one. Volume is always read *relative to its own recent average*, usually the last 20 or 50 periods. "Twice normal volume" is a statement. "Four million shares" is trivia.
+
+<Callout type="eli5">
+
+Imagine your class votes on the school trip and the beach wins. If 30 of 30 children voted, that result is solid. If 3 children voted while everyone else was at lunch, the same result means almost nothing and will probably be overturned. Volume is how many children voted.
+
+</Callout>
+
+## Volume as conviction
+
+Here is the single idea to take away: **volume measures participation, and participation is a proxy for conviction.**
+
+A move on heavy volume means lots of people were willing to act at those prices. Money changed hands, positions were built, and the people who did it now have a reason to defend that area. A move on thin volume means a few orders pushed price around while most of the market was asleep. It is easier to move, and easier to reverse.
+
+<PatternFigure name="breakout-retest" showVolume caption="Watch the volume panel, not just the price. The push through the level comes with a clear surge in volume, and the quiet pullback afterwards comes on much lighter volume. That combination is what traders want to see." />
+
+Two practical readings follow from that.
+
+**Volume should confirm the move.** In a healthy uptrend, the pushes up tend to come on higher volume and the pullbacks on lower volume. It means buyers are committing and sellers are merely taking profits. When that flips — rallies on thin volume, declines on heavy volume — the trend is losing support underneath it.
+
+**Volume should confirm the break.** When price pushes through a level that held before, heavy volume says a genuine crowd wanted in. That is the difference between a break that sticks and one that snaps back.
+
+## Breakouts versus fakeouts
+
+This is where volume earns its keep for a beginner.
+
+A **breakout** on strong volume: price clears a level that has capped it three times, and volume comes in at two or three times the recent average. Lots of participants agreed the level was wrong. The move has fuel.
+
+<PatternFigure name="fakeout" caption="A break that failed. Price pokes above the level and collapses straight back inside. Failed breaks like this very often happen on unremarkable volume, because nobody serious was buying up there." />
+
+A **fakeout**: price pokes above the level on ordinary or light volume, then falls straight back inside the range. Nobody big was involved. The poke was enough to trigger the stop orders sitting above the level, and once those were filled there was no real demand left.
+
+<Callout type="warning" title="Volume is a filter, not a signal">
+
+Be honest about what this buys you. High volume does not guarantee a breakout works, and plenty of real moves begin on unremarkable volume. Volume is best used to *downgrade* things: a breakout on clearly below-average volume deserves your suspicion. Treat it as one vote among several, not as proof.
+
+</Callout>
+
+## The shape of a trading day
+
+Intraday volume has a strong and very consistent shape: a **U**.
+
+The first thirty minutes after the open carry huge volume. Overnight news is being digested, orders queued up while the market was shut all fire at once, and institutions do a lot of their business early. Then volume drains away through late morning, hits a trough around lunchtime when desks are empty, and swells again into the close as funds rebalance and day traders flatten positions.
+
+<IndicatorFigure indicator="vwap" regime="intraday" caption="An intraday session with its volume bars underneath. Notice the tall bars at the open, the thin midday stretch, and the pickup into the close. The line running through price is VWAP, the volume-weighted average price, which you will meet properly in the indicators module." />
+
+That shape has practical consequences. Moves that start in the thin midday session often fail simply because there is nobody around to continue them. Spreads widen when volume dries up, so your fills get worse. And the first and last thirty minutes are both the most liquid and the most violent parts of the day, which is why beginners are usually told to avoid the opening bell until they know what they are doing.
+
+## How to use volume without overthinking it
+
+You do not need a volume strategy. You need three habits.
+
+First, **turn the volume panel on and leave it on.** You cannot notice what you are not looking at.
+
+Second, when a candle stands out, **check whether its volume stands out too.** A huge red candle on triple volume is a genuine event: a lot of holders sold. A huge red candle on below-average volume is thinner than it looks.
+
+Third, **watch for volume drying up.** A trend that keeps making new highs while volume steadily shrinks is running on fumes. It does not tell you when it ends, only that fewer people are still buying it.
+
+<Callout type="tip">
+
+Forex is the honest exception. There is no central exchange, so there is no true total volume for a currency pair. What your platform shows is tick volume, which counts price updates rather than quantity traded. It correlates reasonably well with real activity, but it is a different thing and deserves less weight.
+
+</Callout>
+
+<KeyTakeaways>
+- Volume counts how much actually traded in a period and is drawn as bars beneath the price candles.
+- Every trade has both a buyer and a seller, so volume shows participation, never which side was more eager.
+- Volume only means something relative to its own recent average, not as a raw number.
+- Moves on heavy volume carry more conviction; moves on thin volume are easier to make and easier to reverse.
+- Breakouts on clearly below-average volume deserve suspicion, but volume is a filter rather than proof.
+- Intraday volume follows a U shape: heavy at the open, thin at lunch, heavy into the close.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "What does volume measure?", options: ["How many buyers there were minus sellers", "The total quantity traded during the period", "How far price moved", "The number of traders watching"], answer: 1, explain: "Volume is total quantity traded. Every trade has a buyer and a seller, so it cannot tell you which side dominated." },
+  { q: "A stock trades 4 million shares today. Is that high?", options: ["Yes, 4 million is always high", "No, it is always low", "You cannot tell without comparing it with its own recent average", "Only if the candle is green"], answer: 2, explain: "Volume is relative. Four million is huge for a small company and a quiet day for a mega-cap." },
+  { q: "Price breaks above a level that has capped it three times, on volume well below average. What is the honest read?", options: ["A confirmed breakout, buy immediately", "A break worth being suspicious of, since few participants were involved", "Proof of a fakeout", "Volume is irrelevant to breakouts"], answer: 1, explain: "Thin volume means nobody serious was buying up there. It is a reason for suspicion, not a guarantee of failure." },
+  { q: "In a healthy uptrend, what volume pattern do traders like to see?", options: ["Higher volume on pushes up, lower volume on pullbacks", "Higher volume on pullbacks, lower on pushes up", "Flat volume throughout", "Volume rising every single day"], answer: 0, explain: "Buyers committing on the advances and only profit-taking on the rests is the healthy combination." },
+  { q: "Why is intraday volume shaped like a U?", options: ["Exchanges throttle midday trading", "Overnight orders and institutional business cluster at the open, desks empty at lunch, and rebalancing swells the close", "Retail traders only trade at lunch", "It is a charting artefact"], answer: 1, explain: "The open digests overnight news and queued orders, midday is quiet, and the close brings rebalancing and position flattening." },
+  { q: "Why does forex volume deserve less weight?", options: ["Forex has no volume at all", "There is no central exchange, so platforms show tick volume rather than true quantity traded", "Forex volume is always fake", "Forex volume only updates weekly"], answer: 1, explain: "Without a single exchange there is no total. Tick volume counts price updates and correlates roughly, but it is a different measure." }
+]} />

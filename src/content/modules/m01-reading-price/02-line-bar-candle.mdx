@@ -1,0 +1,98 @@
+Three photographers stand at the same football match. The first takes one photo at the final whistle: a picture of the scoreboard. The second takes a photo of the scoreboard plus a note of the highest and lowest scores at any point in the game. The third takes all of that and paints the swing in team colours so you can see at a glance who was ahead at the end.
+
+All three are telling the truth about the same match. They are just carrying different amounts of detail, and the third one is easier to read in a hurry.
+
+That is exactly the relationship between the three chart types you will meet on every platform: the **line chart**, the **bar chart** and the **candlestick chart**. Same data underneath, three ways of drawing it. This lesson shows you all three side by side and explains why almost every trader in the world ended up choosing candles.
+
+## The same data, three drawings
+
+In the [previous lesson](/learn/m01-reading-price/01-what-is-a-chart) you saw that each mark on a chart summarises one period. Here is one stretch of price history, drawn three ways. Look at it before you read another word.
+
+<ChartTypesFigure caption="Identical price history, three drawings. The line keeps only the closing price. The bars add the open, high and low. The candles add colour and a filled body so direction jumps out." />
+
+Notice that the overall shape is the same in all three. The market did what it did; nothing was invented. What changes is how much of each period's story survives the drawing.
+
+## The line chart: closing price only
+
+A **line chart** takes one number from each period, the <Term id="close">closing price</Term>, plots it as a dot, and joins the dots. A daily line chart is therefore a record of where each day finished, and nothing else.
+
+That sounds lazy, but there is a real argument for it. The close is the most meaningful single price of any period, because it is the price everyone agreed on when the session was over and positions had to be carried overnight. Newspapers and fund reports use the close for exactly this reason.
+
+The cost is everything else. A line chart cannot show you that price crashed 6% during the day and recovered every cent by the bell. Both a boring day and a terrifying day can produce the same dot.
+
+<Callout type="tip">
+
+Line charts are genuinely useful when you want to see the big shape without noise: a ten-year view of an index, or a quick comparison of two stocks on the same picture. Many experienced traders flip to a line chart for thirty seconds precisely because it removes detail and shows the trend.
+
+</Callout>
+
+## The bar chart: OHLC in one stick
+
+A **bar chart**, often called an **OHLC bar**, keeps four numbers from each period: the <Term id="open">open</Term>, the <Term id="high">high</Term>, the <Term id="low">low</Term> and the close. That is a big upgrade, and it is drawn with admirable economy:
+
+- A vertical stick runs from the period's low to its high. Its length is the full range of the period.
+- A small tick on the **left** of the stick marks the opening price.
+- A small tick on the **right** of the stick marks the closing price.
+
+Left tick low, right tick high: the period finished higher than it started. Left tick high, right tick low: it finished lower. That is the whole notation, and it was the standard in Western markets for most of the twentieth century.
+
+Bar charts are compact, so they stay readable when you cram hundreds of periods onto one screen. Their weakness is that the direction of each bar is a thin tick you have to hunt for. On a busy screen at speed, your eye works harder than it should.
+
+## The candlestick chart: the same four numbers, made obvious
+
+A **candlestick** carries the identical four numbers as a bar, open, high, low and close, but draws them differently. The distance between the open and the close is filled in as a rectangle called the **body**, and thin lines called **wicks** stick out above and below to reach the high and the low.
+
+Then comes the trick that won the argument: the body is **coloured by direction**. If the close is above the open, the body is drawn green (or hollow, in older books). If the close is below the open, it is red (or filled). You do not have to read the candle. You see it.
+
+<PatternFigure name="anatomy-bullish" caption="One candlestick with its four prices labelled. The body spans open to close; the wicks reach up to the high and down to the low. Lesson 3 takes this apart properly." />
+
+The idea comes from eighteenth-century Japanese rice merchants, and was brought to Western traders by Steve Nison in the 1990s. Within about a decade, candles became the default on nearly every platform. Not because they are more accurate, but because they are faster to read, and because a coloured body with wicks shows the *shape* of a period in a way a thin stick does not.
+
+<Callout type="eli5">
+
+Imagine three ways of telling your parents about your school day. Option one: "I got a B." Option two: "I started okay, my best moment was an A, my worst was a D, and I ended on a B." Option three: the same story, but you say the good bits in a happy voice and the bad bits in a sad voice. Option three is a candlestick. Same facts, but you can hear the mood.
+
+</Callout>
+
+## Which should you use?
+
+For learning to read price, use candlesticks. Every lesson in this module and the whole of the next module is built on them, and the entire pattern vocabulary of trading assumes candles.
+
+That said, here is an honest comparison.
+
+| | Line | Bar (OHLC) | Candlestick |
+| --- | --- | --- | --- |
+| Data kept per period | Close only | Open, high, low, close | Open, high, low, close |
+| Direction visible at a glance | From the slope | Only from tick positions | Yes, by colour and body |
+| Screen space used | Least | Little | More |
+| Good for | Long-term shape, comparisons | Dense data, some futures traders | Everything else, especially patterns |
+
+<Callout type="warning" title="More detail is not always better">
+
+Beginners often assume the most detailed chart must be the best one. It is not that simple. A candlestick chart of a one-minute timeframe gives you enormous detail about noise that means nothing. The right chart is the one that shows the detail that matters for the decision you are making, and hides the rest.
+
+</Callout>
+
+## One more thing: colour conventions vary
+
+Green-up and red-down is the most common convention, and it is what this site uses. It is not universal. Some platforms default to blue and red. In much of East Asia, red means *up* and green means *down*, which is the reverse of what you are about to learn.
+
+Older printed books use hollow bodies for up periods and filled black bodies for down periods, which is where the phrase "a black candle" comes from. Whatever colours your platform uses, the rule underneath never changes: **body colour is decided by whether the close finished above or below the open.** Check the setting once, then stop thinking about it.
+
+<KeyTakeaways>
+- Line, bar and candlestick charts draw the same underlying price history with different amounts of detail.
+- A line chart keeps only the closing price, which makes it clean for long-term shape but blind to what happened inside each period.
+- A bar chart keeps open, high, low and close, with a left tick for the open and a right tick for the close.
+- A candlestick keeps the same four prices but fills the open-to-close range as a coloured body, so direction is visible instantly.
+- Candles won because they are faster to read, and the entire pattern vocabulary of trading is built on them.
+- Colour conventions differ by platform and region; the rule underneath is always close versus open.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "Which single price does a line chart normally plot?", options: ["The opening price", "The highest price", "The closing price", "The average price"], answer: 2, explain: "Line charts join the closes. It is the most meaningful single price of a period, but everything that happened inside the period is lost." },
+  { q: "On an OHLC bar, what does the tick on the right-hand side show?", options: ["The high", "The open", "The close", "The volume"], answer: 2, explain: "Left tick is the open, right tick is the close. Time reads left to right, so the tick order matches the order events happened." },
+  { q: "How much more data does a candlestick hold than an OHLC bar of the same period?", options: ["Twice as much", "Exactly the same four prices", "One extra price, the midpoint", "It also includes volume"], answer: 1, explain: "Both carry open, high, low and close. Candles just draw those four numbers in a way the eye reads faster." },
+  { q: "A daily candle is red on a platform using the common Western convention. What does that tell you?", options: ["The day had high volume", "The close was below the open", "The low was below yesterday's low", "The stock fell for the whole week"], answer: 1, explain: "Body colour compares close with open for that one period only. Red means the period finished below where it started." },
+  { q: "When is a line chart the better tool?", options: ["When hunting candlestick patterns", "When you want the big shape of ten years of data without noise", "When you need to see intraday highs and lows", "When placing a stop loss inside today's range"], answer: 1, explain: "Removing detail is the point. For long-term shape or comparing two instruments, a line chart is cleaner." },
+  { q: "Why did candlesticks become the default on most platforms?", options: ["They are mathematically more accurate", "They include volume automatically", "They show the same data faster, and patterns are defined in terms of them", "They were required by exchanges"], answer: 2, explain: "Candles carry no extra data. They win on reading speed, and the whole pattern vocabulary assumes them." }
+]} />

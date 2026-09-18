@@ -1,0 +1,110 @@
+A high jumper clears the bar at a new personal best. The crowd cheers. Then the coach watches the slow-motion replay and sees something the crowd missed: the jumper got *less* air than on their previous attempt. They only cleared it because they twisted better over the bar. The record is real. The power behind it is fading.
+
+**Divergence** is that replay. Price makes a new high, so the headline says the trend is fine. But the indicator, which measures how hard price had to push to get there, makes a *lower* high. The new record was set with less force than the last one.
+
+Divergence is one of the few genuinely forward-looking things a lagging indicator can give you, and it is also one of the most over-traded ideas in technical analysis. The distinction that saves money is simple and you should hold on to it from the first paragraph: **divergence is a warning, not a signal.**
+
+## What you are actually comparing
+
+Divergence compares **the slope between two swings on the price chart with the slope between the two matching swings on the indicator**.
+
+That is the whole definition. Two peaks on price, two peaks on the oscillator, and a question: do the two lines point the same way?
+
+<IndicatorFigure indicator="divergence" caption="Price makes a higher high while RSI makes a lower high. The second push took more price and less momentum than the first." />
+
+Why this works is easiest to see with [RSI](/learn/m05-indicators/04-rsi), where you know the formula. RSI is the ratio of average gains to average losses. If price reaches a new high but the up-candles that got it there were smaller than the up-candles in the previous rally, the average gain is lower, so RSI prints a lower peak even as price prints a higher one. The divergence is not a mystical signal; it is arithmetic reporting that the second push was weaker.
+
+The same logic applies to MACD, whose line is the gap between two EMAs and therefore shrinks when a rally decelerates, and to the Stochastic, which falls when closes stop finishing near the top of the range.
+
+<Callout type="eli5">
+
+Imagine bouncing a ball and counting how high it goes and how hard you hit it. If the ball is going higher but your hand is hitting it softer each time, something is odd, and you would expect it to stop going higher soon. Divergence is noticing that the bounces are getting higher while the hits are getting softer.
+
+</Callout>
+
+## The four types
+
+There are two pairs. **Regular** divergence compares the swings *in the direction of the trend* and warns of a reversal. **Hidden** divergence compares the swings *against* the trend, the pullbacks, and suggests continuation.
+
+| Type | Price does | Indicator does | Trend it appears in | What it suggests |
+| --- | --- | --- | --- | --- |
+| Regular bullish | lower low | higher low | downtrend | selling pressure is fading; a bottom may be forming |
+| Regular bearish | higher high | lower high | uptrend | buying pressure is fading; a top may be forming |
+| Hidden bullish | higher low | lower low | uptrend | the pullback was deeper in momentum than in price; the uptrend is likely to resume |
+| Hidden bearish | lower high | higher high | downtrend | the bounce was stronger in momentum than in price; the downtrend is likely to resume |
+
+A memory hook that survives contact with a live chart: **regular means reversal, hidden means hidden continuation.** And in every case, the indicator is the one telling you the truth about force while price tells you about position.
+
+### Reading the table in practice
+
+For **regular bearish** divergence you need an existing uptrend, two clear price peaks with the second higher, and two matching indicator peaks with the second lower. Nothing else counts.
+
+For **regular bullish** divergence you need a downtrend, two price troughs with the second lower, and two indicator troughs with the second higher.
+
+**Hidden** divergence is the same exercise performed on pullbacks. In an uptrend, price pulls back and makes a higher low, which is what uptrends do, but the oscillator drops to a lower low than it reached on the previous pullback. Momentum got washed out harder than price did, which often means the pullback was a shakeout and the trend is ready to go again.
+
+Hidden divergence is much less discussed than regular divergence, and it is worth knowing for a reason that has nothing to do with the signal itself: it is the trend-following counterpart, so seeing both keeps you from assuming every divergence is bearish.
+
+## How to avoid false divergences
+
+Most divergences people find are not divergences. Here are the filters that remove the majority of them.
+
+**1. Use real swing pivots on both charts.** Compare peak to peak and trough to trough, marked with the [3-bar pivot rule](/learn/m03-market-structure/02-swing-highs-and-lows). Comparing a price peak to whatever the indicator happened to be doing that day is not divergence, it is coincidence.
+
+**2. Compare adjacent swings.** The two peaks should be the last two meaningful peaks, separated by a real pullback, and usually no more than a few weeks apart on a daily chart. Divergence drawn between a peak in January and a peak in September, ignoring the six peaks in between, tells you almost nothing.
+
+**3. Require the indicator to be somewhere interesting.** Regular bearish divergence means far more when the first RSI peak was above 70 than when both peaks were near 55. If the oscillator has been sitting in the middle of its range, its "lower high" is noise.
+
+**4. Do not change indicators until you find one that diverges.** If RSI does not diverge but MACD does and Stochastic does not, you have not found a signal; you have found that two out of three disagree with you. Pick one oscillator in advance and read only that one.
+
+**5. Wait for a trigger.** This is the important one. Divergence tells you the trend is weakening; it never tells you when it stops. The trigger should come from price: a break of the trendline, a failed higher high, a close below the last swing low, or a completed [chart pattern](/learn/m04-chart-patterns/02-head-and-shoulders). Divergence plus a structural break is a setup. Divergence alone is an observation.
+
+**6. Check the timeframe.** Divergence on a 5-minute chart in the middle of a strong daily uptrend is a pause, not a top. Match the timeframe of the divergence to the timeframe of the trade.
+
+## How divergence fails
+
+<Callout type="danger" title="Divergence can repeat for months, and each repeat costs money">
+
+The single most expensive mistake in this lesson is shorting a strong uptrend because of bearish divergence. In a powerful trend, divergence is the *normal* state: each leg is a little less explosive than the first one, so the oscillator keeps printing lower highs while price keeps grinding to new highs. Traders short the first divergence, add on the second, add again on the third, and are carried out before the fourth. Some famous rallies produced five or six consecutive bearish divergences on the way up.
+
+If you must trade against a trend on divergence, the rule is: one attempt, a defined stop above the high, normal size, and no adding. If it fails, you are done with that idea.
+
+</Callout>
+
+Three other failure modes are worth naming.
+
+**Hindsight.** With an oscillator on screen you can almost always find two points that diverge after the fact. The only test that means anything is writing the divergence down before the turn.
+
+**Single-candle distortion.** One enormous candle sits inside the oscillator's average for many periods and can create or destroy an apparent divergence on its own. If the divergence depends entirely on one gap day, treat it with suspicion.
+
+**Indicator limits.** Oscillators are bounded. RSI cannot exceed 100, so in a violent first leg it can pin near its ceiling, which mechanically guarantees that the second leg makes a lower high whether or not momentum truly faded. Bounded scales manufacture divergence at extremes.
+
+## Combining with structure
+
+Divergence earns its place when it agrees with something you can see without an indicator.
+
+The strongest version looks like this. Price is in an uptrend and pushes to a new high, but the new high arrives on a shrinking range and fading volume. It stalls right at a long-standing [resistance level](/learn/m03-market-structure/03-support-and-resistance) or at the measured target of a chart pattern. RSI prints a lower high, having been above 70 on the previous push. Then price closes back below the breakout level.
+
+That is four independent pieces of evidence: a level, a volume signature, a momentum divergence and a structural failure. The divergence is one vote, and it is the vote that told you to start paying attention a few candles before the others arrived.
+
+The reverse is also true and less obvious: **divergence with no structure is a reason to do nothing.** If the oscillator is diverging but price is in the middle of a range, above no level and below no level, there is nothing to trade. The best use of a divergence you cannot act on is to note it and watch, which is exactly what a warning is for.
+
+<KeyTakeaways>
+- Divergence compares the slope between two price swings with the slope between the two matching indicator swings.
+- Regular divergence appears in the trend direction and warns of a reversal; hidden divergence appears on pullbacks and suggests continuation.
+- Regular bearish is a higher price high with a lower indicator high; regular bullish is a lower price low with a higher indicator low; hidden bullish is a higher price low with a lower indicator low; hidden bearish is a lower price high with a higher indicator high.
+- It works arithmetically: a new price high made with smaller up-candles lowers RSI's average gain, so the oscillator reports the weaker push.
+- Filter out false divergences by using real pivots, adjacent swings, an oscillator already at an extreme, one pre-chosen indicator, and a matching timeframe.
+- Divergence is a warning, never a signal; trade it only when price itself breaks structure, and never add to a losing counter-trend position because the divergence repeated.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "Price makes a higher high while RSI makes a lower high during an uptrend. What is this?", options: ["Hidden bullish divergence", "Regular bearish divergence", "Hidden bearish divergence", "Regular bullish divergence"], answer: 1, explain: "Comparing the swings in the trend direction is regular divergence, and a weakening uptrend is the bearish version." },
+  { q: "In an uptrend, price pulls back to a higher low but the oscillator drops to a lower low than the previous pullback. What is this and what does it suggest?", options: ["Regular bearish; a top", "Hidden bullish; the uptrend is likely to resume", "Regular bullish; a bottom", "Nothing meaningful"], answer: 1, explain: "Hidden divergence compares pullbacks and points to continuation. The momentum washout was deeper than the price pullback." },
+  { q: "Why does a weaker rally produce a lower RSI peak even at a higher price?", options: ["RSI counts candles", "RSI is the ratio of average gains to average losses, so smaller up-candles lower the average gain", "RSI resets at new highs", "RSI uses volume"], answer: 1, explain: "It is arithmetic, not magic. The formula reports that the second push was made of smaller up-moves." },
+  { q: "Bearish divergence has appeared for the third time in a strong uptrend and you are already short and losing. What is the correct action?", options: ["Add to the short, since the divergence keeps repeating", "Take the stop; one attempt only, no adding", "Move the stop higher and wait", "Switch to a different oscillator"], answer: 1, explain: "Repeated divergence is normal in strong trends. Adding to a losing counter-trend position is how this idea ends accounts." },
+  { q: "Which of these makes a regular bearish divergence more trustworthy?", options: ["Both RSI peaks sitting near 55", "The first RSI peak being above 70 and the two price peaks being adjacent", "Drawing it between peaks eight months apart", "Trying three oscillators until one diverges"], answer: 1, explain: "An oscillator already at an extreme and two adjacent, real swing peaks are the two filters that remove most false readings." },
+  { q: "You spot a clean divergence but price is sitting in the middle of a range with no level nearby. What should you do?", options: ["Enter immediately", "Note it and wait; divergence with no structure is a reason to do nothing", "Increase position size", "Change to a shorter timeframe until a signal appears"], answer: 1, explain: "Divergence is a warning that tells you where to look. Without a structural trigger there is nothing to act on." }
+]} />
+
+<TryIt to="/simulator">Open BIOX on the daily chart with the RSI panel enabled and step forward in bar replay. Every time price makes a new swing high or low, mark whether RSI confirmed it or diverged, and write down what happened over the next ten candles. Keep a separate tally for divergences that came with a structural break and those that did not; the difference between the two columns is the whole lesson.</TryIt>

@@ -1,0 +1,91 @@
+A bull attacks by swinging its horns upward. A bear attacks by swiping its paws downward. Nobody is quite sure whether that is the real origin of the words, but it is the picture every trader carries, and it has stuck for three hundred years. Up is bullish. Down is bearish.
+
+In the [previous lesson](/learn/m01-reading-price/03-anatomy-of-a-candle) you learned what the four prices of a <Term id="candlestick">candlestick</Term> are. This lesson is about the very first thing your eye notices: which way the candle went, and how much that should impress you.
+
+Because here is the thing beginners get wrong. They see green and think "good", red and think "bad". A candle's colour is not a verdict on the company, the trend, or your trade. It is one small fact about one period, and a green candle can appear inside a brutal collapse just as easily as inside a rally.
+
+## The rule that decides the colour
+
+There is exactly one rule, and it is simpler than most people expect:
+
+**If the close is above the open, the candle is bullish (green). If the close is below the open, the candle is bearish (red).**
+
+That is it. The colour compares the end of the period to the start of *the same period*. It does not compare today to yesterday. It does not care about the high or the low. It does not care about the trend.
+
+This matters more than it sounds. A stock can open at 90 after closing at 100 the day before, then climb to 94 by the bell. It has lost 6 points since yesterday, and the candle is green. Both statements are true, and they describe different things.
+
+<Callout type="warning" title="Green does not mean up since yesterday">
+
+Most news headlines and most price tickers quote the change from *yesterday's close* to *today's price*. Candle colour uses *today's open*. When a market gaps, as you will see in [lesson 7](/learn/m01-reading-price/07-gaps), these two measures can disagree completely. A green candle on a day the stock fell 6% is perfectly normal.
+
+</Callout>
+
+<Callout type="eli5">
+
+Imagine a race where you start at the back of the field. You overtake five people and finish 12th. Did you do well? Compared with where you started, yes — that is the green candle. Compared with the 3rd place you held last week, no. The candle colour only ever grades you against your own starting line today.
+
+</Callout>
+
+## Body size is the strength dial
+
+Once you know the direction, the next question is *how convincingly*. That is the body.
+
+<PatternFigure name="body-sizes" caption="The same direction at four different levels of conviction. A long body means one side ran the period from open to close. A tiny body means the period ended where it began, whatever happened in the middle." />
+
+Read that figure left to right and think of it as a volume dial on conviction.
+
+**A long body** means one side took control early and held it. A long green body says buyers were willing to keep paying up all period, and sellers never managed a serious counterattack. When the body takes up almost the whole range with barely any wicks, the candle has a name: a *marubozu*, which you will meet properly in the next module.
+
+**A medium body** is the ordinary case. One side won on points. Nothing dramatic.
+
+**A small body** means the period was a draw. Buyers and sellers ended up in roughly the same place they started, so neither can claim the session. A body that is essentially a flat line is a *doji*, the classic picture of indecision.
+
+There is an important proportion hiding here. Body size only means something **relative to recent candles**. A body of 2 points is enormous on an instrument that usually moves 0.5 points a day, and trivially small on one that usually moves 20. Always judge a candle against its neighbours on the same chart, never against a number you memorised.
+
+## Wick size is the rejection dial
+
+The body says who won. The wicks say who tried.
+
+Think of each candle as having three possible shapes of story:
+
+| Shape | What happened | What it hints |
+| --- | --- | --- |
+| Long body, tiny wicks | One side controlled the whole period | Strong conviction in that direction |
+| Small body, long wicks both ends | Both sides pushed hard, neither held ground | Indecision, often before a change |
+| Small body, one long wick | One side pushed far and was completely rejected | The rejected extreme may matter later |
+
+The third row is where most of the useful candlestick patterns live. A small green body sitting on top of a very long lower wick means sellers dumped price hard and buyers took every cent back. That candle, in the right place, is a hammer — but as the next module will hammer home, only if there was a decline for it to reverse.
+
+<PatternFigure name="anatomy-bullish" caption="Body and wicks read together: a solid green body says buyers won the period, while the short wicks say neither side managed much of a failed excursion." />
+
+## Bullish candle, bearish context
+
+Now the honest warning, and it is the most important paragraph in this lesson.
+
+**One candle's colour tells you almost nothing about what comes next.** In any strong downtrend, roughly 40% of candles are still green. Those green candles are the pauses and the bounces inside a decline, and a beginner who buys every green candle in a downtrend will lose money steadily and be confused about why.
+
+So use colour as a *description*, never as a signal. "Three long red bodies in a row, with small wicks" is a description of sustained selling. "Three long red bodies in a row, and now a candle with a long lower wick and a small green body" is a description of sellers running out of steam. Neither is a reason to click buy on its own. Direction, body and wicks are the alphabet; the next few modules teach you the words.
+
+<Callout type="tip">
+
+A quick drill: open any chart, cover the right-hand third with your hand, and describe the last five candles out loud in terms of direction, body size relative to neighbours, and wick size. Then uncover. You are not trying to predict; you are training yourself to notice what is actually on the screen.
+
+</Callout>
+
+<KeyTakeaways>
+- A candle is bullish when the close is above the open and bearish when the close is below it, comparing the end of a period with the start of the same period.
+- Candle colour is not the same as the change since yesterday, and the two can disagree when price gaps.
+- Body size measures conviction: long bodies mean one side controlled the period, tiny bodies mean the period was a draw.
+- Body and wick sizes only mean something relative to the recent candles on the same chart.
+- Long wicks record failed attempts, and a small body with one long wick is the shape most reversal patterns are built from.
+- Around 40% of candles in a downtrend are still green, so a single candle's colour is a description, not a signal.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "What makes a candle bullish?", options: ["The close is higher than the previous candle's close", "The close is higher than the open of the same candle", "The high is higher than the previous high", "Volume increased"], answer: 1, explain: "Colour compares close with open within the same period. Yesterday plays no part in it." },
+  { q: "A stock closed at 100 yesterday, opened at 90 today and closed today at 94. What colour is today's candle?", options: ["Red, because it is down 6 points from yesterday", "Green, because the close is above today's open", "It has no colour", "Red, because it never reached 100"], answer: 1, explain: "Today's close of 94 is above today's open of 90, so the candle is green even though the stock is down since yesterday." },
+  { q: "What does a very long body with almost no wicks suggest?", options: ["Indecision", "One side controlled the whole period with little pushback", "Very low volume", "A data error"], answer: 1, explain: "Price opened at one end and closed near the other with barely any failed excursions. That is conviction." },
+  { q: "How should you judge whether a candle body is large?", options: ["Anything over 1% is large", "By comparing it with the recent candles on the same chart", "By comparing it with the S&P 500", "By its colour"], answer: 1, explain: "Large is relative. A 2-point body is huge on a quiet instrument and tiny on a volatile one, so always compare with neighbours." },
+  { q: "Roughly what share of candles in a strong downtrend are still green?", options: ["About 5%", "About 40%", "About 75%", "None"], answer: 1, explain: "Downtrends are full of bounces and pauses. Buying every green candle in a downtrend is a reliable way to lose money slowly." },
+  { q: "A candle has a small green body sitting on a very long lower wick. What happened?", options: ["Buyers pushed price up and lost it all", "Nothing moved at all", "Sellers pushed price well down and buyers took it all back before the close", "Trading was halted"], answer: 2, explain: "The long lower wick records a rejected low. Whether that matters depends entirely on where the candle appears." }
+]} />

@@ -1,0 +1,86 @@
+Think about a ball bouncing inside a box. If you want to know whether it is near the top or the bottom of the box, you do not need to know its speed or its history. You just measure how high it is compared with the floor and the ceiling. Near the ceiling: high. Near the floor: low. Halfway up: in the middle.
+
+The <Term id="stochastic">**Stochastic oscillator**</Term> measures price that way. It looks at the highest high and lowest low of the last fourteen candles, which form the box, and asks where today's close sits inside that box, as a percentage. A close at the very top of the recent range reads 100. A close at the very bottom reads 0. George Lane popularised it in the 1950s, based on the observation that in an uptrend closes tend to cluster near the top of the recent range, and in a downtrend near the bottom.
+
+It looks a lot like RSI on a chart, and beginners often treat the two as interchangeable. They are not. RSI measures the *size* of recent moves; Stochastic measures the *position* of the close within the recent range. Those are different questions, and the difference explains when each one lies.
+
+## What Stochastic calculates
+
+<Callout type="math" title="The Stochastic formula with a worked example">
+
+Raw %K = (close − lowest low of N bars) / (highest high of N bars − lowest low of N bars) × 100
+
+Suppose over the last 14 bars the highest high was 110 and the lowest low was 100, and today's close is 108.
+
+Raw %K = (108 − 100) / (110 − 100) × 100 = 8 / 10 × 100 = **80**
+
+The site then smooths this twice. %K (the blue line) is a 3-period simple average of the raw values. %D (the orange line) is a 3-period simple average of %K. If the highest high equals the lowest low (a flat box), the raw value is set to 50.
+
+If the last three raw values were 80, 74 and 71, then %K = (80 + 74 + 71) / 3 = **75**.
+
+</Callout>
+
+The version with the double smoothing is called the **slow stochastic**, and the settings 14, 3, 3 mean: a 14-bar box, %K smoothed over 3, %D smoothed over 3. The unsmoothed version, the **fast stochastic**, is so jumpy that almost nobody uses it. When someone says "the stochastic" they nearly always mean the slow one.
+
+<IndicatorFigure indicator="stochastic" caption="Slow Stochastic 14, 3, 3 in a range. %K (blue) leads, %D (orange) follows. The lines swing from the 80 zone to the 20 zone and back as the close moves from the top of the recent box to the bottom." />
+
+## What Stochastic is trying to measure
+
+The underlying idea is Lane's observation about closes. When buyers are in control, each day tends to close near the top of the recent range, so %K stays high. When control slips, the closes start landing lower in the range even if the highs are still being made, and %K drops before the price high does.
+
+So Stochastic is a **momentum** indicator in the "leading" family from [lesson one](/learn/m05-indicators/01-what-indicators-are): it reacts to a change in the character of the closes, which often comes before a change in direction. That earliness is real, and so is the price you pay for it, which is that Stochastic is one of the noisiest indicators in common use.
+
+<Callout type="eli5">
+
+Imagine a ruler standing up inside a box that is as tall as the highest price and as short as the lowest price of the last two weeks. Every day you mark where the closing price lands on the ruler: 0 at the bottom, 100 at the top. Stochastic is just that mark, averaged over a few days so it wobbles less.
+
+</Callout>
+
+## Default settings and why
+
+Fourteen is Wilder's number again, borrowed for convenience. The 80 and 20 lines are the usual overbought and oversold markers. Because Stochastic is a position within a range rather than a ratio of averages, it reaches the extremes far more often than RSI: a single strong close at a new 14-bar high puts the raw value at 100 by definition. That is why the smoothing exists and why some traders lengthen it to 21, 5, 5 to reduce noise.
+
+## Three ways traders use Stochastic
+
+**Range reversals.** In a sideways market, %K crossing back below 80 after being above it, especially while price is at the top of the range, flags a likely swing down. Crossing back above 20 at range support flags a swing up. This is the same job RSI does, and Stochastic is a little quicker at it and a little more prone to false alarms.
+
+**%K and %D crossovers.** The blue line crossing the orange line is a mini crossover signal, like a tiny moving-average cross applied to the oscillator. Traders who use it usually require the cross to happen in the extreme zones: a bullish cross below 20 or a bearish cross above 80. Crosses in the middle of the scale are ignored as noise.
+
+**Pullback timing in a trend.** In an uptrend, wait for Stochastic to fall into the lower zone during a pullback and hook back upward. Combined with a rising moving average or a structural support level, that hook is a reasonable entry timer. On its own it is not.
+
+## How Stochastic fails
+
+<Callout type="danger" title="Above 80 for weeks">
+
+In a strong uptrend closes land near the top of the recent range day after day, which is precisely what Stochastic reads as overbought. It will sit above 80, dip briefly, and go straight back. Every "overbought" sell signal in a trend loses, and there can be a dozen in a row. This is the same trap as RSI, only it springs faster and more often because Stochastic hits its extremes so easily.
+
+</Callout>
+
+Stochastic is also blind to the size of moves. If the 14-bar range is tiny, a small wobble sends the oscillator from 20 to 80 and back, generating signals from nothing. Check the actual range in price before trusting a Stochastic extreme; if the box is only a fraction of the [ATR](/learn/m05-indicators/08-atr), the oscillator is measuring noise.
+
+And because the box is defined by the highest high and lowest low, one spike candle can reshape it for fourteen bars. A single wick to a new high drags the ceiling up, pushing every subsequent reading lower until that bar drops out of the window.
+
+## Combining with structure
+
+Stochastic earns its place only with a structural reason attached. Price reaching the upper boundary of a well-defined [range](/learn/m03-market-structure/05-ranges-and-consolidation), printing a bearish candle, with %K crossing below %D above 80: that is a range-reversal setup with a clear stop above the range high. The same oscillator signal in the middle of a trending chart with no level nearby is a distraction.
+
+Also use the trend to decide which signals to take at all. Above a rising 50 EMA, only take bullish hooks from the low zone and ignore bearish crosses from the high zone. Below a falling 50 EMA, the reverse. This filter throws away most of the losing signals and keeps the useful ones.
+
+<KeyTakeaways>
+- Stochastic measures where the close sits within the highest high and lowest low of the last N bars, on a 0 to 100 scale.
+- Raw %K = (close − lowest low) / (highest high − lowest low) × 100; %K and %D are 3-period averages layered on top.
+- The default 14, 3, 3 is the slow stochastic; the unsmoothed fast version is too noisy for most uses.
+- It hits 80 and 20 far more easily than RSI, so it gives earlier signals and more false ones.
+- In strong trends it pins at an extreme for weeks; overbought in an uptrend is a description, not a sell signal.
+- Take signals only at structural levels and only in the direction of the larger trend.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "The 14-bar highest high is 110, the lowest low is 100, and today's close is 108. What is raw %K?", options: ["8", "80", "108", "20"], answer: 1, explain: "(108 − 100) / (110 − 100) × 100 = 80." },
+  { q: "What does Stochastic measure that RSI does not?", options: ["The size of up-days versus down-days", "The position of the close within the recent high-low range", "Volume", "Volatility"], answer: 1, explain: "RSI compares the size of gains and losses. Stochastic asks where the close sits inside the recent range." },
+  { q: "In the 14, 3, 3 setting, what are the last two numbers?", options: ["Overbought and oversold levels", "The smoothing periods for %K and %D", "Number of candles and volume", "Fast and slow EMA lengths"], answer: 1, explain: "%K is a 3-period average of the raw value, and %D is a 3-period average of %K." },
+  { q: "Stochastic has been above 80 for three weeks while price climbs. What is the sensible reading?", options: ["Short now, it is overbought", "Closes keep landing near the top of the range, which is what a strong uptrend looks like", "The data is wrong", "The range must be shrinking"], answer: 1, explain: "Persistent high readings describe persistent strength. Selling them in a trend is a well-known way to lose." },
+  { q: "Price is at the top of a clear range, prints a bearish candle, and %K crosses below %D above 80. Where does a stop belong?", options: ["There is no stop", "Just above the range high", "At the 50 line of the oscillator", "Far below the range low"], answer: 1, explain: "The structure gives the trade its stop. The oscillator only helps with timing." }
+]} />
+
+<TryIt to="/simulator">Open the simulator on PETR, daily chart, and enable the RSI panel as a stand-in for a momentum oscillator. Find a sideways stretch and mark each touch of the extreme zones. Then find a strong trend and note how often the oscillator stayed pinned. Stochastic behaves the same way but reaches the extremes even more often, so treat every extreme reading as a question about the trend, not an answer.</TryIt>

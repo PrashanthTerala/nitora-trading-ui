@@ -1,0 +1,120 @@
+You want to own a bit of every big American company. Doing it by hand means 500 separate purchases, 500 sets of fees, and a spreadsheet you will hate by Thursday. So somebody does it once, puts the whole basket in a box, cuts the box into shares, and lists those shares on the exchange. You buy one share of the box.
+
+That box is an **ETF**, an exchange-traded fund. It is the most useful invention in retail investing, and it is also the wrapper that hides two of the nastiest products a beginner can stumble into: leveraged ETFs and, at the far end, CFDs.
+
+This lesson takes the wrapper apart. What is actually inside, how the price stays honest, what the fee really costs you, and why a product that promises three times the index can lose money in a week when the index finishes exactly where it started.
+
+## One share, a whole basket
+
+An <Term id="etf">ETF</Term> holds a portfolio of assets and issues shares against it. Buy one share and you own a proportional slice of everything inside.
+
+| Type of ETF | Holds | Example use |
+| --- | --- | --- |
+| Broad index | Every share in an index | One-click exposure to the whole market |
+| Sector | The shares in one industry | Trading [sector rotation](/learn/m10-fundamentals-and-macro/06-sectors-and-rotation) |
+| Bond | Government or corporate debt | Interest rate exposure |
+| Commodity | Physical metal, or futures contracts | Gold, oil, agriculture |
+| Inverse or leveraged | Derivatives, reset daily | Short-term directional bets only |
+
+For a trader the appeal is practical. An index ETF has one ticker, one chart, one spread, and it cannot gap 30% overnight on a single company's bad earnings, because no single company is more than a slice of it. That makes it a gentler instrument to learn on than an individual share.
+
+<Callout type="eli5">
+
+A class of thirty children each want a different sweet. Instead of thirty trips to the shop, one parent buys a big mixed bag and sells each child an identical handful. Everybody gets the mixture, nobody makes thirty trips, and the parent charges a tiny amount for the trouble. The tiny amount is the point of the rest of this lesson.
+
+</Callout>
+
+## How the price stays honest
+
+An ETF share could in principle drift away from the value of the things it holds, the way a closed fund does. It usually does not, because of a mechanism called **creation and redemption**. Large institutions called authorised participants are allowed to hand the fund a complete basket of the underlying shares and receive newly created ETF shares in return, or hand back ETF shares and receive the basket. So if the ETF trades above the value of its holdings, an authorised participant buys the underlying shares, creates ETF shares and sells them, pushing the price down; if it trades below, they do the reverse. That arbitrage runs all day and keeps the ETF within a whisker of the value of what is inside it, which is why you can usually trust the price on the screen.
+
+## The fee you do not see
+
+An ETF charges an **expense ratio**: an annual percentage of your holding, taken out of the fund's value a little each day. You never get an invoice, which is exactly why it deserves attention.
+
+<Callout type="math" title="Ten years of a fee that looks like nothing">
+
+Put $10,000 into three funds that all earn the same 7% a year before costs, and leave them for ten years.
+
+| Fund | Expense ratio | Return after the fee | Value after 10 years |
+| --- | --- | --- | --- |
+| Broad index ETF | 0.03% | 6.97% | $19,616 |
+| Themed ETF | 0.20% | 6.80% | $19,307 |
+| Active fund | 0.75% | 6.25% | $18,335 |
+
+The cheap fund ends $1,281 ahead of the expensive one. That gap is **about 13% of the money you originally put in**, handed over for a difference of 0.72% a year that you never saw leave your account.
+
+Two things follow. Small percentages compound just like returns do, and a fund has to actually beat its cheaper rival by more than the fee difference to be worth owning.
+
+</Callout>
+
+Commodity ETFs that hold futures carry a second, hidden cost. As you saw in [the futures lesson](/learn/m11-derivatives-and-other-markets/04-futures), a fund in contango must keep selling a cheap near contract and buying a dearer far one, and that roll slowly bleeds value even when the commodity price is flat.
+
+## Leveraged ETFs and the daily reset
+
+Now the dangerous ones. A 3x ETF promises three times the *daily* move of its index. Read that word twice, because everything depends on it.
+
+These funds reset their exposure every single day. They deliver three times today's move, then start again tomorrow from the new, larger or smaller base. They do **not** promise three times the move over a week, a month or a year, and over any period longer than a day they will usually deliver something else entirely.
+
+<Callout type="math" title="The classic two-day example">
+
+An index sits at 100. Day one it rises 10%, to 110. Day two it falls 9.09%, which takes it back to exactly 100. Over two days the index is **flat**.
+
+Watch what the geared products do, each delivering its multiple of those same two daily moves.
+
+| Product | Start | After day 1 (+10%) | After day 2 (-9.09%) | Two-day result |
+| --- | --- | --- | --- | --- |
+| The index | 100.00 | 110.00 | 100.00 | 0% |
+| 2x ETF | 100.00 | 120.00 (+20%) | 98.18 (-18.18%) | -1.82% |
+| 3x ETF | 100.00 | 130.00 (+30%) | 94.55 (-27.27%) | -5.45% |
+| Inverse (-1x) ETF | 100.00 | 90.00 (-10%) | 98.18 (+9.09%) | -1.82% |
+
+The index did nothing and the 3x product lost 5.45%. Nobody stole it. The day-two fall of 27.27% was applied to the larger base of 130, while the day-one gain of 30% was applied to only 100.
+
+This is **volatility decay**, and it happens every time the market chops. Repeat that two-day pattern ten times and the index is still at 100 while the 3x fund has lost roughly 43% of its value.
+
+To be fair in both directions: in a smooth, one-way trend the same maths works for you. Two consecutive 10% up days take the index to 121, up 21%, while the 3x fund goes to 169, up 69%, which is better than three times 21%. Leveraged funds reward straight lines and punish everything else, and markets are mostly everything else.
+
+</Callout>
+
+<Callout type="danger" title="These are day-trading tools with long-term names">
+
+The fund documents say it plainly, and almost nobody reads them: leveraged and inverse ETFs are designed to be held for a day. A 3x fund also carries a high expense ratio, often ten to thirty times an index ETF's, plus the financing cost of the derivatives inside it.
+
+Holding one "for a few months until the market recovers" combines volatility decay, high fees and financing drag, on a position that already moves three times as fast as the thing you were worried about. It is the single most common way a sensible index view turns into a total loss.
+
+</Callout>
+
+## CFDs
+
+A **contract for difference** is not a fund at all. It is a private contract between you and a broker to exchange the difference between a price now and that price when you close. If you open a CFD on a share at $50 and close it at $55, the broker pays you $5 per unit. You never own the share, never receive it, and never vote.
+
+The appeal is access and leverage: hundreds of markets on one platform, fractional sizes, easy shorting, and gearing that regulators in the UK and EU have had to cap at 30:1 for major currencies, 5:1 for individual shares and 2:1 for crypto. You also pay financing on the position every night it stays open, so a CFD is an expensive way to hold anything for long.
+
+**CFDs are banned for retail traders in the United States.** The reason is structural rather than snobbery: they are unlisted, off-exchange contracts with no central clearing house, so your profit depends on your broker still being solvent, and in many cases the broker is the direct counterparty to your trade.
+
+<Callout type="warning" title="Read the number on the broker's own homepage">
+
+UK and EU regulators require CFD providers to publish, prominently, the percentage of their retail clients who lose money. Go and look at any of them. The figure is consistently in the region of **70% to 80%**.
+
+That is not a warning invented by this website. It is the provider's own audited disclosure about its own customers, printed because the regulator forced it. Any product whose vendor is legally obliged to tell you that three or four customers in five lose money deserves to be treated with matching suspicion.
+
+</Callout>
+
+<KeyTakeaways>
+- An ETF holds a basket of assets and sells shares in it, giving you diversified exposure with one ticker and one spread.
+- Creation and redemption by authorised participants arbitrages the ETF price back towards the value of its holdings, so the screen price is trustworthy.
+- Expense ratios compound: 0.03% versus 0.75% on $10,000 over ten years is a gap of about $1,281, roughly 13% of the original stake.
+- Leveraged ETFs promise a multiple of the daily move and reset every day, so over longer periods they track something quite different.
+- In the classic example the index goes plus 10% then minus 9.09% back to flat, while a 3x fund ends down 5.45%, which is volatility decay.
+- CFDs are leveraged contracts with a broker rather than owned assets, banned for US retail, and providers must disclose that roughly 70% to 80% of retail accounts lose money.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "What keeps an ETF's market price close to the value of the assets it holds?", options: ["A rule set by the exchange", "Creation and redemption of shares by authorised participants", "The fund manager adjusting the price daily", "Government price controls"], answer: 1, explain: "Authorised participants swap baskets of the underlying for ETF shares and back again, arbitraging away any gap." },
+  { q: "Fund A charges 0.05% and Fund B charges 0.80%, and both hold the same index. Over ten years, what should you expect?", options: ["They finish about equal because fees are tiny", "Fund B finishes ahead because higher fees mean better management", "Fund A finishes meaningfully ahead, because the fee compounds", "The difference only matters above $1 million"], answer: 2, explain: "A 0.75% annual gap compounds. On $10,000 over ten years it is well over a thousand dollars of difference." },
+  { q: "An index rises 10% on Monday and falls 9.09% on Tuesday, ending exactly where it started. What does a 3x ETF do over those two days?", options: ["It is also flat", "It gains about 5%", "It loses about 5.45%", "It loses 27%"], answer: 2, explain: "It goes 100 to 130 to 94.55. The bigger percentage fall is applied to a bigger base, so the round trip costs money." },
+  { q: "What is a CFD?", options: ["A fund holding a basket of shares", "A contract with a broker to exchange the difference between the opening and closing price, with no ownership of the asset", "A type of futures contract cleared by an exchange", "A bond issued by a broker"], answer: 1, explain: "You never own the underlying. You hold a private, leveraged contract with the broker, who is often your counterparty." },
+  { q: "UK and EU CFD providers must publish the share of retail accounts that lose money. What is it typically?", options: ["Around 10%", "Around 30%", "Around 50%", "Around 70% to 80%"], answer: 3, explain: "The disclosure is the provider's own figure about its own clients, and it sits in the 70% to 80% range across firms." },
+  { q: "You believe an index will recover over the next six months. Why is a 3x ETF a poor way to express that?", options: ["It cannot be shorted", "It resets daily, so months of chop decay it, plus high fees and financing on a position moving three times as fast", "It has no live price", "Leveraged ETFs are illegal everywhere"], answer: 1, explain: "The product is built for one day. Over six months decay and costs can leave you losing money even if the index does recover." }
+]} />

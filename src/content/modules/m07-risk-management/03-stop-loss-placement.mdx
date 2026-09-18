@@ -1,0 +1,123 @@
+If you build a fence around a garden, you put it a little beyond the flowerbeds, not through the middle of them. Put it too close and every gust of wind pushes the plants into the wire. Put it miles away and it protects nothing.
+
+A stop-loss is a fence. The last lesson showed you that the *distance* to the stop determines how many shares you buy. This lesson is about *where* it goes, which is a question about the chart, not about your account. A stop belongs at the price where your reason for the trade is proven wrong, plus a little room for noise. Anywhere else is guessing.
+
+## The stop is the invalidation point
+
+Every trade has a reason. "Support at $98 will hold." "The breakout above $104 is real." "The uptrend will continue." A good stop sits at the price where that reason is *clearly false*. If you bought because support at $98 would hold and price is at $95, support didn't hold. There's nothing to wait for.
+
+Ask yourself: "at what price would I look at this chart and say, I was wrong?" That price, with a small buffer, is the stop. Not "the price where I've lost as much as I can stand." Not "2% because someone said so." The price where the idea is dead.
+
+<Callout type="eli5">
+
+You think your friend is at the park. You walk there to check. If you get to the park and they're not there, you were wrong, and the sensible thing is to go home, not to sit on the bench for three hours hoping. The stop is the moment you arrive at the park and see it's empty.
+
+</Callout>
+
+## Structure stops: beyond the swing
+
+The most common and most sensible stop is placed beyond a **swing point**. From [Swing Highs and Swing Lows](/learn/m03-market-structure/02-swing-highs-and-lows), an uptrend is higher highs and higher lows. If you're long in an uptrend, the most recent swing low is the level that must hold for the trend to be alive. Put your stop below it. If price breaks that low, the higher-low sequence is broken and your reason is gone.
+
+<CandleFigure
+  title="Structure stop below the swing low, with a buffer"
+  bars={[
+    { o: 100, h: 101.2, l: 99.4, c: 100.8 },
+    { o: 100.8, h: 102.5, l: 100.3, c: 102.1 },
+    { o: 102.1, h: 103, l: 101.4, c: 101.7 },
+    { o: 101.7, h: 102, l: 99.6, c: 99.9 },
+    { o: 99.9, h: 100.4, l: 98.7, c: 99.2 },
+    { o: 99.2, h: 100.9, l: 98.9, c: 100.6 },
+    { o: 100.6, h: 101.8, l: 100.2, c: 101.5 },
+    { o: 101.5, h: 102.4, l: 100.9, c: 102.2 },
+    { o: 102.2, h: 103.6, l: 101.9, c: 103.3 },
+    { o: 103.3, h: 104.5, l: 102.8, c: 104.1 }
+  ]}
+  annotations={[
+    { type: "label", index: 4, text: "swing low 98.70", position: "below" },
+    { type: "hline", price: 98.7, text: "swing low", from: 3, to: 9 },
+    { type: "hline", price: 98.2, text: "stop 98.20", from: 3, to: 9 },
+    { type: "arrow", index: 6, direction: "up", text: "buy 100.60" },
+    { type: "zone", from: 5, to: 9, priceFrom: 98.2, priceTo: 100.6, text: "risk $2.40" }
+  ]}
+  caption="Entry at 100.60 on the higher low. The swing low is 98.70; the stop sits at 98.20, half a dollar beyond it, so a quick poke below the low does not take you out."
+  showVolume={false}
+/>
+
+The same idea works everywhere: below the low of a hammer, below a support zone, below the neckline of a pattern you're trading, above the swing high for a short. The level comes from the chart; you just add a buffer.
+
+**How big a buffer?** Enough to survive an ordinary wick, not enough to change the trade. Common choices are a fixed fraction of ATR (see below), or a small round amount that's clearly outside the level. In the figure, the low is 98.70 and the stop is 98.20. A stop at 98.69 is asking to be hit.
+
+## ATR stops: measured by the instrument's own wiggle
+
+Some charts don't have a clean swing to lean on. And even when they do, you need a way to decide how much buffer is "normal noise." The [Average True Range](/learn/m05-indicators/08-atr) solves both problems. ATR is the average size of a bar's full range over the last 14 bars or so. It tells you how far the instrument typically moves, in its own units.
+
+A common rule is to place the stop **1.5 × ATR** from the entry, sometimes 2 × ATR for swing trades in volatile names.
+
+**Worked example.** A stock trades at $50 and its daily ATR is $1.20. A normal day moves about $1.20 from high to low. 1.5 × 1.20 = $1.80. Long at $50, stop at $50 − $1.80 = **$48.20**. On a $10,000 account risking $100, shares = 100 ÷ 1.80 = 55.5, rounded down to **55 shares**.
+
+If the ATR were $3 (a wilder stock), the stop would be $4.50 away at $45.50 and you'd buy only 22 shares. Same risk, smaller position, because the stock needs more room. That's the beauty of ATR sizing: it automatically shrinks your position when the market gets rougher.
+
+| Daily ATR | 1.5 × ATR | Stop (long from $50) | Shares for $100 risk |
+| --- | --- | --- | --- |
+| $0.60 | $0.90 | $49.10 | 111 |
+| $1.20 | $1.80 | $48.20 | 55 |
+| $2.00 | $3.00 | $47.00 | 33 |
+| $3.00 | $4.50 | $45.50 | 22 |
+
+The best stops often combine both methods: find the structural level, then check that it's at least 1 × ATR away. If the swing low is only 0.3 × ATR below your entry, that's not a level, it's noise, and a stop there will be hit by a normal bar.
+
+## Why tight stops get hunted
+
+There's a strong temptation to place stops as close as possible. A tighter stop means more shares for the same risk, which means a bigger win if it works. Beginners discover this and start putting stops 20 cents below entry on a stock that moves $2 a day.
+
+Two things then happen. First, ordinary noise takes them out constantly. A stop inside the normal daily range is a coin flip on whether a random wiggle hits it before the move you wanted. Second, and worse, everyone else has the same idea and the same chart, so stops pile up just under obvious levels. As the [stop orders lesson](/learn/m06-orders-and-execution/02-stop-orders) explained, those piles are fuel: price dips into them, the stops fire as market sells, and then, with the selling exhausted, price reverses and goes exactly where you'd predicted, without you.
+
+<PatternFigure name="fakeout" caption="A textbook stop run. The obvious low is broken by a wick, stops resting just beneath it are triggered, and price reverses. A stop set half an ATR further out would have survived." />
+
+<Callout type="danger" title="A tight stop is not a small risk">
+
+Risk is the dollar loss when the stop hits. A tight stop simply means a bigger position, so when it does hit, you lose the same $100. What changes is how *often* it hits. A stop inside the noise hits far more often, so tight stops don't reduce risk; they raise your loss rate while keeping the loss size the same. That's strictly worse.
+
+</Callout>
+
+## Stops that aren't stops
+
+**The mental stop.** "I'll get out if it hits 96." Then it hits 96 and you think "it'll bounce." Then it's at 94 and you think "I can't sell now, I'm down too much." A mental stop is a stop that exists only while you're calm, and you're never calm when it's needed. Put the order in the market.
+
+**The percentage stop.** "Always 2% below entry." It ignores the chart entirely. On a stock with 0.5% daily range that's generous; on one with 4% daily range it's inside the noise. Use structure and ATR, and let the percentage be whatever it turns out to be.
+
+**The moved stop.** A stop that gets moved *further away* as price approaches it is a stop that was never real. Moving a stop closer as a trade works (trailing it behind new swing lows) is fine. Moving it away is the beginning of every blow-up story.
+
+**The round-number stop.** Stops at $100.00, $50.00, $95.00 are where everyone puts them. Go a few cents beyond the round number, not on it.
+
+## Managing the stop after entry
+
+- **Leave it alone until structure changes.** A new higher low in your favour is a reason to raise the stop to just below that new low.
+- **Breakeven is not magic.** Moving the stop to entry after a small move often just converts winners into scratches when price retests. Wait until there's a real structural reason.
+- **Time stops.** If the trade hasn't done what you expected within a reasonable number of bars, exiting at a small loss or scratch is legitimate. The idea was "it'll go now," and it didn't.
+
+<Callout type="tip" title="Stop, then size, then decide">
+
+Pick the invalidation level. Add a buffer of roughly half an ATR beyond it. Check the distance is at least one ATR total. Calculate shares from the 1% rule. Then, and only then, ask whether the reward justifies it, which is the [next lesson](/learn/m07-risk-management/04-risk-reward-ratio).
+
+</Callout>
+
+<KeyTakeaways>
+- A stop goes at the price where the reason for the trade is proven wrong, plus a small buffer for noise.
+- Structure stops sit beyond the most recent swing low (for longs) or swing high (for shorts).
+- ATR stops use the instrument's own volatility, commonly 1.5 × ATR, and automatically shrink size in wild markets.
+- Tight stops do not reduce risk; they raise your loss rate while keeping the loss the same size.
+- Stops cluster under obvious levels, so place yours a little further out than the crowd.
+- Mental stops, fixed-percentage stops and stops moved further away are not real stops.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "You are long in an uptrend because you expect the higher-low sequence to continue. Where does the stop belong?", options: ["2% below entry", "Just below the most recent swing low, with a small buffer", "At breakeven immediately", "At the round number nearest entry"], answer: 1, explain: "The swing low is the level that must hold for the trend idea to remain valid." },
+  { q: "A stock at $50 has a daily ATR of $1.20. Using a 1.5 × ATR stop, where is the stop for a long?", options: ["$48.80", "$48.20", "$47.60", "$49.40"], answer: 1, explain: "1.5 × 1.20 = 1.80, and 50 minus 1.80 is 48.20." },
+  { q: "With that $48.20 stop and a $100 risk budget, how many shares?", options: ["83", "66", "55", "45"], answer: 2, explain: "100 divided by 1.80 is 55.5, rounded down to 55." },
+  { q: "Why does a very tight stop tend to produce more losses rather than smaller ones?", options: ["Brokers charge more for tight stops", "It sits inside normal noise and is hit by random wiggles, while the dollar loss stays the same", "It reduces position size", "It only works in downtrends"], answer: 1, explain: "The loss per trade is fixed by the 1% rule; a tight stop just raises how often you take it." },
+  { q: "Price dips below an obvious swing low, triggers a cluster of stops, then reverses upward sharply. What is this called?", options: ["A gap fill", "A stop run or fakeout", "A golden cross", "A margin call"], answer: 1, explain: "Clustered stops provide the selling that fuels the dip, and once used up, price snaps back." },
+  { q: "Your long is approaching its stop and you feel sure it will bounce. What should you do with the stop?", options: ["Move it lower to give the trade room", "Cancel it and watch", "Leave it exactly where it is", "Double the position at the lower price"], answer: 2, explain: "Moving a stop away from price is the beginning of most blow-ups; the level was chosen calmly and should be respected." }
+]} />
+
+<TryIt to="/simulator">Open the simulator, add the ATR indicator to a chart, and find the most recent swing low. Place a stop half an ATR beyond it, check the total distance is at least one ATR, then size the trade with the 1% rule. Watch over the next session whether the stop survives ordinary noise.</TryIt>

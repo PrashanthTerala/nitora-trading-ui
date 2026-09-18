@@ -1,0 +1,117 @@
+Ask a beginner how many shares they're going to buy and you'll usually hear something like "a hundred, that's a nice round number" or "about half my account, I really like this one." Ask a professional and they'll say "I don't know yet, where's my stop?"
+
+That difference is the whole lesson. Position size isn't a feeling. It's the output of a short calculation whose inputs are how much you're willing to lose and where the chart says you're wrong. Once you've done that calculation a few times it becomes automatic, and it's the single habit that most reliably separates traders who last from traders who don't.
+
+## The rule
+
+**Never risk more than 1% of your account on a single trade.**
+
+Risk means the amount you lose if your stop-loss is hit. It does not mean the size of the position. A $5,000 position with a tight stop might risk $50. A $500 position with no stop risks $500.
+
+With a $10,000 account, 1% is $100. That's your **risk budget** per trade. If the stop is hit you lose $100 and no more (slippage aside). If you're wrong ten times in a row, which happens to everyone eventually, you're down about 9.6% and entirely able to keep going.
+
+Why 1% rather than 5%? Because of the [asymmetry lesson](/learn/m07-risk-management/01-why-risk-first). Ten losses at 5% each leaves you at 0.95¹⁰ ≈ 60% of your account, needing a 67% gain to recover. Ten losses at 1% leaves you at 0.99¹⁰ ≈ 90%, needing 11%. One of those is an inconvenience; the other is a crisis.
+
+<StatRow>
+<Stat value="1%" label="risk per trade" />
+<Stat value="−9.6%" label="after 10 straight losses" />
+<Stat value="+11%" label="needed to recover" />
+</StatRow>
+
+<Callout type="eli5">
+
+You have a jar of 100 sweets. The rule says you can only bet one sweet at a time. Even if you lose ten bets in a row, you still have 90 sweets and you're still playing. If you bet 20 sweets at a time and lose five in a row, the jar is empty and the game is over. Same sweets, same luck, completely different ending.
+
+</Callout>
+
+## The formula
+
+Three numbers go in, one comes out.
+
+<Callout type="math" title="Position size">
+
+**Risk amount** = account × 1% (e.g. $10,000 × 0.01 = $100)
+
+**Risk per share** = entry price − stop price
+
+**Shares** = risk amount ÷ risk per share
+
+</Callout>
+
+Note what's *not* in the formula: how much you like the trade, how confident you feel, how much money you'd like to make. None of that changes the answer.
+
+## Worked examples
+
+All on a $10,000 account, so the risk amount is $100 every time.
+
+**Example 1.** Entry $50, stop $48. Risk per share = $2. Shares = 100 ÷ 2 = **50 shares**. Position value = 50 × $50 = $2,500. If the stop hits, you lose 50 × $2 = $100. Correct.
+
+**Example 2, tighter stop.** Entry $50, stop $49.50. Risk per share = $0.50. Shares = 100 ÷ 0.50 = **200 shares**. Position value = $10,000. That's your whole account in one stock, yet the risk is still $100. A tighter stop means a bigger position for the same risk.
+
+**Example 3, wider stop.** Entry $50, stop $45. Risk per share = $5. Shares = 100 ÷ 5 = **20 shares**. Position value = $1,000. A wide stop means a small position.
+
+**Example 4, expensive stock.** Entry $900, stop $880. Risk per share = $20. Shares = 100 ÷ 20 = **5 shares**. Position value $4,500. The share price doesn't matter; only the distance to the stop does.
+
+**Example 5, a short.** Short at $60, stop at $63. Risk per share = $3. Shares = 100 ÷ 3 = 33.3, round *down* to **33 shares**. Always round down; rounding up breaks the 1% rule by definition.
+
+| | Entry | Stop | Risk/share | Shares | Position value | Loss at stop |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | $50 | $48 | $2.00 | 50 | $2,500 | $100 |
+| 2 | $50 | $49.50 | $0.50 | 200 | $10,000 | $100 |
+| 3 | $50 | $45 | $5.00 | 20 | $1,000 | $100 |
+| 4 | $900 | $880 | $20.00 | 5 | $4,500 | $100 |
+| 5 (short) | $60 | $63 | $3.00 | 33 | $1,980 | $99 |
+
+Five very different positions, one identical risk. That's the point. Every trade you take is now the same size in the only sense that matters.
+
+<PositionSizer />
+
+## Stop first, size second
+
+Look again at examples 1 to 3. The stop distance *determined* the size. Beginners do this backwards: they pick the number of shares they want, then place a stop wherever it makes the loss feel acceptable. The result is a stop at a price that means nothing on the chart, which gets hit by noise, which produces a string of losses that were never "wrong," just badly placed.
+
+The right order: read the chart, decide where the trade idea is invalid, put the stop there, *then* calculate shares. The [next lesson](/learn/m07-risk-management/03-stop-loss-placement) is all about that first step.
+
+<Callout type="warning" title="When the position won't fit">
+
+In example 2 the position was your entire account. What if the maths says 400 shares and you can only afford 200? You have three honest choices: take the 200 shares and risk only 0.5%, skip the trade, or use leverage to buy the 400 while still risking $100. What you must not do is buy 200 and widen the stop so you can "risk the full 1%". That's moving the stop for the wrong reason.
+
+</Callout>
+
+## Common objections, answered
+
+**"1% is too small, I'll never make money."** The 1% is the *loss* if you're wrong. If your winners are three times your losers, each winner is +3%. Ten trades at a 40% win rate: four wins of 3% and six losses of 1% is +6% in ten trades. That's a good month for most professionals.
+
+**"My account is tiny, 1% is $5."** Then the sizing still works; you'll just be trading a few shares or fractional shares. What matters is building the habit while the numbers are small. The habit doesn't scale badly; the lack of it does.
+
+**"I'm very confident in this one."** Confidence is not information. Your journal will show you, in numbers, that your most confident trades win about as often as your least confident ones. Until it shows otherwise, every trade gets 1%.
+
+**"Can I use 2%?"** Some experienced traders with proven edges risk 2%. Ten straight losses at 2% is an 18% drawdown, survivable but painful. For a beginner, or anyone who hasn't logged a few hundred trades, 1% or even 0.5% is the right place to start. You can always increase it later. You can't always recover from starting too high.
+
+## Percent stops vs price stops
+
+You'll sometimes see "use a 2% stop." That means a stop 2% below the entry price, and it has nothing to do with the 1% rule. Both can be true at once: entry $50, stop 2% below at $49, risk per share $1, and with a $100 risk budget you buy 100 shares. The 1% is about *your account*. The 2% is about *the price*. Don't confuse them; and prefer stops based on the chart over stops based on a fixed percentage, as the next lesson explains.
+
+## Slippage and the real risk
+
+The formula assumes your stop fills at the stop price. From the [slippage lesson](/learn/m06-orders-and-execution/07-slippage-and-liquidity), you know it often fills a little worse. On liquid stocks in the main session, a 1% planned risk becomes maybe 1.1% in reality. Through a gap it can become 3% or more. Two practical rules: use slightly less than the full 1% on thinner instruments, and never hold a full-size position through scheduled news.
+
+<KeyTakeaways>
+- Risk is what you lose if the stop is hit, not the size of the position.
+- Never risk more than 1% of the account per trade; ten straight losses then costs under 10%.
+- Shares = risk amount ÷ (entry − stop), and you always round down.
+- The stop distance determines the size; never choose a size first and fit a stop to it.
+- Confidence does not change the size; the formula does not have an input for it.
+- Plan for slippage: real risk is a little more than 1%, and much more through gaps.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "Account $10,000, entry $50, stop $48. How many shares under the 1% rule?", options: ["20", "50", "100", "200"], answer: 1, explain: "Risk budget $100 divided by $2 risk per share equals 50 shares." },
+  { q: "Same account, entry $50, stop $49.50. How many shares?", options: ["50", "100", "200", "400"], answer: 2, explain: "$100 divided by $0.50 equals 200 shares, a $10,000 position with a $100 risk." },
+  { q: "Same account, entry $900, stop $880. How many shares?", options: ["1", "5", "11", "20"], answer: 1, explain: "$100 divided by $20 risk per share equals 5 shares; the share price itself is irrelevant." },
+  { q: "The formula says 33.3 shares. What do you buy?", options: ["33", "34", "35", "30"], answer: 0, explain: "Always round down; rounding up means risking more than the budget." },
+  { q: "Which of these is NOT an input to position size?", options: ["Account size", "Stop distance", "How confident you feel", "Risk percentage"], answer: 2, explain: "Confidence is not information and has no place in the formula." },
+  { q: "The sizing calls for 400 shares but you can only afford 200 without leverage. Which is the wrong choice?", options: ["Buy 200 and accept 0.5% risk", "Skip the trade", "Buy 200 and widen the stop until the loss is $100", "Use margin to buy 400 with the original stop"], answer: 2, explain: "Widening the stop for sizing reasons puts it at a price the chart never chose, which is how noise turns into losses." }
+]} />
+
+<TryIt to="/simulator">Open the simulator, pick a chart, and decide on a stop level from the chart before anything else. Then use the position sizer above to compute shares for 1% of your simulator balance and enter exactly that size with the stop attached. Do this on every trade from now on.</TryIt>

@@ -1,0 +1,154 @@
+Think of a smoke alarm. It does nothing all day. It doesn't cook, it doesn't clean, it just sits on the ceiling waiting for one specific thing to happen. When smoke reaches it, it acts instantly and loudly, whether you are awake or not.
+
+A **stop order** is a smoke alarm for your trade. It sits there doing nothing until price reaches a level you chose, and then it fires. Most of the time the thing it fires is "get me out before this gets worse." That makes it the single most important order type for staying alive, and the one that beginners most often skip.
+
+This lesson covers the three flavours: the plain stop, the stop-limit, and the trailing stop that follows price like a shadow.
+
+## The plain stop order
+
+A <Term id="stop-order">stop order</Term> has a **trigger price**. Nothing happens until the market trades at (or through) that price. When it does, the stop becomes a **market order** and fills at the best available price.
+
+Used to exit a long, it's called a <Term id="stop-loss">stop-loss</Term>. Say you bought at $98 and decide the trade is wrong if price falls to $96. You place a sell stop at $96. If price never gets there, the order never wakes up. If price prints $96, your shares are sold at market, probably around $96, maybe $95.90, maybe worse if the market is moving fast.
+
+<CandleFigure
+  title="Where the orders sit on a long trade"
+  bars={[
+    { o: 100, h: 101, l: 99.5, c: 100.5 },
+    { o: 100.5, h: 101, l: 99, c: 99.5 },
+    { o: 99.5, h: 100, l: 98.2, c: 98.6 },
+    { o: 98.6, h: 99, l: 97.6, c: 98.0 },
+    { o: 98, h: 99.2, l: 96.6, c: 99 },
+    { o: 99, h: 100.5, l: 98.8, c: 100.2 },
+    { o: 100.2, h: 101.5, l: 99.8, c: 101.2 },
+    { o: 101.2, h: 102, l: 100.6, c: 101.8 },
+    { o: 101.8, h: 102.5, l: 101, c: 102.3 },
+    { o: 102.3, h: 103.4, l: 102, c: 103 },
+    { o: 103, h: 104.2, l: 102.7, c: 104.0 },
+    { o: 104, h: 104.5, l: 103, c: 103.5 }
+  ]}
+  annotations={[
+    { type: "hline", price: 98, text: "limit buy 98", from: 0, to: 11 },
+    { type: "hline", price: 96, text: "stop loss 96", from: 0, to: 11 },
+    { type: "hline", price: 104, text: "take profit 104", from: 0, to: 11 },
+    { type: "arrow", index: 3, direction: "up", text: "filled" },
+    { type: "arrow", index: 4, direction: "up", text: "stop held" },
+    { type: "arrow", index: 10, direction: "down", text: "target hit" }
+  ]}
+  caption="A limit buy waits below price, a stop-loss waits below the entry, and a take-profit waits above. Bar 4 dipped to 96.60 and the stop at 96 survived by 60 cents."
+  showVolume={false}
+/>
+
+Stops also work in the other direction. A **buy stop** sits *above* the current price and triggers when price rises to it. Two common uses: exiting a short position (next lesson but one), and entering a breakout, as in "buy me in if price clears $104, because that means the range has broken."
+
+<Callout type="eli5">
+
+A stop order is a note you leave for the market: "If the price ever gets to 96, sell my shares straight away, don't ask me." It means you don't have to sit and stare at the screen, and you don't get to change your mind in a panic either.
+
+</Callout>
+
+## Stop-limit: the alarm with a condition
+
+A plain stop guarantees you get out, but not the price. In a gap or a crash, "at market" can be ugly. A <Term id="stop-limit-order">stop-limit order</Term> fixes the price problem by adding a second number: when the stop triggers, it becomes a *limit* order instead of a market order.
+
+You set two prices:
+
+- **Stop price** (the trigger), say $96.
+- **Limit price** (the worst you'll accept), say $95.50.
+
+If price falls to $96, a limit sell at $95.50 is placed. If the market is trading anywhere at or above $95.50, you fill. If it isn't, you don't.
+
+That last sentence is the trap. Suppose bad news hits overnight and the stock opens at $91, straight through both of your numbers. Your stop triggers at the open, your limit sell at $95.50 goes into the book, and nobody buys at $95.50 because everyone can buy at $91. You are still long, the "protection" did nothing, and you are now down $7 a share instead of $2.
+
+| | Stop (market) | Stop-limit |
+| --- | --- | --- |
+| Trigger | Stop price | Stop price |
+| Becomes | Market order | Limit order at your limit price |
+| Fill guaranteed? | Yes (when market is open) | No |
+| Price guaranteed? | No | Yes, limit or better, if it fills |
+| Danger | Bad fill in a gap or crash | No fill at all in a gap or crash |
+| Good for | Protective stop-losses | Breakout entries where you refuse to chase |
+
+<Callout type="danger" title="Do not use a stop-limit as your only protection">
+
+The one time you most need a stop-loss to work is a gap or crash. That is exactly the situation where a stop-limit can fail to fill. For protecting a position, use a plain stop and accept a bit of slippage. Save stop-limits for entries, where "no fill" just means "no trade."
+
+</Callout>
+
+## Trailing stop: the shadow
+
+A <Term id="trailing-stop">trailing stop</Term> is a stop that moves. You set a distance, either in dollars or in percent. The stop sits that distance below the highest price seen since you placed it. When price rises, the stop rises with it. When price falls, the stop stays exactly where it is. It never moves down.
+
+**Worked example.** You buy at $100 and set a trailing stop of $3.
+
+| Event | Highest price so far | Stop level | What happens |
+| --- | --- | --- | --- |
+| You buy | $100 | $97 | Waiting |
+| Price rises to $103 | $103 | $100 | Stop now at breakeven |
+| Price rises to $106 | $106 | $103 | Locked in $3 of gain |
+| Price dips to $104.50 | $106 | $103 | Stop does not move down |
+| Price rises to $108 | $108 | $105 | Locked in $5 |
+| Price falls to $105 | $108 | $105 | **Triggered**, sells at market |
+
+You bought at $100 and sold near $105 without ever deciding "this is the top." The trailing stop decided for you, and it was wrong by exactly $3 from the actual peak, which is the deal you signed up for.
+
+<CandleFigure
+  title="A $3 trailing stop stepping up behind price"
+  bars={[
+    { o: 100, h: 101.5, l: 99.4, c: 101 },
+    { o: 101, h: 103.2, l: 100.6, c: 103 },
+    { o: 103, h: 104, l: 102.2, c: 102.5 },
+    { o: 102.5, h: 106.1, l: 102.3, c: 105.8 },
+    { o: 105.8, h: 106, l: 104.3, c: 104.6 },
+    { o: 104.6, h: 108.1, l: 104.4, c: 107.7 },
+    { o: 107.7, h: 108, l: 106.4, c: 106.8 },
+    { o: 106.8, h: 107, l: 104.8, c: 105.1 }
+  ]}
+  annotations={[
+    { type: "hline", price: 97, text: "stop 97", from: 0, to: 0 },
+    { type: "hline", price: 100, text: "stop 100", from: 1, to: 2 },
+    { type: "hline", price: 103, text: "stop 103", from: 3, to: 4 },
+    { type: "hline", price: 105, text: "stop 105", from: 5, to: 7 },
+    { type: "arrow", index: 7, direction: "down", text: "stopped out" }
+  ]}
+  caption="The stop rises each time price makes a new high, and freezes on every pullback. The final bar dipped to 104.80 and triggered the stop at 105."
+  showVolume={false}
+/>
+
+Percent trailing stops work the same way but scale with price. A 3% trail on a $100 stock starts at $97; if price reaches $200 the stop sits at $194.
+
+The catch: a trail that's too tight gets clipped by ordinary noise. Every stock wiggles. If your stock typically moves $2 a day and you trail by $1, you'll be stopped out of nearly every winner within a day or two. The [ATR lesson](/learn/m05-indicators/08-atr) gives you a ruler for "normal wiggle", and the risk module will show you how to use it.
+
+## Why stops get "hunted"
+
+You'll hear traders complain that the market "went for their stop" and then reversed. Sometimes that's paranoia. Sometimes it's real, and the reason is simple: stops cluster.
+
+Thousands of traders look at the same chart and see the same obvious low. They all put their stop just below it. That creates a pile of sell orders at one spot. When price dips into the pile, those stops fire as market sells, price lurches lower for a moment, and then, with the sellers used up, it snaps back. Nobody needed to conspire. The crowd did it to itself.
+
+<PatternFigure name="fakeout" caption="Price pokes below an obvious level, triggers the pile of stops resting there, then reverses. The stops were the fuel." />
+
+Two defences. First, don't put your stop at the *obvious* level; put it a little beyond, where a quick poke won't reach. Second, use a distance based on how much the instrument actually moves, not a round number. Both are covered properly in [Where to Put Your Stop Loss](/learn/m07-risk-management/03-stop-loss-placement).
+
+<Callout type="warning" title="A stop is not a promise">
+
+A stop-loss caps your loss *most* of the time. In a gap, the first trade after the trigger might be far below your level. Stops reduce the chance of disaster; they don't remove it. That's why position size, which the risk module covers, matters just as much.
+
+</Callout>
+
+<KeyTakeaways>
+- A stop order sleeps until price reaches its trigger, then becomes a market order.
+- A sell stop below a long entry is a stop-loss; a buy stop above price can enter a breakout or exit a short.
+- A stop-limit adds a worst-acceptable price, but can fail to fill in a gap, so don't rely on it for protection.
+- A trailing stop rises with new highs and never moves down, locking in gains without you picking a top.
+- Stops cluster at obvious levels, which is why price often pokes through them and reverses; place yours a little beyond.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "You are long from $98 with a sell stop at $96. Price falls to $96. What does the stop become?", options: ["A limit order at $96", "A market order", "A cancelled order", "A buy order"], answer: 1, explain: "A plain stop converts to a market order at the trigger, so it fills at the best available price, which may be a little below $96." },
+  { q: "Your stop-limit has a stop of $96 and a limit of $95.50. The stock gaps open at $91. What happens?", options: ["You are sold at $91", "You are sold at $95.50", "You are still long; the limit sits unfilled", "You are sold at $96"], answer: 2, explain: "The trigger fires, but a limit sell at $95.50 cannot fill when the market is at $91, so the position remains open." },
+  { q: "You buy at $100 with a $3 trailing stop. Price goes to $106, then to $104.50. Where is the stop now?", options: ["$97", "$101.50", "$103", "$104.50"], answer: 2, explain: "The stop sits $3 below the highest price seen, $106, and does not move down on the pullback." },
+  { q: "Why do prices often dip just below an obvious swing low and then reverse?", options: ["Exchanges reverse the price on purpose", "Many stops rest there, they fire as market sells, then the selling runs out", "Because of the time of day", "It is random and never happens more than chance"], answer: 1, explain: "Clustered stops become a pile of sell orders; once they are consumed, price snaps back." },
+  { q: "Which order would you use to enter a breakout above $104 without chasing it much higher than $104.20?", options: ["Market buy now", "Buy stop at $104, no limit", "Buy stop-limit with stop $104 and limit $104.20", "Sell stop at $104"], answer: 2, explain: "A stop-limit enters if $104 trades but refuses to pay more than $104.20, and missing the trade is acceptable for an entry." },
+  { q: "Which statement about a stop-loss is honest?", options: ["It guarantees your maximum loss", "It caps losses most of the time but can slip badly in a gap", "It only works on limit orders", "It moves down automatically when price falls"], answer: 1, explain: "Stops reduce the chance of disaster but cannot fill above the market if price gaps through them." }
+]} />
+
+<TryIt to="/simulator">Open the simulator, buy a small position with a market order, then attach a stop-loss about 2% below your entry. Watch how the stop sits on the chart. Next, try a stop-limit entry above the current price and see whether it fills.</TryIt>

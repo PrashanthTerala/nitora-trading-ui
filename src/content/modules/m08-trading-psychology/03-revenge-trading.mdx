@@ -1,0 +1,106 @@
+A child loses a game of cards. Instead of walking away, they slam down a new hand and say "again, double or nothing." They lose that too. Now they are not playing to win; they are playing to make the losing *not have happened*. Every adult watching knows how this ends.
+
+Traders do exactly this, and they do it with real money. It is called <Term id="revenge-trading">revenge trading</Term>: taking a trade not because a setup appeared, but because you want the market to give back what it just took. The state of mind behind it, borrowed from poker, is called **tilt**.
+
+Tilt is the single fastest way to turn a small, normal loss into a large, account-damaging one. This lesson gives you a protocol to stop it, and the protocol only works if you write it down *before* you need it.
+
+## What it looks like
+
+<Callout type="story" title="Sam's Tuesday">
+
+Sam takes a planned trade on BIOX. It gaps against him and stops out for a 1R loss, $150. Annoying but fine. Then he sees BIOX bouncing and thinks, *of course it bounces right after I'm out.* He re-enters long with no setup, slightly bigger size, "to get the $150 back." It drops. Another $220. Now he is angry. He flips short, bigger again, because "it's obviously going down." It squeezes up. Another $400. By 11am Sam has lost $770 on a day where his plan would have cost him $150. The first trade was trading. The next three were a fight.
+
+</Callout>
+
+Look at the pattern, because it is always the same:
+
+1. A normal loss happens.
+2. The loss feels *personal*, as if the market did it on purpose.
+3. The next trade is about the loss, not about a setup.
+4. Size goes up, because a normal win wouldn't "fix" it.
+5. Each new loss makes the next trade bigger and less rational.
+
+<Callout type="danger">
+
+Revenge trading is how most blown accounts actually happen. Not one huge bad trade, but a single bad hour where three or four unplanned trades at rising size compound. The [daily loss limit](/learn/m07-risk-management/09-daily-loss-limits) you set in the risk module exists precisely for this hour.
+
+</Callout>
+
+## The mechanism: why losing makes you reckless
+
+Three things stack on top of each other.
+
+**Loss aversion.** A $150 loss feels like a $300 loss. Your brain registers an emergency and wants it fixed *now*. Waiting for a proper setup feels like tolerating the emergency.
+
+**The break-even fixation.** Research on gamblers shows that people become dramatically more risk-seeking when they are below where they started. Getting back to zero becomes the goal, and the risk needed to get there stops registering. This is why Sam's size went up, not down.
+
+**Adrenaline.** After a loss, especially a fast one, your body is in a fight response. Heart rate up, tunnel vision, reduced access to the reasoning parts of the brain. This is a physical state, and it does not clear by deciding to be calm. It clears with time, roughly 15 to 30 minutes once the trigger is removed.
+
+<Callout type="eli5">
+
+When you stub your toe, for the next minute you are not thinking clearly about anything. You are just hurt and cross. A trading loss stubs your brain's toe. The smart thing is to sit down for a bit, not to run somewhere else and stub it again.
+
+</Callout>
+
+## Recognising tilt in yourself
+
+Tilt does not feel like tilt. It feels like clarity. "It's *obviously* going to bounce." That certainty is the warning sign. Other signals:
+
+- You are thinking about a specific dollar amount you need to get back.
+- You feel the market is doing something *to* you.
+- You are entering faster than usual, without checking your list.
+- You want a bigger size than your rule allows.
+- You are talking to the screen.
+- You feel a strong urge to "just one more".
+
+If two of these are true, you are on tilt. You do not get to argue with that assessment, because the part of you doing the arguing is the part that is compromised.
+
+## The tilt protocol
+
+Write this out and keep it where you can see it. Every step is mechanical on purpose.
+
+**Trigger:** any of the following happens.
+
+- Two losses in a row.
+- One loss larger than 1.5R (something went wrong with execution).
+- Half of your daily loss limit is gone.
+- You notice two tilt signals from the list above.
+
+**Then, in order:**
+
+1. **Flatten.** Close any unplanned position immediately at market. Cancel all pending orders that were not part of the plan.
+2. **Stand up and leave the screen.** Physically. Not "minimise the chart". Walk out of the room.
+3. **Cooldown timer: 20 minutes minimum.** Set it on your phone. During this time you may not open the platform. This is non-negotiable and it is the step that does the work, because it lets adrenaline clear.
+4. **Write three lines** in the [journal](/journal): what happened, what you felt, what the rule said to do.
+5. **Return at half size.** For the rest of the session, your position size is 50% of normal. This is a pre-commitment: you decided it now, when calm, and it protects you from your own overconfidence.
+6. **If the daily loss limit is hit, you are done for the day.** No exceptions, no "just watching".
+
+<Callout type="tip">
+
+Put the cooldown timer *in the plan* and treat it like a stop loss for your brain. A stop loss on a trade is a decision made in advance so you do not have to make it under pressure. A cooldown timer is the same thing for you.
+
+</Callout>
+
+## The market does not know you exist
+
+The deepest fix is a change in belief. The market did not take your money. It did not notice your trade. It is millions of orders from people who have never heard of you, and it would have done exactly the same thing if you had been asleep.
+
+There is nothing to get back, because nothing was taken. There was a trade with an edge, it lost, and that is the price of playing a game with an edge. Tomorrow there will be another setup. It does not care about Tuesday.
+
+<KeyTakeaways>
+- Revenge trading is entering to recover a loss rather than because a setup appeared, and it is how most accounts actually blow up.
+- Loss aversion, break-even fixation and adrenaline combine to make you more reckless exactly when you are least able to notice.
+- Tilt feels like certainty, not anger; strong conviction right after a loss is a warning sign.
+- The tilt protocol is mechanical: flatten, leave the screen, 20-minute cooldown, journal three lines, return at half size, stop at the daily limit.
+- The market did not take anything from you, so there is nothing to get back.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "You have just taken two losses in a row and feel certain the next move is up. According to the tilt protocol, what do you do?", options: ["Enter long at double size to recover", "Enter long at normal size", "Flatten, leave the screen and start a 20-minute cooldown", "Switch to a different symbol"], answer: 2, explain: "Two losses in a row is a trigger. Certainty right after a loss is a tilt signal, not information." },
+  { q: "Why does position size tend to increase during revenge trading?", options: ["Because the trader's edge improves", "Because a normal-sized win would not feel like it fixes the loss", "Because brokers require it", "Because volatility drops after losses"], answer: 1, explain: "The goal shifts from finding a setup to getting back to break-even, and a bigger size feels like the only way there." },
+  { q: "Roughly how long does the adrenaline response after a loss take to clear once you remove the trigger?", options: ["A few seconds", "15 to 30 minutes", "Several days", "It never clears"], answer: 1, explain: "The physical fight response needs time away from the trigger. This is why the cooldown is a fixed timer, not a feeling." },
+  { q: "After the cooldown, what position size does the protocol allow for the rest of the session?", options: ["Normal size", "Double size to catch up", "Half of normal size", "Zero, you must stop"], answer: 2, explain: "Half size is a pre-commitment made while calm that protects against the overconfidence that follows a tilt episode." },
+  { q: "Sam's plan trade lost $150; his three revenge trades lost another $620. What was the real cause of the $620?", options: ["The market moving against him", "Bad luck", "Entering trades that had no setup, at rising size, to recover a loss", "Using a stop loss"], answer: 2, explain: "The first loss was the cost of trading with an edge. The rest came from trades that had no edge at all." }
+]} />
+
+<TryIt to="/journal">Open the journal and add a tag called tilt. Go back through your last 20 simulator trades and tag any that you entered within five minutes of a loss without a written setup. Count them. That number is your baseline; the goal is to drive it to zero.</TryIt>

@@ -1,0 +1,138 @@
+Before screens, the people trading in the pits had no charts. They had a pencil, a card and yesterday's numbers. Every morning a floor trader would do one small sum on the back of that card and write down seven prices for the day: one middle number and three levels above and below it. Then they traded around those prices all session.
+
+That sum still exists. **Pivot points** are the oldest indicator in this module and the only one designed to be computed by hand in under a minute. They are also unusual in that every level is fixed before the session starts and does not move all day, which makes them the cleanest shared map any group of traders has ever had.
+
+This lesson covers pivots properly, then gives you an overview of **Ichimoku Kinko Hyo**, a complete Japanese charting system you will certainly run into and should be able to read even if you never trade it.
+
+## What pivot points calculate
+
+The classic floor-trader pivot takes three numbers from the **previous** period, the high, the low and the close, and produces a central pivot plus support and resistance levels around it.
+
+<Callout type="math" title="The pivot formulas with a worked example">
+
+From the previous period's high (H), low (L) and close (C):
+
+- P = (H + L + C) / 3
+- R1 = 2P − L
+- S1 = 2P − H
+- R2 = P + (H − L)
+- S2 = P − (H − L)
+- R3 = H + 2 × (P − L)
+- S3 = L − 2 × (H − P)
+
+Worked example. Yesterday's high was **105**, low **99**, close **103**. The range is 6.
+
+- P = (105 + 99 + 103) / 3 = 307 / 3 = **102.33**
+- R1 = 2 × 102.33 − 99 = 204.67 − 99 = **105.67**
+- S1 = 2 × 102.33 − 105 = 204.67 − 105 = **99.67**
+- R2 = 102.33 + 6 = **108.33**
+- S2 = 102.33 − 6 = **96.33**
+- R3 = 105 + 2 × (102.33 − 99) = 105 + 6.67 = **111.67**
+- S3 = 99 − 2 × (105 − 102.33) = 99 − 5.33 = **93.67**
+
+Those seven numbers are then fixed for the whole of today's session.
+
+</Callout>
+
+Look at what the formulas are doing. P is simply the average of where price was high, where it was low and where it settled: a one-number summary of yesterday. R1 is that summary reflected off yesterday's low, S1 is it reflected off yesterday's high, and R2 and S2 are P plus or minus yesterday's whole range. There is no smoothing and no parameter to tune.
+
+<IndicatorFigure indicator="pivots" caption="Pivot levels computed from the highlighted prior period, then held fixed. Notice that the levels do not move as new candles print: that is the point." />
+
+## What pivots are trying to measure
+
+Pivots try to answer two questions with one calculation.
+
+**Where is fair, relative to yesterday?** That is P. Trading above P means today's market is valuing the instrument higher than yesterday's summary; below P, lower.
+
+**How far is a normal day?** That is R1 through R3 and S1 through S3. The levels are spaced using yesterday's range, so on a quiet day they sit close together and on a wild day they spread out. A market that reaches R2 has already moved a full prior range from its own centre, which is a lot.
+
+<Callout type="eli5">
+
+Yesterday your class scored between 99 and 105 on a test and finished at 103. Take the middle of those three numbers and call it "normal" for today. Then mark how far above and below normal the class would have to score for today to count as a good day or a bad day. Pivot points are those marks, drawn before anyone has taken the test.
+
+</Callout>
+
+## Default settings and why
+
+**Daily pivots from the previous day** are the standard for intraday trading. **Weekly pivots from the previous week** suit swing traders, and **monthly pivots** show up on longer-term charts. The choice should match your holding period: there is no point using daily pivots on a trade you intend to hold for three weeks.
+
+Why the previous period rather than a rolling average? Because everyone who computes the level gets exactly the same number. A 20-period moving average depends on your settings and your data feed; a daily pivot depends on nothing but yesterday's high, low and close. That shared, unambiguous quality is most of the value, and it is the same self-fulfilling mechanism discussed in [the Fibonacci lesson](/learn/m05-indicators/12-fibonacci).
+
+## Three ways traders use pivots
+
+**Bias.** The simplest use. Price above P for the session means favour long setups; below P, favour shorts. Price crossing P during the day is treated as a change of character. Many intraday traders use nothing more than this.
+
+**Targets and stops for intraday trades.** If you go long near S1, R1 or P is a natural first target and just under S2 is a natural stop. Because the levels are known before the open, the entire trade can be planned before the session starts, which is a real advantage for anyone prone to improvising.
+
+**Reversion versus breakout.** On a quiet day, price tends to oscillate between S1 and R1 and reverse at them; fading those levels can work. On a strong trend day, price runs through R1 to R2 and beyond, and fading them is expensive. The judgement call is which kind of day it is, and tools such as [ADX](/learn/m05-indicators/11-adx-and-trend-strength) and the size of the opening move help you decide.
+
+Pivots also combine naturally with [VWAP](/learn/m05-indicators/09-vwap): VWAP tells you the average price actually paid today, pivots tell you what yesterday thought was fair. When they agree, that price is a strong magnet.
+
+## How pivots fail
+
+<Callout type="warning" title="Pivots assume today resembles yesterday">
+
+The entire calculation is built from one prior period. On a day with an earnings report, a central bank decision or a gap, yesterday's range tells you nothing useful about today's, and price can slice through R1, R2 and R3 before lunch. Pivots are a map of an ordinary day. They are least useful precisely when the market is most exciting.
+
+</Callout>
+
+There are two other honest problems.
+
+**Variant sprawl.** Classic, Woodie, Camarilla, DeMark and Fibonacci pivots all exist and all produce different numbers. The shared-map advantage only holds while most people use the same variant, and the classic formula above is the one with the broadest use, which is a reason to stick with it.
+
+**Arbitrary session boundaries.** In 24-hour markets such as forex and crypto, "the previous day" depends on which close your platform treats as the day's end. Two traders on the same pair can have pivots several points apart. In stocks, where there is one official close, this problem does not arise.
+
+## Ichimoku Kinko Hyo: the overview
+
+Ichimoku translates roughly as "one glance equilibrium chart", and that is the design goal: everything you need on one screen. It was developed by a Japanese journalist, Goichi Hosoda, over decades before publication in the late 1960s, and it is a complete system rather than a single indicator.
+
+Five lines do the work.
+
+| Component | Meaning | Default calculation | What it shows |
+| --- | --- | --- | --- |
+| Tenkan-sen | conversion line | midpoint of the highest high and lowest low of the last 9 periods | short-term momentum, roughly a fast moving average |
+| Kijun-sen | base line | midpoint of the highest high and lowest low of the last 26 periods | medium-term equilibrium; a common stop and trailing reference |
+| Senkou span A | leading span A | midpoint of tenkan-sen and kijun-sen, plotted 26 periods into the future | the fast edge of the cloud |
+| Senkou span B | leading span B | midpoint of the highest high and lowest low of the last 52 periods, plotted 26 periods into the future | the slow edge of the cloud |
+| Kumo | the cloud | the shaded area between span A and span B | projected support and resistance, with thickness showing how contested it is |
+| Chikou span | lagging span | today's close, plotted 26 periods into the past | whether today is above or below where price was trading a month ago |
+
+Three things about that table are worth noticing.
+
+**It uses midpoints, not averages.** Every line is the middle of a high-low range, not a mean of closes. That makes the lines flatter and more level-like than a moving average, which is why they often sit exactly where price reacts.
+
+**Part of it is drawn in the future.** The cloud is shifted 26 periods forward, so you can see projected support and resistance before price gets there. Nothing else in this module does that.
+
+**The numbers 9, 26 and 52 are historical.** They come from a Japanese trading week of six days: roughly a week and a half, a month, and two months. On a five-day week the equivalents would be 7, 22 and 44. Most traders leave the originals alone, partly out of tradition and partly because, once again, shared settings mean shared levels.
+
+The basic reading: price above the cloud is bullish, below is bearish, inside is undecided. A thick cloud is stronger resistance or support than a thin one. Tenkan crossing above kijun is a bullish momentum signal, stronger when it happens above the cloud. The chikou span above the price of 26 periods ago adds confirmation.
+
+That is deliberately an overview. Ichimoku is a whole discipline, it is not available as an overlay in the [simulator](/simulator), and learning it properly means learning a different vocabulary for things you already know. The reason to recognise it is that a large share of charts you will see posted online use it, and you should be able to tell at a glance whether someone is showing you a cloud or a set of Bollinger Bands.
+
+## Combining with structure
+
+Both tools do the same job as your own eyes, in a more formal way. Pivots are yesterday's [support and resistance](/learn/m03-market-structure/03-support-and-resistance) computed rather than drawn. The Ichimoku cloud is a projected version of the same idea.
+
+So the routine does not change. Mark the real structure first: the levels price has actually reacted to, the trend, the range boundaries. Then add the pivots. **The pivot levels that matter are the ones that land on something that was already there.** A daily pivot sitting on last week's high is a genuine confluence worth trading; a pivot sitting in empty space is a number on a chart that many people are watching, which is weaker but not nothing.
+
+If you take one habit from this lesson, take this one: write the seven pivot numbers down before the session opens, and note which of them coincide with levels you had already marked. It takes two minutes and it turns an improvised day into a planned one.
+
+<KeyTakeaways>
+- Classic pivots are computed from the previous period's high, low and close: P = (H+L+C)/3, R1 = 2P − L, S1 = 2P − H, R2 = P + (H−L), S2 = P − (H−L).
+- The levels are fixed before the session and never move, which makes them an unusually clean shared map.
+- Above P favours longs and below P favours shorts; quiet days tend to revert at S1 and R1 while trend days run through them.
+- Pivots assume today resembles yesterday, so they fail on gaps, news and earnings days, and 24-hour markets have no agreed session boundary.
+- Ichimoku uses five components: tenkan-sen, kijun-sen, senkou span A and B forming the kumo cloud, and the chikou span, all built from high-low midpoints rather than averages of closes.
+- Price above the cloud is bullish and below is bearish, and the cloud is plotted 26 periods into the future, which is unique among the tools in this module.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "Yesterday's high was 120, low 114 and close 117. What is the pivot P?", options: ["117", "116", "117.5", "115"], answer: 0, explain: "P = (120 + 114 + 117) / 3 = 351 / 3 = 117." },
+  { q: "Yesterday's high was 105, low 99 and close 103, so P is 102.33. What is S1?", options: ["105.67", "99.67", "96.33", "102.33"], answer: 1, explain: "S1 = 2P minus the high = 204.67 minus 105 = 99.67. R1 would be 2P minus the low = 105.67." },
+  { q: "Why are pivots computed from the previous period rather than a rolling average?", options: ["It is faster to compute", "Everyone gets the same unambiguous numbers, so the levels are genuinely shared", "Rolling averages are illegal", "It makes them lag less"], answer: 1, explain: "A pivot depends only on yesterday's high, low and close, so two traders always agree on it. That shared quality is most of the value." },
+  { q: "On which kind of day are pivot levels least useful?", options: ["A quiet, rangebound day", "An earnings or central bank day with a large gap", "A normal Tuesday", "A day with average volume"], answer: 1, explain: "The whole calculation assumes today's range resembles yesterday's. A news gap breaks that assumption immediately." },
+  { q: "In Ichimoku, what is the kumo?", options: ["The lagging span", "The shaded cloud between senkou span A and senkou span B", "The 9-period conversion line", "The volume histogram"], answer: 1, explain: "The kumo is the area between the two leading spans, plotted 26 periods ahead as projected support and resistance." },
+  { q: "What is unusual about how Ichimoku lines are calculated compared with moving averages?", options: ["They use volume", "They use midpoints of high-low ranges rather than averages of closes", "They use only the open", "They are exponentially weighted"], answer: 1, explain: "Every Ichimoku line is the middle of a range, which makes the lines flatter and more level-like than a mean of closes." }
+]} />
+
+<TryIt to="/simulator">Open PETR on an intraday chart and, for each new session in bar replay, compute P, R1, S1, R2 and S2 by hand from the previous session's high, low and close before stepping forward. Write down whether price opened above or below P, and record where it turned. Ten sessions is enough to see the difference between a reverting day and a trend day.</TryIt>

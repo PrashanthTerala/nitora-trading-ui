@@ -1,0 +1,102 @@
+When you send a letter, you decide what's in it. But there's a hidden second decision: how long is the offer inside it good for? "Reply by Friday" is very different from "this offer stands until I say otherwise."
+
+Every order you send has the same hidden setting. It's called <Term id="time-in-force">time in force</Term>, and it answers one question: **if my order doesn't fill straight away, how long should it keep trying?** Get it wrong and a limit order you forgot about can fill three weeks later at a price that made sense then and is a disaster now.
+
+There are only four settings that matter, plus a couple of session flags. This is a short lesson because it should be.
+
+## DAY: gone at the close
+
+A `DAY` order lives until the end of the current trading session. If it hasn't filled by the closing bell, the broker cancels it. Tomorrow you start clean.
+
+This is the default on most platforms, and it's the safest default. Anything you placed with today's chart in mind expires with today's chart.
+
+## GTC: good till cancelled
+
+A `GTC` order stays alive across days until it fills or you cancel it. Most brokers put a ceiling on this, often 60 or 90 days, but for practical purposes it lives until you kill it.
+
+`GTC` is what makes resting orders useful. A limit buy at a support level that price might visit next week, or the stop-loss leg of a [bracket](/learn/m06-orders-and-execution/03-bracket-and-oco) on a swing trade, has to survive overnight or it's pointless. Your stop-loss on any position held overnight should be `GTC`. Full stop.
+
+<Callout type="danger" title="The forgotten GTC">
+
+A trader places a `GTC` limit buy at $80 on a stock trading at $95, then forgets it. Three weeks later the company warns on earnings and the stock gaps to $70. The forgotten order fills at $80 on the way down, buying a falling knife with no stop attached.
+
+Every `GTC` order you have is a promise you've made to the market. Keep a list. Check it daily.
+
+</Callout>
+
+## IOC: immediate or cancel
+
+An `IOC` order tries to fill *right now*, takes whatever it can get, and cancels the rest. Partial fills are allowed.
+
+Say you send an `IOC` limit buy for 500 shares at $50.02 and only 300 are offered there. You get 300 and the remaining 200 are cancelled immediately, rather than sitting in the book as a new bid.
+
+Why would you want that? Because sometimes you don't want to show your hand. A resting 200-share bid tells everyone you're a buyer. `IOC` takes what's available and leaves no trace.
+
+## FOK: fill or kill
+
+`FOK` is the strict cousin: fill the *whole* order immediately, or cancel the whole thing. No partials.
+
+Same example, 500 shares wanted, 300 available at your price: a `FOK` order fills nothing and is cancelled. You either get all 500 at once or you get zero. This is used by traders who need an exact size, for example to hedge something else precisely, and who would rather have nothing than a fraction.
+
+<Callout type="eli5">
+
+Picture ordering pizzas for a party:
+
+- `DAY`: "Deliver by tonight or forget it."
+- `GTC`: "Deliver whenever you can, even next week, unless I ring and cancel."
+- `IOC`: "Give me whatever pizzas you have ready right now, and cancel the rest."
+- `FOK`: "I need all ten pizzas this minute, or none at all."
+
+</Callout>
+
+## The four side by side
+
+| Setting | Lifetime | Partial fills? | Typical use |
+| --- | --- | --- | --- |
+| `DAY` | Until today's close | Yes | Anything based on today's chart; safe default |
+| `GTC` | Until filled or cancelled (broker cap ~60 to 90 days) | Yes | Resting limits at levels; stop-losses on overnight positions |
+| `IOC` | Seconds | Yes, then cancels remainder | Taking available liquidity without leaving a resting order |
+| `FOK` | Seconds | No, all or nothing | Exact-size fills where a partial is worse than nothing |
+
+## Extended-hours flags
+
+Regular time-in-force settings assume the main session. Most brokers add a separate switch for the pre-market and after-hours sessions covered in [When Markets Are Open](/learn/m00-what-is-a-market/08-market-hours-and-sessions). You'll see labels like `EXT`, `Extended hours`, `Pre/Post` or `GTC+EXT`.
+
+Three things to know:
+
+1. **Without the flag, your order sleeps outside the main session.** A `DAY` limit placed at 8 a.m. won't do anything until the open. A `GTC` stop won't trigger at 7 p.m. even if price crashes through it in after-hours. This is usually what you want, because thin after-hours prints can be wild.
+2. **With the flag, market orders are often rejected.** Many brokers only accept limit orders in extended hours, because the spread is too wide for a market order to be sane. If they do accept them, don't use them.
+3. **Extended-hours prints can trigger stops on some platforms.** Check your broker's rules. A stop that fires on a thin after-hours trade at a silly price is a nasty surprise.
+
+<Callout type="warning" title="Check the default before you trade">
+
+Platforms differ. Some default to `DAY`, some to `GTC`, and some remember the last setting you used. A bracket's exit legs are sometimes `GTC` while the entry is `DAY`. Read the order ticket every time until it's a reflex.
+
+</Callout>
+
+## The simple rules
+
+- Intraday trade you'll close today: `DAY` for everything.
+- Any position held overnight: the stop-loss is `GTC`, no exceptions.
+- Resting limit at a level you expect price to visit later: `GTC`, and write it down.
+- Need it now, don't want to leave a footprint: `IOC`.
+- Need the exact size or nothing: `FOK`.
+- Outside the main session: limits only, and know whether your stops are live.
+
+<KeyTakeaways>
+- Time in force decides how long an unfilled order keeps trying.
+- DAY dies at the close; GTC lives until filled or cancelled, so review every GTC order daily.
+- IOC fills what it can immediately and cancels the rest; FOK fills all or nothing.
+- Stop-losses on overnight positions must be GTC or they will vanish when you need them.
+- Extended-hours flags decide whether your order is awake outside the main session; use limits only there.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "You hold a swing trade for a week with a stop-loss placed as a DAY order. What happens after the first day?", options: ["The stop stays active", "The stop is cancelled at the close and you are unprotected", "The stop becomes a limit order", "The stop triggers at the close"], answer: 1, explain: "DAY orders are cancelled at the end of the session; overnight stops must be GTC." },
+  { q: "You send an IOC limit buy for 500 shares and only 300 are available at your price. What happens?", options: ["You get 500", "You get 300 and 200 rest in the book", "You get 300 and 200 are cancelled", "The whole order is cancelled"], answer: 2, explain: "IOC takes what it can immediately and cancels the remainder." },
+  { q: "Same situation but the order is FOK. What happens?", options: ["You get 300", "You get 500", "Nothing fills and the order is cancelled", "The order waits for 200 more"], answer: 2, explain: "Fill or kill requires the entire quantity at once, otherwise the whole order is cancelled." },
+  { q: "Which time in force carries the risk of a forgotten order filling weeks later?", options: ["DAY", "GTC", "IOC", "FOK"], answer: 1, explain: "GTC orders persist across days until filled or cancelled." },
+  { q: "You want to buy in pre-market. Which is the sensible choice?", options: ["Market order with the extended-hours flag", "Limit order with the extended-hours flag", "Market order without the flag", "FOK market order"], answer: 1, explain: "Spreads are wide outside the main session, so a limit order with the extended flag is the safe tool." }
+]} />
+
+<TryIt to="/simulator">Open the simulator, place a limit order away from price, and look at the time-in-force selector on the ticket. Set one order to DAY and one to GTC, then check which survives when the session rolls over.</TryIt>

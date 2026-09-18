@@ -1,0 +1,107 @@
+Someone hands you a $10 note. If you had $10 in your pocket, your day just changed: you have doubled your money. If you had $1,000, you barely notice. The gift is identical. Its meaning depends entirely on what you already had.
+
+Charts have exactly this problem, and almost nobody explains it to beginners. The price axis you met in [What a Chart Actually Shows](/learn/m01-reading-price/01-what-is-a-chart) can be drawn in two different ways, and the choice quietly changes the shape of everything you look at. Get it wrong on a long-term chart and you will conclude that perfectly ordinary growth was a historic bubble.
+
+## The two scales
+
+A **linear scale** (sometimes called arithmetic) gives every *point* of price the same amount of vertical space. The distance from 10 to 20 on the axis is exactly the same as the distance from 100 to 110, because both are 10 points.
+
+A **logarithmic scale**, almost always shortened to <Term id="log-scale">log scale</Term>, gives every *percentage* the same amount of vertical space. The distance from 10 to 20 is the same as the distance from 100 to 200, because both are a doubling. On a log axis, 10 to 110 would be a colossal climb, while 100 to 110 is a small step.
+
+That is the whole difference. Linear measures points. Log measures percentages.
+
+## Why it matters: the same ten points
+
+Look at two instruments, each gaining exactly 10 points over the same handful of days.
+
+<CandleFigure
+  title="A share going from 10 to 20"
+  bars={[
+    { o: 10, h: 11.4, l: 9.8, c: 11.2 },
+    { o: 11.2, h: 13.6, l: 11, c: 13.3 },
+    { o: 13.3, h: 16.2, l: 13, c: 15.8 },
+    { o: 15.8, h: 18.1, l: 15.4, c: 17.6 },
+    { o: 17.6, h: 20.3, l: 17.4, c: 20 }
+  ]}
+  annotations={[
+    { type: "bracket", from: 0, to: 4, text: "plus 10 points, plus 100%" }
+  ]}
+  caption="Ten points of gain on a 10 share. Every holder doubled their money."
+/>
+
+<CandleFigure
+  title="A share going from 100 to 110"
+  bars={[
+    { o: 100, h: 102.1, l: 99.6, c: 101.8 },
+    { o: 101.8, h: 104.2, l: 101.5, c: 103.9 },
+    { o: 103.9, h: 106.4, l: 103.6, c: 106 },
+    { o: 106, h: 108.5, l: 105.7, c: 108.2 },
+    { o: 108.2, h: 110.4, l: 107.9, c: 110 }
+  ]}
+  annotations={[
+    { type: "bracket", from: 0, to: 4, text: "plus 10 points, plus 10%" }
+  ]}
+  caption="Ten points of gain on a 100 share. Same points, one tenth of the return. The two charts look almost identical in shape."
+/>
+
+Both pictures show the same climb. But the first investor doubled their money and the second made 10%. On a linear chart, drawn at the same scale, those two moves occupy the identical vertical distance, which is misleading, because your wallet does not care about points.
+
+<Callout type="eli5">
+
+Imagine measuring how much children grow. A linear chart says "Amy grew 10cm and so did her dad, so they grew the same". A log chart says "Amy went from 100cm to 110cm, which is a tenth of her height, and her dad went from 180cm to 190cm, which is a twentieth. Amy grew twice as much, for her size." Log scale measures growth the way growth actually feels.
+
+</Callout>
+
+## Long-term charts are where it bites
+
+Take a share that went from $1 in 1995 to $400 today. On a linear chart, the entire first decade is squashed into a flat line along the bottom, because the move from $1 to $10 is only 9 points on an axis that runs to 400. The final few years look like a vertical rocket.
+
+The conclusion your eye reaches is "nothing happened for ten years, then it exploded". The truth is the opposite: the $1 to $10 stretch was a 900% gain, the best decade the share ever had, and the recent "rocket" from $200 to $400 is a mere doubling.
+
+Switch that chart to log scale and it usually turns into something far more reasonable: a fairly steady slope. Trends that look like exponential bubbles on linear charts routinely look like ordinary, persistent growth on log charts.
+
+<Callout type="warning" title="Trendlines change, so signals change">
+
+Because the scale changes the shape, it also changes anything you draw on top. A trendline that connects three lows perfectly on a linear chart may miss them completely on a log chart, and a channel can appear on one and vanish on the other. Chart patterns and breakout levels can differ too. Pick a scale, know which one you are using, and be consistent, otherwise you will find whatever you want to find.
+
+</Callout>
+
+## Which should you use?
+
+A simple rule covers almost every case.
+
+| Situation | Scale |
+| --- | --- |
+| Intraday and short-term charts | Linear |
+| Any chart where price moved less than about 50% | Either, they look nearly identical |
+| Multi-year charts, or price that has multiplied several times | Log |
+| Comparing two instruments with very different prices | Log |
+| Anything involving percentage targets | Log |
+
+The reason the second row exists is reassuring: over a small price range the two scales are practically indistinguishable. If you are day trading a stock between 98 and 104, this entire lesson is academic. It only starts to matter when price has travelled a long way.
+
+Most platforms hide the toggle in the bottom right corner of the price axis, often labelled `log` or `L`. Some charting sites put it in the settings menu. Find it once on the platform you use, and then make a habit of flipping any long-term chart to log before you form an opinion about it.
+
+<Callout type="tip">
+
+A quick test of whether it matters for the chart in front of you: is the highest price more than roughly one and a half times the lowest price on screen? If yes, check it on both scales. If no, do not think about it again.
+
+</Callout>
+
+<KeyTakeaways>
+- A linear price axis gives equal space to equal point moves; a log axis gives equal space to equal percentage moves.
+- A move from 10 to 20 and a move from 100 to 110 are both 10 points, but one is a 100% gain and the other is 10%.
+- On long-term linear charts the early years get squashed flat and recent moves look explosive, which misleads the eye.
+- Log scale usually turns an apparent exponential bubble into a steadier, more honest slope.
+- Changing the scale changes trendlines, channels and pattern shapes, so pick one and stay consistent.
+- Use linear for short-term charts and log for multi-year charts or anything where price has multiplied.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "On a logarithmic price scale, which two moves take up the same vertical distance?", options: ["10 to 20 and 100 to 110", "10 to 20 and 100 to 200", "10 to 11 and 100 to 200", "All moves of 10 points"], answer: 1, explain: "Log scale gives equal space to equal percentages. Both 10 to 20 and 100 to 200 are a doubling." },
+  { q: "A share rose from 10 to 20 while another rose from 100 to 110. What is true?", options: ["Both gained the same percentage", "Both gained 10 points, but the first gained 100% and the second 10%", "The second gained more in percentage terms", "The first gained 10% and the second 100%"], answer: 1, explain: "Equal point moves are very different percentage moves at different price levels, which is exactly why the scale matters." },
+  { q: "Why can a long-term linear chart be misleading?", options: ["It uses the wrong prices", "The early low-priced years get squashed flat while recent moves look explosive", "It hides volume", "It only shows closing prices"], answer: 1, explain: "A huge percentage gain at a low price is only a few points, so it barely registers on an axis scaled for today's price." },
+  { q: "You are day trading a stock that has moved between 98 and 104 all week. Does the scale choice matter?", options: ["Yes, always use log", "No, over a small price range the two scales look nearly identical", "Yes, always use linear or your stops break", "Only if volume is high"], answer: 1, explain: "Across a narrow range the difference is invisible. The choice only starts to matter when price has travelled a long way." },
+  { q: "What happens to a trendline when you switch a chart from linear to log?", options: ["Nothing, lines are unaffected", "It can shift so that it no longer touches the same points", "It is deleted automatically", "It becomes a horizontal line"], answer: 1, explain: "The scale reshapes the price data, so anything drawn on top can change. Pick one scale and be consistent." },
+  { q: "Which chart most needs log scale?", options: ["A 5-minute chart of today", "A 25-year chart of a share that went from 1 to 400", "A chart of a stock ranging between 50 and 52", "A one-week forex chart"], answer: 1, explain: "When price has multiplied many times over, only a log axis shows the growth rate honestly across the whole history." }
+]} />

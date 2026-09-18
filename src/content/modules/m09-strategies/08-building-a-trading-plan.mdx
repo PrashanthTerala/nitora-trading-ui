@@ -1,0 +1,165 @@
+A pilot who has flown the same route four hundred times still reads the checklist aloud before takeoff. Not because they have forgotten it, but because the checklist does not get tired, distracted or overconfident, and the pilot does.
+
+A trading plan is that checklist. It is a written document, made when you are calm, that answers every question the market will ask you before the market asks it. What do I trade? What am I looking for? What makes me press the button? Where am I wrong? Where do I take money? How much? What do I do while it is open? How do I know if any of this is working?
+
+Without one, every trade is a fresh improvisation performed by a person with money on the line. That is not a strategy; it is a mood. This lesson gives you the seven parts, shows you what a testable rule looks like, and hands you a complete filled-in plan to copy and adapt.
+
+## The seven parts
+
+| Part | The question it answers |
+| --- | --- |
+| 1. Setup | What conditions must exist before I even look for an entry? |
+| 2. Entry trigger | What exact event makes me place the order? |
+| 3. Stop | At what price am I proven wrong? |
+| 4. Target | Where am I taking profit, and is that far enough to be worth it? |
+| 5. Position size | How many shares or units? |
+| 6. Management | What do I do between entry and exit, and what am I forbidden from doing? |
+| 7. Review | How and when do I check whether this works? |
+
+Parts 1 and 2 are different things, and confusing them is the most common flaw in a beginner's plan. The **setup** is the state of the world: the trend, the level, the regime. The **trigger** is the single event that turns a watched chart into a live order. You can have a perfect setup and never get a trigger, and the correct response is no trade.
+
+<Callout type="eli5">
+
+Waiting to cross a road has two stages. The setup is standing at a proper crossing with a clear view in both directions. The trigger is the green man lighting up. You need both. Standing at a good crossing is not permission to walk, and a green man in the middle of a motorway is not either.
+
+</Callout>
+
+## What makes a rule testable
+
+A rule is testable if two people reading it would place the same order at the same second, and if you could hand it to a computer without having to explain anything.
+
+| Not testable | Testable |
+| --- | --- |
+| "Enter when it looks strong" | "Price closes above the 20 EMA on the 15m chart" |
+| "Wait for a pullback" | "Price trades down to within 0.2 ATR of the 20 EMA, then closes back above it" |
+| "Use a sensible stop" | "Stop at the low of the trigger candle minus 0.25 ATR" |
+| "Take profit near resistance" | "Limit order at the most recent swing high" |
+| "Only trade when the market is trending" | "ADX(14) on the 1h chart is above 25" |
+| "Size according to conviction" | "Shares equals 1% of account divided by entry minus stop" |
+| "Cut it if it goes badly" | "Close at market if the trade has not reached 1R within 12 candles" |
+
+The rewritten versions all share three properties: a named indicator with its settings, a named timeframe, and a comparison that is either true or false right now. If any rule in your plan needs the word "strong", "clean", "good" or "obvious", it is not a rule yet. It is a feeling with a job title.
+
+This matters for a practical reason beyond discipline. A rule you cannot state precisely cannot be [backtested](/learn/m09-strategies/09-backtesting-and-forward-testing), and a rule that cannot be backtested can never be shown to have an edge. Vagueness is not just sloppy; it makes the whole scientific part of trading impossible.
+
+<Callout type="warning" title="The escape hatch clause">
+
+Watch for rules that contain a get-out: "close below the 20 EMA, unless momentum still looks good". The exception is where all your losses will live, because in the moment momentum always looks good enough. Write the rule without the exception. If you genuinely need a second condition, name it and measure it, so that it is a rule too.
+
+</Callout>
+
+## A complete plan you can copy
+
+What follows is a real, fully specified swing plan. Every number is stated, nothing is left to judgement. Copy it, change the instruments and numbers to suit you, and then do not change anything for a hundred trades.
+
+### Plan: Daily range breakout with retest
+
+**Scope**
+
+- Instruments: BLUE, IDX and PETR in the simulator. No BIOX (gap risk), no CRYP (no session structure).
+- Timeframes: 1D for the setup and stop, 1h for the entry trigger.
+- Routine: review charts once per day after the close. Orders are placed for the following session. No intraday screen watching.
+- Maximum 2 open positions, total open risk capped at 2%, per the [heat rule](/learn/m07-risk-management/08-correlation-and-diversification).
+
+**1. Setup** — all four must be true on the daily chart:
+
+1. Price has traded inside a horizontal range for at least 15 daily bars, with at least two touches of the range high and two of the range low.
+2. The range height is at least 3 × the 14-day ATR.
+3. One daily candle closes above the range high by at least 0.25 × ATR.
+4. Volume on that breakout day is at least 1.5 × the 20-day average volume.
+
+**2. Entry trigger**
+
+- Place a buy limit at the range high plus 0.1 × ATR, good for 5 trading days.
+- The order fills only on a retest. If price runs away without returning, there is no trade and no chasing.
+
+**3. Stop**
+
+- At the last daily swing low inside the range, minus 0.25 × ATR.
+- The total distance from entry to stop must be at least 1 × ATR. If it is not, skip the trade rather than tightening.
+
+**4. Target**
+
+- Measured move: range high plus the full range height.
+- The trade must offer at least **2R** at the limit price. If it does not, skip it.
+
+**5. Position size**
+
+- Shares = (account × 1%) ÷ (entry − stop), always rounded down. Nothing else affects size.
+
+**6. Management**
+
+- At +2R, sell half and move the stop on the remainder to breakeven.
+- Trail the remainder below each new daily swing low.
+- Exit everything at the measured-move target, or at the trailing stop, whichever comes first.
+- Time stop: if the trade has not reached +1R within 10 daily bars, close it at market.
+- Forbidden: moving the stop further away, adding to a loser, taking a trade that fails any setup condition, trading in the 2 days before a scheduled earnings date.
+
+**7. Review**
+
+- Log every trade in the [journal](/journal) with planned R, realised R and whether every rule was followed.
+- Weekly: count rule breaks. Any rule break is a failure regardless of profit.
+- Every 30 trades: check win rate, average win in R, average loss in R and expectancy.
+- Change nothing until 100 trades are complete, then change at most one rule.
+
+## The worked example
+
+BLUE has traded between **$38.00 and $42.00** for 22 daily bars, touching each boundary three times. The 14-day ATR is **$0.90**.
+
+*Setup check:* range height $4.00 is comfortably above 3 × ATR ($2.70). A daily candle closes at $42.60, which is $0.60 above the range high and above the $0.225 minimum. Volume that day is 1.8 times the 20-day average. All four conditions pass.
+
+*Entry:* buy limit at $42.00 + $0.09 = **$42.09**, rounded to **$42.10**. Two sessions later price drifts back and fills it.
+
+*Stop:* the last daily swing low inside the range was $40.80. Minus 0.25 × ATR ($0.225) gives **$40.55**. Risk per share is $42.10 − $40.55 = **$1.55**, which is 1.7 ATR, comfortably above the 1 ATR minimum.
+
+*Target:* $42.00 + $4.00 = **$46.00**. Reward is $3.90 per share. $3.90 ÷ $1.55 = **2.52R**, above the 2R minimum, so the trade is valid.
+
+*Size:* $10,000 account, 1% = $100. $100 ÷ $1.55 = 64.5, rounded down to **64 shares**. Loss at the stop: 64 × $1.55 = $99.20.
+
+*Management:* +2R is $3.10 above entry, at **$45.20**. Price gets there; sell 32 shares for +$99.20 and move the stop on the remaining 32 to $42.10. Price continues to $46.00 and the rest closes for 32 × $3.90 = $124.80.
+
+*Result:* $224.00 on a $99.20 risk, or **+2.26R**. Logged as planned 2.52R, realised 2.26R, all rules followed.
+
+<StatRow>
+<Stat value="2.52R" label="planned" />
+<Stat value="2.26R" label="realised" />
+<Stat value="64" label="shares" />
+<Stat value="$99.20" label="1R" />
+</StatRow>
+
+Notice how little was decided on the day. The stop, the size, the scale-out and the exit were all fixed before the order existed. That is what a plan buys you: on the morning the trade goes wrong, there is nothing to decide.
+
+## Building your own
+
+- **Start from one strategy, not three.** A plan covering three setups is three plans, and you will not gather enough trades on any of them to learn anything.
+- **Write it in one page.** If it does not fit, it contains judgement calls disguised as rules.
+- **Include the risk section explicitly**: risk per trade, total open risk, daily and weekly [loss limits](/learn/m07-risk-management/09-daily-loss-limits), and the drawdown brake.
+- **Write the forbidden list.** It is usually more valuable than the entry rules, because your losses come from things you do, not things you fail to do.
+- **Date it and version it.** When you change a rule, write the date and the reason. Six months of that history is the most useful trading document you will ever own.
+
+<Callout type="tip" title="The plan is not finished when it is written">
+
+A plan earns its authority by being tested. Write it, then take it through the [backtest, paper, small-size progression](/learn/m09-strategies/09-backtesting-and-forward-testing) in the next lesson before it decides anything about real money. A confident, beautifully formatted plan that has never been measured is exactly as reliable as a guess.
+
+</Callout>
+
+<KeyTakeaways>
+- A trading plan has seven parts: setup, entry trigger, stop, target, position size, management and review.
+- The setup is the state of the world; the trigger is the single event that places the order, and confusing them causes most early entries.
+- A rule is testable if it names an indicator with its settings, a timeframe and a condition that is true or false right now.
+- Words like strong, clean or obvious mean the rule is not finished, and a vague rule can never be backtested.
+- Your plan must contain a forbidden list and explicit risk limits, not just entry conditions.
+- Write one page for one strategy, version it with dates and reasons, and change nothing until you have a hundred trades.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "Which of these is a testable entry rule?", options: ["Enter when momentum looks strong", "Enter when price closes above the 20 EMA on the 15m chart", "Enter on a clean pullback", "Enter when the setup is obvious"], answer: 1, explain: "It names the indicator, the timeframe and a condition that is either true or false right now." },
+  { q: "What is the difference between a setup and an entry trigger?", options: ["They are the same thing", "The setup is the state of the world that must exist; the trigger is the single event that places the order", "The setup is for longs and the trigger is for shorts", "The trigger comes before the setup"], answer: 1, explain: "You can have a perfect setup and never get a trigger, in which case the correct action is no trade." },
+  { q: "In the example plan, entry is $42.10 and the stop is $40.55 on a $10,000 account risking 1%. How many shares?", options: ["32", "64", "100", "155"], answer: 1, explain: "Risk per share is $1.55, and $100 divided by $1.55 is 64.5, rounded down to 64." },
+  { q: "The same trade has a measured-move target at $46.00. What R does it offer at entry?", options: ["1.5R", "2.0R", "2.5R", "3.9R"], answer: 2, explain: "Reward is $3.90 and risk is $1.55, so 3.90 divided by 1.55 is about 2.52R." },
+  { q: "A rule reads: close below the 20 EMA, unless momentum still looks good. What is wrong with it?", options: ["Nothing, flexibility is useful", "The exception is where every loss will live, because momentum always looks good enough in the moment", "The EMA period is too short", "It should use the SMA instead"], answer: 1, explain: "An escape hatch converts a rule back into a judgement call at exactly the moment judgement is worst." },
+  { q: "You broke a plan rule and the trade made money. How should the weekly review count it?", options: ["As a success", "As a rule break", "It should not be counted", "As a success with a note to repeat it"], answer: 1, explain: "Rule breaks are counted regardless of profit, because a profitable break is the one most likely to be repeated." },
+  { q: "Which section of a plan is most often missing and most often needed?", options: ["The entry rules", "The forbidden list and explicit risk limits", "The instrument list", "The chart colours"], answer: 1, explain: "Losses come mostly from things traders do, such as moving stops or adding to losers, rather than from setups they failed to find." }
+]} />
+
+<TryIt to="/simulator">Write your own one-page plan using the seven headings above, with every number filled in and nothing left to judgement. Then open the simulator on BLUE at the 1D timeframe and replay bar by bar, taking only trades that pass every single condition. Count how many setups you rejected; that number is the plan doing its job.</TryIt>

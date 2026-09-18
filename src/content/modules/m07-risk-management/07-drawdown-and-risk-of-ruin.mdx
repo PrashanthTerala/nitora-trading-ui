@@ -1,0 +1,118 @@
+Flip a fair coin a hundred times and write down the results. Somewhere in that list there will almost certainly be a run of six heads in a row, and quite possibly seven. The coin has not changed. Nothing is broken. Long runs are simply what randomness looks like up close.
+
+Traders forget this. The fifth loss in a row does not feel like arithmetic; it feels like proof that the strategy has stopped working, that the market has changed, that you have lost your touch. So the trader changes something, right at the point where nothing needed changing.
+
+This lesson is about making streaks boring. If you know in advance roughly how long your worst run will be, how deep the hole will get, and what it takes to climb out, then the streak becomes an expected event you have already planned for rather than an emergency you improvise through.
+
+<StreakSimulator />
+
+## The probability of N losses in a row
+
+If your win rate is w, then your loss rate is (1 − w), and the chance of losing N trades in a row, starting from any particular trade, is that loss rate multiplied by itself N times.
+
+<Callout type="math" title="Streak probability">
+
+**probability of N losses in a row = (1 − w)ᴺ**
+
+This assumes trades are independent, which is roughly true for a mechanical strategy and less true if your mood affects your next entry.
+
+</Callout>
+
+| Win rate | 3 in a row | 5 in a row | 8 in a row | 10 in a row |
+| --- | --- | --- | --- | --- |
+| 60% | 6.4% | 1.0% | 0.07% | 0.01% |
+| 50% | 12.5% | 3.1% | 0.39% | 0.10% |
+| 40% | 21.6% | 7.8% | 1.7% | 0.60% |
+| 35% | 27.5% | 11.6% | 3.2% | 1.3% |
+
+Those small percentages are the trap. At a 40% win rate, an eight-loss streak looks like a 1.7% event, and 1.7% feels like "never". But it is 1.7% *per starting point*, and a hundred trades gives you about ninety-three starting points. Multiply and you get roughly one and a half such streaks expected in every hundred trades. The rare event is not rare when you roll the dice ninety-three times.
+
+The [last lesson](/learn/m07-risk-management/06-win-rate-vs-rr) gave the practical version of that: expect a longest streak of about six at a 50% win rate and about nine at 35%, within any hundred trades.
+
+<Callout type="eli5">
+
+Imagine a bag with six red marbles and four green ones. Pulling red three times in a row is not surprising. If you keep pulling all afternoon, at some point you will pull red eight times in a row, and the bag has not cheated. It was always going to happen eventually, and knowing that in the morning is what stops you throwing the bag away in the afternoon.
+
+</Callout>
+
+## Drawdown: the hole and the ladder out
+
+A **drawdown** is the fall from your account's highest point to its lowest point before a new high. It is measured in percent, and it is the number professional traders care about most after expectancy, because it is what actually ends careers.
+
+The cruelty of drawdown is that the ladder out is always longer than the fall in, and it gets disproportionately longer the deeper you go. The [first lesson of this module](/learn/m07-risk-management/01-why-risk-first) showed why: a 50% loss needs a 100% gain because you are earning the second 50% on a halved account.
+
+| Drawdown | Gain needed to get back |
+| --- | --- |
+| 5% | 5.3% |
+| 10% | 11.1% |
+| 20% | 25% |
+| 30% | 42.9% |
+| 50% | 100% |
+| 75% | 300% |
+
+Below about 20% the arithmetic is annoying. Above about 50% it is career-ending, because the returns required stop being plausible. A trader down 75% who makes an excellent 30% a year needs more than five years just to see their old balance again.
+
+## Risk per trade is the whole game
+
+Here is the calculation that should decide your risk percentage. Take that twenty-loss streak, which is unlikely but entirely possible for a low win rate system, and run it at four different risk levels. Each loss is a percentage of the *current* account, which is how the 1% rule works, so the account shrinks a little more slowly each time.
+
+| Risk per trade | Account left after 20 straight losses | Drawdown | Gain needed to recover |
+| --- | --- | --- | --- |
+| 1% | 81.8% | −18.2% | +22.3% |
+| 2% | 66.8% | −33.2% | +49.8% |
+| 5% | 35.8% | −64.2% | +179% |
+| 10% | 12.2% | −87.8% | +722% |
+
+Read the last column as time. At 1% you have a bad two months and carry on. At 2% you have a rough quarter. At 5% you need to nearly triple your remaining money, which for most traders means years. At 10% the account is functionally dead: $10,000 has become $1,216, and you would need to turn it back into $10,000 at a ratio no honest strategy produces.
+
+<StatRow>
+<Stat value="−18.2%" label="20 losses at 1% risk" />
+<Stat value="−87.8%" label="20 losses at 10% risk" />
+<Stat value="+22.3%" label="to recover the first" />
+<Stat value="+722%" label="to recover the second" />
+</StatRow>
+
+Notice that the streak was identical in all four rows. Same strategy, same market, same bad luck. The only variable was the size of the bet, and it was the difference between an inconvenience and the end.
+
+## Risk of ruin
+
+**Risk of ruin** is the probability that your account falls below the point where you can keep trading. It depends on three things, and only three:
+
+1. **Your expectancy.** Negative expectancy means ruin is certain given enough trades; the only question is when.
+2. **Your risk per trade.** This is the one you control completely and instantly.
+3. **How much of a drawdown you can survive**, financially and emotionally, before you stop.
+
+With a positive expectancy and small fixed-fractional risk, risk of ruin gets very small very quickly, because each loss is a percentage of a shrinking account and the arithmetic never quite reaches zero. With large risk, even a good strategy can be killed by an ordinary streak arriving early, before the edge has had enough trades to show up.
+
+<Callout type="danger" title="Doubling your risk does not double your drawdown">
+
+It roughly doubles your *return* in good times, which is why the temptation exists. But drawdowns compound: going from 1% to 5% risk turned an 18% hole into a 64% hole, more than three times as deep, and turned the recovery from 22% into 179%, eight times as hard. Risk scales your profits linearly and your pain exponentially.
+
+</Callout>
+
+## Planning for the streak before it arrives
+
+- **Write your expected worst streak in your plan.** From your win rate, using the table above. If it says nine, then the ninth loss is information you already had.
+- **Decide your maximum acceptable drawdown**, and what you will do at it. A common rule is to halve position size at 10% drawdown and stop to review at 15%.
+- **Use circuit breakers** so a bad day cannot become a bad month. That is the [daily loss limit lesson](/learn/m07-risk-management/09-daily-loss-limits).
+- **Never raise risk to recover faster.** The urge to make it back quickly appears exactly when your account is least able to absorb being wrong.
+
+<KeyTakeaways>
+- The probability of N losses in a row is the loss rate raised to the power N, and it applies at every starting point, so rare streaks are common over a hundred trades.
+- Expect a longest streak of about six at a 50% win rate and about nine at 35%, and write that number in your plan.
+- Recovery grows far faster than the drawdown: 20% down needs 25% back, but 50% down needs 100% back.
+- The same twenty-loss streak costs 18% at 1% risk and 88% at 10% risk, so bet size, not bad luck, decides whether you survive.
+- Risk of ruin depends only on expectancy, risk per trade and how much drawdown you can endure.
+- Raising risk to recover faster is the single most reliable way to turn a drawdown into a blow-up.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "Your strategy wins 40% of the time. What is the probability of five losses in a row from any given starting point?", options: ["About 1%", "About 7.8%", "About 21%", "About 40%"], answer: 1, explain: "0.6 to the power 5 is 0.0778, so about 7.8%." },
+  { q: "Why should a 1.7% chance of an eight-loss streak still be planned for?", options: ["Because the probability is wrong", "Because it applies at each of roughly 93 starting points in 100 trades", "Because brokers cause streaks", "Because win rates always fall over time"], answer: 1, explain: "Multiply the per-start probability by the number of starting points and you expect such a streak more than once per hundred trades." },
+  { q: "You are down 50% from your peak. What gain on the remaining account returns you to that peak?", options: ["50%", "67%", "100%", "150%"], answer: 2, explain: "Half your money must double to get back, which is a 100% gain." },
+  { q: "Twenty straight losses at 1% risk leaves an account at roughly what percentage of its starting value?", options: ["50%", "66%", "82%", "90%"], answer: 2, explain: "0.99 to the power 20 is about 0.818, an 18.2% drawdown." },
+  { q: "The same twenty losses at 10% risk leave the account at roughly what percentage?", options: ["12%", "36%", "50%", "80%"], answer: 0, explain: "0.9 to the power 20 is about 0.122, an 87.8% drawdown needing over 700% to recover." },
+  { q: "You are eight losses into a streak your plan predicted. What is the correct response?", options: ["Double the risk on the next trade to catch up", "Abandon the strategy", "Keep the same risk and keep following the rules", "Widen your stops to win more often"], answer: 2, explain: "The streak was forecast by the arithmetic. Raising risk during a drawdown is exactly when the account can least afford to be wrong." }
+]} />
+
+<TryIt to="/simulator">Use the streak simulator above with your own win rate, then open the simulator and take twenty trades in a single sitting on BIOX, which gaps and will give you a rough ride. Before you start, write down the longest losing streak you expect. Compare afterwards, and note how you felt at the worst point rather than what the balance did.</TryIt>

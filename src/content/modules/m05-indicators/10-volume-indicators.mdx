@@ -1,0 +1,93 @@
+In [Volume: How Many People Showed Up](/learn/m01-reading-price/06-volume) you learned that volume is the number of shares that changed hands, and that a price move on heavy volume carries more conviction than the same move on light volume. Those volume bars under the chart are honest but hard to read over long stretches. Was there more buying or more selling over the last month? Staring at fifty bars of different heights does not tell you.
+
+Volume indicators exist to turn that pile of bars into something readable. This lesson covers two that are worth knowing. **On-Balance Volume** runs a running total that leans up on up-days and down on down-days, so you can see whether volume has been flowing in or out. **Volume profile** turns the question sideways: instead of asking how much traded on each day, it asks how much traded at each price.
+
+Both are useful because they measure something the price line alone cannot. Neither one predicts anything. Keep the [first lesson](/learn/m05-indicators/01-what-indicators-are) in mind: they are derived from past trades and they lag reality like everything else.
+
+## On-Balance Volume: what it calculates
+
+<Term id="obv">**OBV**</Term> is one of the simplest indicators ever written. Joseph Granville introduced it in 1963. It keeps a running total. If today's close is higher than yesterday's, add today's volume to the total. If lower, subtract it. If unchanged, do nothing.
+
+<Callout type="math" title="OBV worked example">
+
+Day 1: start at 0.
+
+Day 2: close 101 (up from 100), volume 5,000. OBV = 0 + 5,000 = **5,000**.
+
+Day 3: close 100.5 (down), volume 2,000. OBV = 5,000 − 2,000 = **3,000**.
+
+Day 4: close 100.5 (unchanged), volume 4,000. OBV = **3,000**, no change.
+
+Day 5: close 102 (up), volume 8,000. OBV = 3,000 + 8,000 = **11,000**.
+
+The actual number is meaningless. Only the direction and shape of the OBV line matter.
+
+</Callout>
+
+The starting value is arbitrary, so OBV on one chart cannot be compared with OBV on another. It also does not care how much price moved, only whether it closed up or down. A one-cent up close on huge volume adds the whole day's volume, exactly as if the stock had jumped 10%.
+
+<IndicatorFigure indicator="obv" caption="On-Balance Volume with the raw volume bars. When price and OBV rise together, up-days are attracting the volume. When price rises but OBV flattens or falls, the rally is running on thin participation." />
+
+## What OBV is trying to measure
+
+OBV is trying to detect **accumulation and distribution**: whether the big, patient money is quietly buying or quietly selling. The theory is that volume leads price: institutions build positions over weeks, and their buying shows up as heavier volume on up-days before it shows up as a clear price trend. If that is happening, OBV rises even while price drifts sideways.
+
+<Callout type="eli5">
+
+Imagine a jar. Every day the stock closes up, you pour in a number of marbles equal to that day's volume. Every day it closes down, you take that many out. Over time the jar level tells you whether more marbles have gone in than come out. OBV is the jar level.
+
+</Callout>
+
+## How traders use OBV
+
+**Confirming a trend.** Price making higher highs while OBV makes higher highs is a healthy uptrend: the buying is broad. Price making higher highs while OBV makes lower highs is a warning that the new highs are being made on less volume than the old ones. That is OBV [divergence](/learn/m05-indicators/14-divergence) and it is the main reason people watch the indicator.
+
+**Spotting quiet accumulation.** In a long [range](/learn/m03-market-structure/05-ranges-and-consolidation), a steadily rising OBV suggests that someone is absorbing supply at the range low. A breakout from that range on rising OBV is the textbook accumulation-to-markup transition from the [Wyckoff cycle](/learn/m03-market-structure/09-market-cycles-wyckoff).
+
+**Breakout validation.** A break of a resistance level that is not matched by a break to a new high on OBV is suspicious. Real breakouts pull volume with them; [fakeouts](/learn/m03-market-structure/06-breakouts-and-fakeouts) often do not.
+
+## How OBV fails
+
+<Callout type="warning" title="One big day can distort OBV for months">
+
+Because every up-day adds its full volume, a single enormous volume day, such as an earnings gap or an index rebalancing, moves OBV by more than months of normal trading. The line then shows a step that has nothing to do with slow accumulation. Always check whether an OBV move came from many days or from one.
+
+</Callout>
+
+OBV ignores the size of price moves, so a stock that closes up by a hair on heavy volume and down by a lot on light volume shows a rising OBV while losing value. It also has no scale, no overbought level and no natural zero, so it can only be read by its shape. And volume itself can be misleading on instruments where trading is fragmented across venues or where reported volume is thin.
+
+## Volume profile: volume by price instead of by time
+
+The volume bars under a chart show volume per unit of *time*. **Volume profile** shows volume per unit of *price*. It takes a chosen stretch of bars, usually a day, a week or a whole range, and draws a horizontal histogram on the side of the chart: for each price level, a bar whose length shows how many shares traded at that level.
+
+The shape tells you where the market spent its time and money. The price with the longest bar is the **point of control** (POC), the single most-traded price in the period. The band of prices around it that contains about 70% of the volume is the **value area**, with a **value area high** and **value area low** at its edges. Prices with big bars are called **high-volume nodes**: places where buyers and sellers agreed to trade a lot, which tend to act as magnets and as support or resistance. Prices with tiny bars are **low-volume nodes**: places the market moved through quickly, which price tends to cross quickly again.
+
+Traders use the profile in three main ways. First, as a map of support and resistance built from actual transactions rather than from swing highs and lows: a high-volume node is a level where a lot of people have positions to defend. Second, to judge breakouts: a move out of the value area into a low-volume region often travels fast, while a move into a high-volume node often stalls. Third, to spot when a market is out of balance: if price is trading far above the value area on rising volume, the market is repricing higher and the old value area becomes a reference for pullbacks.
+
+Volume profile has the same limits as every volume tool. It depends on good volume data, it describes the past period only, and the choice of period changes the picture entirely. A weekly profile and a monthly profile of the same stock can show different points of control.
+
+## Combining with structure
+
+Volume tools are at their best as a truth check on structure. You have a support level drawn from three previous bounces. If the volume profile shows a high-volume node at the same price, the level is backed by real transactions, not just a line. If OBV has been climbing while price sat on that level, someone has been buying there. A bullish candle at that level is now a three-way agreement: structure, transactions and flow.
+
+The opposite check is just as valuable. A breakout above a range high on flat OBV and into a thin, low-volume region above is a breakout without participation. You may still take it, but with a tighter stop and lower expectations, because the evidence says few people showed up.
+
+<KeyTakeaways>
+- OBV keeps a running total: add the day's volume on an up close, subtract it on a down close, ignore unchanged closes.
+- The OBV number itself means nothing; only its direction and shape, and its agreement or disagreement with price, matter.
+- OBV is meant to reveal accumulation or distribution before price shows it, and to confirm or question breakouts.
+- A single huge volume day can distort OBV for months, and it ignores the size of price moves entirely.
+- Volume profile shows volume by price, with the point of control, value area and high- and low-volume nodes as its key features.
+- Use both as a truth check on structure: do the transactions and the flow agree with the level you have drawn?
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "OBV is 5,000. Today the stock closes lower on volume of 2,000. What is the new OBV?", options: ["7,000", "3,000", "5,000", "2,000"], answer: 1, explain: "A down close subtracts the day's volume: 5,000 − 2,000 = 3,000." },
+  { q: "Today's close equals yesterday's close, on volume of 4,000. What happens to OBV?", options: ["It rises by 4,000", "It falls by 4,000", "It does not change", "It resets to zero"], answer: 2, explain: "Unchanged closes add nothing to the running total." },
+  { q: "Price makes a higher high but OBV makes a lower high. What does that suggest?", options: ["Strong accumulation", "The new high was made on less volume than the previous one, a bearish divergence", "Nothing, OBV cannot diverge", "The stock will gap up"], answer: 1, explain: "OBV divergence flags that participation is fading while price still pushes higher." },
+  { q: "What is the point of control in a volume profile?", options: ["The highest price of the period", "The price where the most volume traded", "The closing price", "The midpoint of the range"], answer: 1, explain: "The POC is the single price level with the longest bar in the volume-by-price histogram." },
+  { q: "Price breaks out of its value area into a region of very thin volume above. What does the profile suggest?", options: ["Price will stall immediately", "Price may move quickly through the thin area since few positions sit there", "The breakout must fail", "Volume profile is irrelevant to breakouts"], answer: 1, explain: "Low-volume nodes are areas the market crossed quickly before, and they often get crossed quickly again." },
+  { q: "OBV jumped 40% in one day and has been flat since. What is the most likely explanation?", options: ["Steady institutional accumulation", "One huge volume day, such as an earnings gap, distorted the total", "The stock split", "A data feed error"], answer: 1, explain: "OBV adds a day's full volume regardless of the price change, so one abnormal volume day creates a step that tells you nothing about slow accumulation." }
+]} />
+
+<TryIt to="/simulator">Open the simulator on AURM, daily chart, with the volume bars showing. Pick a rally and tally by hand whether the up-days or the down-days had the taller bars; that is OBV done manually. Then find a breakout from a range and check whether the breakout candle had noticeably more volume than the candles inside the range.</TryIt>

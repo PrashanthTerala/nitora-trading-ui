@@ -1,0 +1,120 @@
+Picture a crowd pressed up against a rope barrier at a concert. The rope holds, and holds, and holds. Then it snaps. Everyone who was leaning on it stumbles forward at once, and the people behind push through the gap. For a few seconds the movement is fast and one-directional.
+
+A <Term id="breakout">breakout</Term> is the rope snapping. Price has been held by a level, a [resistance](/learn/m03-market-structure/03-support-and-resistance) or the top of a [range](/learn/m03-market-structure/05-ranges-and-consolidation), and when it finally breaks through, the orders that were stacked there get triggered all at once: stops from short sellers, buy stops from breakout traders, and fresh buying from people who were waiting for confirmation.
+
+Breakout trading tries to be in the crowd pushing through the gap. Done well, it catches the fastest part of a move. Done badly, it buys the one time the rope does not snap and gets pushed back into the crowd. That failure has a name, the <Term id="fakeout">fakeout</Term>, and managing it is the whole game.
+
+## Why breakouts work, and why they fail
+
+A level becomes important because people remember it. The more times price has touched a level and turned, the more orders cluster around it. When price finally breaks through with force, those orders fuel the move.
+
+But everyone can see the level. Including the traders whose job is to provide liquidity, who know that a spike just above resistance will trigger a pile of buy stops that they can sell into. So many breakouts push a little way through, run out of buyers, and collapse back. The fakeout is not bad luck; it is a predictable feature of obvious levels.
+
+<PatternFigure name="fakeout" caption="Price pushes through resistance, finds no follow-through, and closes back inside. Breakout buyers are trapped above. This is why confirmation rules exist." />
+
+<Callout type="eli5">
+
+Imagine a door that has been locked for weeks. One day someone pushes and it opens a crack. Sometimes it swings wide and everyone rushes through. Sometimes it was just loose, and it slams shut on the first person's fingers. The breakout trader learns to wait and see whether it stays open before walking through.
+
+</Callout>
+
+## Market conditions it suits
+
+Breakouts work best when a period of *compression* precedes them: a tightening range, a triangle, a flag, or a squeeze in the [Bollinger Bands](/learn/m05-indicators/07-bollinger-bands). Compression means volatility has been stored and is ready to release.
+
+They work worst when the market has already been trending hard and the level being broken is just the latest in a series. Late breakouts in tired trends fail often.
+
+The checks:
+
+- **Compression**: the range of the last 10 to 20 bars is clearly narrower than the 50 bars before it. ATR is falling.
+- **A clear level**: at least two prior touches of the resistance being broken, ideally more.
+- **Volume**: the breakout candle has volume above the 20-bar average, ideally 1.5× or more. Low-volume breakouts fail far more often.
+- **Direction of the larger trend**: breakouts in the direction of the higher-timeframe trend succeed more often than those against it.
+
+## The core strategy: breakout with retest
+
+There are two ways to trade a breakout. Buying the break itself is faster but eats more fakeouts. Waiting for the [retest](/learn/m03-market-structure/06-breakouts-and-fakeouts) is slower, misses some runners, but has a far higher win rate. This is the retest version, because it is more forgiving for a learning trader.
+
+<PatternFigure name="breakout-retest" caption="The break, the pullback to the old resistance, and the hold. The entry is the hold, not the break." />
+
+**Setup:**
+
+- Timeframe: 1h.
+- A resistance level with at least two touches, and compression in the 10 to 20 bars before the break.
+- A 1h candle *closes* above the level (not just wicks), with volume above the 20-bar average.
+
+**Entry trigger:**
+
+- After the breakout close, wait for price to return to within 0.3 ATR of the broken level.
+- Enter when a 1h candle closes back above the level *after* touching it, with a bullish body. This is the retest hold.
+- Enter at the close of that candle, or with a buy stop just above its high.
+- If price does not retest within 8 candles, the setup expires. Do not chase.
+
+**Stop:**
+
+- Below the retest candle's low, or 0.5 ATR below the broken level, whichever is lower. If price closes back inside the old range, the breakout has failed and you are out regardless.
+
+**Target:**
+
+- **Measured move**: the height of the range or pattern, projected from the breakout level. You learned this in [measured moves](/learn/m04-chart-patterns/09-measured-moves-and-targets). If the measured move is less than 2R from entry, skip the trade.
+- Take half at the measured move, move the stop to breakeven, and trail the remainder with a 2 ATR stop.
+
+**Management:**
+
+- No adjustments before the first target.
+- If the trade has not reached 1R within 10 candles after entry, close it. Breakouts that work tend to work fast.
+
+**Size:** 1% risk from entry to stop.
+
+## A worked example
+
+BIOX on the 1h has ranged between $41 and $46 for four days, with three touches of $46. ATR(14) is $0.70. The range has been tightening; the last two days sat between $44 and $46. A 1h candle closes at $46.90 on volume double the average.
+
+Price drifts back over the next three candles to $46.20, within 0.3 ATR of the level, and the next candle closes at $46.75 after a wick to $46.05. That is the retest hold.
+
+- **Entry**: $46.80.
+- **Stop**: retest candle low $46.05, or 0.5 ATR below $46 which is $45.65. The lower is $45.65. Risk per share: $1.15.
+- **Measured move**: range height $5 ($46 minus $41), projected from $46 = $51. Reward: $4.20, which is 3.65R. Well above the 2R minimum.
+- **Size**: $10,000 account, $100 risk, divided by $1.15 = 86 shares.
+
+If the trade reaches $51, sell 43 shares for $180, move the stop to $46.80, and trail the rest.
+
+## Known weaknesses
+
+**Fakeouts.** Even with a retest, some breakouts fail after the hold. Expect a win rate around 40% to 50% with the retest method, lower without it.
+
+**Missed runners.** Some of the best breakouts never retest. They go, and keep going. The retest trader watches them leave. This is a real cost and there is no free fix: buying the break catches them but eats more fakeouts.
+
+**Gappy instruments.** On BIOX-style stocks, breakouts often happen as gaps, and the retest can be violent. Stops get hit by noise. Widen the stop buffer or reduce size on gappy names.
+
+**Obvious levels attract traps.** The clearer the level, the more likely a stop-hunt spike through it. The volume requirement and the close-not-wick requirement are your main defences.
+
+<Callout type="warning">
+
+Never enter a breakout on a wick. A candle that pokes above resistance and closes below it is not a breakout; it is a fakeout in progress. The rule is a *close* above the level. This single filter removes a large share of losing breakout trades.
+
+</Callout>
+
+<Callout type="story" title="Sam learns to wait">
+
+Sam used to buy every push through resistance the moment it happened. His journal showed 41 breakout trades with a 29% win rate. He switched to requiring a close above the level and a retest hold. The next 40 trades: 48% win rate, and because the stop was tighter under the retest, the average winner grew from 1.6R to 2.4R. He missed a handful of runners. He also stopped losing money.
+
+</Callout>
+
+<KeyTakeaways>
+- A breakout is price pushing through a remembered level and triggering the orders clustered there; a fakeout is that push failing and trapping the buyers.
+- Breakouts work best after compression, on a level with multiple touches, with volume above average, in the direction of the bigger trend.
+- The retest strategy waits for a 1h close above the level, then a pullback to it, then a bullish close off it; the stop goes below the retest low, and any close back inside the range means exit.
+- The target is the measured move of the range, requiring at least 2R, with half taken there and the rest trailed.
+- The known costs are missed runners that never retest, gappy instruments that hit stops with noise, and obvious levels that attract stop hunts.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "A 1h candle wicks $0.40 above a well-tested resistance but closes $0.10 below it. What does the strategy say?", options: ["Buy the breakout", "Not a breakout; a close above the level is required", "Short it immediately", "Wait for RSI to confirm"], answer: 1, explain: "A wick through a level with a close back below it is a fakeout in progress, not a breakout. The rule requires a close above." },
+  { q: "After a valid breakout close, price keeps rising for 12 candles without returning to the level. What does the retest strategy say?", options: ["Chase it before it goes higher", "The setup expired after 8 candles; let it go", "Buy at market with a wide stop", "Short the exhaustion"], answer: 1, explain: "Missing runners that never retest is a known cost of the method. Chasing converts a missed trade into a real loss." },
+  { q: "A range is $5 tall and breaks out at $46. Entry on the retest is $46.80 with a stop at $45.65. Is the trade valid?", options: ["No, the target is too close", "Yes; the measured move to $51 is $4.20 reward against $1.15 risk, about 3.65R", "Only if the market is closed", "No, the stop is too wide"], answer: 1, explain: "The measured move from the breakout level gives 3.65R, comfortably above the 2R minimum." },
+  { q: "Which single filter removes the largest share of losing breakout trades?", options: ["Trading only on Fridays", "Requiring the breakout candle to close above the level rather than just wick through it", "Using a 200 EMA", "Doubling the position size"], answer: 1, explain: "Most fakeouts show up as wicks through the level with closes back inside. The close requirement filters them out." },
+  { q: "Why does the strategy require volume above the 20-bar average on the breakout candle?", options: ["Because high volume guarantees success", "Because low-volume breakouts fail far more often; volume shows real participation", "Because brokers charge less on high volume", "It does not; volume is optional"], answer: 1, explain: "Volume above average suggests genuine buying rather than a thin push that will collapse. It improves the odds, not guarantees." }
+]} />
+
+<TryIt to="/simulator">Open the simulator on BIOX, 1h, with volume showing. Replay at moderate speed and mark every resistance level with at least two touches. Take only breakouts with a close above the level on above-average volume, followed by a retest hold. Note in the journal how many breakouts never retested, and how many retests failed.</TryIt>

@@ -1,0 +1,105 @@
+In a supermarket, nothing is sold as "some". Eggs come in boxes of six or twelve, milk in litres, cheese by the 100 grams, bananas one at a time. Before you can compare two prices you have to know what quantity each price refers to, which is why the shelf label always carries the price per unit in small type.
+
+Markets are the same, and beginners get caught by it constantly. "It went up 40" means something completely different for a share, a currency pair, an index and a futures contract. Somebody says they bought "one lot" and you have no idea whether they risked $5 or $5,000.
+
+This short lesson fixes that. It covers how instruments are named, and what "one" means in each market you might touch.
+
+## Tickers: the short name
+
+Every tradable instrument has a **ticker symbol**: a short code that identifies it uniquely on a particular venue. Tickers exist because typing "The Coca-Cola Company, ordinary shares, New York Stock Exchange" into an order form all day would be unbearable.
+
+US share <Term id="ticker">tickers</Term> are one to five letters, and they are often but not always suggestive of the name. Elsewhere conventions differ: London tickers usually carry a suffix, Indian and Japanese markets use their own schemes, and many data providers add an exchange tag so that the same company listed in two countries is not confused.
+
+Other markets have their own naming habits:
+
+- **Forex** uses two three-letter currency codes joined together, such as EUR/USD or GBP/JPY. The first is the base currency, the second is the quote currency.
+- **Crypto** uses a short code plus the thing it is priced in, such as BTC/USD or ETH/USDT.
+- **Futures** use a root code plus a month letter and a year digit, so a contract expiring in a given month has its own symbol and its own expiry.
+- **Options** use a long symbol combining the underlying ticker, the expiry date, whether it is a call or a put, and the strike price.
+
+<Callout type="warning" title="The same letters are not always the same thing">
+
+Ticker symbols are unique on one exchange, not across the world, and they get recycled when companies delist. A three-letter code on one venue can be an entirely different company on another. Always confirm the full name and the exchange on the order screen before you buy. People really do buy the wrong company.
+
+</Callout>
+
+## What "one" means in each market
+
+### Shares: one share
+
+The simplest case. You buy a whole number of shares, and your profit or loss is the price change multiplied by the number of shares.
+
+Buy 300 shares at $40 and sell at $41.20: 300 times $1.20 equals **$360**.
+
+Historically a "round lot" meant 100 shares, and odd lots sometimes got worse treatment. That barely matters now. Many brokers also offer **fractional shares**, letting you buy $50 worth of a $900 share, which is convenient but sometimes comes with restrictions on order types.
+
+### Forex: lots
+
+Currencies move in such small increments that trading one unit would be pointless, so forex is sized in **lots**.
+
+| Lot type | Units of base currency | Value of one pip in a USD-quoted pair |
+| --- | --- | --- |
+| Standard lot | 100,000 | about $10 |
+| Mini lot | 10,000 | about $1 |
+| Micro lot | 1,000 | about $0.10 |
+
+A **pip** is the standard smallest move in most pairs: the fourth decimal place, so a move from 1.0850 to 1.0851 is one pip. That means a 30-pip move is worth roughly $300 on a standard lot, $30 on a mini and $3 on a micro.
+
+This is why "I bought one lot" is a meaningless sentence until you know which kind. Learn with micro lots.
+
+### Crypto: fractions
+
+Crypto is the opposite problem. You are not forced into a big unit; you can buy 0.0004 of a coin. Most exchanges let you enter either a quantity of coins or an amount of cash, and they convert.
+
+The practical catch is that the quantity field can have eight decimal places, so a misplaced decimal point changes your position size by a factor of ten without looking obviously wrong. Read the confirmation, not the input box.
+
+### Futures: contracts
+
+A futures position is counted in **contracts**, and each contract has a fixed, published size. You cannot buy half.
+
+For a common equity index future, one contract might be worth a set number of dollars per index point, for example $50 per point. If the index moves 20 points in your favour, one contract makes 20 times $50 equals **$1,000**. The same 20 points against you costs $1,000, on a deposit that may only be a few thousand dollars.
+
+Contracts also move in fixed steps called **ticks**, each with a published value. Before trading any future, you must know three numbers: the contract size, the tick value and the expiry date.
+
+### Indices: points and percent
+
+An index is quoted in **points**, and a point is just a number on its own scale. A 200-point fall sounds enormous on an index at 4,000 and is 5%; the same 200 points on an index at 40,000 is 0.5%.
+
+<Callout type="eli5">
+
+Points are like steps. Twenty steps across a room is a lot. Twenty steps across a field is nothing. Always ask what percentage the move is, because that is the number that compares across markets.
+
+</Callout>
+
+## The summary table
+
+| Market | One unit is | Typical smallest move | What decides your profit |
+| --- | --- | --- | --- |
+| Shares | One share | One cent | Price change times share count |
+| ETFs | One unit | One cent | Price change times unit count |
+| Forex | One lot (standard, mini or micro) | One pip | Pips times pip value times lots |
+| Crypto | Any fraction of a coin | Varies by exchange | Price change times quantity held |
+| Futures | One contract, fixed size | One tick | Ticks times tick value times contracts |
+| Indices | One point | One point | Points times the value per point of your product |
+
+Whenever you meet a new instrument, ask the same three questions before you ever place an order: **what is one unit, what is the smallest move, and what is that move worth in my currency?** If you cannot answer all three, you do not know how much you are risking, and everything you learn in the risk module later will be built on sand.
+
+<TryIt to="/simulator">Open the simulator and place a small paper position in BLUE, then the same cash amount in FXEU. Compare how many units each takes and how differently the profit line reacts to a move of the same visual size on the chart.</TryIt>
+
+<KeyTakeaways>
+- A ticker is a short code identifying an instrument on a particular exchange, and codes are not unique worldwide.
+- Shares are counted one at a time, and many brokers now allow fractional shares.
+- Forex is sized in lots: standard is 100,000 units, mini is 10,000 and micro is 1,000.
+- A pip is worth about $10, $1 and $0.10 per standard, mini and micro lot respectively in USD-quoted pairs.
+- Futures are counted in whole contracts with a fixed size, a fixed tick value and an expiry date.
+- Index points mean nothing without the level, so always convert a move into a percentage.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "What is a ticker symbol?", options: ["The price of a share", "A short code identifying an instrument on a particular exchange", "The number of shares a company has issued", "A type of order"], answer: 1, explain: "Tickers are short identifiers. They are unique on one venue, not globally, so always confirm the full name." },
+  { q: "How many units of the base currency are in one standard forex lot?", options: ["1,000", "10,000", "100,000", "1,000,000"], answer: 2, explain: "A standard lot is 100,000 units, a mini is 10,000 and a micro is 1,000." },
+  { q: "You make a 30-pip gain trading one mini lot in a USD-quoted pair. Roughly how much is that?", options: ["About $3", "About $30", "About $300", "About $3,000"], answer: 1, explain: "A pip on a mini lot is worth about $1, so 30 pips is about $30." },
+  { q: "An index future is worth $50 per point. The index moves 20 points against you on one contract. What is the loss?", options: ["$20", "$50", "$1,000", "$100,000"], answer: 2, explain: "20 points times $50 per point equals $1,000, on a deposit that may be only a few thousand dollars." },
+  { q: "A market commentator says an index fell 200 points. What do you need to judge how serious that is?", options: ["The ticker symbol", "The level of the index, so you can convert it to a percentage", "The number of shares outstanding", "The pip value"], answer: 1, explain: "200 points is 5% on an index at 4,000 and 0.5% on one at 40,000. Percentage is the comparable number." },
+  { q: "What three questions should you answer before trading any new instrument?", options: ["Who recommended it, when it listed, and its logo", "What one unit is, what the smallest move is, and what that move is worth in your currency", "Its ticker, its country and its founder", "Its dividend, its P/E and its sector"], answer: 1, explain: "Without those three numbers you cannot know your position size or your risk, and every risk rule later depends on them." }
+]} />

@@ -1,0 +1,120 @@
+Stretch a rubber band and let go. It snaps back. Stretch it further and it snaps back harder. Stretch it too far and, occasionally, it breaks. That is the entire theory of mean reversion in one object.
+
+Most of the time, most markets are not trending. They are drifting sideways in a [range](/learn/m03-market-structure/05-ranges-and-consolidation), with price stretching away from its average and snapping back, over and over. <Term id="mean-reversion">Mean reversion</Term> trading bets on the snap-back. You sell when price is stretched high, buy when it is stretched low, and aim for the middle.
+
+It is the mirror image of trend following. Where the trend follower buys strength, the mean reverter fades it. Where the trend follower has a low win rate and big winners, the mean reverter has a high win rate and small winners, with the occasional large loss when the rubber band breaks. Knowing which regime you are in decides which approach makes money.
+
+## Why mean reversion works
+
+In a range, price movement is mostly *noise*. A burst of buying pushes price up, but there is no new information behind it, so once the buyers are done, price drifts back. Sellers at the top of the range have been there before and step in again. Buyers at the bottom do the same.
+
+The edge is that short-term stretches away from the average are, in a range, more likely to reverse than continue. That tendency is measurable, and it is one of the older, better-documented edges in markets.
+
+<PatternFigure name="range" caption="Price bouncing between a floor and a ceiling. Mean reversion buys the floor, sells the ceiling, and targets the middle." />
+
+<Callout type="eli5">
+
+Imagine a dog on a lead, walking with its owner down a path. The dog runs ahead, reaches the end of the lead, and gets pulled back. It runs to the side, gets pulled back. As long as the owner keeps walking straight, the dog always returns to the path. The mean reverter bets on the lead. The danger is the moment the owner turns a corner.
+
+</Callout>
+
+## Market conditions it suits
+
+Mean reversion needs a range. Not a trend. Not a breakout. A range. The checks:
+
+- **Structure**: price has bounced between a clear ceiling and floor at least twice each. Highs are roughly equal, lows are roughly equal. No higher highs and higher lows.
+- **Flat averages**: the 20 and 50 EMAs are close together and roughly horizontal, and price crosses them regularly.
+- **[ADX](/learn/m05-indicators/11-adx-and-trend-strength)** below 20. This is the strongest single filter. Above 25, do not fade anything.
+- **Bollinger Bands** roughly horizontal, not sloping. Price touching the bands and returning to the middle, not "walking" along them.
+
+In the simulator, AURM is built to mean-revert and is the best place to practise. BLUE and FXEU also spend much of their time in ranges. NOVA and CRYP trend too often; fading them is expensive.
+
+## The core strategy: Bollinger fade with RSI confirmation
+
+<IndicatorFigure indicator="bollinger" regime="range" caption="In a range, price touches the outer bands and returns to the middle band. The fade sells the upper touch and buys the lower touch, targeting the middle." />
+
+**Setup:**
+
+- Timeframe: 1h.
+- Indicators: Bollinger Bands (20, 2), RSI(14), ADX(14).
+- Regime filter: ADX below 20, and the Bollinger middle band roughly flat over the last 20 bars (it should not be more than 1 ATR higher or lower than it was 20 bars ago).
+- A clear range with at least two touches of each boundary.
+
+**Entry trigger (long; mirror for short):**
+
+- A 1h candle closes *at or below* the lower Bollinger Band.
+- RSI(14) is below 30 on that candle.
+- The next candle closes back *inside* the bands with a bullish body. That close-back-inside is the trigger. Do not buy while price is still outside the band; that is catching a falling knife.
+- Enter at the close of the trigger candle.
+
+**Stop:**
+
+- Below the lowest low of the move that pushed price outside the band, plus 0.5 ATR. This is deliberately wider than a trend stop, because mean reversion entries are noisy.
+
+**Target:**
+
+- The middle Bollinger Band (the 20 SMA) at the time of entry. That is the mean you are reverting to.
+- The reward-to-risk on mean reversion trades is often only 1:1 to 1.5:1. That is fine, because the win rate is high. But if the middle band is less than 1R away, skip the trade.
+
+**Management:**
+
+- No breakeven move. Mean reversion trades often wobble before they work; a breakeven stop turns winners into scratches.
+- Time stop: if price has not reached the target within 10 candles, close at market. Ranges reward speed; a stretched price that does not snap back is a warning.
+- **Regime exit**: if ADX rises above 25 while you are in the trade, close it. The range is becoming a trend and your thesis is gone.
+
+**Size:** 1% risk from entry to stop.
+
+<IndicatorFigure indicator="rsi" caption="RSI below 30 confirms that the push to the lower band was a real stretch, not just a quiet drift. The combination filters out weak signals." />
+
+## A worked example
+
+AURM on the 1h has ranged between $1,840 and $1,875 for three days. ADX is 14. The middle band is flat at $1,857. ATR is $6.
+
+A candle sells off and closes at $1,839, below the lower band at $1,841. RSI reads 26. The next candle wicks to $1,836 and closes at $1,845, back inside the bands with a bullish body. Trigger.
+
+- **Entry**: $1,845.
+- **Stop**: lowest low of the push, $1,836, minus 0.5 ATR ($3) = $1,833. Risk: $12.
+- **Target**: middle band at $1,857. Reward: $12. Exactly 1R. Valid, but only just; a target closer than 1R would mean skipping.
+- **Size**: $10,000 account, $100 risk, divided by $12 = 8 units.
+
+The trade reaches $1,857 four candles later. Win, 1R.
+
+<Callout type="math" title="Why 1R targets still make money">
+
+If the win rate is 68% and every win is 1R and every loss is 1R, expectancy is 0.68 minus 0.32 = 0.36R per trade. That is comparable to a good trend strategy. The difference is that it comes as many small wins rather than a few big ones, and the drawdowns are shallower but the individual losses, when the range breaks, are sharper.
+
+</Callout>
+
+## Known weaknesses
+
+**The range breaks.** Every range ends. When it does, the mean reverter is short at the top as price breaks out upward, or long at the bottom as it breaks down. These losses are larger than the wins, and they come exactly when the setup looked best (price has never been this stretched!). The ADX regime exit and the hard stop are the only protection.
+
+**Catching knives.** Buying while price is still outside the band, before the close back inside, is the most common error. The rubber band can stretch much further than seems possible.
+
+**Low reward-to-risk.** With targets of 1R to 1.5R, a small drop in win rate makes the strategy unprofitable. Costs matter more here than in trend strategies; on wide-spread instruments the edge can vanish.
+
+**Trending days.** A single strong trend day can produce three consecutive losing fades. Stop after two losses in the same direction on the same day; the market is telling you the regime has changed.
+
+<Callout type="danger">
+
+Mean reversion is the strategy where [averaging down](/learn/m07-risk-management/10-never-average-down) feels most logical: "it's even more stretched now, the snap-back will be bigger." This is how mean reverters blow up. The stop is the stop. If price goes through it, the range is broken and you were wrong. Adding to the position turns a 1R loss into a catastrophe.
+
+</Callout>
+
+<KeyTakeaways>
+- Mean reversion bets that a stretch away from the average in a range will snap back, and it is the mirror image of trend following.
+- It requires a genuine range: flat averages, equal highs and lows, and ADX below 20, which is the single strongest filter.
+- The core rules are a close outside the Bollinger Band with RSI beyond 30 or 70, then a close back inside as the trigger, a stop beyond the extreme, and the middle band as target.
+- Win rates of 60% to 70% with 1R to 1.5R targets produce a solid expectancy, but losses arrive when the range breaks and are sharper than the wins.
+- Never add to a losing mean reversion trade; the moment price passes the stop, the range is broken and the thesis is gone.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "AURM closes below the lower Bollinger Band with RSI at 24. What does the strategy say?", options: ["Buy now, it is oversold", "Wait for the next candle to close back inside the bands with a bullish body", "Sell short, the trend is down", "Buy half now and half later"], answer: 1, explain: "The close outside is the setup. The trigger is the close back inside. Buying while still outside is catching a falling knife." },
+  { q: "You are in a long mean reversion trade and ADX rises from 16 to 27. What does the strategy say?", options: ["Hold; the target is close", "Close the trade; the range is turning into a trend", "Add to the position", "Move the stop wider"], answer: 1, explain: "The regime filter has failed. A rising ADX means the range is breaking, which is exactly when mean reversion loses big." },
+  { q: "A fade has a 68% win rate with 1R wins and 1R losses. What is the expectancy?", options: ["Negative", "About 0.36R per trade", "About 1R per trade", "Zero"], answer: 1, explain: "0.68 minus 0.32 equals 0.36R. A high win rate compensates for the small reward-to-risk." },
+  { q: "Price has gone through your stop on a mean reversion long and is now even more stretched. What do you do?", options: ["Add to the position; the snap-back will be bigger", "Take the loss; the range is broken", "Widen the stop", "Switch to a lower timeframe"], answer: 1, explain: "Averaging down on a broken range is how mean reverters blow up. The stop is the point where the thesis is wrong." },
+  { q: "Which simulator symbol is built for practising mean reversion?", options: ["NOVA", "CRYP", "AURM", "BIOX"], answer: 2, explain: "AURM is gold-like and mean reverting. NOVA and CRYP trend too often; BIOX gaps." }
+]} />
+
+<TryIt to="/simulator">Open the simulator on AURM, 1h, and add Bollinger Bands, RSI and check ADX. Replay at moderate speed and take only fades where ADX is under 20, price closed outside a band with RSI beyond 30 or 70, and the next candle closed back inside. Use a bracket with the middle band as target. Track how many losses came from range breaks versus noise.</TryIt>

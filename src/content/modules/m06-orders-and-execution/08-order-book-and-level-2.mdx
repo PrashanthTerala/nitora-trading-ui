@@ -1,0 +1,102 @@
+Picture a queue at two counters in a hall. At the left counter stand people who want to buy, each holding a sign with the most they'll pay and how many they want. At the right counter stand sellers, each with a sign showing the least they'll accept. The two front people are closest to agreeing; the people at the back are far apart and might wait all day.
+
+The **order book** is that hall, written down. Every resting limit order in a market sits in it, sorted by price. When you learned about the <Term id="bid">bid</Term> and <Term id="ask">ask</Term> in [Bid, Ask and the Spread](/learn/m00-what-is-a-market/07-bid-ask-spread), you were looking at the two people at the front of each queue. Now you get to see the whole hall.
+
+## What the book looks like
+
+Here is a small <Term id="order-book">order book</Term> for a stock trading around $50. Bids on the left, asks on the right, best prices in the middle, sizes in shares.
+
+| Bid size | Bid price | | Ask price | Ask size |
+| --- | --- | --- | --- | --- |
+| | | | $50.10 | 2,500 |
+| | | | $50.08 | 900 |
+| | | | $50.05 | 1,000 |
+| | | | **$50.02** | **300** |
+| **500** | **$49.98** | | | |
+| 1,200 | $49.95 | | | |
+| 700 | $49.92 | | | |
+| 3,000 | $49.90 | | | |
+
+The bold row is the **top of book**: the best bid ($49.98 for 500 shares) and the best ask ($50.02 for 300 shares). The <Term id="spread">spread</Term> is 4 cents. Everything else is **depth**: orders waiting further away.
+
+Every number here is a resting limit order. Nobody's market order appears in the book, because market orders don't wait; they consume what's there and vanish.
+
+<Callout type="eli5">
+
+The order book is a list of everyone's "I'll buy at..." and "I'll sell at..." notes, stacked so the friendliest prices are at the top. The two friendliest notes are the bid and ask. When a buyer and seller's notes match, a trade happens and those notes are torn up.
+
+</Callout>
+
+## Level 1 vs Level 2
+
+**Level 1** data is the top of the book only: best bid, best ask, sizes, and the last trade. It's what most free apps show.
+
+<Term id="level-2">Level 2</Term> shows the depth: several price levels on each side, often with the identity of the market maker or exchange posting each order. Some platforms also show **time and sales**, a running tape of every trade with its price, size and whether it hit the bid or lifted the ask.
+
+Level 2 lets you see what a market order will do *before* you send it. In the book above, a market buy of 1,000 shares would take 300 at $50.02, 700 of the 1,000 at $50.05, and stop. Average: (300 × 50.02 + 700 × 50.05) ÷ 1,000 = (15,006 + 35,035) ÷ 1,000 = **$50.041**. You can see that 2.1 cents of slippage on the screen ahead of time.
+
+## Reading the queue
+
+**Price priority.** Better prices get filled first. A bid at $49.98 fills before a bid at $49.95, always.
+
+**Time priority.** At the same price, whoever placed their order first gets filled first. If 500 shares are bid at $49.98 and you add 200 more at the same price, you're at the back of that 700-share queue. A 300-share market sell hits the original orders, not yours.
+
+This is why "joining the bid" can be slow. You're queueing behind everyone who got there earlier. If you want to be at the front, you have to bid a cent higher, which means a new best bid and a narrower spread. You just improved the market for everyone, and got yourself to the front.
+
+## What the book can and can't tell you
+
+Level 2 is often sold as a window into "what the big players are doing." Be sceptical. Here's what it honestly shows and what it doesn't.
+
+| The book shows | The book does not show |
+| --- | --- |
+| Resting limit orders at each level, right now | Market orders, which never rest |
+| Where the spread is and how deep each side is | Orders on other venues or dark pools |
+| Approximate slippage for a given order size | Whether a large order is real or about to be cancelled |
+| Imbalances (far more size on one side) | Iceberg orders that display only a slice of their true size |
+| The queue you'd join at a given price | Anyone's intention, only their current resting order |
+
+**Spoofing** is placing a large order to look like support or resistance and cancelling it before it fills, to nudge other traders. It's illegal in regulated markets and still happens. **Icebergs** are large orders that show only a small visible portion and refill it as it's eaten. Both mean the displayed sizes are a hint, not a promise.
+
+<Callout type="warning" title="Big size in the book is not a wall">
+
+A 3,000-share bid at $49.90 looks like a floor. It can be cancelled in a millisecond, and often is the moment price approaches it. Treat displayed depth as "what's there now," never as "what will be there when I need it." Many beginners buy in front of a big bid, watch it vanish, and hold the bag.
+
+</Callout>
+
+## Watching a trade happen
+
+Let's run a market sell of 800 shares through the book above, one row at a time.
+
+1. The best bid is $49.98 with 500 shares. The sell takes all 500. That row disappears.
+2. 300 shares remain to sell. The new best bid is $49.95 with 1,200 shares. The sell takes 300 of them.
+3. The book now shows 900 shares bid at $49.95 as the new top. The last trade printed at $49.95.
+
+The bid moved down 3 cents, not because anyone changed their mind about the stock, but because one impatient seller ate the top of the queue. That's how price moves at the smallest scale: the [tug of war](/learn/m00-what-is-a-market/03-why-prices-move) is fought one row of the book at a time.
+
+## How traders actually use Level 2
+
+- **Judging liquidity before sizing.** If the top three levels hold 800 shares and you want to trade 5,000, you're about to move the market.
+- **Choosing a limit price.** Seeing 1,200 shares queued at $49.95 tells you a bid there will wait a while; a bid at $49.99 jumps the queue.
+- **Spotting a thinning book.** When asks vanish as price rises, there's little resistance overhead; when bids vanish as price falls, there's an air pocket below. Both are short-lived clues, not signals.
+- **Time and sales confirmation.** A steady stream of trades hitting the ask suggests aggressive buying; trades hitting the bid suggests aggressive selling.
+
+For most swing and position traders, Level 2 is a curiosity. For scalpers and day traders in a single instrument it's the main screen. Either way, understanding it turns the bid and ask from two mysterious numbers into a queue you can picture.
+
+<KeyTakeaways>
+- The order book is every resting limit order, stacked by price, with the best bid and best ask at the top.
+- Level 1 shows only the top of the book; Level 2 shows the depth on each side.
+- Orders fill by price first and then by time, so joining an existing level puts you at the back of that queue.
+- You can estimate a market order's slippage by walking it through the visible levels.
+- Displayed size can be cancelled instantly or hidden as icebergs, so depth is a hint, not a wall.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "In an order book, which orders are visible?", options: ["Market orders waiting to fill", "Resting limit orders at each price", "Every order ever placed today", "Only orders from market makers"], answer: 1, explain: "Only limit orders rest in the book; market orders consume liquidity and never wait." },
+  { q: "The ask side shows 300 at $50.02 and 1,000 at $50.05. A market buy for 1,000 shares fills at what average price?", options: ["$50.02", "$50.035", "$50.041", "$50.05"], answer: 2, explain: "300 × 50.02 plus 700 × 50.05 equals 50,041, divided by 1,000 shares is 50.041." },
+  { q: "500 shares are already bid at $49.98 and you add a 200-share bid at $49.98. A 300-share market sell arrives. How many of your shares fill?", options: ["200", "100", "0", "300"], answer: 2, explain: "Time priority: the earlier 500 shares fill first, so the 300-share sell never reaches your order." },
+  { q: "What is the difference between Level 1 and Level 2 data?", options: ["Level 1 is for stocks, Level 2 for crypto", "Level 1 shows the top of book; Level 2 shows depth at several prices", "Level 2 is delayed by 15 minutes", "Level 1 includes time and sales, Level 2 does not"], answer: 1, explain: "Level 2 adds the queue behind the best bid and ask." },
+  { q: "You see a 3,000-share bid three cents below price. What is the honest interpretation?", options: ["A guaranteed floor", "Support that cannot break", "A resting order that could be cancelled at any moment", "Proof a fund is accumulating"], answer: 2, explain: "Displayed size is real only until it is cancelled or revealed as an iceberg; it is a hint, not a wall." },
+  { q: "A market sell of 800 shares hits a book with 500 bid at $49.98 and 1,200 at $49.95. Where is the best bid afterwards?", options: ["$49.98 with 500", "$49.95 with 900", "$49.95 with 1,200", "$49.92 with 700"], answer: 1, explain: "The sell removes the whole $49.98 level and 300 of the 1,200 at $49.95, leaving 900 there as the new top." }
+]} />
+
+<TryIt to="/simulator">Open the simulator and place three limit buys at three different prices below the market. Then send a market sell for a small size and watch which of your orders fill first. Price priority in action.</TryIt>

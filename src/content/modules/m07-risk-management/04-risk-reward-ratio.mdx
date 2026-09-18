@@ -1,0 +1,128 @@
+Two traders describe their week. One made $400 on a single trade in a $900 stock. The other made $80 on 400 shares of a $3 stock. Which one traded better?
+
+You can't tell. The numbers are in different units: different account sizes, different instruments, different position sizes. Comparing them is like comparing a distance in miles to a weight in kilos.
+
+Traders fix this the way scientists fix it. They pick one unit and measure everything in it. That unit is called **R**, and once you start thinking in R, every trade you have ever taken becomes directly comparable to every other one.
+
+## 1R is your risk, in dollars
+
+**1R is the amount you lose if your stop is hit.** That is the whole definition. It is decided before you enter, it is the same on every trade, and it never changes once the trade is live.
+
+From the [1% rule](/learn/m07-risk-management/02-the-one-percent-rule), on a $10,000 account you risk $100 per trade. So 1R is $100. If the stop is hit you lose 1R. If the trade makes $300 you made 3R. If you close it at entry for nothing, that is 0R.
+
+Notice what this does. Because you sized the position so that the stop costs exactly $100, the *dollar* result and the *R* result are the same measurement twice. Divide any dollar result by $100 and you have the R-multiple.
+
+<Callout type="eli5">
+
+Imagine every bet you make is one sweet. Sometimes you win two sweets, sometimes three, sometimes you lose your one sweet. You don't need to remember how big the sweets were or which game you were playing. You just count sweets. R is the sweet.
+
+</Callout>
+
+## Three trades, three instruments, one answer
+
+All on a $10,000 account. 1R is $100 each time, because the [position sizing](/learn/m07-risk-management/02-the-one-percent-rule) made it so.
+
+| Trade | Entry | Stop | Risk/share | Shares | Exit | Dollar result | R-multiple |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| A | $50 | $48 | $2.00 | 50 | $56 | +$300 | +3R |
+| B | $900 | $880 | $20.00 | 5 | $940 | +$300 | +3R |
+| C | $3.00 | $2.80 | $0.20 | 500 | $3.60 | +$300 | +3R |
+
+A blue chip, a mega-cap and a penny stock. Three completely different price moves: $6, $40 and $0.60. Identical trades. That is the point of R.
+
+The formula for any closed trade is simple:
+
+<Callout type="math" title="R-multiple">
+
+**R-multiple** = (exit price − entry price) ÷ (entry price − stop price)
+
+For a short, flip both subtractions. A stopped-out trade gives −1R. A trade closed at entry gives 0R.
+
+</Callout>
+
+Trade A again, exited early at $53: (53 − 50) ÷ (50 − 48) = 3 ÷ 2 = **+1.5R**, which is $150. Trade A stopped at $48: (48 − 50) ÷ 2 = **−1R**, which is −$100.
+
+## Planned R and realised R
+
+Before you enter, you can compute the R the trade *offers*. Reward is target minus entry; risk is entry minus stop. Divide one by the other.
+
+Entry $50, stop $48, target $55. Risk $2, reward $5, so the trade offers **2.5R**. That is the number you judge the setup by, and it is why the [pullback strategy](/learn/m09-strategies/04-pullback-trading) refuses any setup offering less than 1.5R.
+
+After the trade closes you record the R you actually got. The gap between planned R and realised R is one of the most useful things in a journal: if you plan 2.5R trades and realise 0.8R on average, you are cutting winners early, and no amount of finding better setups will fix that.
+
+## The breakeven win rate
+
+Here is where R starts paying you back. If every win is R times your risk and every loss is exactly your risk, there is one win rate at which you break exactly even.
+
+<Callout type="math" title="Breakeven win rate">
+
+**breakeven win rate = 1 ÷ (1 + R)**
+
+It comes straight from setting wins equal to losses: w × R = (1 − w) × 1, so w × (1 + R) = 1.
+
+</Callout>
+
+| Reward to risk | Breakeven win rate | You need better than |
+| --- | --- | --- |
+| 1R | 50.0% | 50% |
+| 1.5R | 40.0% | 40% |
+| 2R | 33.3% | 1 win in 3 |
+| 3R | 25.0% | 1 win in 4 |
+| 5R | 16.7% | 1 win in 6 |
+
+Read that table slowly. At 3R, you can be wrong three times out of four and still make money. At 1R, being right 49 times out of 100 loses money. The reward you take changes what "being good at this" even means.
+
+Two honest cautions. First, this ignores costs; spreads and commissions push every breakeven win rate up by a percentage point or two. Second, it assumes your average loss is exactly 1R, and in reality slippage makes it slightly more, as the [slippage lesson](/learn/m06-orders-and-execution/07-slippage-and-liquidity) explains.
+
+## The 3R target that never fills
+
+Beginners read the table above and reach an obvious conclusion: take huge targets, be wrong most of the time, get rich. It does not work, because the win rate is not independent of the target. Moving your target further away makes it less likely to be reached.
+
+Compare two versions of the same setup.
+
+**Version one: 3R target.** Price reaches it 20% of the time. Expectancy per trade is 0.20 × 3 − 0.80 × 1 = 0.60 − 0.80 = **−0.2R**. A losing strategy, despite the beautiful ratio.
+
+**Version two: 1.5R target.** Price reaches it 50% of the time. Expectancy is 0.50 × 1.5 − 0.50 × 1 = 0.75 − 0.50 = **+0.25R**. A working strategy, despite the modest ratio.
+
+Version one needs a 25% win rate and gets 20%. Version two needs 40% and gets 50%. The ratio alone told you nothing; the ratio *against the achieved win rate* told you everything. That combined number is [expectancy](/learn/m07-risk-management/05-expectancy), and it is the subject of the next lesson.
+
+<Callout type="warning" title="Targets come from the chart, not from your wishes">
+
+The right way to choose a target is to find the next place price is genuinely likely to stall: a previous swing high, a supply zone, the opposite side of a range, a measured move from a pattern. Then you measure what R that gives you, and if it is too small you skip the trade. The wrong way is to decide you want 3R and then mark a line 3R away. A target with nothing behind it is just a number on a screen, and price has no reason to go there.
+
+</Callout>
+
+<StatRow>
+<Stat value="1R" label="your risk, in dollars" />
+<Stat value="25%" label="breakeven win rate at 3R" />
+<Stat value="1.5R" label="typical realistic target" />
+</StatRow>
+
+## Why professionals talk in R all day
+
+- **It removes account size.** A 2R day is a 2R day whether you trade $1,000 or $1,000,000. Your results stay comparable to your own past as your account grows.
+- **It removes the instrument.** Forex pips, gold points and share dollars all collapse into one scale.
+- **It removes the emotional weight of money.** "I lost 1R" is a fact. "I lost $340" is a feeling.
+- **It makes review possible.** You can add up a hundred trades and get one honest number.
+
+The [journal](/journal) does this automatically. Every simulated trade you take is stored with its entry, stop and exit, and the R-multiple is computed for you.
+
+<KeyTakeaways>
+- 1R is the dollar amount you lose if the stop is hit, decided before entry and fixed for the trade.
+- Every result expressed in R is comparable across instruments, timeframes and account sizes.
+- R-multiple equals exit minus entry, divided by entry minus stop; a stop-out is always −1R.
+- Breakeven win rate is 1 divided by (1 + R), so 2R needs 33%, 3R needs 25% and 1R needs 50%.
+- A bigger target lowers the win rate, so a high ratio proves nothing on its own.
+- A 1.5R target that fills half the time beats a 3R target that fills one time in five.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "On a $10,000 account risking 1% per trade, what is 1R?", options: ["$10", "$100", "$1,000", "It depends on the share price"], answer: 1, explain: "1R is the planned loss if the stop is hit, which is 1% of $10,000." },
+  { q: "Entry $50, stop $48, exit $56. What is the R-multiple?", options: ["+1R", "+2R", "+3R", "+6R"], answer: 2, explain: "Reward is $6, risk is $2, so 6 divided by 2 is 3R." },
+  { q: "A strategy takes 2R targets. What win rate does it need just to break even, ignoring costs?", options: ["20%", "25%", "33%", "50%"], answer: 2, explain: "1 divided by (1 plus 2) is 0.333, so about 33%." },
+  { q: "Strategy X wins 20% of the time at 3R. Strategy Y wins 50% of the time at 1.5R. Which is profitable?", options: ["X only", "Y only", "Both", "Neither"], answer: 1, explain: "X gives 0.6 minus 0.8 equals minus 0.2R. Y gives 0.75 minus 0.5 equals plus 0.25R." },
+  { q: "You buy at $20 with a stop at $19 and close the trade at $20 for no gain. What did you record?", options: ["−1R", "0R", "+1R", "Nothing, it was not a trade"], answer: 1, explain: "A scratch is 0R and still belongs in the journal, because it used up a slot and a decision." },
+  { q: "Your journal shows you plan 2.5R trades but realise 0.7R on average. What is the most likely problem?", options: ["Your stops are too wide", "You are closing winners long before the target", "Your win rate is too high", "You are risking too little"], answer: 1, explain: "A large gap between planned and realised R usually means winners are being cut early, which no amount of better setups will fix." }
+]} />
+
+<TryIt to="/journal">Open the journal and look at your last twenty simulated trades. For each one, check the R-multiple the journal computed, then write down what R you had planned when you entered. If the two columns are far apart, the problem is your management, not your setups.</TryIt>

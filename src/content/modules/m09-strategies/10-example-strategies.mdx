@@ -1,0 +1,189 @@
+Recipes teach cooking better than principles do. What teaches you is following one written recipe exactly and understanding afterwards why each step was there.
+
+These are three recipes: complete, rule-based strategies with every condition stated and nothing left to judgement. They are not secret and not magic; thousands of traders use versions of all three. What makes them useful is that they are *specified*, so you can [backtest](/learn/m09-strategies/09-backtesting-and-forward-testing) them and measure whether you can execute them. Pick one and trade it for a hundred trades before you look at the other two.
+
+<Callout type="eli5">
+
+Three ways of catching a bus. Run alongside a moving one and hop on when it slows. Or stand at a stop where you know it stops. Or wait at the depot for the first one out. All three work. Doing all three at once does not.
+
+</Callout>
+
+## Strategy A: the 20 EMA pullback, 15m chart
+
+A trend-following strategy that waits for a dip: the full specification of the method from [pullback trading](/learn/m09-strategies/04-pullback-trading).
+
+<PatternFigure name="uptrend" caption="What the strategy needs: a clean sequence of higher highs and higher lows. Without this on the chart before you start, there is no trade." />
+
+**Market conditions needed.** An established trend on two timeframes, on an instrument that trends: NOVA, CRYP, or IDX in a directional stretch. Never AURM, which mean-reverts.
+
+**Setup** — all must be true:
+
+1. On the 1h chart: price is above the 50 EMA and the 20 EMA is above the 50 EMA.
+2. On the 15m chart: at least two higher highs and two higher lows, and the 20 EMA is rising.
+3. Price pulls back to touch or slightly pierce the 15m 20 EMA. A wick through it is fine. A close more than 0.5 ATR below it voids the setup.
+
+<IndicatorFigure indicator="crossover" caption="The higher-timeframe filter in one picture: the faster average above the slower one, both rising. When this is not true, none of the entry rules below apply." />
+
+**Entry trigger.** A 15m candle closes back above the 20 EMA with a bullish body. Buy stop 1 tick above that candle's high.
+
+**Stop.** The lowest low of the pullback, minus 0.2 × ATR.
+
+**Targets.** The most recent swing high before the pullback; if it is less than 1.5R away, skip the trade. Extended target is the previous leg's length projected up from the pullback low.
+
+**Management.** Sell half at the first target and move the stop on the rest to breakeven, then trail below each new 15m higher low. Close everything if the trade has gone nowhere for 12 candles.
+
+**Size.** 1% of the account, from entry to stop.
+
+### Worked example
+
+NOVA on the 15m, with the 1h filter passing. NOVA has printed higher highs at $214.00, $218.00 and $222.40, and higher lows at $210.00 and $215.00. The 20 EMA is rising at $217.60 and the 15m ATR is $1.10.
+
+Price pulls back over four candles. The fourth wicks to $217.10, just under the EMA, and closes at $218.40 with a bullish body and a high of $218.50. Trigger.
+
+- **Entry:** $218.55, one tick above the trigger candle's high.
+- **Stop:** $217.10 − (0.2 × $1.10) = **$216.88**. Risk per share **$1.67**.
+- **First target:** $222.40. Reward $3.85, which is **2.31R**, above the 1.5R minimum, so the trade is valid.
+- **Extended target:** the previous leg ran $215.00 to $222.40, a $7.40 move, projected from $217.10 to give **$224.50**.
+- **Size:** $100 ÷ $1.67 = 59.9, so **59 shares**. Loss at the stop: $98.53.
+
+Price reaches $222.40. Sell 30 shares for 30 × $3.85 = $115.50 and move the stop on the remaining 29 to $218.55. Price runs on to $224.50, closing the rest for 29 × $5.95 = $172.55. Total: **$288.05** on a $98.53 risk, or **+2.92R**.
+
+**Expected performance.** A win rate around 45% to 55%, with the scale-out producing average winners near 2R against 1R losses, so roughly **+0.3R to +0.4R per trade** in genuinely trending conditions. In a chop it is negative, which is what the filters are for.
+
+<PatternFigure name="bull-flag" caption="The ideal shape of the pullback: a tight, low-volume drift against the trend. A deep, wide, high-volume pullback is usually a reversal instead." />
+
+**Known failure mode.** The pullback that is actually a reversal, which looks identical until your stop is hit. Second is chop around the average in a tiring trend, producing several small losses in a row. The filters reduce both and eliminate neither.
+
+## Strategy B: range fade with Bollinger Bands and RSI, 1h chart
+
+A mean reversion strategy that sells the top of a range and buys the bottom, from [mean reversion](/learn/m09-strategies/06-mean-reversion).
+
+<PatternFigure name="range" caption="The only environment this strategy is allowed to operate in: equal highs, equal lows, no trend. The moment this breaks, so does the strategy." />
+
+**Market conditions needed.** A genuine range with flat averages: BLUE, AURM or FXEU. Never NOVA or CRYP, which trend too often.
+
+**Setup** — all must be true:
+
+1. Timeframe 1h. Indicators: Bollinger Bands (20, 2), RSI(14), ADX(14).
+2. ADX(14) below 20. The single strongest filter; above 25, fade nothing.
+3. The middle band is flat: no more than 1 ATR higher or lower than it was 20 bars ago.
+4. At least two touches of each side of the range.
+
+<IndicatorFigure indicator="bollinger" regime="range" caption="Price stretching to the outer band and returning to the middle. The trade is the return, not the stretch." />
+
+**Entry trigger (long; mirror for short).** A 1h candle closes at or below the lower band with RSI below 30. The *next* candle closes back inside the bands with a bullish body; enter at that candle's close. Never enter while price is still outside the band.
+
+**Stop.** The lowest low of the move that pushed price outside the band, minus 0.5 × ATR. Deliberately wide, because these entries are noisy.
+
+**Target.** The middle Bollinger Band at the time of entry. If it is less than 1R away, skip the trade.
+
+**Management.** No breakeven move; these trades wobble before they work. Close at market if the target is not reached within 10 candles, or immediately if ADX rises above 25.
+
+**Size.** 1% of the account.
+
+### Worked example
+
+BLUE on the 1h has ranged between $61.20 and $63.40 for three days, with three touches of each side. ADX is 16, the middle band is flat at $62.30, and ATR is $0.30.
+
+A candle sells off and closes at $61.18, below the lower band at $61.25, with RSI at 28. The next candle wicks to $61.05 and closes at $61.42, back inside the bands with a bullish body. Trigger.
+
+- **Entry:** $61.42.
+- **Stop:** $61.05 − (0.5 × $0.30) = **$60.90**. Risk per share **$0.52**.
+- **Target:** the middle band at $62.30. Reward $0.88, or **1.69R**. Valid.
+- **Size:** $100 ÷ $0.52 = 192.3, so **192 shares**. Loss at the stop: $99.84.
+
+Price returns to $62.30 six candles later: 192 × $0.88 = **$168.96**, or **+1.69R**.
+
+**Expected performance.** Win rates of 60% to 68% at 1R to 1.5R targets. At 62% with an average 1.2R win against a 1.05R loss: 0.62 × 1.2 − 0.38 × 1.05 = **+0.35R per trade**. It is fragile: a drop to a 55% win rate takes it to +0.19R, and costs eat much of what remains.
+
+**Known failure mode.** The range breaks, leaving you long at the bottom as price falls through it. These losses are larger than the wins and arrive exactly when the setup looked most attractive, because price had never been this stretched. The ADX exit and the hard stop are your only protection.
+
+<Callout type="danger" title="This is the strategy that tempts you to average down">
+
+Every instinct will tell you that a more stretched price is a better price. It is the reasoning that ends mean reversion accounts. When price passes your stop, the range is broken and your thesis is dead; adding turns a 1R loss into the kind described in [averaging down](/learn/m07-risk-management/10-never-average-down). If you know you cannot resist this, trade Strategy A or C instead.
+
+</Callout>
+
+## Strategy C: opening range breakout, 5m chart
+
+A day-trading strategy that lets the first fifteen minutes of the session define the day's battlefield, then trades the escape from it.
+
+<PatternFigure name="breakout-retest" caption="The opening range is a miniature version of this: a defined box, a break, and a move away from it. The entry is on the break, not on the box." />
+
+**Market conditions needed.** An instrument with a real session open: IDX, NOVA or PETR. Not CRYP, which trades continuously, nor BIOX, whose gaps make the opening range meaningless.
+
+**Setup** — all must be true:
+
+1. Mark the high and low of the first three 5m bars of the session. That is the **opening range**.
+2. The range height is at least 2 × and no more than 6 × the 5m ATR(14). Smaller is noise; larger makes the stop unusable.
+3. No scheduled economic release in the next 30 minutes.
+
+**Entry trigger.** A buy stop 1 tick above the opening range high and a sell stop 1 tick below the low, as an OCO pair, valid until 11:00. Whichever fills cancels the other. **One attempt per side per day**: if you are stopped out, that direction is finished for the session.
+
+**Stop.** For a long, the opening range midpoint minus 0.2 × ATR; mirror for a short. The midpoint rather than the far side, because a genuine breakout should not return halfway into the box.
+
+**Targets.** The range high plus 1 × the range height, then plus 2 × the range height. The trade must offer at least 1.5R at the first target or you skip it.
+
+**Management.** Sell half at the first target and move the stop to breakeven. Close early if the trade has not reached +1R within 12 bars, and close everything 30 minutes before the session close whatever is happening.
+
+**Size.** 1% of the account.
+
+### Worked example
+
+IDX on the 5m. The first three bars make a high of **5,020** and a low of **5,000**, so the opening range height is **20 points**. The 5m ATR is 5 points, so the range is 4 × ATR, inside the allowed band. No data release is due, and the tick size is 0.5.
+
+- **Entry:** buy stop at **5,020.5**. It fills on the fifth bar.
+- **Stop:** midpoint 5,010 − (0.2 × 5) = **5,009**. Risk **11.5 points**.
+- **First target:** 5,020 + 20 = **5,040**. Reward 19.5 points, or **1.70R**. Valid.
+- **Extended target:** 5,020 + 40 = **5,060**, a reward of 39.5 points or **3.43R**.
+- **Size:** $100 ÷ 11.5 = 8.7, so **8 units**. Loss at the stop: $92.
+
+Price reaches 5,040. Sell 4 units for 4 × 19.5 = **$78** and move the stop on the rest to 5,020.5. The move extends to 5,060 and the last 4 close for 4 × 39.5 = **$158**. Total: **$236** on a $92 risk, or **+2.57R**.
+
+**Expected performance.** A low win rate strategy: roughly **35%** winners, the scale-out giving average wins near 2.5R against 1R losses, for about **+0.2R to +0.3R per trade** plus small scratches from the time stop. You must be able to sit through the streaks described in [win rate versus reward](/learn/m07-risk-management/06-win-rate-vs-rr).
+
+<PatternFigure name="fakeout" caption="The failure mode in one image. Price pushes a few ticks past the opening range high, triggers the buy stops resting there, and reverses straight back through the box." />
+
+**Known failure mode.** The false breakout, and there are a lot of them. On a directionless day price can break the range high, fail, break the low and fail again, which is why the one-attempt-per-side rule exists. Second is the huge gap day, where the 6 × ATR ceiling should keep you out.
+
+<Callout type="warning" title="Do not run all three">
+
+Running all three means you always have a reason to be in a trade, which is the opposite of an edge, and you will never accumulate a hundred trades on any of them. Pick the one matching the market you like watching and the win rate you can live with.
+
+</Callout>
+
+## Choosing between them
+
+| | A: 20 EMA pullback | B: range fade | C: opening range breakout |
+| --- | --- | --- | --- |
+| Timeframe | 15m | 1h | 5m |
+| Regime needed | Trending | Ranging | Directional open |
+| Typical win rate | 45% to 55% | 60% to 68% | about 35% |
+| Typical average win | 2R | 1.2R | 2.5R |
+| Rough expectancy | +0.3R to +0.4R | +0.25R to +0.35R | +0.2R to +0.3R |
+| Worst feature | Reversals disguised as pullbacks | The range break | Long losing streaks |
+| Suits you if | You can wait for the trigger | You can obey a hard stop | You can be wrong often |
+
+Those expectancies assume you follow the rules exactly and subtract costs, and none is a promise. Each simply has a plausible reason to work, can be tested, and will show you quickly whether you can execute a written plan.
+
+<KeyTakeaways>
+- All three are fully specified, so they can be backtested, practised and measured rather than argued about.
+- A buys a 20 EMA pullback in a two-timeframe uptrend, stops below the pullback low and needs at least 1.5R to the previous high.
+- B fades a band touch with RSI confirmation only when ADX is below 20, targets the middle band, and dies when the range breaks.
+- C trades the break of the first fifteen minutes with a stop at the midpoint and one attempt per side, and expects a low win rate.
+- All three size at 1% risk, scale half out at the first target and use a time stop.
+- Trade one for a hundred trades before considering another; running all three guarantees you learn nothing about any of them.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "In Strategy A, entry is $218.55, the stop is $216.88 and the first target is $222.40. Is the trade valid under the rules?", options: ["No, the stop is too tight", "Yes, the reward of $3.85 against $1.67 of risk is 2.31R, above the 1.5R minimum", "No, the target must be at least 3R", "Only if ADX is above 25"], answer: 1, explain: "3.85 divided by 1.67 is about 2.31, which clears the 1.5R requirement." },
+  { q: "In Strategy B, a candle closes below the lower Bollinger Band with RSI at 26. What do you do?", options: ["Buy immediately at the close", "Wait for the next candle to close back inside the bands with a bullish body", "Sell short", "Widen the stop and buy half"], answer: 1, explain: "The close outside is the setup. The close back inside is the trigger. Buying while price is still outside is catching a falling knife." },
+  { q: "Strategy C: the opening range is 5,000 to 5,020 and the 5m ATR is 5 points. Where does the long stop go?", options: ["5,000", "5,009", "5,015", "5,019.5"], answer: 1, explain: "The stop is the midpoint of 5,010 minus 0.2 ATR, which is 1 point, giving 5,009." },
+  { q: "With that stop and an entry at 5,020.5, what R does the first target at 5,040 offer?", options: ["1.00R", "1.70R", "2.50R", "3.43R"], answer: 1, explain: "Reward is 19.5 points against 11.5 points of risk, which is about 1.70R." },
+  { q: "You are long a Strategy B fade and ADX climbs from 17 to 26. What do the rules say?", options: ["Hold; the target is close", "Close the position, because the range is turning into a trend", "Add at the lower price", "Move the stop further away"], answer: 1, explain: "The regime filter has failed, and a breaking range is exactly where mean reversion takes its largest losses." },
+  { q: "Which strategy would you avoid running on AURM in the simulator?", options: ["Strategy A, the trend pullback", "Strategy B, the range fade", "Both B and C", "None of them"], answer: 0, explain: "AURM is built to mean-revert, so it suits the range fade and is poor ground for a trend-following pullback." },
+  { q: "Why does Strategy C allow only one attempt per side per day?", options: ["To reduce commissions", "Because a directionless day produces repeated false breakouts in both directions", "Because the platform limits orders", "To guarantee a winning session"], answer: 1, explain: "On a choppy day price can break the high, fail, break the low and fail again, so the rule caps the damage from that pattern." },
+  { q: "What is the strongest argument for trading only one of these three?", options: ["The other two do not work", "Running all three means you always have a reason to trade and never gather enough trades to measure any of them", "Brokers penalise multiple strategies", "One strategy always outperforms"], answer: 1, explain: "Without a hundred trades on one set of rules you cannot tell an edge from noise, and always having a setup available is the opposite of selectivity." }
+]} />
+
+<TryIt to="/simulator">Choose one strategy today. For A, open NOVA on the 15m with the 1h filter checked first. For B, open BLUE on the 1h with Bollinger Bands, RSI and ADX. For C, open IDX on the 5m and mark the first three bars of the session. Replay bar by bar, take only setups that pass every rule, and tag each trade with the strategy letter in the journal so you can measure them separately.</TryIt>

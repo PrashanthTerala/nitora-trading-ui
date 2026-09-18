@@ -1,0 +1,104 @@
+You leave a cinema at 11pm and the car park is half full. You come back at 7am and it is packed solid. You never saw a single car arrive. As far as your eyes are concerned, the car park teleported from one state to another.
+
+Markets do this every day. A share closes at 50 on Tuesday afternoon, the exchange shuts, and on Wednesday morning the very first trade happens at 56. There is no price history between 50 and 56, because nobody was allowed to trade there. The chart shows a visible hole.
+
+That hole is a <Term id="gap">gap</Term>, and it is one of the few things on a chart that is not a matter of interpretation. Either the new candle's range overlaps the previous one, or it does not. This lesson covers why gaps happen, what they tend to do afterwards, and the very practical reason they can break your risk plan.
+
+## What a gap is
+
+A **gap up** happens when a period's low is above the previous period's high. Nothing traded in between.
+
+<PatternFigure name="gap-up" caption="A gap up. The new candle opens well above the previous close and never trades back down into the old range, leaving an empty band on the chart." />
+
+A **gap down** is the mirror image: the period's high is below the previous period's low.
+
+<PatternFigure name="gap-down" caption="A gap down, usually the result of bad news released while the market was closed. Anyone holding overnight had no chance to exit anywhere inside that empty band." />
+
+Notice what you can and cannot see. You know price moved from A to B. You have no idea by what route, or whether anyone would have traded at the prices in between, because the question was never asked.
+
+<Callout type="eli5">
+
+Imagine a staircase where somebody has removed three steps in the middle. You can stand on the step below, and you can stand on the step above, but there is no way to put your foot anywhere between them. A gap is three missing steps on the price staircase.
+
+</Callout>
+
+## Why gaps happen
+
+Gaps exist because markets close and the world does not.
+
+**Overnight news.** A takeover bid, a drug trial result, a regulatory fine, a war. All of it lands while the exchange is shut, and by the time the bell rings every participant has already repriced the asset in their head. The opening auction simply finds the new agreed price, which can be a long way from yesterday's close.
+
+**Earnings.** This is the big one for individual shares. Companies deliberately publish results outside trading hours so everyone gets the same information at the same time. Gaps of 5%, 10% or 20% the next morning are routine on earnings day, in either direction, and often in the direction nobody expected.
+
+**Sector and market-wide moves.** A central bank decision or an overnight fall in Asian markets can gap an entire index and everything inside it.
+
+**Thin trading.** On illiquid instruments, small caps or crypto at 4am, price can jump simply because there is nobody offering in between. These gaps are less informative; they are about absence, not news.
+
+Instruments that trade continuously gap far less. Forex runs 24 hours on weekdays, so its main gaps appear at the Sunday open. Crypto trades 24/7 and still gaps, because liquidity thins out and large orders arrive into an empty book.
+
+## The gap fill tendency
+
+You will hear people say "gaps always get filled". They do not. But there is a real tendency worth understanding.
+
+A gap is **filled** when price later trades back through the empty band and touches the pre-gap close. Statistically, a large proportion of ordinary gaps do get filled eventually, and small gaps on liquid, news-free instruments fill very often, sometimes the same day.
+
+The reason is sensible. Some of the people who bought at the open regret paying up; some holders want out at any decent price; and traders who think the reaction was overdone lean the other way. That pressure pushes price back towards the old level.
+
+<Callout type="warning" title="Eventually is doing a lot of work">
+
+The problem with "gaps get filled" is the word *eventually*. A gap caused by a genuine change in value — a company being bought at a 40% premium, a drug being approved — may never fill, or may fill in four years. Trading a strategy of "short the gap up because it will fill" is how people discover that being right eventually and being solvent today are different things.
+
+</Callout>
+
+So treat the fill as a tendency to notice, not a plan to trade. It is far more useful as context: an unfilled gap sitting above current price is an area with no trading history, and price often moves through such areas quickly when it does return.
+
+## Why gaps make stops unreliable
+
+This is the part that costs real money, so read it twice.
+
+In a later module you will meet the [stop loss](/learn/m07-risk-management/03-stop-loss-placement), an order that says "get me out if price reaches 48". It is the main tool traders use to cap a loss. It works by triggering when price touches your level.
+
+A gap does not touch your level. It jumps over it.
+
+Suppose you own 100 shares bought at 52, with a stop at 48, so you believe your worst case is a $400 loss. The company reports terrible earnings after the close and the stock opens at 41. Your stop triggers, but it becomes a market order and fills at around 41, not 48. Your actual loss is about $1,100, nearly three times what you planned for.
+
+<CandleFigure
+  title="A gap jumping straight over a stop"
+  bars={[
+    { o: 52.4, h: 53, l: 51.8, c: 52.1 },
+    { o: 52, h: 52.6, l: 51.6, c: 51.9 },
+    { o: 41, h: 42.2, l: 39.8, c: 40.5 }
+  ]}
+  annotations={[
+    { type: "hline", price: 48, text: "stop at 48, never traded", from: 0, to: 2 },
+    { type: "label", index: 2, text: "opens at 41 on earnings", position: "below" },
+    { type: "arrow", index: 2, direction: "down", text: "gap down" }
+  ]}
+  caption="The stop level sits inside the empty band. Price never traded at 48, so the stop could not fill there. This is called slippage, and overnight gaps are its most common cause."
+/>
+
+Three consequences follow, and every experienced trader lives by them.
+
+First, **a stop loss limits your loss on most days, not on all days.** It is protection against ordinary movement, not against news.
+
+Second, **check the earnings calendar before holding a position overnight.** Holding a single stock through its own earnings report is one of the few genuinely uncontrollable risks in trading. Many traders simply refuse to do it.
+
+Third, **size positions so that a gap is survivable.** If a 20% overnight gap against you would end your account, the position is too big, regardless of where your stop is.
+
+<KeyTakeaways>
+- A gap is a hole in the chart where the new candle's range does not overlap the previous one, because nothing traded in between.
+- Gaps happen mainly because markets close while news does not, with earnings the most common cause for individual shares.
+- Instruments that trade around the clock, like forex and crypto, gap much less but still gap when liquidity is thin.
+- Many ordinary gaps eventually get filled, but gaps caused by a genuine change in value may never fill.
+- A stop loss cannot protect you inside a gap, because price never trades at your level and the order fills far worse.
+- Check for scheduled events before holding overnight, and size positions so a bad gap is survivable.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "What defines a gap up on a chart?", options: ["The candle is green", "The candle's low is above the previous candle's high", "The candle closes above the previous close", "Volume doubled"], answer: 1, explain: "A true gap means the ranges do not overlap at all: nothing traded in the empty band between them." },
+  { q: "What is the most common cause of a large gap in an individual share?", options: ["A stock split", "An earnings report released outside trading hours", "A change in the chart timeframe", "Low volume at lunchtime"], answer: 1, explain: "Companies publish results when the market is shut so everyone gets the news together. The opening auction then finds a new price." },
+  { q: "Is it true that all gaps get filled?", options: ["Yes, always", "No, many ordinary gaps fill but gaps from a genuine change in value may never fill", "Only gaps up get filled", "Only gaps on Mondays get filled"], answer: 1, explain: "Fill is a tendency, not a law, and eventually can mean years. Treat it as context rather than a trading plan." },
+  { q: "You own shares at 52 with a stop at 48. The stock gaps down and opens at 41. What happens?", options: ["The stop fills at 48 as planned", "The stop is cancelled", "The stop triggers and fills near 41, so your loss is much larger than planned", "You keep the shares with no loss"], answer: 2, explain: "Price never traded at 48, so the stop could not fill there. It becomes a market order and fills near the open." },
+  { q: "Which market gaps the least?", options: ["Individual small-cap shares", "Forex during the weekday session", "Biotech shares on trial results", "Shares on earnings day"], answer: 1, explain: "Forex trades 24 hours on weekdays, so it mostly only gaps at the Sunday open." },
+  { q: "What is the most reliable defence against gap risk?", options: ["A tighter stop loss", "Trading only at the open", "Position sizing small enough that a bad gap is survivable, and avoiding scheduled events", "Using a limit order instead"], answer: 2, explain: "Stops cannot help inside a gap. Controlling size and avoiding known event risk are the defences that actually work." }
+]} />

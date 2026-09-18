@@ -1,0 +1,96 @@
+Every indicator so far has had a problem with ranges. Moving averages whipsaw in them. RSI and Stochastic give their best signals in them and their worst signals outside them. MACD flips sign every few bars in them. The single most valuable thing you could know before choosing a tool is: *is this market trending or chopping right now?*
+
+The <Term id="adx">**Average Directional Index (ADX)**</Term> was built to answer exactly that question. It is unusual among indicators because it does not care which way the market is going. A strong uptrend and a strong downtrend both give a high ADX. A sideways market gives a low one. It is a gauge of trend *strength* only, and it comes with two companion lines, +DI and −DI, that supply the direction if you want it.
+
+Wilder published it in 1978 alongside RSI and ATR, and of the three it is the least understood, mostly because the calculation has several steps. The steps are not hard. Let's walk through them.
+
+## What ADX calculates
+
+The idea is to measure how much of each candle's movement is "directional": pushing to a new high or a new low compared with the previous candle, rather than just wobbling inside the old range.
+
+<Callout type="math" title="The ADX calculation, step by step">
+
+Step 1. Directional movement. Up move = today's high − yesterday's high. Down move = yesterday's low − today's low.
++DM = the up move if it is larger than the down move and positive, otherwise 0.
+−DM = the down move if it is larger than the up move and positive, otherwise 0.
+Only one of them can be non-zero on any bar.
+
+Example: yesterday high 105, low 100. Today high 108, low 102. Up move = 3, down move = −2. So +DM = **3**, −DM = **0**.
+
+Step 2. Smooth +DM, −DM and true range with Wilder's method over 14 bars, as in the [ATR lesson](/learn/m05-indicators/08-atr).
+
+Step 3. Directional indicators. +DI = 100 × smoothed +DM / smoothed true range. −DI likewise. Suppose these come out at +DI = 30 and −DI = 10.
+
+Step 4. DX = 100 × (difference between +DI and −DI) / (+DI + −DI) = 100 × 20 / 40 = **50**.
+
+Step 5. ADX = Wilder-smoothed average of DX over 14 bars. If yesterday's ADX was 40, today's = (40 × 13 + 50) / 14 = **40.7**.
+
+</Callout>
+
+Notice what DX rewards. When one directional line dominates the other, DX is high. When they are nearly equal, meaning about as much upward push as downward push, DX is near zero. ADX then smooths DX, twice removed from the raw candles, which is why ADX is so slow to move.
+
+<IndicatorFigure indicator="adx" caption="ADX with +DI (green) and −DI (red). ADX climbs above 25 as the trend gets going and rolls over as it tires. Which DI line is on top tells you the direction; ADX alone does not." />
+
+## What ADX is trying to measure
+
+ADX is a **trend-strength meter** on a 0 to 100 scale, though in practice it rarely goes above 60. Readings below 20 to 25 mean the directional movement has been small relative to the total range: a chop, a range, a drift. Readings above 25 mean one side has been winning consistently. Readings above 40 mean a powerful trend.
+
+The direction is carried by the two DI lines. +DI above −DI means the up-moves have dominated: an uptrend. −DI above +DI means a downtrend. Together the three lines answer both questions, strength and direction, but it is worth keeping them apart in your head because ADX by itself really does not know which way price is going.
+
+<Callout type="eli5">
+
+Imagine a tug of war where you only measure how far the rope's centre moves each minute, ignoring which direction. If the centre keeps moving a lot, one team is clearly winning, even if you do not know which one. That is ADX. The +DI and −DI lines are the two teams: whichever is higher is the one dragging the rope.
+
+</Callout>
+
+## Default settings and why
+
+Fourteen periods, again. The 25 line is the usual threshold for "a trend exists", and 20 is sometimes used instead. Because the calculation smooths twice, ADX is even slower than ATR or RSI with the same period; shortening to 7 or 10 makes it more responsive but noisier. Most traders leave it at 14 and accept the lag as the cost of a reliable reading.
+
+## Three ways traders use ADX
+
+**Choosing the toolkit.** This is the most valuable use. ADX below 20: treat the market as a range and use range tools, such as fading RSI extremes at the range edges. ADX above 25 and rising: treat it as a trend and use trend tools, such as buying pullbacks to a moving average. Choosing the right playbook matters far more than any signal inside the playbook.
+
+**Filtering entries.** Trend-following systems often add a rule such as "only take the moving-average crossover if ADX is above 20". This removes a large share of the whipsaws that happen in flat markets, at the cost of missing the very start of some trends. Tested honestly, it usually improves results.
+
+**Reading exhaustion.** ADX rolling over from a high level, say from 45 to 40, does not mean the trend has reversed. It means the trend is losing strength. In practice a falling ADX from a high reading often precedes a range rather than a reversal. Traders use it as a cue to tighten stops or take partial profits, not to flip direction.
+
+The DI crossover, +DI crossing above −DI, is sometimes traded as a signal in its own right. It behaves like any other crossover: fine in trends, noisy in ranges, and improved enormously by requiring ADX to be rising at the same time.
+
+## How ADX fails
+
+<Callout type="warning" title="ADX is very late">
+
+Because DX is smoothed once for the DI lines and again for ADX itself, a fresh trend can be a third of the way done before ADX crosses 25. Then, once a trend ends, ADX can stay high for many bars while price goes sideways. It is a wonderful indicator for describing the last few weeks and a poor one for announcing the next few days.
+
+</Callout>
+
+ADX is also non-directional, which is a feature and a trap. Beginners see "ADX rising" and assume it is bullish. It is not; a crash sends ADX soaring. Always check the DI lines or, better, the price structure.
+
+Sharp V-shaped reversals confuse it. If a strong downtrend flips into a strong uptrend, the falling ADX from the first trend and the rising ADX from the second can cancel out into a flat, unhelpful line right through the turn. And in very slow, grinding trends where each bar barely exceeds the last, ADX can stay low even though the trend is obvious on the price chart, because the directional movement per bar is small compared with the range.
+
+## Combining with structure
+
+ADX is a numeric version of a judgement you already make with your eyes. In [Trends](/learn/m03-market-structure/01-trends) you learned to see higher highs and higher lows; in [Ranges and Consolidation](/learn/m03-market-structure/05-ranges-and-consolidation) you learned to see horizontal highs and lows. ADX puts a number on the difference. When your structural read and ADX agree, act with confidence. When they disagree, ADX is probably late and structure is probably right, but the disagreement itself is worth a pause.
+
+A practical routine: mark the structure first, then glance at ADX. Clear higher lows, ADX above 25 and rising, +DI on top: a trend where pullbacks to support are buys. Overlapping candles, ADX under 20, DI lines braided: a range where the edges are the only interesting places and the middle is a place to do nothing.
+
+<KeyTakeaways>
+- ADX measures trend strength on a 0 to 100 scale without regard to direction; +DI and −DI supply the direction.
+- +DM is the up-move when it beats the down-move, −DM the reverse; DI lines are smoothed DM divided by smoothed true range; DX compares the two; ADX smooths DX.
+- Below 20 to 25 is a range, above 25 is a trend, above 40 is a strong trend.
+- Its best use is choosing the right playbook: range tools when low, trend tools when high.
+- It is doubly smoothed and therefore very late, and a rising ADX is not bullish on its own.
+- Read structure first and use ADX as the confirming number.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "Yesterday high 105, low 100. Today high 108, low 102. What are +DM and −DM?", options: ["+DM 3, −DM 2", "+DM 3, −DM 0", "+DM 0, −DM 2", "+DM 8, −DM 0"], answer: 1, explain: "The up-move (3) beats the down-move (−2, which is not positive), so +DM = 3 and −DM = 0." },
+  { q: "+DI is 30 and −DI is 10. What is DX?", options: ["20", "40", "50", "75"], answer: 2, explain: "DX = 100 × (30 − 10) / (30 + 10) = 100 × 20 / 40 = 50." },
+  { q: "ADX is rising sharply from 15 to 35. What does that mean about direction?", options: ["Price is rising", "Price is falling", "Nothing; ADX measures strength only", "A reversal is coming"], answer: 2, explain: "A strong downtrend and a strong uptrend both raise ADX. Check the DI lines or the price structure for direction." },
+  { q: "ADX has been below 18 for a month and the DI lines are braided together. Which playbook fits?", options: ["Buy moving-average crossovers", "Range tools: fade extremes at the range edges", "Trend following", "Breakout chasing on every candle"], answer: 1, explain: "Low ADX with tangled DI lines is a range. Trend tools whipsaw there; range tools have a chance." },
+  { q: "ADX rolls over from 48 to 42 during a strong uptrend. What is the sensible response?", options: ["Reverse to short", "Treat it as fading momentum: tighten stops or take partial profit, but do not assume a reversal", "Add to the long", "Ignore it entirely"], answer: 1, explain: "Falling ADX from a high level means the trend is losing strength. It more often leads to a range than a reversal." },
+  { q: "Why is ADX so slow?", options: ["It uses a 50-period setting", "It is smoothed twice: once for the DI lines and again for ADX", "It uses weekly data", "It waits for volume"], answer: 1, explain: "Wilder smoothing is applied to DM and true range, then again to DX, so ADX reacts long after price has moved." }
+]} />
+
+<TryIt to="/simulator">Open the simulator on FXEU, daily chart, and identify by eye three stretches: one strong trend, one range, one transition. Write down for each whether you think ADX would read above or below 25. Then use the available overlays, an SMA for example, and confirm whether price was on one side of the average (trend) or weaving through it (range). Your eye is training to do what ADX does.</TryIt>

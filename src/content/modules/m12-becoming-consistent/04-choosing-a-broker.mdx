@@ -1,0 +1,126 @@
+Choosing a broker feels like choosing an app. Nice charts, low fees, fast signup, done in ten minutes. That instinct is wrong in one important way: a broker is not a tool you use, it is an institution you hand your money to. The charts are the least important thing about it.
+
+A trading platform is closer to a bank than to a piece of software. It holds your cash, executes your instructions, and stands between you and the market. If it is badly regulated, your strategy does not matter. If it freezes during a crash, your stop does not matter. If getting your money out takes three months, your profit does not exist.
+
+This lesson is a checklist in the order that matters. Safety first, then costs, then execution, then the pretty parts.
+
+## Start with the regulator
+
+Before anything else, find out **who supervises the firm and in which country**. Every legitimate broker publishes this, usually in small print at the bottom of the homepage, with a licence number.
+
+| Where | Main regulator | Typical client protection |
+| --- | --- | --- |
+| United States | SEC and FINRA for shares; CFTC and NFA for futures and FX | SIPC coverage, currently up to $500,000 per customer including $250,000 in cash |
+| United Kingdom | FCA | FSCS, currently up to £85,000 |
+| European Union | The national regulator under MiFID rules, such as BaFin or CySEC | National investor compensation schemes, commonly around €20,000 |
+| Canada | CIRO | CIPF, currently up to CAD 1,000,000 per account category |
+| Australia | ASIC | Client money rules, but no broad deposit-style compensation scheme |
+| Singapore | MAS | Client money rules under the Securities and Futures Act |
+
+Those limits change, so confirm the current figure on the scheme's own website rather than the broker's marketing page.
+
+Two details matter more than the list itself. First, **which entity you actually sign with**. A well-known brand may onboard you to an offshore subsidiary, so the name on the top of the website and the name on your client agreement can be different companies with different protections. Read the agreement for the entity name and check that entity's licence.
+
+Second, be honest about what an offshore licence means. Registration in a jurisdiction that supervises company formation but not financial conduct is not regulation. It usually exists to offer leverage that a real regulator would not allow, and it means that if the firm keeps your money, your options are a foreign legal system and a lot of luck.
+
+<Callout type="eli5">
+
+Two people offer to hold your bike while you go into a shop. One is the shop's own staff member, in a uniform, with a name badge and a boss you could complain to. The other is a friendly stranger who says they are very trustworthy and will also let you borrow a much better bike later. The second offer is more exciting, which is the problem.
+
+</Callout>
+
+## Segregated client funds
+
+Ask whether client money is **segregated**. It should be held in separate accounts at a bank, labelled as client money, and kept off the broker's own balance sheet, so it cannot be used to pay the firm's staff, rent or trading losses.
+
+This is the specific protection that matters if the broker fails. Segregated funds are supposed to be returned to clients ahead of ordinary creditors; funds mixed into the company's own accounts become part of the wreckage. The crypto collapses in [the crypto lesson](/learn/m11-derivatives-and-other-markets/06-crypto) were, in essence, failures of exactly this principle.
+
+Also check for **negative balance protection**, which is mandatory for retail clients in the UK and EU and means a gap through your stop cannot leave you owing the broker money.
+
+## The fee structure
+
+Brokers rarely have one fee. They have six, and the loudest one is usually the smallest.
+
+| Cost | Where it hides | Typical retail range |
+| --- | --- | --- |
+| Commission | Per trade, per share, or per contract | Zero to a few dollars per trade; often $0.50 to $1.00 per option contract |
+| Spread markup | Built into the price you see | The main revenue source for most forex and CFD brokers |
+| Financing or overnight interest | Leveraged and margin positions | A benchmark rate plus roughly 2% to 3% |
+| Currency conversion | Buying a foreign market | 0.15% to 1.5% each way |
+| Inactivity fee | A quiet month or three | $10 to $25 a month |
+| Withdrawal and transfer fees | Getting your money out | Zero to about $30 per wire |
+| Market data | Real-time prices and Level 2 | A few dollars to hundreds a month |
+
+"Zero commission" is a pricing decision, not charity. The revenue moves somewhere else, usually into the spread, the currency conversion, or the order flow arrangement described next. Work out what your own trading will actually cost: take your typical size, your typical frequency and your typical holding period, and price a month of it. A scalper and a swing trader should often choose different brokers for this reason alone, as [the fees lesson](/learn/m06-orders-and-execution/09-fees-commissions-settlement) showed.
+
+## Execution quality and payment for order flow
+
+Two brokers can charge the same and still cost you differently, because what matters is the price you actually get.
+
+**Payment for order flow** is an arrangement where your broker sends your orders to a wholesale market maker, who pays the broker for them. The market maker profits from the spread and often gives you a price slightly better than the public quote, which is why the practice is defended. The concern is the conflict: your broker is being paid by the firm on the other side of your trade, and you cannot see whether a different route would have been better.
+
+It is legal in the United States with disclosure, where brokers must publish routing reports, and it has been banned in the UK and is being phased out across the EU. It is not a scandal, and it is not nothing. What you should do is practical: look at the broker's published execution statistics, and test with small orders whether your stops and market orders fill near where you expect.
+
+Watch for one genuine red flag, common at low-end forex and CFD brokers: **requotes**, where you click a price and the platform comes back asking you to accept a worse one. A platform that does this repeatedly during news is not an execution venue, it is a filter.
+
+## Platform and data
+
+Now the part everyone starts with.
+
+- **Reliability under load.** The only day a platform's stability matters is the day everyone is trading, and that is the day weak ones go down. Search for the broker's name alongside the word outage before you sign up.
+- **The order types you need.** Bracket orders, OCO and trailing stops are not luxuries if your plan uses them, as [module 6](/learn/m06-orders-and-execution/03-bracket-and-oco) explained.
+- **Honest data.** Real-time rather than delayed, enough history to study, and charts that do not repaint.
+- **Both screens.** A desktop platform for analysis and a mobile app for managing an open position, with the same account and the same orders visible in both.
+- **Support you can reach on a bad day**, ideally by phone, during the hours you actually trade.
+
+## Withdrawal friction is the biggest red flag
+
+Deposits are instant everywhere. Withdrawals are where a broker's true character shows, so this is the last test and the most important one.
+
+<Callout type="danger" title="Withdraw money in your first week">
+
+Fund the account, trade nothing, and immediately withdraw a small amount. It costs you a few dollars and a couple of days, and it tells you more than every review site combined.
+
+These are the signs to walk away from, whatever the reason given:
+
+- The withdrawal takes far longer than the published time, then longer again.
+- Each request triggers a new document demand that was not mentioned before.
+- An "account manager" telephones to talk you out of it, or offers a bonus to keep the funds in.
+- A deposit bonus turns out to require a large trading volume before any withdrawal is allowed.
+- The support line goes quiet only for withdrawal requests.
+
+One normal rule that is not a red flag: money usually has to return to the same source it came from, because anti-money-laundering rules require it. Delay, changing conditions and pressure are the warning signs, not the same-source rule.
+
+</Callout>
+
+## The checklist
+
+| Check | Must have | Walk away if |
+| --- | --- | --- |
+| Regulation | A named regulator with a verifiable licence number for the exact legal entity you sign with | Offshore registration only, or the entity does not match the brand |
+| Client funds | Segregated, plus a compensation scheme where one exists | Vague or unanswered when you ask |
+| Negative balance | Protection for retail clients where required | Leverage above 100:1 offered to beginners |
+| Costs | A total you have calculated for your own style, not a headline | Fees that only appear in a PDF you had to hunt for |
+| Execution | Published routing or execution quality data | Repeated requotes, or stops filling far from your level |
+| Platform | Stable on busy days, all the order types your plan needs | A history of outages during volatility |
+| Withdrawals | Tested by you, in the first week, successfully | Any delay, pressure or new condition |
+
+Take the boring, regulated, slightly more expensive option. Over a career, the difference in fees is small and the difference in whether your money exists is total.
+
+<KeyTakeaways>
+- A broker holds your money, so regulation and client-fund safety come before charts, fees or features.
+- Check the specific legal entity on your client agreement and verify its licence with the regulator directly, not through the broker's own link.
+- Segregated client funds and, where offered, a compensation scheme are what protect you if the firm fails.
+- Brokers have many fees at once, so price a realistic month of your own trading rather than reading the headline commission.
+- Payment for order flow is legal in the US with disclosure, banned in the UK and being phased out in the EU; judge execution by published statistics and your own fills.
+- Withdrawal friction is the clearest warning sign there is, so test a small withdrawal in your first week.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "What should you check first when choosing a broker?", options: ["The quality of the charts", "Who regulates the specific legal entity you will sign with, and its licence number", "Whether commissions are zero", "The size of the welcome bonus"], answer: 1, explain: "Regulation determines whether everything else matters. Brands can onboard clients to offshore entities with different protections." },
+  { q: "What does segregated client funds mean?", options: ["Your account is split between shares and cash", "Client money is held separately from the firm's own money and cannot fund its operations", "You can only trade one market at a time", "Funds are locked for a fixed period"], answer: 1, explain: "Segregation is what makes client money recoverable ahead of ordinary creditors if the broker fails." },
+  { q: "A broker advertises zero commission. What follows?", options: ["Trading there is free", "The revenue comes from somewhere else, such as spreads, conversion charges or order flow payments", "It must be unregulated", "It cannot offer real-time data"], answer: 1, explain: "Zero commission is a pricing choice. Total cost is what matters, so price a realistic month of your own trading." },
+  { q: "What is payment for order flow?", options: ["A fee you pay to route orders", "A market maker paying your broker to send it your orders", "A charge for withdrawing funds", "Interest on margin"], answer: 1, explain: "It is legal in the US with disclosure, banned in the UK and being phased out in the EU. The concern is the conflict of interest." },
+  { q: "Which of these is the strongest reason to leave a broker immediately?", options: ["Its charts lack one indicator you like", "Withdrawals are repeatedly delayed and each request brings a new document demand", "Commissions rose by $0.50", "Support is only available by email at weekends"], answer: 1, explain: "Withdrawal friction is the clearest sign of a firm in trouble or a firm that never intended to pay." },
+  { q: "You are asked to send money to a different account than the one shown on your statement, or the broker requires a large trading volume before you can withdraw a bonus. What is the right response?", options: ["Comply, it is standard practice", "Negotiate a smaller volume requirement", "Treat both as serious warnings and stop depositing", "Withdraw only half"], answer: 2, explain: "Volume-locked bonuses and irregular payment instructions are classic traps. Returning funds to their original source, by contrast, is a normal legal requirement." }
+]} />

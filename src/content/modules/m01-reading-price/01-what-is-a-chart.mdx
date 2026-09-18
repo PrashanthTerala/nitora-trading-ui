@@ -1,0 +1,97 @@
+Imagine you write down the price of a bar of chocolate every day for a year. January 3rd: $2.10. January 4th: $2.12. January 5th: $2.05. After a year you have 365 numbers in a notebook. Useful, but unreadable. Nobody can look at a column of 365 numbers and say "chocolate got more expensive in the spring".
+
+So you do what people have done since the 1700s: you draw it. You put the dates along the bottom of a page, the prices up the side, and you make a dot where each date meets its price. Join the dots and suddenly the year has a shape. You can see the spring rise without reading a single number.
+
+That drawing is a **price chart**. That is all it is. Not a prediction machine, not a crystal ball, not a secret code. It is price history turned into a picture so that your eyes can do the work your brain would struggle with. Everything else in this course, every candle and pattern and indicator, is built on top of this one simple idea.
+
+## The two axes
+
+Every price chart you will ever see has the same two axes, and getting them straight now will save you confusion later.
+
+**Time runs along the bottom (the horizontal axis).** It always moves left to right. The oldest data is on the left, the newest is on the right, and the far right edge is right now. Nothing exists to the right of that edge, which is worth remembering every time you feel certain about what happens next.
+
+**Price runs up the side (the vertical axis).** Higher up means a higher price. On most platforms this axis sits on the right-hand side, next to the newest data, so you can read the current price at a glance.
+
+Put those together and any point on the chart answers one question: *at this time, what was the price?* A dot high on the right means a high price recently. A dot low on the left means a low price a while ago. There is nothing more to it.
+
+<Callout type="eli5">
+
+Think of a chart as a height chart on a doorframe, the kind where a parent draws a pencil line every birthday. The marks go up the wall as the child gets taller, and the dates run along beside them. A price chart is exactly that, except the market gets measured every day instead of every birthday, and it can shrink as well as grow.
+
+</Callout>
+
+## Each mark is a period, not a moment
+
+Here is the first idea that trips up beginners. On most charts, one mark is not one price. It is a **summary of everything that happened during a period of time.**
+
+Take a daily chart of a share. One mark stands for one whole trading day. During that day the price may have moved thousands of times, ticking up and down with every trade. The mark squashes all of that movement into a small picture: where the day started, the highest and lowest points it reached, and where it finished.
+
+<CandleFigure
+  title="Four days, four summaries"
+  bars={[
+    { o: 100, h: 103, l: 99.4, c: 102.4 },
+    { o: 102.5, h: 104.8, l: 102, c: 104.2 },
+    { o: 104.1, h: 105.2, l: 101.8, c: 102.3 },
+    { o: 102.4, h: 106.5, l: 102.1, c: 106.1 }
+  ]}
+  annotations={[
+    { type: "label", index: 3, text: "newest" },
+    { type: "bracket", from: 0, to: 3, text: "four trading days" }
+  ]}
+  caption="Time left to right, price bottom to top. Each shape squashes one entire day of trading into a single summary. Lesson 3 takes one of these apart."
+/>
+
+That period is called the <Term id="timeframe">timeframe</Term>, and you get to choose it. On a 5-minute chart, each mark covers five minutes. On a weekly chart, each mark covers a whole week. Same market, same history, different level of zoom. [Lesson 5](/learn/m01-reading-price/05-timeframes) is entirely about choosing it well.
+
+<Callout type="warning" title="The chart is not the market">
+
+A chart is a summary, and summaries throw things away. A calm-looking daily candle might hide a terrifying hour in the middle of that day. If you plan to hold a trade for an hour, a chart that summarises whole days is not showing you the risk you are actually taking.
+
+</Callout>
+
+## What the shape is telling you
+
+Once the dots are drawn, your eyes start doing something powerful for free: they see direction. A chart that climbs from bottom-left to top-right means buyers have been willing to pay more and more over time. A chart that slides down means the opposite. A chart that wanders sideways means neither side has been winning.
+
+<PatternFigure name="uptrend" caption="Left to right, higher over time. Notice it does not climb in a straight line: it pushes up, rests, pushes up again. Almost every real chart looks like this rather than a clean diagonal." />
+
+Look closely at that picture and notice something important. Price does not go up in a smooth line. It moves in pushes and pauses, up a lot, back a little, up again. That stair-step rhythm is the natural breathing of a market where, as you saw in [Why Prices Go Up and Down](/learn/m00-what-is-a-market/03-why-prices-move), real people are constantly changing their minds about what something is worth.
+
+Reading a chart well means describing that rhythm honestly. Not "it is going to the moon", but "over the last three months this has made a series of higher peaks, with pullbacks of roughly a third of each push". That sentence is a fact. The moon is a fantasy.
+
+## What a chart cannot do
+
+Be clear about the limits before you fall in love with the pictures.
+
+A chart shows you the **past**, perfectly. It shows you the **present**, at the right edge. It shows you the **future**, not at all. People who trade with charts are not predicting; they are noticing situations that have tended to resolve one way more often than the other, and then managing what happens when they are wrong.
+
+A chart also has no idea *why* anything happened. It cannot tell you that the drop on Tuesday was a disappointing earnings report and the rise on Friday was a takeover rumour. It only records the footprints, never the reason for the walk.
+
+<Callout type="tip">
+
+A good habit from your very first chart: before you form any opinion, say out loud what the axes are. "This is Tesla, daily candles, price from 180 to 260, covering about four months." Beginners routinely analyse a 5-minute chart while thinking they are looking at a daily one, and every conclusion after that is wrong.
+
+</Callout>
+
+## Where we go from here
+
+For the rest of this module you will take that simple picture apart. Next you will meet the three common ways to draw it: lines, bars and candles. Then you will pull one candle to pieces and learn to read the battle inside it. After that come timeframes, volume, gaps and the scale on the side.
+
+By the end of this module a chart should stop looking like a wiggly line and start looking like a written record of what a crowd of people did, and how they felt while doing it.
+
+<KeyTakeaways>
+- A price chart is just price history drawn as a picture so your eyes can see patterns your brain cannot see in a list of numbers.
+- Time runs left to right along the bottom; price runs bottom to top up the side; the far right edge is now.
+- Each mark on a chart summarises one period of time, not one moment, and you choose how long that period is.
+- Summaries hide detail, so a calm daily chart can contain a violent hour.
+- Charts record the past and the present accurately, tell you nothing about the future, and never explain the reason behind a move.
+- Always identify the symbol, the timeframe and the price range before you form any opinion.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "On a standard price chart, what runs along the horizontal axis?", options: ["Price", "Time, oldest on the left", "Volume", "Time, newest on the left"], answer: 1, explain: "Time always runs left to right, with the oldest data on the left and the current moment at the right edge." },
+  { q: "On a daily chart, what does one mark represent?", options: ["One trade", "One price at one instant", "A summary of everything that happened in one trading day", "One hour of trading"], answer: 2, explain: "Each mark compresses an entire period into a summary. On a daily chart that period is one full trading day." },
+  { q: "Why can a calm-looking daily candle be misleading?", options: ["Because daily data is often wrong", "Because the summary hides the swings that happened inside the day", "Because daily charts use a different price axis", "Because daily candles are drawn right to left"], answer: 1, explain: "Summaries throw detail away. A quiet daily mark can contain a very rough hour that matters if you trade intraday." },
+  { q: "Which of these can a price chart genuinely tell you?", options: ["Why the price moved", "What the price will do tomorrow", "What the price has done up to right now", "Which news caused a drop"], answer: 2, explain: "A chart records the footprints. It shows the past and present accurately but carries no reason and no forecast." },
+  { q: "You open a chart and immediately start looking for a trade. What step did you skip?", options: ["Checking the symbol, timeframe and price range", "Adding three indicators", "Drawing a trendline", "Reading the news"], answer: 0, explain: "Identifying what you are actually looking at comes first. Analysing a 5-minute chart while believing it is daily makes every later conclusion wrong." }
+]} />

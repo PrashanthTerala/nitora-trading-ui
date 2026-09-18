@@ -1,0 +1,114 @@
+Two shops open on the same street. The corner shop sells sweets: almost everyone who walks in buys something, but each sale makes 20 cents. The furniture shop sells sofas: ninety-five people out of a hundred walk out empty-handed, but the ones who buy leave $600 behind.
+
+Both shops can be excellent businesses. Neither is "better". They are the same business run at different points on one dial, and turning the dial towards more sales necessarily means smaller sales.
+
+Trading has exactly that dial. On one end is **win rate**, how often you are right. On the other is **reward to risk**, how much you make when you are. You can have a lot of one or a lot of the other. You cannot have a lot of both, and every beginner spends a year trying.
+
+## Why the trade-off is real, not just typical
+
+It is not a coincidence or a market conspiracy. It is a direct consequence of where you put your target.
+
+Your entry is fixed. Your stop is fixed by the chart. The only dial you control is the target. Move it closer and price reaches it more often, so your win rate rises and your R falls. Move it further away and price reaches it less often, so your R rises and your win rate falls.
+
+The same thing happens on the stop side. Widen the stop and fewer trades get shaken out, so the win rate rises, but risk per share grows so R falls. Tighten the stop and R improves while the win rate collapses, which is exactly the trap the [stop placement lesson](/learn/m07-risk-management/03-stop-loss-placement) warned about.
+
+<Callout type="eli5">
+
+You are throwing a ball at a target on a wall. A big target is easy to hit but the prize is small. A tiny target is hard to hit but pays a lot. You cannot have a target that is both huge and pays a fortune, because whoever is paying would go broke. Markets work the same way, and nobody is in charge of it.
+
+</Callout>
+
+## The break-even table, read the other way
+
+The [last lesson but one](/learn/m07-risk-management/04-risk-reward-ratio) gave you breakeven win rate from R. Turn the formula around and you get the minimum R you need for a given win rate: **R = (1 − w) ÷ w**.
+
+| Win rate | Minimum R to break even | What that means |
+| --- | --- | --- |
+| 80% | 0.25R | Wins can be a quarter the size of losses |
+| 70% | 0.43R | Wins can be under half the size of losses |
+| 60% | 0.67R | Wins can be two thirds of a loss |
+| 50% | 1.00R | Wins must match losses exactly |
+| 40% | 1.50R | Wins must be half again as big |
+| 35% | 1.86R | Wins must be nearly twice as big |
+| 30% | 2.33R | Wins must be well over twice as big |
+| 25% | 3.00R | Wins must be three times as big |
+| 20% | 4.00R | Wins must be four times as big |
+
+Every row is break-even. To actually make money you need to be somewhere above your row, and far enough above it to pay for costs.
+
+Now put two real systems side by side.
+
+**The sweet shop.** 80% win rate, wins of 0.5R, losses of 1R. Expectancy = 0.80 × 0.5 − 0.20 × 1 = 0.40 − 0.20 = **+0.20R per trade**.
+
+**The furniture shop.** 35% win rate, wins of 3R, losses of 1R. Expectancy = 0.35 × 3 − 0.65 × 1 = 1.05 − 0.65 = **+0.40R per trade**.
+
+The one that is wrong two times out of three earns double per trade. This surprises people every time, and it is why [expectancy](/learn/m07-risk-management/05-expectancy), not win rate, is the scoreboard.
+
+<StatRow>
+<Stat value="+0.20R" label="80% win rate, 0.5R wins" />
+<Stat value="+0.40R" label="35% win rate, 3R wins" />
+</StatRow>
+
+## Why beginners chase win rate
+
+Because being right feels good and being wrong feels bad, and a beginner has no other scoreboard yet.
+
+A new trader with no journal cannot see expectancy. What they can see, every single day, is whether the last trade worked. So they optimise for the feeling: they take profits early, because a small win is a win, and they hold losers, because a loss is not a loss until you close it. Within a month they have built the exact system from the end of the last lesson, an 80% win rate that loses money.
+
+There is a second pull. Almost everything sold to beginners advertises a win rate, because "87% accurate" sells and "0.3R expectancy over 400 trades" does not. A win rate quoted without an average win and average loss beside it is not information. It is marketing, and you should treat it the way the [scams lesson](/learn/m12-becoming-consistent/05-scams-and-red-flags) suggests.
+
+<Callout type="danger" title="The three ways a high win rate is faked">
+
+**No stop.** A trade that is never closed at a loss is never a loss. Win rates near 100% are usually this, and they end in one catastrophic trade.
+
+**Tiny targets.** Taking 0.2R over and over produces a wonderful win rate and negative expectancy once costs are included.
+
+**Averaging down.** Adding to losers until the average price is beaten converts most losers into small wins, and the rare failure destroys the account. That is the whole of [lesson 10](/learn/m07-risk-management/10-never-average-down).
+
+All three raise the win rate by moving risk somewhere you cannot see it. Nothing was improved.
+
+</Callout>
+
+## What a 35% win rate actually feels like
+
+The furniture shop has better expectancy. Living inside it is genuinely hard, and you should know the shape of that before you choose it.
+
+At a 35% win rate, roughly two out of every three trades lose. The chance of four losses in a row, starting from any given trade, is 0.65 × 0.65 × 0.65 × 0.65, which is about **18%**. Not a bad day. A Tuesday.
+
+Over a run of 100 trades, the *longest* losing streak you should expect is around **nine**, and there is roughly a two-in-three chance of hitting a streak of eight or more somewhere in there. At a 50% win rate the expected longest streak over 100 trades is about six; at 60% it is under five.
+
+| Win rate | Typical longest losing streak in 100 trades |
+| --- | --- |
+| 60% | about 5 |
+| 50% | about 6 |
+| 35% | about 9 |
+
+Nine losses in a row, at 1% risk each, is roughly a 9% drawdown and several weeks of doing everything right while the account only goes down. Your brain will offer you a way out every single day: take profits earlier, skip this one, make the target smaller. Each suggestion quietly turns your furniture shop into a sweet shop.
+
+That is the real cost, and it is not financial. A low win rate system needs a trader who can be wrong repeatedly without changing their behaviour, and that is a rarer skill than reading a chart. If you know you cannot do it, choose a higher win rate system with honest arithmetic instead. A 55% strategy at 1.2R that you actually follow beats a 35% strategy at 3R that you abandon on the seventh loss.
+
+<Callout type="tip" title="Pick the dial setting that fits you, then stop moving it">
+
+Decide before you start where on the dial you live, write it in the plan, and measure everything against expectancy afterwards. What ruins traders is not picking the wrong point on the dial. It is drifting along it trade by trade, chasing whichever end has been working most recently.
+
+</Callout>
+
+<KeyTakeaways>
+- Win rate and reward to risk trade off against each other, because both are controlled by where you put the target.
+- The minimum R for break-even is (1 minus win rate) divided by win rate, so 50% needs 1R and 25% needs 3R.
+- A 35% win rate at 3R earns twice as much per trade as an 80% win rate at 0.5R.
+- Beginners chase win rate because it is the only scoreboard they can see, and the ways of raising it usually hide risk rather than remove it.
+- A quoted win rate with no average win and average loss beside it carries no information.
+- A 35% system will hand you a nine-loss streak inside 100 trades, so choose a system you can still follow on the eighth loss.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "Your strategy wins 40% of the time. What is the minimum reward to risk you need just to break even?", options: ["0.67R", "1.0R", "1.5R", "2.5R"], answer: 2, explain: "(1 minus 0.4) divided by 0.4 equals 1.5." },
+  { q: "System A wins 80% at 0.5R. System B wins 35% at 3R. Which has the better expectancy?", options: ["A, at plus 0.4R", "B, at plus 0.4R", "A, at plus 0.2R", "They are identical"], answer: 1, explain: "A gives 0.4 minus 0.2 equals 0.2R. B gives 1.05 minus 0.65 equals 0.4R." },
+  { q: "Why does moving your target further away lower your win rate?", options: ["Brokers widen spreads on large targets", "Price reaches a distant level less often than a near one", "Stops become wider automatically", "It does not; win rate is independent of the target"], answer: 1, explain: "The entry and stop are fixed, so the target is the dial. Further away means reached less often." },
+  { q: "An advertisement claims a 92% win rate. What is the first thing you should ask for?", options: ["The number of subscribers", "The average win and average loss", "The name of the indicator", "The broker they use"], answer: 1, explain: "A win rate without the average win and loss beside it cannot be turned into expectancy, so it says nothing." },
+  { q: "Roughly how long a losing streak should a 35% win rate trader expect somewhere within 100 trades?", options: ["Two or three", "Four or five", "About nine", "Streaks that long do not happen"], answer: 2, explain: "At a 35% win rate the expected longest run of losses over 100 trades is around nine, and an eight-loss run is more likely than not." },
+  { q: "You are six losses into a streak on a low win rate system you tested properly. What is the change most likely to hurt you?", options: ["Continuing to follow the rules", "Cutting your targets shorter so you win more often", "Reviewing whether you followed the plan", "Taking a day off"], answer: 1, explain: "Shrinking targets raises the win rate but lowers R below what the system needs, converting a working strategy into a losing one." }
+]} />
+
+<TryIt to="/journal">Open the journal and find your win rate and your average win and average loss in R. Look up your win rate in the table above and check whether your average win clears the minimum. If it does not, the fix is a bigger target or a tighter, better-chosen stop, not more trades.</TryIt>

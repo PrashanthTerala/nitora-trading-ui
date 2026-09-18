@@ -1,0 +1,114 @@
+A lever lets a child lift a boulder. Put the fulcrum in the right place and a small push at one end moves something enormous at the other. It's a wonderful tool. It also means that if the boulder slips, the same lever slams the child's end into the ground with enormous force.
+
+**Leverage** in trading is exactly that lever. It lets you control a position far bigger than your money, using cash borrowed from your broker. The gains are multiplied. So are the losses, and unlike a plain share purchase, a leveraged loss can exceed the money you put in.
+
+Most trading disasters involve leverage. Not because leverage is evil, but because people use it before they understand the arithmetic. So let's do the arithmetic.
+
+## Margin: the deposit
+
+<Term id="margin">Margin</Term> is money you put down as a deposit so the broker will lend you the rest. If you want to control $20,000 of stock with a $10,000 deposit, the broker lends the other $10,000 and your margin is $10,000, or 50%.
+
+Two numbers govern a margin account:
+
+- **Initial margin** is the deposit needed to *open* a position. In US stocks the standard is 50%, so you can buy up to twice your cash. Futures, forex and crypto often allow far less.
+- **Maintenance margin** is the minimum equity you must *keep* once the position is open, often 25% to 30% for stocks. Fall below it and the broker steps in.
+
+<Term id="leverage">Leverage</Term> is the ratio of position size to your own money. $20,000 of stock on $10,000 of cash is 2x (also written 2:1). $50,000 on $10,000 is 5x. $200,000 on $10,000 is 20x.
+
+<Callout type="eli5">
+
+Imagine you have $10 and want to buy a $20 toy. A friend lends you $10 on the condition that if the toy loses value, the losses come out of *your* $10 first, not theirs. If the toy drops to $15, you've lost $5, which is half your money, even though the toy only fell 25%. If it drops to $10, your $10 is gone entirely. Your friend still wants their $10 back.
+
+</Callout>
+
+## The worked example: one move, three leverages
+
+You have $10,000. A stock trades at $100. Let's see what a 10% move does at 2x, 5x and 20x.
+
+| Leverage | Position size | Shares | Borrowed | Price −10% loses | Loss as % of your $10,000 | Price +10% gains |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1x (no leverage) | $10,000 | 100 | $0 | $1,000 | 10% | +$1,000 |
+| 2x | $20,000 | 200 | $10,000 | $2,000 | 20% | +$2,000 |
+| 5x | $50,000 | 500 | $40,000 | $5,000 | 50% | +$5,000 |
+| 20x | $200,000 | 2,000 | $190,000 | $20,000 | 200% | +$20,000 |
+
+Read the 20x row slowly. A 10% dip, which happens to ordinary stocks fairly regularly, loses you $20,000. You only had $10,000. You are wiped out and you *owe the broker another $10,000*. The upside row looks glorious; the downside row is a debt.
+
+The rule hiding in the table: **at leverage L, a move of 100 ÷ L percent against you wipes out your entire deposit.**
+
+- 2x: a 50% move wipes you out.
+- 5x: a 20% move.
+- 10x: a 10% move.
+- 20x: a 5% move.
+- 100x: a 1% move, which is normal noise on a quiet afternoon.
+
+## The margin call
+
+In practice the broker doesn't wait for you to reach zero, because then *they* would be at risk. When your equity falls to the maintenance level, you get a <Term id="margin-call">margin call</Term>: a demand to deposit more cash or close positions, usually within hours.
+
+Let's walk the 2x stock example with a 25% maintenance requirement, which is the common US rule.
+
+1. Position $20,000, your equity $10,000, borrowed $10,000. Equity is 50% of the position. Fine.
+2. Price falls 20%. Position now $16,000. The loan is still $10,000, because losses never come out of the loan. Equity = $16,000 − $10,000 = **$6,000**, which is 37.5% of the position. Still above 25%. No call yet, but you've lost 40% of your money on a 20% move.
+3. Price falls 33.3% from the start. Position now $13,333. Equity = $13,333 − $10,000 = **$3,333**, which is exactly 25% of the position. **Margin call.** Deposit cash or the broker starts selling.
+
+Notice the shape of it. The loan is a fixed rock; only your equity shrinks. At 2x you had a 33% cushion before the call. At 5x, with $40,000 borrowed against $10,000, your equity is only 20% of the position on day one, already below a 25% rule, so a stock broker simply won't let you open it. Products that do allow 5x set the maintenance level lower; even at a lenient 15%, the same arithmetic gives a call after a fall of only about 6%. At 20x there is essentially no cushion at all. That is why stock brokers cap overnight leverage at 2x, and why higher leverage lives in futures, forex, crypto and CFDs, where the rules are written as a fraction of *your margin* rather than of the position.
+
+## Liquidation
+
+If you don't meet the margin call, or if price moves so fast there's no time to ask, the broker **liquidates**: they close your positions at market, without your permission, at whatever price the market offers. In crypto and CFD products this is automated and instant. There's a **liquidation price** printed on the ticket, and when price touches it, your position and your margin are gone.
+
+Worked example at 20x. You put up $500 of margin to control $10,000 of a coin priced at $100. Liquidation is typically set a little before your margin is fully consumed; say the exchange liquidates when you've lost 80% of margin, which is $400. That's a 4% move: liquidation at **$96**. Coins move 4% before breakfast.
+
+<Callout type="danger" title="Liquidation is not a stop-loss">
+
+Beginners treat the liquidation price as if it were a stop. It isn't. A stop-loss is *your* decision about where the trade is wrong. Liquidation is the *broker's* decision about where they stop lending to you, and it takes your entire deposit. If you find yourself thinking "well, I'll just get liquidated if it goes wrong," you have sized the trade to lose 100%.
+
+</Callout>
+
+## Financing: the meter that never stops
+
+Borrowed money isn't free. Brokers charge interest on the loan, often called the **financing rate** or **overnight rate**. It accrues every day you hold the position, including weekends.
+
+Example: 2x leverage on $10,000 of your own money means a $10,000 loan. At 8% a year, that's $800 a year, or about $2.19 a day. Hold for a month and you've paid roughly $66 before the stock has done anything. A stock that goes nowhere for a year at 2x has cost you 8% of your capital. Leverage silently punishes sitting still.
+
+In crypto perpetual futures the equivalent is the **funding rate**, paid every eight hours between longs and shorts. It can run at several percent a month when a market is crowded.
+
+## What leverage really is
+
+Leverage doesn't change the odds of the trade. The stock goes where it goes. Leverage only changes the *size* of your bet relative to your money. That's it. Which means every question about leverage is really a question about position size, and position size is the subject of the [1% rule lesson](/learn/m07-risk-management/02-the-one-percent-rule).
+
+Here is the reframe that keeps traders alive. Don't ask "how much leverage can I get?" Ask "how much do I lose if my stop is hit, and is that 1% of my account?" If the answer is 1%, the leverage number is irrelevant. If the answer is 40%, no amount of confidence justifies the trade.
+
+<StatRow>
+<Stat value="2x" label="a 50% move wipes you out" />
+<Stat value="5x" label="a 20% move" />
+<Stat value="20x" label="a 5% move" />
+<Stat value="100x" label="a 1% move" />
+</StatRow>
+
+<Callout type="tip" title="Leverage as a tool, not a bet">
+
+Professionals use leverage for one legitimate reason: a stop that is *very close* to entry, so the dollar risk stays at 1% even though the position is large. A day trader risking $0.20 per share on 5,000 shares needs $500,000 of buying power to risk $1,000. That's 50x on a $10,000 account, yet the trade risks 1%. The leverage isn't the risk. The stop distance times the shares is the risk.
+
+</Callout>
+
+<KeyTakeaways>
+- Margin is your deposit; leverage is how many times bigger the position is than that deposit.
+- At leverage L, a move of 100 ÷ L percent against you erases the whole deposit, and beyond that you owe money.
+- A margin call is the broker demanding more cash when equity falls below maintenance; liquidation is the broker closing you out.
+- Liquidation is not a stop-loss: it is a 100% loss of your margin decided by the broker, not you.
+- Borrowed money costs interest every day, so leverage punishes positions that go nowhere.
+- Leverage never changes the odds, only the size, so the real question is always dollar risk per trade.
+</KeyTakeaways>
+
+<Quiz questions={[
+  { q: "You have $10,000 and use 5x leverage on a stock. The stock falls 10%. What is your loss?", options: ["$1,000", "$2,000", "$5,000", "$10,000"], answer: 2, explain: "5x means a $50,000 position; 10% of that is $5,000, which is half your money." },
+  { q: "At 20x leverage, what adverse move wipes out your deposit completely?", options: ["20%", "10%", "5%", "1%"], answer: 2, explain: "100 divided by 20 is 5; a 5% move against a 20x position loses 100% of margin." },
+  { q: "What is a margin call?", options: ["A bonus from the broker for using leverage", "A demand to add cash or close positions because equity fell below maintenance", "A phone call confirming your trade", "An automatic profit lock"], answer: 1, explain: "When equity drops under the maintenance requirement the broker demands more collateral or will close positions." },
+  { q: "You borrow $10,000 at 8% a year for a 2x position and hold for 30 days while the stock goes nowhere. Roughly what did it cost?", options: ["$0", "$8", "$66", "$800"], answer: 2, explain: "$800 a year divided by 365 is about $2.19 a day, or about $66 for 30 days." },
+  { q: "Which statement is true?", options: ["Leverage improves the odds of a trade", "Leverage changes only the size of the bet relative to your money", "Liquidation is the same as a stop-loss", "Higher leverage lowers financing costs"], answer: 1, explain: "The trade goes where it goes; leverage just multiplies how much of your account rides on it." },
+  { q: "A trader uses 50x buying power but sets a stop so tight that the loss at the stop is 1% of the account. Is this trade risky because of the leverage?", options: ["Yes, 50x is always reckless", "No, the risk is the stop distance times the shares, which is 1% here, though slippage past the stop is still a danger", "Yes, because stops do not work with leverage", "No, because leverage cannot lose money"], answer: 1, explain: "Dollar risk is what matters; the caveat is that a gap through a tight stop on a large position can lose far more than planned." }
+]} />
+
+<TryIt to="/simulator">Open the simulator and place the same trade twice: once with a position that risks 1% of the account at the stop, and once sized four times larger. Let both run and compare how the equity curve feels. The second one is what leverage does to your nerves.</TryIt>
