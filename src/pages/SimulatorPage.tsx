@@ -4,6 +4,7 @@ import { TradingChart } from '@/components/sim/TradingChart';
 import { OrderTicket } from '@/components/sim/OrderTicket';
 import { PositionsPanel, OrdersPanel, HistoryPanel, EventsPanel, AccountBar } from '@/components/sim/Panels';
 import { useSim, chartBars, pricesAt, startClock, specOf, type Overlays } from '@/store/sim';
+import { DataSourceBar, RealSymbolPicker } from '@/components/sim/DataSource';
 import { SYMBOLS } from '@/engine/market/symbols';
 import { TIMEFRAMES, type Timeframe } from '@/engine/market/types';
 import { SUBTICKS } from '@/engine/market/feed';
@@ -23,7 +24,7 @@ const OVERLAY_LABELS: { key: keyof Overlays; label: string; group: 'overlay' | '
 const SPEEDS = [2, 8, 30, 120];
 
 export function SimulatorPage() {
-  const { symbol, timeframe, cursor, subtick, playing, speed, overlays, account, clock } = useSim();
+  const { symbol, timeframe, cursor, subtick, playing, speed, overlays, account, clock, source, realSymbol, realSymbols, realStatus } = useSim();
   const setSymbol = useSim((s) => s.setSymbol);
   const setTimeframe = useSim((s) => s.setTimeframe);
   const setPlaying = useSim((s) => s.setPlaying);
@@ -55,11 +56,17 @@ export function SimulatorPage() {
     return () => window.removeEventListener('keydown', onKey);
   }, [setPlaying, stepBar]);
 
-  const bars = useMemo(() => chartBars(symbol, timeframe, cursor, subtick), [symbol, timeframe, cursor, subtick]);
+  const isReal = source === 'real';
+  /** The instrument on screen, whichever market is live. */
+  const active = isReal ? realSymbol : symbol;
+  const bars = useMemo(() => chartBars(symbol, timeframe, cursor, subtick), [symbol, timeframe, cursor, subtick, source, realSymbol, realStatus, clock]);
   const watchSymbols = useMemo(() => SYMBOLS.map((s) => s.symbol), []);
-  const prices = useMemo(() => pricesAt(cursor, subtick, watchSymbols), [cursor, subtick, watchSymbols]);
-  const spec = specOf(symbol);
-  const price = prices[symbol];
+  const prices = useMemo(() => pricesAt(cursor, subtick, watchSymbols), [cursor, subtick, watchSymbols, source, realSymbol, realStatus]);
+  const realSpec = realSymbols.find((x) => x.symbol === realSymbol);
+  const spec = isReal
+    ? realSpec && { ...realSpec, tickSize: 1 / 10 ** realSpec.decimals }
+    : specOf(symbol);
+  const price = prices[active] ?? 0;
   const last = bars[bars.length - 1];
   const prevClose = bars.length > 1 ? bars[bars.length - 2].close : last?.open ?? price;
   const chg = price - prevClose;
@@ -70,13 +77,17 @@ export function SimulatorPage() {
     <div className="flex flex-col lg:h-[calc(100vh-3.5rem)]">
       {/* top bar */}
       <div className="flex shrink-0 flex-wrap items-center gap-3 border-b border-line bg-surface px-3 py-2">
-        <select value={symbol} onChange={(e) => setSymbol(e.target.value)} className="input py-1 font-mono font-bold">
-          {SYMBOLS.map((s) => (
-            <option key={s.symbol} value={s.symbol}>
-              {s.symbol} · {s.name}
-            </option>
-          ))}
-        </select>
+        {isReal ? (
+          <RealSymbolPicker />
+        ) : (
+          <select value={symbol} onChange={(e) => setSymbol(e.target.value)} className="input py-1 font-mono font-bold">
+            {SYMBOLS.map((s) => (
+              <option key={s.symbol} value={s.symbol}>
+                {s.symbol} · {s.name}
+              </option>
+            ))}
+          </select>
+        )}
         <div className="flex items-baseline gap-2">
           <span className="font-mono text-xl font-bold">{price?.toFixed(spec?.decimals ?? 2)}</span>
           <span className={`font-mono text-sm font-semibold ${chg >= 0 ? 'text-up' : 'text-down'}`}>
@@ -135,6 +146,8 @@ export function SimulatorPage() {
       <div className="flex shrink-0 items-center gap-4 border-b border-line bg-panel/50 px-3 py-1.5">
         <AccountBar prices={prices} account={account} />
       </div>
+
+      <DataSourceBar />
 
       {showSettings && <SettingsBar onReset={resetAccount} onNewMarket={newMarket} />}
 

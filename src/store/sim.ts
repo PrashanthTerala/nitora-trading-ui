@@ -6,6 +6,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { Market, SUBTICKS } from '@/engine/market/feed';
+import { RealFeed, fetchRealHistory, fetchRealSymbols, type RealSymbolSpec } from '@/engine/market/realFeed';
 import { SYMBOLS, SYMBOL_MAP } from '@/engine/market/symbols';
 import { bucketStart, minuteOfSession } from '@/engine/market/generator';
 import type { Bar, Timeframe } from '@/engine/market/types';
@@ -30,9 +31,22 @@ export const START_CURSOR = 80 * 390; // 80 trading days of history before "toda
 let market = new Market('tradelab-1', SYMBOLS);
 let lastPrices: PriceMap = {};
 
+/**
+ * Real-data replay state lives outside the store because a RealFeed holds thousands of
+ * bars and must never be written to localStorage. It is refetched on demand instead.
+ */
+let realFeed: RealFeed | null = null;
+let realLoadToken = 0;
+
 export function getMarket() {
   return market;
 }
+
+export function getRealFeed() {
+  return realFeed;
+}
+
+export type DataSource = 'synthetic' | 'real';
 
 export interface Overlays {
   sma20: boolean;
@@ -59,12 +73,21 @@ interface SimState {
   clock: number; // increments on every tick; components subscribe to it
   hydrated: boolean;
 
+  /** Which market the simulator is replaying. Synthetic is the default and works offline. */
+  source: DataSource;
+  realSymbol: string;
+  realSymbols: RealSymbolSpec[];
+  realStatus: 'idle' | 'loading' | 'ready' | 'error';
+  realError: string | null;
+  realMeta: { source: string; cached?: boolean; stale?: boolean; bars: number } | null;
+
   setSymbol: (s: string) => void;
   setTimeframe: (tf: Timeframe) => void;
   setPlaying: (p: boolean) => void;
   setSpeed: (s: number) => void;
   toggleOverlay: (k: keyof Overlays) => void;
   advance: (n: number) => void;
+  advanceReal: (n: number) => void;
   stepBar: () => void;
   placeOrder: (input: NewOrderInput) => Order;
   cancelOrder: (id: string) => void;
@@ -75,15 +98,31 @@ interface SimState {
   resetAccount: (settings?: Partial<AccountSettings>) => void;
   newMarket: (seed?: string) => void;
   setHydrated: () => void;
+  setSource: (s: DataSource) => void;
+  setRealSymbol: (s: string) => void;
+  loadReal: () => Promise<void>;
 }
 
 export function currentTime(cursor: number, subtick: number) {
+  if (useSim.getState().source === 'real' && realFeed) {
+    // Real bars carry their own timestamps; spread sub-ticks across the bar's span.
+    const i = realFeed.clamp(cursor);
+    const b = realFeed.baseBar(i);
+    const next = realFeed.baseBar(Math.min(i + 1, realFeed.length - 1));
+    const span = Math.max(60, next.time - b.time);
+    return b.time + Math.floor((subtick * span) / SUBTICKS);
+  }
   const f = market.feed(SYMBOLS[0].symbol);
   return f.baseBar(cursor).time + subtick * Math.floor(60 / SUBTICKS);
 }
 
 export function pricesAt(cursor: number, subtick: number, symbols: string[]): PriceMap {
   const out: PriceMap = {};
+  if (useSim.getState().source === 'real') {
+    // Only the replayed instrument exists in real mode; nothing else has prices.
+    if (realFeed) out[realFeed.symbol] = realFeed.price(cursor, subtick);
+    return out;
+  }
   for (const s of symbols) out[s] = market.feed(s).price(cursor, subtick);
   return out;
 }
@@ -109,14 +148,28 @@ export const useSim = create<SimState>()(
       overlays: { sma20: false, sma50: false, ema9: false, ema21: true, bb: false, vwap: false, volume: true, rsi: false, macd: false },
       clock: 0,
       hydrated: false,
+      source: 'synthetic',
+      realSymbol: 'AAPL',
+      realSymbols: [],
+      realStatus: 'idle',
+      realError: null,
+      realMeta: null,
 
       setSymbol: (symbol) => set({ symbol }),
-      setTimeframe: (timeframe) => set({ timeframe }),
+      setTimeframe: (timeframe) => {
+        set({ timeframe });
+        // Real data is fetched per timeframe rather than aggregated from one base series.
+        if (get().source === 'real') void get().loadReal();
+      },
       setPlaying: (playing) => set({ playing }),
       setSpeed: (speed) => set({ speed: Math.max(1, Math.min(400, speed)) }),
       toggleOverlay: (k) => set((s) => ({ overlays: { ...s.overlays, [k]: !s.overlays[k] } })),
 
       advance: (n) => {
+        if (get().source === 'real') {
+          get().advanceReal(n);
+          return;
+        }
         let { cursor, subtick, account } = get();
         const { symbol } = get();
         const feed = market.feed(symbol);
@@ -155,6 +208,11 @@ export const useSim = create<SimState>()(
       },
 
       stepBar: () => {
+        if (get().source === 'real') {
+          // One real bar is exactly one cursor step, so finish the forming bar.
+          get().advance(SUBTICKS - get().subtick);
+          return;
+        }
         const { cursor, timeframe, symbol } = get();
         const feed = market.feed(symbol);
         const startBucket = bucketStart(feed.baseBar(cursor).time, timeframe);
@@ -227,23 +285,146 @@ export const useSim = create<SimState>()(
         }));
       },
       setHydrated: () => set({ hydrated: true }),
+
+      /**
+       * Real-data replay. One bar of the chosen timeframe per cursor step, and only the
+       * replayed instrument has a price, so there are no other symbols to evaluate.
+       * The replay stops at the last bar the provider gave us rather than looping.
+       */
+      advanceReal: (n) => {
+        const feed = realFeed;
+        if (!feed) return;
+        let { cursor, subtick, account } = get();
+        const symbol = feed.symbol;
+        let prevPrice = feed.price(cursor, subtick);
+        let steps = 0;
+        for (let i = 0; i < n; i++) {
+          if (feed.exhausted(cursor) && subtick >= SUBTICKS - 1) break;
+          if (subtick < SUBTICKS - 1) subtick++;
+          else {
+            cursor++;
+            subtick = 0;
+          }
+          steps++;
+          const time = currentTime(cursor, subtick);
+          const price = feed.price(cursor, subtick);
+          const bar = feed.baseBar(cursor);
+          const newBar = subtick === 0;
+          // Between two real bars nothing traded, so a jump at a bar open is a true gap.
+          const gapped = newBar && Math.abs(bar.open - prevPrice) / (prevPrice || 1) > 0.0005;
+          account = processTick(account, {
+            symbol,
+            price,
+            high: Math.max(prevPrice, price),
+            low: Math.min(prevPrice, price),
+            time,
+            isNewDay: newBar,
+            gapped,
+          });
+          prevPrice = price;
+          if (subtick === SUBTICKS - 1) {
+            lastPrices = { [symbol]: price };
+            account = checkMargin(account, lastPrices, time);
+            account = recordEquity(account, lastPrices, time);
+          }
+        }
+        if (steps === 0) {
+          set({ playing: false });
+          return;
+        }
+        set((st) => ({ cursor, subtick, account, clock: st.clock + steps, playing: feed.exhausted(cursor) ? false : st.playing }));
+      },
+
+      setSource: (next) => {
+        if (next === get().source) return;
+        // Positions and orders are priced against the market that created them, so
+        // carrying them across would invent profit exactly as a new market would.
+        set((st) => ({
+          source: next,
+          playing: false,
+          clock: 0,
+          account: createAccount(st.account.settings),
+          cursor: next === 'synthetic' ? START_CURSOR : 0,
+          subtick: SUBTICKS - 1,
+          realError: null,
+        }));
+        if (next === 'real') void get().loadReal();
+      },
+
+      setRealSymbol: (sym) => {
+        if (sym === get().realSymbol) return;
+        set((st) => ({ realSymbol: sym, playing: false, account: createAccount(st.account.settings), clock: 0 }));
+        void get().loadReal();
+      },
+
+      /**
+       * Fetch the chosen instrument and timeframe from the local data server. Each call
+       * takes a token so a slow response for an instrument the user has already moved
+       * away from cannot overwrite the current one.
+       */
+      loadReal: async () => {
+        const token = ++realLoadToken;
+        const { realSymbol, timeframe } = get();
+        set({ realStatus: 'loading', realError: null });
+        try {
+          if (get().realSymbols.length === 0) {
+            const list = await fetchRealSymbols();
+            if (token !== realLoadToken) return;
+            set({ realSymbols: list });
+          }
+          const res = await fetchRealHistory(realSymbol, timeframe);
+          if (token !== realLoadToken) return;
+          const spec = get().realSymbols.find((x) => x.symbol === realSymbol);
+          realFeed = new RealFeed(realSymbol, timeframe, res.bars, spec?.decimals ?? 2);
+          // Start part-way in so there is history on screen to read before the first trade.
+          const start = Math.min(Math.max(60, Math.floor(res.bars.length * 0.6)), res.bars.length - 2);
+          set((st) => ({
+            realStatus: 'ready',
+            realMeta: { source: res.source, cached: res.cached, stale: res.stale, bars: res.bars.length },
+            cursor: Math.max(0, start),
+            subtick: SUBTICKS - 1,
+            clock: st.clock + 1,
+            account: createAccount(st.account.settings),
+          }));
+        } catch (e) {
+          if (token !== realLoadToken) return;
+          realFeed = null;
+          set({ realStatus: 'error', realError: e instanceof Error ? e.message : String(e), playing: false });
+        }
+      },
     }),
     {
       name: 'tradelab-sim-v1',
-      partialize: (s) => ({ seed: s.seed, symbol: s.symbol, timeframe: s.timeframe, cursor: s.cursor, subtick: s.subtick, speed: s.speed, account: s.account, overlays: s.overlays }),
+      partialize: (s) => ({ seed: s.seed, symbol: s.symbol, timeframe: s.timeframe, cursor: s.cursor, subtick: s.subtick, speed: s.speed, account: s.account, overlays: s.overlays, source: s.source, realSymbol: s.realSymbol }),
       onRehydrateStorage: () => (state) => {
         if (state) {
           market = new Market(state.seed, SYMBOLS);
           state.setHydrated();
+          // Bars are never persisted, so a session resumed in real mode has no feed yet.
+          if (state.source === 'real') void state.loadReal();
         }
       },
     },
   ),
 );
 
-/** Chart data for the active symbol at the current clock. */
+/** Chart data for the active symbol at the current clock, from whichever market is live. */
 export function chartBars(symbol: string, tf: Timeframe, cursor: number, subtick: number): Bar[] {
+  if (useSim.getState().source === 'real') return realFeed ? realFeed.chartBars(cursor, subtick) : [];
   return market.feed(symbol).chartBars(tf, cursor, subtick);
+}
+
+/** The instrument actually being replayed, whichever mode is active. */
+export function activeSymbol(): string {
+  const st = useSim.getState();
+  return st.source === 'real' ? st.realSymbol : st.symbol;
+}
+
+/** Decimal places for the active instrument. */
+export function activeDecimals(): number {
+  const st = useSim.getState();
+  if (st.source === 'real') return realFeed?.decimals ?? st.realSymbols.find((x) => x.symbol === st.realSymbol)?.decimals ?? 2;
+  return SYMBOL_MAP[st.symbol]?.decimals ?? 2;
 }
 
 export function currentPrice(symbol: string) {
