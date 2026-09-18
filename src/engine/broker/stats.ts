@@ -13,8 +13,8 @@ export interface TradeStats {
   avgLoss: number;
   profitFactor: number;
   expectancy: number; // $ per trade
+  /** Mean R across trades that have an R-multiple. This is also the expectancy in R. */
   avgR: number | null;
-  expectancyR: number | null;
   bestTrade: number;
   worstTrade: number;
   longestWinStreak: number;
@@ -72,7 +72,6 @@ export function computeStats(trades: Trade[]): TradeStats {
     profitFactor: grossLoss > 0 ? grossProfit / grossLoss : grossProfit > 0 ? Infinity : 0,
     expectancy: count ? netPnl / count : 0,
     avgR: rTrades.length ? rTrades.reduce((s, t) => s + (t.rMultiple ?? 0), 0) / rTrades.length : null,
-    expectancyR: rTrades.length ? rTrades.reduce((s, t) => s + (t.rMultiple ?? 0), 0) / rTrades.length : null,
     bestTrade: count ? Math.max(...trades.map((t) => t.pnl)) : 0,
     worstTrade: count ? Math.min(...trades.map((t) => t.pnl)) : 0,
     longestWinStreak: lw,

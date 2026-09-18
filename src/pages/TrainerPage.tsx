@@ -15,7 +15,7 @@ import { SYMBOLS } from '@/engine/market/symbols';
 import { aggregate } from '@/engine/market/generator';
 import type { OHLC } from '@/engine/market/types';
 import { useProgress } from '@/store/progress';
-import { Rng } from '@/lib/rng';
+import { Rng, shuffled } from '@/lib/rng';
 
 /** Patterns eligible for the naming quiz, grouped so distractors are plausible. */
 const QUIZ_POOL: { name: string; label: string; group: string }[] = [
@@ -67,6 +67,11 @@ const QUIZ_POOL: { name: string; label: string; group: string }[] = [
 
 const ALL_FIGS = { ...CANDLE_PATTERNS, ...CHART_PATTERNS };
 
+/** A fresh, opaque seed per round. Keeps each question stable once it is on screen. */
+function newSeed() {
+  return Math.random().toString(36).slice(2, 10);
+}
+
 export function TrainerPage() {
   const [mode, setMode] = useState<'name' | 'next'>('name');
   return (
@@ -93,34 +98,40 @@ export function TrainerPage() {
 function NameGame() {
   const trainerBest = useProgress((s) => s.trainerBest);
   const setTrainerBest = useProgress((s) => s.setTrainerBest);
-  const [round, setRound] = useState(0);
+  const [seed, setSeed] = useState(newSeed);
   const [picked, setPicked] = useState<string | null>(null);
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
   const [asked, setAsked] = useState(0);
 
+  /**
+   * Derived from `seed` alone, so the question cannot change underneath a learner who is
+   * looking at it. Randomness lives in the seed, which only advances when they move on;
+   * calling Math.random() inside the memo meant any recompute silently swapped the chart.
+   */
   const q = useMemo(() => {
-    const rng = new Rng(`name-${round}-${Math.floor(round / 1)}`);
-    const seedShift = Math.floor(Math.random() * 1e9);
-    const r2 = new Rng(`${round}-${seedShift}`);
-    const answer = QUIZ_POOL[Math.floor(r2.float() * QUIZ_POOL.length)];
-    const sameGroup = QUIZ_POOL.filter((p) => p.group === answer.group && p.name !== answer.name);
-    const others = QUIZ_POOL.filter((p) => p.group !== answer.group && p.name !== answer.name);
-    const distractors: typeof QUIZ_POOL = [];
-    const pool = [...sameGroup].sort(() => r2.float() - 0.5);
-    while (distractors.length < 3 && pool.length) distractors.push(pool.shift()!);
-    const pool2 = [...others].sort(() => r2.float() - 0.5);
-    while (distractors.length < 3 && pool2.length) distractors.push(pool2.shift()!);
-    const options = [answer, ...distractors].sort(() => rng.float() - 0.5);
-    return { answer, options };
-  }, [round]);
+    const rng = new Rng(seed);
+    const answer = QUIZ_POOL[Math.floor(rng.float() * QUIZ_POOL.length)];
+    // Distractors come from the same family first, so the choice tests the shape rather
+    // than whether the learner can tell a candle pattern from a chart pattern.
+    const sameGroup = shuffled(
+      QUIZ_POOL.filter((p) => p.group === answer.group && p.name !== answer.name),
+      rng,
+    );
+    const others = shuffled(
+      QUIZ_POOL.filter((p) => p.group !== answer.group && p.name !== answer.name),
+      rng,
+    );
+    const distractors = [...sameGroup, ...others].slice(0, 3);
+    return { answer, options: shuffled([answer, ...distractors], rng) };
+  }, [seed]);
 
   const fig = ALL_FIGS[q.answer.name];
   const correct = picked === q.answer.name;
 
   const next = () => {
     setPicked(null);
-    setRound((r) => r + 1);
+    setSeed(newSeed());
   };
 
   const choose = (name: string) => {
@@ -194,7 +205,7 @@ function NameGame() {
 function NextCandleGame() {
   const trainerBest = useProgress((s) => s.trainerBest);
   const setTrainerBest = useProgress((s) => s.setTrainerBest);
-  const [round, setRound] = useState(0);
+  const [seed, setSeed] = useState(newSeed);
   const [guess, setGuess] = useState<'up' | 'down' | null>(null);
   const [score, setScore] = useState(0);
   const [asked, setAsked] = useState(0);
@@ -202,12 +213,17 @@ function NextCandleGame() {
   const HIDDEN = 5;
   const SHOWN = 45;
 
+  /**
+   * Everything about the chart is derived from `seed`. The instrument and timeframe used
+   * to come from bare Math.random() calls inside this memo, so a recompute could hand the
+   * learner a different chart than the one their answer was scored against.
+   */
   const { visible, full, symbol } = useMemo(() => {
-    const seed = `trainer-${round}-${Math.floor(Math.random() * 1e6)}`;
-    const m = new Market(seed, SYMBOLS);
-    const spec = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+    const pick = new Rng(`pick-${seed}`);
+    const m = new Market(`trainer-${seed}`, SYMBOLS);
+    const spec = SYMBOLS[Math.floor(pick.float() * SYMBOLS.length)];
     const feed = m.feed(spec.symbol);
-    const tf = (['15m', '1h', '1D'] as const)[Math.floor(Math.random() * 3)];
+    const tf = (['15m', '1h', '1D'] as const)[Math.floor(pick.float() * 3)];
     const need = tf === '1D' ? 390 * (SHOWN + HIDDEN + 5) : tf === '1h' ? 60 * (SHOWN + HIDDEN + 5) : 15 * (SHOWN + HIDDEN + 5);
     feed.ensure(need + 10);
     const agg = aggregate(feed.series, 0, Math.min(need, feed.series.length), tf);
@@ -215,11 +231,14 @@ function NextCandleGame() {
     const window = agg.slice(start, start + SHOWN + HIDDEN);
     const toOhlc = (b: { open: number; high: number; low: number; close: number; volume: number }): OHLC => ({ o: b.open, h: b.high, l: b.low, c: b.close, v: b.volume });
     return { visible: window.slice(0, SHOWN).map(toOhlc), full: window.map(toOhlc), symbol: spec.symbol };
-  }, [round]);
+  }, [seed]);
 
   const startClose = visible[visible.length - 1]?.c ?? 0;
   const endClose = full[full.length - 1]?.c ?? 0;
-  const actual = endClose >= startClose ? 'up' : 'down';
+  // An exact tie is a push. Folding it into "up" would hand the Higher button free wins in
+  // a drill whose entire lesson is that direction is close to a coin flip.
+  const tied = endClose === startClose;
+  const actual = endClose > startClose ? 'up' : 'down';
   const movePct = startClose ? ((endClose - startClose) / startClose) * 100 : 0;
 
   const choose = useCallback(
@@ -227,18 +246,18 @@ function NextCandleGame() {
       if (guess) return;
       setGuess(g);
       setAsked((a) => a + 1);
-      if (g === actual) {
+      if (g === actual || tied) {
         const s = score + 1;
         setScore(s);
         setTrainerBest('next-candle', s);
       }
     },
-    [guess, actual, score, setTrainerBest],
+    [guess, actual, tied, score, setTrainerBest],
   );
 
   useEffect(() => {
     setGuess(null);
-  }, [round]);
+  }, [seed]);
 
   const hitRate = asked ? (score / asked) * 100 : 0;
 
@@ -250,12 +269,12 @@ function NextCandleGame() {
           {asked >= 5 && <strong className={`ml-2 font-mono ${hitRate >= 55 ? 'text-up' : hitRate >= 45 ? 'text-ink' : 'text-down'}`}>{hitRate.toFixed(0)}%</strong>}
         </span>
         <span className="flex items-center gap-1 text-xs text-ink-soft">
-          <Trophy size={13} /> Best run {trainerBest['next-candle'] ?? 0}
+          <Trophy size={13} /> Most correct {trainerBest['next-candle'] ?? 0}
         </span>
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-line bg-surface p-3">
-        <CandleSvg bars={guess ? full : visible} height={280} showVolume fadeBefore={guess ? undefined : undefined} />
+        <CandleSvg bars={guess ? full : visible} height={280} showVolume fadeBefore={guess ? SHOWN : undefined} />
         <p className="mt-1 text-center text-xs text-ink-soft">
           {guess ? `The next ${HIDDEN} candles are revealed.` : `Where does ${symbol} close after ${HIDDEN} more candles?`}
         </p>
@@ -273,14 +292,14 @@ function NextCandleGame() {
       ) : (
         <div className={`rounded-xl border p-4 ${guess === actual ? 'border-up/40 bg-up/5' : 'border-down/40 bg-down/5'}`}>
           <p className="font-bold">
-            {guess === actual ? 'Right direction.' : 'Wrong direction.'} Price moved {movePct >= 0 ? '+' : ''}
+            {tied ? 'Dead flat, so that one is a push.' : guess === actual ? 'Right direction.' : 'Wrong direction.'} Price moved {movePct >= 0 ? '+' : ''}
             {movePct.toFixed(2)}%.
           </p>
           <p className="mt-1 text-sm text-ink-soft">
             Do not read too much into any single result. Over many rounds most people land near 50%, which is exactly the point: direction alone is close to a coin flip. Edges come
             from where you enter, where you exit and how much you risk, not from prediction.
           </p>
-          <button type="button" onClick={() => setRound((r) => r + 1)} className="btn-primary mt-3">
+          <button type="button" onClick={() => setSeed(newSeed())} className="btn-primary mt-3">
             <RotateCcw size={14} /> Next chart
           </button>
         </div>

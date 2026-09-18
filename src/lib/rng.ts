@@ -50,3 +50,18 @@ export class Rng {
     return this.next() < p;
   }
 }
+
+/**
+ * Fisher-Yates. Never reach for `array.sort(() => rng.float() - 0.5)`: the comparator is
+ * inconsistent, so the result depends on the sort implementation rather than on chance.
+ * The trainer used that idiom and put the correct answer in the first of four slots 36% of
+ * the time, which let a learner beat the drill by always clicking the top option.
+ */
+export function shuffled<T>(items: readonly T[], rng: Rng): T[] {
+  const a = [...items];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rng.float() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}

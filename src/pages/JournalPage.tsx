@@ -5,6 +5,7 @@ import { useSim, specOf } from '@/store/sim';
 import { computeStats, maxDrawdown, sharpeLike } from '@/engine/broker/stats';
 import { fmtMoney } from '@/components/sim/OrderTicket';
 import type { Trade } from '@/engine/broker/types';
+import { toCsv } from '@/lib/csv';
 
 const SETUP_TAGS = ['trend pullback', 'breakout', 'range fade', 'reversal', 'momentum', 'news', 'other'];
 const MISTAKE_TAGS = ['no plan', 'moved my stop', 'chased entry', 'oversized', 'exited early', 'revenge trade', 'ignored trend', 'no stop'];
@@ -63,9 +64,9 @@ export function JournalPage() {
   }, [trades]);
 
   const exportCsv = () => {
-    const head = 'id,symbol,direction,qty,entryPrice,exitPrice,entryTime,exitTime,pnl,fees,rMultiple,exitReason,tags,mistakes,notes';
-    const rows = trades.map((t) =>
-      [
+    // prettier-ignore
+    const head = ['id', 'symbol', 'direction', 'qty', 'entryPrice', 'exitPrice', 'entryTime', 'exitTime', 'pnl', 'fees', 'rMultiple', 'exitReason', 'tags', 'mistakes', 'notes'];
+    const rows = trades.map((t) => [
         t.id,
         t.symbol,
         t.direction,
@@ -78,18 +79,21 @@ export function JournalPage() {
         t.fees.toFixed(2),
         t.rMultiple?.toFixed(3) ?? '',
         t.exitReason ?? '',
-        `"${t.tags.join('; ')}"`,
-        `"${(t.mistakes ?? []).join('; ')}"`,
-        `"${t.notes.replace(/"/g, "'")}"`,
-      ].join(','),
-    );
-    const blob = new Blob([[head, ...rows].join('\n')], { type: 'text/csv' });
+        t.tags.join('; '),
+        (t.mistakes ?? []).join('; '),
+        t.notes,
+      ]);
+    const blob = new Blob([toCsv(head, rows)], { type: 'text/csv;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
     a.download = 'tradelab-journal.csv';
+    // Some browsers ignore a click on an anchor that is not in the document, and revoking
+    // the URL in the same tick can cancel the download before it starts.
+    document.body.appendChild(a);
     a.click();
-    URL.revokeObjectURL(url);
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
   if (trades.length === 0) {
@@ -176,6 +180,7 @@ export function JournalPage() {
             <Row label="Short trades" value={`${stats.byDirection.short.count} · $${fmtMoney(stats.byDirection.short.pnl)}`} />
             <Row label="Stopped out" value={String(stats.byExitReason.stop_loss ?? 0)} />
             <Row label="Hit target" value={String(stats.byExitReason.take_profit ?? 0)} />
+            <Row label="Liquidated" value={String(stats.byExitReason.liquidation ?? 0)} />
           </dl>
         </div>
 

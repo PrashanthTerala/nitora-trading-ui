@@ -30,12 +30,14 @@ writeFileSync(
   `
 import * as broker from '@/engine/broker/broker';
 import * as stats from '@/engine/broker/stats';
+import { Rng, shuffled } from '@/lib/rng';
+import { csvCell, toCsv } from '@/lib/csv';
 import { Market } from '@/engine/market/feed';
 import { RealFeed } from '@/engine/market/realFeed';
 import { SYMBOLS, SYMBOL_MAP } from '@/engine/market/symbols';
 import { aggregate, bucketStart, nextSessionMinute, minuteOfSession } from '@/engine/market/generator';
 import * as ind from '@/engine/market/indicators';
-export { broker, stats, Market, RealFeed, SYMBOLS, SYMBOL_MAP, aggregate, bucketStart, nextSessionMinute, minuteOfSession, ind };
+export { broker, stats, Rng, shuffled, csvCell, toCsv, Market, RealFeed, SYMBOLS, SYMBOL_MAP, aggregate, bucketStart, nextSessionMinute, minuteOfSession, ind };
 `,
 );
 
@@ -46,7 +48,7 @@ execSync(
 );
 
 const M = await import(pathToFileURL(bundle).href);
-const { broker, stats, Market, RealFeed, SYMBOLS, ind } = M;
+const { broker, stats, Rng, shuffled, csvCell, toCsv, Market, RealFeed, SYMBOLS, ind } = M;
 
 let pass = 0;
 let fail = 0;
@@ -343,6 +345,82 @@ const near = (a, b, eps = 1e-6) => Math.abs(a - b) < eps;
   // 14. buying power respects leverage
   a = broker.createAccount({ startingCash: 10000, leverage: 3 });
   check('buying power is equity times leverage', near(broker.buyingPower(a, P('X', 50)), 30000));
+}
+
+// ---------------------------------------------------------------- shuffle and csv
+{
+  /**
+   * The trainer shuffles four answer options. A biased shuffle is invisible in use and
+   * silently teaches position-guessing, so the distribution is asserted rather than eyeballed.
+   * The old `sort(() => rng.float() - 0.5)` put the answer first 36% of the time.
+   */
+  const slots = [0, 0, 0, 0];
+  const N = 40000;
+  const rng = new Rng('shuffle-fairness');
+  for (let i = 0; i < N; i++) {
+    const out = shuffled(['answer', 'b', 'c', 'd'], rng);
+    slots[out.indexOf('answer')]++;
+  }
+  const pct = slots.map((c) => (c / N) * 100);
+  const worst = Math.max(...pct.map((p) => Math.abs(p - 25)));
+  check('shuffle puts the answer in each slot about equally often', worst < 1.5, `worst deviation ${worst.toFixed(2)} points from 25%`);
+
+  const sameSeed = (seed) => shuffled([1, 2, 3, 4, 5, 6, 7, 8], new Rng(seed)).join(',');
+  check('shuffle is deterministic for a given seed', sameSeed('s1') === sameSeed('s1'));
+  check('shuffle differs across seeds', sameSeed('s1') !== sameSeed('s2'));
+  check('shuffle keeps every element exactly once', shuffled([1, 2, 3, 4, 5], new Rng('k')).sort((a, b) => a - b).join() === '1,2,3,4,5');
+
+  // CSV: the journal previously turned a trader's quotes into apostrophes, producing a
+  // file that parsed cleanly and no longer said what they wrote.
+  check('csv leaves a plain field unquoted', csvCell('breakout') === 'breakout');
+  check('csv quotes a field containing a comma', csvCell('a,b') === '"a,b"');
+  check('csv doubles an embedded quote', csvCell('he said "hi"') === '"he said ""hi"""');
+  const NL = String.fromCharCode(10);
+  check('csv quotes a field containing a newline', csvCell('one' + NL + 'two') === '"one' + NL + 'two"');
+  check('csv renders null and undefined as empty', csvCell(null) === '' && csvCell(undefined) === '');
+
+  const noteText = 'He said "buy", then' + NL + 'left';
+  const doc = toCsv(['a', 'notes'], [[1, noteText]]);
+  check('csv document starts with a UTF-8 BOM for Excel', doc.charCodeAt(0) === 0xfeff);
+  check('csv document uses CRLF between records', doc.includes(String.fromCharCode(13, 10)));
+
+  /** Parse it back the way a spreadsheet would, and insist the note survived intact. */
+  const parse = (text) => {
+    const rows = [];
+    let row = [];
+    let f = '';
+    let q = false;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      if (q) {
+        if (c === '"') {
+          if (text[i + 1] === '"') {
+            f += '"';
+            i++;
+          } else q = false;
+        } else f += c;
+      } else if (c === '"') q = true;
+      else if (c === ',') {
+        row.push(f);
+        f = '';
+      } else if (c === String.fromCharCode(13)) {
+        /* part of CRLF */
+      } else if (c === NL) {
+        row.push(f);
+        rows.push(row);
+        row = [];
+        f = '';
+      } else f += c;
+    }
+    if (f || row.length) {
+      row.push(f);
+      rows.push(row);
+    }
+    return rows;
+  };
+  const back = parse(doc.slice(1));
+  check('csv round-trips a note containing quotes and a newline', back.length === 2 && back[1][1] === noteText, JSON.stringify(back[1]));
+  check('csv round-trip keeps every row the same width', back.every((r) => r.length === back[0].length));
 }
 
 // ---------------------------------------------------------------- real feed
