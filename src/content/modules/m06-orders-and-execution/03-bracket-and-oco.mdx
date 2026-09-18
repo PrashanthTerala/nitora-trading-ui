@@ -60,7 +60,7 @@ The exits "bracket" the entry, one above and one below. Here it is on a chart.
     { type: "arrow", index: 2, direction: "up", text: "entry fills" },
     { type: "arrow", index: 9, direction: "down", text: "target fills, stop cancelled" }
   ]}
-  caption="Risk $2 to make $6. Once the target fills at bar 9, OCO cancels the stop automatically. If the stop had fired at bar 3 instead, the target would have been cancelled."
+  caption="Risk $2 to make $6. Once the target fills at bar 9, OCO cancels the stop automatically. Bar 3 came within 80 cents of the stop; had it gone that little bit further, the stop would have filled and the target would have been cancelled instead."
   showVolume={false}
 />
 
@@ -86,7 +86,7 @@ A bracket's stop and target are usually GTC orders, which the next lesson explai
 
 ## Common variations
 
-**Scaling out.** Instead of one take-profit at $104, you might place two: sell half at $102 and half at $105. The stop stays for the full size until the first target hills, then many traders move it to breakeven. Brokers differ in how they let you set this up.
+**Scaling out.** Instead of one take-profit at $104, you might place two: sell half at $102 and half at $105. The stop stays for the full size until the first target hits, then many traders move it to breakeven. Brokers differ in how they let you set this up.
 
 **Bracket on a short.** Everything flips. The entry is a sell, the stop-loss is a *buy* stop above, and the take-profit is a *buy* limit below. Same logic, mirror image, and we'll cover shorts properly in [Going Long and Going Short](/learn/m06-orders-and-execution/05-going-long-and-short).
 

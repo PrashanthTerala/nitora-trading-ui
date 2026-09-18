@@ -30,7 +30,7 @@ Then you need an **outsized reaction**. A gap of at least 2 ATR, or a single bar
 
 And you need the reaction to *hold*. A gap that fills within the first hour was not a catalyst move; it was a knee-jerk.
 
-In the simulator, BIOX is designed around gappy catalyst-style behaviour, and NOVA produces sharp momentum bursts. Use those.
+In the simulator, BIOX is designed around gappy catalyst-style behaviour, and NOVA produces sharp momentum bursts. Use those. Note that the simulator has no news feed and no earnings calendar: the gaps and jumps arrive without a headline attached. That is a fair way to practise the *mechanics* of the entry, but it cannot teach you to judge whether a catalyst was real, which on a live market is half the work.
 
 ## The core strategy: gap-and-go with a first-pullback entry
 
@@ -65,11 +65,17 @@ Trading the first minute after news is a fast, dangerous game with wide spreads 
 
 **Size:** 1% risk from entry to stop. On gappy names, consider 0.5% until you have a sample.
 
+<Callout type="info" title="Running this in the simulator">
+
+The simulator has no news events and no trailing-stop order, and it does not draw ATR. Practise the entry on a BIOX gap instead: measure the gap against the height of a typical recent bar rather than against ATR, drop the "no scheduled release" and "do not hold through the next event" rules because there are none to check, and move the bracket's stop by hand for the runner.
+
+</Callout>
+
 ## A worked example
 
-BIOX closed yesterday at $38. Overnight, positive trial data. It opens at $46, a $8 gap, with 1h ATR of $1.20, so the gap is over 6 ATR. First 5m candle volume is 5× average.
+BIOX closed yesterday at $38. Overnight, positive trial data. It opens at $46, an $8 gap, with 1h ATR of $1.20, so the gap is over 6 ATR. First 5m candle volume is 5× average.
 
-Thirty minutes in, price is at $47.20, above the 60% hold level ($42.80). The move has held. From 10:05 to 10:35, price consolidates between $46.60 and $47.40 over six candles. At 10:40, a 5m candle closes at $47.55.
+Thirty minutes in, the high so far is $47.40 and price is at $47.20. Sixty per cent of the way from $38 to $47.40 is $43.64, so price is comfortably above the hold level and the move has held. From 10:05 to 10:35, price consolidates between $46.60 and $47.40 over six candles. At 10:40, a 5m candle closes at $47.55.
 
 - **Entry**: buy stop at $47.45, filled.
 - **Stop**: consolidation low $46.60. Risk: $0.85.
@@ -96,7 +102,7 @@ Never enter in the first five minutes after news. The spread is wide, the fills 
 
 <Callout type="story" title="Leo and the headline">
 
-Leo sees a headline, sees BIOX up 20%, and buys at market within thirty seconds. His fill is $0.60 above the quote. Price spikes another dollar, then drops three. He has no stop because "it was moving too fast". He exits down $2.40 a share, having correctly identified the direction of a move that ended the day up 24%. Being right about the news is not the same as trading it well.
+Leo sees a headline, sees BIOX up 20%, and buys at market within thirty seconds. His fill is $0.60 above the quote he clicked. Price spikes another dollar, then drops three. He has no stop because "it was moving too fast". He exits $2 a share below his fill, $2.60 below the price he thought he was paying, having correctly identified the direction of a move that ended the day up 24%. Being right about the news is not the same as trading it well.
 
 </Callout>
 

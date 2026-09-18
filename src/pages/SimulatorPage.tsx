@@ -236,10 +236,10 @@ function SettingsBar({ onReset, onNewMarket }: { onReset: (s?: Partial<{ startin
       <button type="button" className="btn-ghost py-1.5" onClick={() => onReset({ startingCash: cash, leverage: lev, commissionPerOrder: comm, slippageBps: slip })}>
         <RotateCcw size={13} /> Reset account
       </button>
-      <button type="button" className="btn-ghost py-1.5" onClick={onNewMarket}>
+      <button type="button" className="btn-ghost py-1.5" onClick={() => onNewMarket()}>
         <Sparkles size={13} /> New market
       </button>
-      <p className="text-ink-soft">Resetting clears positions, orders and trade history. A new market re-rolls all eight price series from a fresh seed.</p>
+      <p className="max-w-md text-ink-soft">Reset account clears positions, orders and trade history but keeps the market. New market re-rolls all eight price series from a fresh seed and starts a fresh account, because positions from the old series would be meaningless against new prices.</p>
     </div>
   );
 }

@@ -203,11 +203,28 @@ export const useSim = create<SimState>()(
       },
       updateTrade: (id, patch) => set((s) => ({ account: brokerUpdateTrade(s.account, id, patch) })),
       resetAccount: (settings) => set((s) => ({ account: createAccount({ ...s.account.settings, ...settings }) })),
+      /**
+       * Rolling a new market also starts a fresh account, deliberately.
+       * Every position, order and equity point refers to the old price series, so
+       * carrying them into an unrelated one would invent profit out of nothing: a
+       * position opened at 62 would be marked against a series that now starts near
+       * 142, and resting orders would sit at prices that no longer mean anything.
+       * The configured settings (cash, leverage, costs) are kept, since those are a
+       * deliberate choice rather than a result.
+       */
       newMarket: (seed) => {
-        const s = seed ?? `tradelab-${Math.random().toString(36).slice(2, 8)}`;
+        // Guard against being wired straight to an onClick, which would pass the event.
+        const s = typeof seed === 'string' && seed ? seed : `tradelab-${Math.random().toString(36).slice(2, 8)}`;
         market = new Market(s, SYMBOLS);
         lastPrices = {};
-        set({ seed: s, cursor: START_CURSOR, subtick: SUBTICKS - 1, playing: false, clock: 0 });
+        set((prev) => ({
+          seed: s,
+          cursor: START_CURSOR,
+          subtick: SUBTICKS - 1,
+          playing: false,
+          clock: 0,
+          account: createAccount(prev.account.settings),
+        }));
       },
       setHydrated: () => set({ hydrated: true }),
     }),

@@ -20,11 +20,13 @@ A little boat on the sea can row in any direction it likes, but if the tide is g
 
 ## The top-down routine
 
-Pick three timeframes. A common set, and the one this lesson uses, is **daily, hourly, 5-minute**. Each one is roughly four to six times the one below it, which keeps them related without being redundant. Then work strictly from the top down.
+Pick three timeframes. A common set, and the one this lesson uses, is **daily, hourly, 5-minute**. Each step is at least four to six times the zoom of the one below, which keeps them related without being redundant. Then work strictly from the top down.
 
 ### Step 1: Daily chart for bias
 
 Ask one question: which way is the tide? Use the [trend definition](/learn/m03-market-structure/01-trends): higher highs and higher lows, lower highs and lower lows, or range. Mark the two or three nearest support and resistance zones. Note which Wyckoff season it looks like.
+
+<PatternFigure name="uptrend" caption="Step 1 output. Higher highs and higher lows on the daily chart, so the bias for the day is long and you will only hunt for buying setups." />
 
 The output of this step is a single word: **long**, **short**, or **neutral**. That is your bias. If the daily chart is in an uptrend and price is above the nearest support, the bias is long. You will only look for buying setups today. You are not forbidden from ever shorting, but you accept you are fighting the tide when you do.
 
@@ -85,7 +87,7 @@ The daily, hourly, 5-minute set suits day traders. Swing traders holding for day
 - The output of the daily step is one word (long, short or neutral); the output of the hourly step is a specific zone; the output of the 5-minute step is a turn in structure at that zone.
 - The best trades have all three timeframes aligned; when the daily and hourly disagree, wait.
 - Never hop timeframes to justify keeping a losing trade; the stop was set on the timeframe you entered on.
-- Three timeframes, each four to six times the one below, is enough for any style.
+- Three timeframes, each at least four to six times the zoom of the one below, is enough for any style.
 </KeyTakeaways>
 
 <Quiz questions={[
@@ -93,7 +95,7 @@ The daily, hourly, 5-minute set suits day traders. Swing traders holding for day
   { q: "The daily chart is in an uptrend and the hourly chart is in a downtrend. What is the most sensible interpretation?", options: ["Time to short", "A pullback inside the uptrend is in progress; wait for the hourly chart to turn", "The daily chart is wrong", "Buy immediately"], answer: 1, explain: "A lower-timeframe downtrend inside a higher-timeframe uptrend is usually a pullback. It becomes a long when the hourly structure turns at support, not before." },
   { q: "What is the 5-minute chart used for in this routine?", options: ["Choosing the bias", "Finding the precise entry and a tight stop once price reaches the hourly location", "Drawing the daily levels", "Nothing; it is too noisy"], answer: 1, explain: "The lowest timeframe gives you a turn in small structure at the zone, which sets your entry and your stop." },
   { q: "You entered on a 5-minute setup and price is heading for your stop. You notice the hourly chart still looks bullish. What should you do?", options: ["Move the stop to the hourly structure", "Honour the stop you set on the timeframe you entered on", "Add to the position", "Switch to the weekly chart"], answer: 1, explain: "Hopping timeframes to avoid a stop is the same as moving the goalposts. The trade was defined on the 5-minute structure." },
-  { q: "Which set of timeframes best follows the guideline that each is four to six times the one below?", options: ["Weekly, daily, 4-hour", "Monthly, 1-minute, weekly", "5-minute, 1-minute, 30-second", "Daily, daily, daily"], answer: 0, explain: "Weekly to daily is about five times; daily to 4-hour is about six. The roles stay the same: bias, setup, entry." }
+  { q: "Which set of timeframes best follows the guideline that each step is at least four to six times the zoom of the one below?", options: ["Weekly, daily, 4-hour", "Monthly, 1-minute, weekly", "5-minute, 1-minute, 30-second", "Daily, daily, daily"], answer: 0, explain: "Weekly to daily is about five times; daily to 4-hour is about six. The roles stay the same: bias, setup, entry." }
 ]} />
 
 <TryIt to="/simulator">Pick NOVA. Write down the daily bias in one word. Switch to the 1-hour chart and mark one location where you would want to buy or sell. Then switch to 5-minute bar replay and step forward until price reaches your location. Only then decide whether the structure turns.</TryIt>

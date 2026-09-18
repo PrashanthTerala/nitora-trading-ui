@@ -99,4 +99,4 @@ For most swing and position traders, Level 2 is a curiosity. For scalpers and da
   { q: "A market sell of 800 shares hits a book with 500 bid at $49.98 and 1,200 at $49.95. Where is the best bid afterwards?", options: ["$49.98 with 500", "$49.95 with 900", "$49.95 with 1,200", "$49.92 with 700"], answer: 1, explain: "The sell removes the whole $49.98 level and 300 of the 1,200 at $49.95, leaving 900 there as the new top." }
 ]} />
 
-<TryIt to="/simulator">Open the simulator and place three limit buys at three different prices below the market. Then send a market sell for a small size and watch which of your orders fill first. Price priority in action.</TryIt>
+<TryIt to="/simulator">Open the simulator and place three limit buys at three different prices below the market, then leave them and watch. The one nearest price fills first and the furthest may never fill at all, which is price priority seen from your side of the queue. The simulator has no live order book behind it, so picture the hall from this lesson sitting behind every fill.</TryIt>

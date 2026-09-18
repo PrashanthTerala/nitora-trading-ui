@@ -34,7 +34,7 @@ A rule is testable if two people reading it would place the same order at the sa
 | "Wait for a pullback" | "Price trades down to within 0.2 ATR of the 20 EMA, then closes back above it" |
 | "Use a sensible stop" | "Stop at the low of the trigger candle minus 0.25 ATR" |
 | "Take profit near resistance" | "Limit order at the most recent swing high" |
-| "Only trade when the market is trending" | "ADX(14) on the 1h chart is above 25" |
+| "Only trade when the market is trending" | "The 1h chart has printed two higher highs and two higher lows, and the 20 SMA is above the 50 SMA" |
 | "Size according to conviction" | "Shares equals 1% of account divided by entry minus stop" |
 | "Cut it if it goes badly" | "Close at market if the trade has not reached 1R within 12 candles" |
 
@@ -59,7 +59,7 @@ What follows is a real, fully specified swing plan. Every number is stated, noth
 - Instruments: BLUE, IDX and PETR in the simulator. No BIOX (gap risk), no CRYP (no session structure).
 - Timeframes: 1D for the setup and stop, 1h for the entry trigger.
 - Routine: review charts once per day after the close. Orders are placed for the following session. No intraday screen watching.
-- Maximum 2 open positions, total open risk capped at 2%, per the [heat rule](/learn/m07-risk-management/08-correlation-and-diversification).
+- Maximum 2 open positions, total open risk capped at 2%. That is stricter than the 3% ceiling in the [heat rule](/learn/m07-risk-management/08-correlation-and-diversification), which is allowed: the rule is a maximum, not a target.
 
 **1. Setup** — all four must be true on the daily chart:
 
@@ -93,7 +93,7 @@ What follows is a real, fully specified swing plan. Every number is stated, noth
 - Trail the remainder below each new daily swing low.
 - Exit everything at the measured-move target, or at the trailing stop, whichever comes first.
 - Time stop: if the trade has not reached +1R within 10 daily bars, close it at market.
-- Forbidden: moving the stop further away, adding to a loser, taking a trade that fails any setup condition, trading in the 2 days before a scheduled earnings date.
+- Forbidden: moving the stop further away, adding to a loser, taking a trade that fails any setup condition, trading in the 2 days before a scheduled earnings date. The simulator models no earnings dates, so that last rule sits idle while you practise and becomes live the moment you use this plan on a real instrument.
 
 **7. Review**
 
@@ -110,7 +110,7 @@ BLUE has traded between **$38.00 and $42.00** for 22 daily bars, touching each b
 
 *Entry:* buy limit at $42.00 + $0.09 = **$42.09**, rounded to **$42.10**. Two sessions later price drifts back and fills it.
 
-*Stop:* the last daily swing low inside the range was $40.80. Minus 0.25 × ATR ($0.225) gives **$40.55**. Risk per share is $42.10 − $40.55 = **$1.55**, which is 1.7 ATR, comfortably above the 1 ATR minimum.
+*Stop:* the last daily swing low inside the range was $40.80. Minus 0.25 × ATR ($0.225) gives $40.575, rounded down to **$40.55** so the stop sits a whisker further away rather than a whisker closer. Risk per share is $42.10 − $40.55 = **$1.55**, which is 1.7 ATR, comfortably above the 1 ATR minimum.
 
 *Target:* $42.00 + $4.00 = **$46.00**. Reward is $3.90 per share. $3.90 ÷ $1.55 = **2.52R**, above the 2R minimum, so the trade is valid.
 

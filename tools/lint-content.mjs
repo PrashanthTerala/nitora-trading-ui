@@ -40,6 +40,8 @@ const figureNames = new Set([...figSrc.matchAll(/^\s{2}'([a-z0-9-]+)': \{$/gm)].
 const INDICATORS = new Set(['sma', 'ema', 'sma-vs-ema', 'crossover', 'rsi', 'macd', 'stochastic', 'bollinger', 'atr', 'vwap', 'obv', 'adx', 'fibonacci', 'pivots', 'divergence', 'overload', 'clean']);
 const REGIMES = new Set(['trend-up', 'trend-down', 'range', 'reversal', 'volatile', 'crash', 'intraday']);
 const CALLOUTS = new Set(['tip', 'warning', 'danger', 'info', 'story', 'math', 'eli5']);
+/** Modules that teach shapes, where every lesson must carry at least one figure. */
+const VISUAL_MODULES = new Set(['m01-reading-price', 'm02-candlestick-patterns', 'm03-market-structure', 'm04-chart-patterns', 'm05-indicators']);
 
 // --- glossary ids ---
 let glossaryIds = new Set();
@@ -102,6 +104,22 @@ for (const mod of modules) {
     }
     for (const m of text.matchAll(/<TryIt[^>]*\sto="([^"]+)"/g)) {
       if (!['/simulator', '/trainer', '/journal', '/glossary', '/learn'].includes(m[1]) && !m[1].startsWith('/learn/')) err(`TryIt points at unknown route ${m[1]}`);
+    }
+
+    // The guide requires a figure in any lesson about candles, patterns, structure or
+    // indicators. Those modules teach shapes, and a shape lesson with no picture is a
+    // wall of adjectives. Two slipped through before this was enforced.
+    if (VISUAL_MODULES.has(mod.id) && !/<(PatternFigure|CandleFigure|IndicatorFigure|ChartTypesFigure)\b/.test(text)) {
+      err('is in a visual module but has no figure');
+    }
+
+    // <Compare> renders a two-column grid and expects exactly two markdown lists as
+    // children. With one list, or with the blank lines missing, every bullet lands in
+    // the left column under the wrong heading and the figure reads as nonsense.
+    for (const m of text.matchAll(/<Compare[^>]*>([\s\S]*?)<\/Compare>/g)) {
+      const blocks = m[1].trim().split(/\n\s*\n/).filter((b) => b.trim());
+      const lists = blocks.filter((b) => /^\s*[-*]\s/.test(b));
+      if (lists.length !== 2) err(`<Compare> has ${lists.length} markdown lists, needs exactly 2 (one per column)`);
     }
 
     // quiz structure

@@ -118,6 +118,8 @@ Percent trailing stops work the same way but scale with price. A 3% trail on a $
 
 The catch: a trail that's too tight gets clipped by ordinary noise. Every stock wiggles. If your stock typically moves $2 a day and you trail by $1, you'll be stopped out of nearly every winner within a day or two. The [ATR lesson](/learn/m05-indicators/08-atr) gives you a ruler for "normal wiggle", and the risk module will show you how to use it.
 
+Not every platform offers a trailing stop as an order type, and the simulator on this site does not. That is no great loss: you trail by hand, moving your ordinary stop order up each time price makes a new high, which is what the automatic version does anyway and forces you to look at the chart while doing it.
+
 ## Why stops get "hunted"
 
 You'll hear traders complain that the market "went for their stop" and then reversed. Sometimes that's paranoia. Sometimes it's real, and the reason is simple: stops cluster.

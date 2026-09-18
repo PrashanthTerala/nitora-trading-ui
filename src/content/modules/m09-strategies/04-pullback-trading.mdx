@@ -51,14 +51,20 @@ Every rule, in order.
 **Target:**
 
 - Primary target: the most recent higher high (the swing high before the pullback). If that is less than 1.5R away, skip the trade.
-- Extended target: a measured move equal to the previous leg, projected from the pullback low. Take half at the first target, move the stop to breakeven, and let the rest run to the extended target.
+- Extended target: a measured move equal to the previous leg, projected from the pullback low. Take half at the first target, move the stop to breakeven, and let the rest run to the extended target, lifting the stop under each new 15m higher low as it forms.
 
 **Management:**
 
-- No adjustment until the first target. Then breakeven stop on the remainder.
+- No adjustment until the first target. Then breakeven stop on the remainder, lifted under each new higher low after that.
 - Time stop: if the trade has gone nowhere for 12 candles (three hours on the 15m), close it. A good pullback resumes quickly.
 
 **Size:** 1% risk from entry to stop. See the [position sizer](/learn/m07-risk-management/02-the-one-percent-rule).
+
+<Callout type="info" title="Running this in the simulator">
+
+Two rules above use ATR, which the simulator does not draw. Judge them by eye instead: for the void condition, treat a close sitting clearly below the average, roughly as far below it as a normal bar is tall, as a failed pullback; for the stop buffer, use a few ticks below the pullback low. The simulator's overlays are EMA 9, EMA 21, SMA 20 and SMA 50, so use SMA 20 in place of the 20 EMA and SMA 50 in place of the 50.
+
+</Callout>
 
 <Callout type="tip">
 
@@ -116,4 +122,4 @@ Do not "anticipate" the trigger by buying when price first touches the EMA. The 
   { q: "Why does the strategy include a 12-candle time stop?", options: ["To reduce commissions", "Because a healthy pullback resumes quickly; one that stalls is more likely to fail", "Because the platform requires it", "To force more trades per day"], answer: 1, explain: "A pullback that does not resume within a few hours has lost its momentum, and holding it ties up risk in a weakening setup." }
 ]} />
 
-<TryIt to="/simulator">Open the simulator on NOVA, 15m, with a 20 EMA and 50 EMA. Check the 1h filter first. Replay at moderate speed and take only pullbacks that meet every rule, using a bracket order with the first target. Tag each in the journal as pullback and note whether the dip had all three quality signs.</TryIt>
+<TryIt to="/simulator">Open the simulator on NOVA, 15m, with the SMA 20 and SMA 50 overlays on. Check the 1h filter first. Replay at moderate speed and take only pullbacks that meet every rule, using a bracket order with the first target. Tag each in the journal as pullback and note whether the dip had all three quality signs.</TryIt>

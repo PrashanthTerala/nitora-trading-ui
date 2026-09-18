@@ -40,7 +40,9 @@ Correlation stacks, and most traders only notice the top layer.
 
 **Direction correlation.** Five longs are correlated by being longs. Genuinely separate compartments need some shorts, or instruments with different drivers entirely.
 
-The simulator makes this easy to feel. NOVA, IDX and BIOX all follow broad risk appetite, so holding all three long is close to one large position. AURM behaves like gold and often moves against them, PETR follows energy, and FXEU has its own rhythm.
+The simulator's instruments are labelled by what they stand for, which makes the sorting easy to practise. NOVA is growth tech, IDX is the broad index and BIOX a small-cap biotech, and in a real market all three would ride the same risk appetite, so holding all three long would be close to one large position. AURM stands in for gold, PETR for energy and FXEU for a currency pair: different drivers, different bets.
+
+One honest caveat. Each simulated instrument is generated independently, so you will not actually see them move together on the charts the way real ones do. Use the labels to rehearse the slot rule below; take the correlation itself from real markets, where it is very real indeed.
 
 ## In a crisis, correlation goes to one
 
@@ -96,8 +98,8 @@ A worked case. You hold NOVA long at 1% and now like BIOX long. Both rise with t
   { q: "What does a correlation of plus 0.9 between two instruments mean?", options: ["They move in opposite directions", "They usually move together closely", "One always leads the other by a day", "They are unrelated"], answer: 1, explain: "Close to plus 1 means near-lockstep movement, so holding both is close to holding one twice." },
   { q: "What typically happens to correlations during a sharp market selloff?", options: ["They fall towards zero", "They rise towards one", "They become negative", "They stay exactly the same"], answer: 1, explain: "Investors sell whatever they can to raise cash, so unrelated assets fall together." },
   { q: "Under a 3% total open risk cap, you already hold three positions at 1% each. A good setup appears. What do you do?", options: ["Take it at 1%, good setups are rare", "Take it at 2% since it looks strong", "Take no new trade until a position closes or a stop reaches breakeven", "Cancel one of the existing stops"], answer: 2, explain: "The cap is the cap. A position whose stop has moved to breakeven frees a slot because it can no longer lose money." },
-  { q: "Which basket in the simulator gives you the most genuinely separate compartments?", options: ["NOVA, IDX and BIOX long", "NOVA, AURM and FXEU", "Five different technology names", "CRYP long twice at half size"], answer: 1, explain: "NOVA, AURM and FXEU are driven by different things, whereas NOVA, IDX and BIOX all follow broad risk appetite." },
+  { q: "Judging by what they represent, which basket would give you the most genuinely separate compartments in a real market?", options: ["NOVA, IDX and BIOX long", "NOVA, AURM and FXEU", "Five different technology names", "CRYP long twice at half size"], answer: 1, explain: "Growth tech, gold and a currency pair have different drivers, whereas a tech name, the index and a biotech all ride broad risk appetite." },
   { q: "An airline long, a hotel long and an oil producer long are in three different sectors. Are they diversified?", options: ["Yes, different sectors always means diversified", "Not necessarily; they can share a travel and fuel theme", "Yes, as long as each risks 1%", "Only if they are all shorts"], answer: 1, explain: "Theme correlation cuts across sector labels, and the actual driver is what matters." }
 ]} />
 
-<TryIt to="/simulator">Open the simulator and put NOVA, IDX and AURM on the screen together over the same period. Watch which two rise and fall in step and which one goes its own way. Then open three positions totalling 3% of risk and check that no more than one slot went to a single driver.</TryIt>
+<TryIt to="/simulator">Open the simulator and, before you place anything, write down which real-world driver each instrument you are watching stands for. Then open three positions totalling no more than 3% of risk, and check that no more than one full slot went to a single driver. The discipline you are practising is the sorting, not the chart reading.</TryIt>

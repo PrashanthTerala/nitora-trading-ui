@@ -64,9 +64,9 @@ A mean reversion strategy that sells the top of a range and buys the bottom, fro
 
 **Setup** — all must be true:
 
-1. Timeframe 1h. Indicators: Bollinger Bands (20, 2), RSI(14), ADX(14).
-2. ADX(14) below 20. The single strongest filter; above 25, fade nothing.
-3. The middle band is flat: no more than 1 ATR higher or lower than it was 20 bars ago.
+1. Timeframe 1h. Indicators: Bollinger Bands (20, 2), RSI(14), and ADX(14) where your platform has it.
+2. ADX(14) below 20. On a platform that draws it this is the single strongest filter; above 25, fade nothing. The simulator does not draw ADX, so there the flat-band test below does this job.
+3. The middle band is flat: no more than 1 ATR higher or lower than it was 20 bars ago, with both outer bands level rather than sloping.
 4. At least two touches of each side of the range.
 
 <IndicatorFigure indicator="bollinger" regime="range" caption="Price stretching to the outer band and returning to the middle. The trade is the return, not the stretch." />
@@ -77,7 +77,7 @@ A mean reversion strategy that sells the top of a range and buys the bottom, fro
 
 **Target.** The middle Bollinger Band at the time of entry. If it is less than 1R away, skip the trade.
 
-**Management.** No breakeven move; these trades wobble before they work. Close at market if the target is not reached within 10 candles, or immediately if ADX rises above 25.
+**Management.** No breakeven move; these trades wobble before they work. Close at market if the target is not reached within 10 candles, or immediately if ADX rises above 25; in the simulator, close instead the moment price starts walking along the far band while the middle band tilts, which is the same warning arriving through the bands.
 
 **Size.** 1% of the account.
 
@@ -116,9 +116,9 @@ A day-trading strategy that lets the first fifteen minutes of the session define
 
 1. Mark the high and low of the first three 5m bars of the session. That is the **opening range**.
 2. The range height is at least 2 × and no more than 6 × the 5m ATR(14). Smaller is noise; larger makes the stop unusable.
-3. No scheduled economic release in the next 30 minutes.
+3. No scheduled economic release in the next 30 minutes. The simulator has no calendar, so this condition is always satisfied there and always needs checking on a live market.
 
-**Entry trigger.** A buy stop 1 tick above the opening range high and a sell stop 1 tick below the low, as an OCO pair, valid until 11:00. Whichever fills cancels the other. **One attempt per side per day**: if you are stopped out, that direction is finished for the session.
+**Entry trigger.** A buy stop 1 tick above the opening range high and a sell stop 1 tick below the low, as an OCO pair, valid until 11:00. Whichever fills cancels the other. The simulator has no OCO pairing, so place both stop orders and cancel the survivor by hand the moment one fills. **One attempt per side per day**: if you are stopped out, that direction is finished for the session.
 
 **Stop.** For a long, the opening range midpoint minus 0.2 × ATR; mirror for a short. The midpoint rather than the far side, because a genuine breakout should not return halfway into the box.
 
@@ -130,15 +130,15 @@ A day-trading strategy that lets the first fifteen minutes of the session define
 
 ### Worked example
 
-IDX on the 5m. The first three bars make a high of **5,020** and a low of **5,000**, so the opening range height is **20 points**. The 5m ATR is 5 points, so the range is 4 × ATR, inside the allowed band. No data release is due, and the tick size is 0.5.
+IDX on the 5m. The first three bars make a high of **5,020** and a low of **5,000**, so the opening range height is **20 points**. The 5m ATR is 5 points, so the range is 4 × ATR, inside the allowed band. No data release is due, and IDX trades in ticks of 0.25.
 
-- **Entry:** buy stop at **5,020.5**. It fills on the fifth bar.
-- **Stop:** midpoint 5,010 − (0.2 × 5) = **5,009**. Risk **11.5 points**.
-- **First target:** 5,020 + 20 = **5,040**. Reward 19.5 points, or **1.70R**. Valid.
-- **Extended target:** 5,020 + 40 = **5,060**, a reward of 39.5 points or **3.43R**.
-- **Size:** $100 ÷ 11.5 = 8.7, so **8 units**. Loss at the stop: $92.
+- **Entry:** buy stop at **5,020.25**. It fills on the fifth bar.
+- **Stop:** midpoint 5,010 − (0.2 × 5) = **5,009**. Risk **11.25 points**.
+- **First target:** 5,020 + 20 = **5,040**. Reward 19.75 points, or **1.76R**. Valid.
+- **Extended target:** 5,020 + 40 = **5,060**, a reward of 39.75 points or **3.53R**.
+- **Size:** $100 ÷ 11.25 = 8.9, so **8 units**. Loss at the stop: $90.
 
-Price reaches 5,040. Sell 4 units for 4 × 19.5 = **$78** and move the stop on the rest to 5,020.5. The move extends to 5,060 and the last 4 close for 4 × 39.5 = **$158**. Total: **$236** on a $92 risk, or **+2.57R**.
+Price reaches 5,040. Sell 4 units for 4 × 19.75 = **$79** and move the stop on the rest to 5,020.25. The move extends to 5,060 and the last 4 close for 4 × 39.75 = **$159**. Total: **$238** on a $90 risk, or **+2.64R**.
 
 **Expected performance.** A low win rate strategy: roughly **35%** winners, the scale-out giving average wins near 2.5R against 1R losses, for about **+0.2R to +0.3R per trade** plus small scratches from the time stop. You must be able to sit through the streaks described in [win rate versus reward](/learn/m07-risk-management/06-win-rate-vs-rr).
 
@@ -179,11 +179,11 @@ Those expectancies assume you follow the rules exactly and subtract costs, and n
   { q: "In Strategy A, entry is $218.55, the stop is $216.88 and the first target is $222.40. Is the trade valid under the rules?", options: ["No, the stop is too tight", "Yes, the reward of $3.85 against $1.67 of risk is 2.31R, above the 1.5R minimum", "No, the target must be at least 3R", "Only if ADX is above 25"], answer: 1, explain: "3.85 divided by 1.67 is about 2.31, which clears the 1.5R requirement." },
   { q: "In Strategy B, a candle closes below the lower Bollinger Band with RSI at 26. What do you do?", options: ["Buy immediately at the close", "Wait for the next candle to close back inside the bands with a bullish body", "Sell short", "Widen the stop and buy half"], answer: 1, explain: "The close outside is the setup. The close back inside is the trigger. Buying while price is still outside is catching a falling knife." },
   { q: "Strategy C: the opening range is 5,000 to 5,020 and the 5m ATR is 5 points. Where does the long stop go?", options: ["5,000", "5,009", "5,015", "5,019.5"], answer: 1, explain: "The stop is the midpoint of 5,010 minus 0.2 ATR, which is 1 point, giving 5,009." },
-  { q: "With that stop and an entry at 5,020.5, what R does the first target at 5,040 offer?", options: ["1.00R", "1.70R", "2.50R", "3.43R"], answer: 1, explain: "Reward is 19.5 points against 11.5 points of risk, which is about 1.70R." },
+  { q: "With that stop and an entry at 5,020.25, what R does the first target at 5,040 offer?", options: ["1.00R", "1.76R", "2.50R", "3.53R"], answer: 1, explain: "Reward is 19.75 points against 11.25 points of risk, which is about 1.76R." },
   { q: "You are long a Strategy B fade and ADX climbs from 17 to 26. What do the rules say?", options: ["Hold; the target is close", "Close the position, because the range is turning into a trend", "Add at the lower price", "Move the stop further away"], answer: 1, explain: "The regime filter has failed, and a breaking range is exactly where mean reversion takes its largest losses." },
   { q: "Which strategy would you avoid running on AURM in the simulator?", options: ["Strategy A, the trend pullback", "Strategy B, the range fade", "Both B and C", "None of them"], answer: 0, explain: "AURM is built to mean-revert, so it suits the range fade and is poor ground for a trend-following pullback." },
   { q: "Why does Strategy C allow only one attempt per side per day?", options: ["To reduce commissions", "Because a directionless day produces repeated false breakouts in both directions", "Because the platform limits orders", "To guarantee a winning session"], answer: 1, explain: "On a choppy day price can break the high, fail, break the low and fail again, so the rule caps the damage from that pattern." },
   { q: "What is the strongest argument for trading only one of these three?", options: ["The other two do not work", "Running all three means you always have a reason to trade and never gather enough trades to measure any of them", "Brokers penalise multiple strategies", "One strategy always outperforms"], answer: 1, explain: "Without a hundred trades on one set of rules you cannot tell an edge from noise, and always having a setup available is the opposite of selectivity." }
 ]} />
 
-<TryIt to="/simulator">Choose one strategy today. For A, open NOVA on the 15m with the 1h filter checked first. For B, open BLUE on the 1h with Bollinger Bands, RSI and ADX. For C, open IDX on the 5m and mark the first three bars of the session. Replay bar by bar, take only setups that pass every rule, and tag each trade with the strategy letter in the journal so you can measure them separately.</TryIt>
+<TryIt to="/simulator">Choose one strategy today. For A, open NOVA on the 15m with the SMA 20 and SMA 50 overlays, having checked the 1h filter first. For B, open BLUE on the 1h with the Bollinger overlay and the RSI panel. For C, open IDX on the 5m and mark the first three bars of the session. The simulator does not draw ATR, so read those distances off the height of a typical recent bar. Replay bar by bar, take only setups that pass every rule, and tag each trade with the strategy letter in the journal so you can measure them separately.</TryIt>

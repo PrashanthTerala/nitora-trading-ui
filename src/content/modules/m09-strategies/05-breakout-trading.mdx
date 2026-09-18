@@ -66,6 +66,12 @@ There are two ways to trade a breakout. Buying the break itself is faster but ea
 
 **Size:** 1% risk from entry to stop.
 
+<Callout type="info" title="Running this in the simulator">
+
+The ATR distances above are there to scale the rules to the instrument's normal bar size; the simulator does not draw ATR and has no trailing-stop order, so estimate them from the height of a typical recent bar and move the bracket's stop by hand under each new higher low. Everything else, including the volume panel you need for the volume filter, is there.
+
+</Callout>
+
 ## A worked example
 
 BIOX on the 1h has ranged between $41 and $46 for four days, with three touches of $46. ATR(14) is $0.70. The range has been tightening; the last two days sat between $44 and $46. A 1h candle closes at $46.90 on volume double the average.

@@ -26,9 +26,9 @@ Ways to check the condition before trading:
 
 - **Structure**: a clear sequence of [higher highs and higher lows](/learn/m03-market-structure/01-trends) (or lower for a downtrend) on the timeframe you trade.
 - **Moving averages**: price above a rising 50 EMA, and the 20 EMA above the 50, for a long. Both sloping the same way.
-- **[ADX](/learn/m05-indicators/11-adx-and-trend-strength)**: above 25 suggests a trend with enough strength to follow; below 20 suggests a range.
+- **[ADX](/learn/m05-indicators/11-adx-and-trend-strength)**: above 25 suggests a trend with enough strength to follow; below 20 suggests a range. The simulator does not draw ADX, so when you practise there, judge strength from structure instead: pullbacks that stay shallow and highs that keep being taken out mean a trend worth following, while overlapping bars that keep crossing back through the averages mean a range.
 
-In the simulator, NOVA, PETR and CRYP tend to produce the longest trends. AURM and BLUE spend more time in ranges and will punish a pure trend approach.
+In the simulator, NOVA, PETR and CRYP tend to produce the longest trends. AURM, BLUE and FXEU spend more time in ranges and will punish a pure trend approach.
 
 ## The core strategy: moving average crossover with trend filter
 
@@ -62,6 +62,12 @@ There are many trend strategies. Here is the foundational one, with every rule s
 
 **Size:** 1% of account risk, from entry to initial stop, as always.
 
+<Callout type="info" title="Running this in the simulator">
+
+The simulator does not draw ATR and has no trailing-stop order type. Practise the same idea by hand: set the initial stop below the most recent swing low, and once per bar close drag the bracket's stop up to sit just under the latest higher low. It is the same rule, measured from structure rather than from a volatility number, and moving it by hand every bar teaches you how often you will want to move it early.
+
+</Callout>
+
 ## What the results look like
 
 Be prepared for this, because it surprises everyone: a classic trend strategy has a **win rate around 30% to 40%**. Most trades are small losses or small wins. A minority run for 5R, 8R, even 15R, and those few trades produce all the profit.
@@ -86,7 +92,7 @@ This is why trend following is hard to *do* even though it is easy to *understan
 
 <Callout type="warning">
 
-The single most common way traders break a trend strategy is by taking profit at 2R or 3R because it feels like a lot. The strategy's entire expectancy lives in the trades that go past 5R. Cap the winners and you have a 35% win rate with 2R winners, which loses money. Do not add a target.
+The single most common way traders break a trend strategy is by taking profit at 2R or 3R because it feels like a lot. The strategy's entire expectancy lives in the trades that go past 5R. Run the hundred trades above again with every winner capped at 2R: you win 25 × 1.5R plus 10 × 2R, which is 57.5R, against the same 58.5R of losses. The 39R profit is gone and the strategy is under water before costs. Do not add a target.
 
 </Callout>
 
@@ -108,10 +114,10 @@ All of them share the DNA: enter with the trend, cut losses small, let winners r
 
 <Quiz questions={[
   { q: "The 20 EMA crosses above the 50 EMA on the 1h chart, but on the daily chart price is below the 50 EMA. What does the strategy say?", options: ["Enter long, the 1h cross is enough", "No trade; the daily filter is bearish", "Enter short", "Wait for RSI confirmation"], answer: 1, explain: "The daily filter must agree. A 1h cross against the daily trend is exactly the whipsaw the filter exists to avoid." },
-  { q: "A trend trade is up 3R and you are tempted to take profit. What does the strategy say?", options: ["Take it; 3R is a good win", "Hold; the trailing stop manages the exit and the big winners fund the strategy", "Take half now", "Move the stop to 2.9R"], answer: 1, explain: "Trend following earns its expectancy from trades that go past 5R. A fixed target at 3R turns a winning strategy into a losing one." },
+  { q: "A trend trade is up 3R and you are tempted to take profit. What does the strategy say?", options: ["Take it; 3R is a good win", "Hold; the trailing stop manages the exit and the big winners fund the strategy", "Take half now", "Move the stop to 2.9R"], answer: 1, explain: "Trend following earns its expectancy from trades that go past 5R. Capping every winner at 3R cuts the hundred-trade result from 39R to about 9R, and capping at 2R turns it negative." },
   { q: "Why is the win rate of a trend-following strategy typically only 30% to 40%?", options: ["Because the entries are bad", "Because confirmation means entering late, and many trends fail soon after a cross", "Because the stops are too tight", "It is not; trend following wins most of the time"], answer: 1, explain: "Waiting for a cross to confirm means paying for certainty with a worse price and frequent small failures." },
   { q: "Which market condition breaks trend following most reliably?", options: ["Strong uptrends", "Extended sideways ranges", "High volume", "Gaps"], answer: 1, explain: "Ranges generate constant crosses, each a small loss. Filters reduce this but cannot eliminate it." },
   { q: "The initial stop rule says to use the swing low or 2 ATR, whichever is wider. Why wider?", options: ["To risk more money", "Trend trades need room to survive normal pullbacks; a tight stop gets hit before the trend resumes", "Because ATR is unreliable", "To make the position bigger"], answer: 1, explain: "A wider stop means fewer shares at the same 1% risk, and a better chance of staying in a trend through its noise." }
 ]} />
 
-<TryIt to="/simulator">Open the simulator on PETR, 1h, and add a 20 EMA and 50 EMA. Switch to 1D and add a 50 EMA as the filter. Replay at high speed and take every valid cross, using a bracket with the initial stop only, then manually trail it 2 ATR below the highest close each bar. Aim for 20 trades. Check the win rate and the size of your biggest winner in the journal.</TryIt>
+<TryIt to="/simulator">Open the simulator on PETR, 1h, and turn on the SMA 20 and SMA 50 overlays as your fast and slow pair. Switch to 1D and turn on SMA 50 as the filter. Replay at high speed and take every valid cross, using a bracket with the initial stop only, then drag that stop up under each new higher low as the bars close. Aim for 20 trades. Check the win rate and the size of your biggest winner in the journal.</TryIt>

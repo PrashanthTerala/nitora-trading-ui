@@ -17,7 +17,7 @@ interface Props {
 
 const TYPES: { id: OrderType; label: string; hint: string }[] = [
   { id: 'market', label: 'Market', hint: 'Fills immediately at the current price. You get speed, not a guaranteed price.' },
-  { id: 'limit', label: 'Limit', hint: 'Fills only at your price or better. You get the price, not a guaranteed fill.' },
+  { id: 'limit', label: 'Limit', hint: 'Fills only if price reaches your limit, and fills at that limit. You get the price, not a guaranteed fill.' },
   { id: 'stop', label: 'Stop', hint: 'Becomes a market order when price reaches the trigger. Used to enter breakouts or to exit losers.' },
   { id: 'stop_limit', label: 'Stop limit', hint: 'Becomes a limit order at the trigger. Protects against a terrible fill, risks no fill at all.' },
 ];

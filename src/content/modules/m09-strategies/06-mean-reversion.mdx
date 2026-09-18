@@ -24,7 +24,7 @@ Mean reversion needs a range. Not a trend. Not a breakout. A range. The checks:
 
 - **Structure**: price has bounced between a clear ceiling and floor at least twice each. Highs are roughly equal, lows are roughly equal. No higher highs and higher lows.
 - **Flat averages**: the 20 and 50 EMAs are close together and roughly horizontal, and price crosses them regularly.
-- **[ADX](/learn/m05-indicators/11-adx-and-trend-strength)** below 20. This is the strongest single filter. Above 25, do not fade anything.
+- **[ADX](/learn/m05-indicators/11-adx-and-trend-strength)** below 20. On a real platform this is the strongest single filter, and above 25 you fade nothing. The simulator does not draw ADX, so the two bullets above and below carry the same job there: equal highs and lows, flat averages, and price crossing the middle band regularly rather than hugging one side.
 - **Bollinger Bands** roughly horizontal, not sloping. Price touching the bands and returning to the middle, not "walking" along them.
 
 In the simulator, AURM is built to mean-revert and is the best place to practise. BLUE and FXEU also spend much of their time in ranges. NOVA and CRYP trend too often; fading them is expensive.
@@ -63,6 +63,12 @@ In the simulator, AURM is built to mean-revert and is the best place to practise
 - **Regime exit**: if ADX rises above 25 while you are in the trade, close it. The range is becoming a trend and your thesis is gone.
 
 **Size:** 1% risk from entry to stop.
+
+<Callout type="info" title="Running this in the simulator">
+
+The simulator draws Bollinger Bands and RSI but not ADX or ATR, so the regime filter and the regime exit need a substitute there. Use the bands themselves: fade only while the middle band is flat and both bands are level, and close the trade if price starts walking along the far band while the middle band tilts, which is the same message ADX would give you a bar or two later. For the 0.5 ATR stop buffer, use roughly the height of a typical recent bar.
+
+</Callout>
 
 <IndicatorFigure indicator="rsi" caption="RSI below 30 confirms that the push to the lower band was a real stretch, not just a quiet drift. The combination filters out weak signals." />
 
@@ -117,4 +123,4 @@ Mean reversion is the strategy where [averaging down](/learn/m07-risk-management
   { q: "Which simulator symbol is built for practising mean reversion?", options: ["NOVA", "CRYP", "AURM", "BIOX"], answer: 2, explain: "AURM is gold-like and mean reverting. NOVA and CRYP trend too often; BIOX gaps." }
 ]} />
 
-<TryIt to="/simulator">Open the simulator on AURM, 1h, and add Bollinger Bands, RSI and check ADX. Replay at moderate speed and take only fades where ADX is under 20, price closed outside a band with RSI beyond 30 or 70, and the next candle closed back inside. Use a bracket with the middle band as target. Track how many losses came from range breaks versus noise.</TryIt>
+<TryIt to="/simulator">Open the simulator on AURM, 1h, and turn on the Bollinger overlay and the RSI panel. Replay at moderate speed and take only fades where the bands are level and the middle band is flat, price closed outside a band with RSI beyond 30 or 70, and the next candle closed back inside. Use a bracket with the middle band as target. Track how many losses came from range breaks versus noise.</TryIt>
