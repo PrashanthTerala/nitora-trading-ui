@@ -56,6 +56,7 @@ export function TradingChart({ bars, symbol, timeframe, overlays, account, decim
   const priceLinesRef = useRef<IPriceLine[]>([]);
   const markersRef = useRef<ISeriesMarkersPluginApi<Time> | null>(null);
   const lastKeyRef = useRef('');
+  const prevLastTimeRef = useRef(0);
   const themeRef = useRef('');
 
   // create chart once
@@ -101,6 +102,7 @@ export function TradingChart({ bars, symbol, timeframe, overlays, account, decim
       priceLinesRef.current = [];
       markersRef.current = null;
       lastKeyRef.current = '';
+      prevLastTimeRef.current = 0;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -201,7 +203,16 @@ export function TradingChart({ bars, symbol, timeframe, overlays, account, decim
     const chart = chartRef.current;
     if (!candles || !chart || bars.length === 0) return;
     const key = `${symbol}|${timeframe}`;
-    const full = key !== lastKeyRef.current;
+    const lastTime = bars[bars.length - 1].time;
+    /**
+     * update() only accepts a time at or after the last one the series holds. Rolling a
+     * new market rewinds the clock to the start of history without changing symbol or
+     * timeframe, so the key alone would not catch it and the chart would throw
+     * "Cannot update oldest data" on every tick afterwards. Any backwards jump forces a
+     * full setData instead.
+     */
+    const wentBackwards = lastTime < prevLastTimeRef.current;
+    const full = key !== lastKeyRef.current || wentBackwards;
 
     const toCandle = (b: Bar) => ({ time: b.time as UTCTimestamp, open: b.open, high: b.high, low: b.low, close: b.close });
 
@@ -214,6 +225,7 @@ export function TradingChart({ bars, symbol, timeframe, overlays, account, decim
     } else {
       candles.update(toCandle(bars[bars.length - 1]));
     }
+    prevLastTimeRef.current = lastTime;
 
     if (volRef.current) {
       const up = cssVar('--color-up', '#22c55e');
