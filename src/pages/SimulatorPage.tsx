@@ -67,7 +67,7 @@ export function SimulatorPage() {
   const clockTime = last ? new Date(last.time * 1000) : new Date();
 
   return (
-    <div className="flex h-[calc(100vh-3.5rem)] flex-col">
+    <div className="flex flex-col lg:h-[calc(100vh-3.5rem)]">
       {/* top bar */}
       <div className="flex shrink-0 flex-wrap items-center gap-3 border-b border-line bg-surface px-3 py-2">
         <select value={symbol} onChange={(e) => setSymbol(e.target.value)} className="input py-1 font-mono font-bold">
@@ -139,8 +139,8 @@ export function SimulatorPage() {
       {showSettings && <SettingsBar onReset={resetAccount} onNewMarket={newMarket} />}
 
       {/* main */}
-      <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
-        <div className="flex min-h-0 flex-1 flex-col">
+      <div className="flex flex-col lg:min-h-0 lg:flex-1 lg:flex-row">
+        <div className="flex flex-col lg:min-h-0 lg:flex-1">
           <div className="flex shrink-0 flex-wrap items-center gap-1 border-b border-line px-3 py-1.5">
             {OVERLAY_LABELS.map((o) => (
               <button key={o.key} type="button" onClick={() => toggleOverlay(o.key)} className={`chip transition ${overlays[o.key] ? 'chip-on' : 'hover:text-ink'}`}>
@@ -149,11 +149,11 @@ export function SimulatorPage() {
             ))}
             <span className="ml-auto hidden text-[11px] text-ink-soft xl:inline">{spec?.description}</span>
           </div>
-          <div className="min-h-[320px] flex-1">
+          <div className="h-[clamp(300px,52vh,460px)] lg:h-auto lg:min-h-[320px] lg:flex-1">
             <TradingChart bars={bars} symbol={symbol} timeframe={timeframe} overlays={overlays} account={account} decimals={spec?.decimals ?? 2} clock={clock} />
           </div>
           {/* bottom panels */}
-          <div className="h-56 shrink-0 border-t border-line">
+          <div className="h-64 shrink-0 border-t border-line lg:h-56">
             <div className="flex items-center gap-1 border-b border-line bg-panel/40 px-2">
               {(['positions', 'orders', 'history', 'events'] as const).map((t) => (
                 <button
@@ -180,7 +180,7 @@ export function SimulatorPage() {
         </div>
 
         {/* right rail */}
-        <aside className="scroll-thin w-full shrink-0 overflow-y-auto border-t border-line bg-surface lg:w-80 lg:border-l lg:border-t-0">
+        <aside className="scroll-thin w-full shrink-0 border-t border-line bg-surface lg:w-80 lg:overflow-y-auto lg:border-l lg:border-t-0">
           <div className="border-b border-line px-3 py-2 text-xs font-bold uppercase tracking-wide text-ink-soft">Order ticket</div>
           <OrderTicket symbol={symbol} price={price} prices={prices} />
           <div className="border-t border-line">

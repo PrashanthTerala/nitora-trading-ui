@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "typecheck": "tsc -b"
+    "typecheck": "tsc -b",
+    "lint:content": "node tools/lint-content.mjs",
+    "test:engine": "node tools/test-engine.mjs",
+    "check": "tsc -b && node tools/lint-content.mjs && node tools/test-engine.mjs"
   },
   "dependencies": {
     "@mdx-js/react": "^3.1.1",
