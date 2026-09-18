@@ -1,0 +1,42 @@
+server:
+  port: ${PORT:5300}
+  # Loopback by default. This service proxies an endpoint we are not licensed to redistribute,
+  # so it must not become reachable from the network without a deliberate override.
+  address: ${BIND_ADDRESS:127.0.0.1}
+  error:
+    # The @RestControllerAdvice owns every error body; Spring's default /error page would
+    # otherwise leak a different shape (and a trace) for anything it handles first.
+    include-stacktrace: never
+    include-message: never
+
+spring:
+  application:
+    name: tradelab-data
+  mvc:
+    throw-exception-if-no-handler-found: true
+  jackson:
+    default-property-inclusion: always
+
+tradelab:
+  version: 1.0.0
+  provider: ${PROVIDER:yahoo}
+  # Extra origins beyond the two dev servers, comma separated.
+  allowed-origins: ${ALLOWED_ORIGINS:}
+  cache:
+    dir: ${CACHE_DIR:.cache}
+    # Grouped by how fast the underlying bars actually change.
+    intraday-ttl: ${CACHE_TTL_INTRADAY:5m}
+    hourly-ttl: ${CACHE_TTL_HOURLY:30m}
+    daily-ttl: ${CACHE_TTL_DAILY:12h}
+  upstream:
+    timeout: ${UPSTREAM_TIMEOUT:15s}
+    connect-timeout: ${UPSTREAM_CONNECT_TIMEOUT:5s}
+    requests-per-second: ${UPSTREAM_RPS:5}
+    yahoo-base-url: ${YAHOO_BASE_URL:https://query1.finance.yahoo.com}
+
+logging:
+  level:
+    root: INFO
+    com.terala.tradelab: INFO
+  pattern:
+    console: "%d{HH:mm:ss.SSS} %-5level %-32logger{32} : %msg%n"
