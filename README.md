@@ -22,7 +22,6 @@ src/
     mdx/                 Components lessons may use (callouts, quizzes, figures, calculators)
     sim/                 Chart, order ticket and panels for the simulator
   pages/                 Home, Learn, Module, Lesson, Simulator, Trainer, Journal, Glossary
-server/                  Spring Boot service for the optional real-data mode (see server/README.md)
 tools/
   lint-content.mjs       Validates all 128 lessons against docs/CONTENT-GUIDE.md
   test-engine.mjs        82 tests over the market generator, indicators and broker
@@ -97,15 +96,22 @@ description: about 1.0x for the currency pair, 1.1x for the index, 2.0x for the 
 the description and every worked example a lie.
 
 **Real data is optional.** It replays actual historical bars served by the Spring Boot service in
-`server/`. Because a provider offers roughly seven days of one-minute bars but ten years of daily
+the separate TradeLab_DataService project. Because a provider offers roughly seven days of one-minute bars but ten years of daily
 ones, there is no single base resolution to aggregate from, so this mode fetches the bars for the
 chosen timeframe directly and changing timeframe refetches. Switching source starts a fresh
 account, for the same reason rolling a new market does: positions are priced against the market
 that created them.
 
-Start it with `mvnw spring-boot:run` in `server/`. With the service down the simulator says so and
-offers a retry; nothing else on the site depends on it. See `server/README.md` for the API and,
-importantly, for the data licensing position.
+That service is a standalone Spring Boot project, kept outside this repository because it has a
+different toolchain, a different release cadence and a licensing position of its own:
+
+```
+../TradeLab_DataService      Spring Boot market-data API, see its README
+```
+
+Start it with `mvnw spring-boot:run` there. With the service down the simulator says so and offers
+a retry; nothing else on the site depends on it. Read that project's README for the API contract
+and, importantly, for the data licensing position.
 
 ## How fills work
 

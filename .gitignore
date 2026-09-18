@@ -4,7 +4,3 @@ dist
 *.log
 .vite
 
-# Spring Boot data service
-server/target/
-server/.cache/
-server/logs/

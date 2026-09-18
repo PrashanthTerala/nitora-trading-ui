@@ -102,6 +102,11 @@ export class RealFeed {
 
 // ---------------------------------------------------------------- API client
 
+/**
+ * The market-data service is a separate project (TradeLab_DataService) with its own
+ * toolchain and release cadence, so it is addressed over HTTP rather than imported.
+ * Override with VITE_DATA_API when it runs somewhere other than the default port.
+ */
 const DEFAULT_BASE = (import.meta.env?.VITE_DATA_API as string | undefined) ?? 'http://localhost:5300';
 
 export interface HistoryResponse {
@@ -130,7 +135,7 @@ async function getJson<T>(path: string, signal?: AbortSignal): Promise<T> {
   try {
     res = await fetch(`${DEFAULT_BASE}${path}`, { signal });
   } catch {
-    throw new DataApiError('Cannot reach the data service. Start it with "mvnw spring-boot:run" in the server folder.', 'offline');
+    throw new DataApiError('Cannot reach the data service. Start the TradeLab_DataService project with "mvnw spring-boot:run".', 'offline');
   }
   if (!res.ok) {
     let msg = `Data server returned ${res.status}`;
