@@ -3,3 +3,8 @@ dist
 .DS_Store
 *.log
 .vite
+
+# Spring Boot data service
+server/target/
+server/.cache/
+server/logs/

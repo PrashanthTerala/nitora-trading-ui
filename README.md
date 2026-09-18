@@ -22,10 +22,12 @@ src/
     mdx/                 Components lessons may use (callouts, quizzes, figures, calculators)
     sim/                 Chart, order ticket and panels for the simulator
   pages/                 Home, Learn, Module, Lesson, Simulator, Trainer, Journal, Glossary
+server/                  Spring Boot service for the optional real-data mode (see server/README.md)
 tools/
   lint-content.mjs       Validates all 128 lessons against docs/CONTENT-GUIDE.md
   test-engine.mjs        82 tests over the market generator, indicators and broker
   test-figures.mjs       Checks all 85 teaching figures draw valid candles
+  check-prices.mjs       Checks lesson examples quote prices the engine actually produces
 docs/
   CONTENT-GUIDE.md       The contract every lesson file follows
 ```
@@ -74,13 +76,36 @@ second one is designed to be humbling.
 profit factor, win rate, maximum drawdown, an equity curve, an R-distribution histogram and
 tagging for setups and mistakes. Exports to CSV.
 
-## How the market works
+## Two markets
 
-Each symbol is a regime-switching random walk in log space, seeded so the same seed always
-produces the same market. Bars are generated at one-minute resolution and aggregated up to the
-requested timeframe. The model includes intraday U-shaped volatility and volume, mean reversion
-toward a slow anchor, rare news jumps, overnight gaps and a Mon–Fri 09:30–16:00 session clock.
-A one-minute bar forms over four sub-ticks so a learner can watch a candle being built.
+The simulator can replay either of two markets, chosen with the toggle above the chart.
+
+**Synthetic is the default.** Each symbol is a regime-switching random walk in log space, seeded
+so the same seed always produces the same market. Bars are generated at one-minute resolution and
+aggregated up to the requested timeframe. The model includes intraday U-shaped volatility and
+volume, mean reversion toward a slow anchor, rare news jumps, overnight gaps and a Mon–Fri
+09:30–16:00 session clock. A one-minute bar forms over four sub-ticks so a learner can watch a
+candle being built.
+
+It is the default because it is deterministic, needs no network, generates unlimited history at
+any resolution, and is the market every lesson example is written against.
+
+Each instrument is calibrated to realize the volatility its specification claims. Measured across
+twelve seeds every one lands between 0.84x and 1.03x of spec, and the 80-day range matches the
+description: about 1.0x for the currency pair, 1.1x for the index, 2.0x for the crypto-like name.
+`npm run test:engine` pins this, because a "calm blue chip" that moves 48% in a quarter makes both
+the description and every worked example a lie.
+
+**Real data is optional.** It replays actual historical bars served by the Spring Boot service in
+`server/`. Because a provider offers roughly seven days of one-minute bars but ten years of daily
+ones, there is no single base resolution to aggregate from, so this mode fetches the bars for the
+chosen timeframe directly and changing timeframe refetches. Switching source starts a fresh
+account, for the same reason rolling a new market does: positions are priced against the market
+that created them.
+
+Start it with `mvnw spring-boot:run` in `server/`. With the service down the simulator says so and
+offers a retry; nothing else on the site depends on it. See `server/README.md` for the API and,
+importantly, for the data licensing position.
 
 ## How fills work
 
@@ -108,9 +133,11 @@ npm run check   # typecheck, then all three suites below
 | `npm run lint:content` | All 128 lessons present and structurally valid |
 | `npm run test:engine` | 82 tests: generator, indicators, broker, statistics |
 | `npm run test:figures` | All 85 teaching figures draw valid candles with in-range annotations |
+| `npm run check:prices` | Lesson examples quote prices the instruments actually trade at |
 
 A figure with an out-of-range annotation index renders silently wrong, so that is
-checked mechanically rather than by eye.
+checked mechanically rather than by eye. The price checker derives each instrument's real
+trading band from the engine itself, so lesson examples cannot drift when the generator changes.
 
 The content linter enforces the contract in `docs/CONTENT-GUIDE.md`: correct file paths, no H1,
 required components, valid figure and indicator names, resolvable internal links, quiz arrays
