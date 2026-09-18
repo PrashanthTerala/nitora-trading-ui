@@ -104,19 +104,19 @@ What follows is a real, fully specified swing plan. Every number is stated, noth
 
 ## The worked example
 
-BLUE has traded between **$38.00 and $42.00** for 22 daily bars, touching each boundary three times. The 14-day ATR is **$0.90**.
+BLUE has traded between **$86.00 and $90.00** for 22 daily bars, touching each boundary three times. The 14-day ATR is **$0.90**.
 
-*Setup check:* range height $4.00 is comfortably above 3 × ATR ($2.70). A daily candle closes at $42.60, which is $0.60 above the range high and above the $0.225 minimum. Volume that day is 1.8 times the 20-day average. All four conditions pass.
+*Setup check:* range height $4.00 is comfortably above 3 × ATR ($2.70). A daily candle closes at $90.60, which is $0.60 above the range high and above the $0.225 minimum. Volume that day is 1.8 times the 20-day average. All four conditions pass.
 
-*Entry:* buy limit at $42.00 + $0.09 = **$42.09**, rounded to **$42.10**. Two sessions later price drifts back and fills it.
+*Entry:* buy limit at $90.00 + $0.09 = **$90.09**, rounded to **$90.10**. Two sessions later price drifts back and fills it.
 
-*Stop:* the last daily swing low inside the range was $40.80. Minus 0.25 × ATR ($0.225) gives $40.575, rounded down to **$40.55** so the stop sits a whisker further away rather than a whisker closer. Risk per share is $42.10 − $40.55 = **$1.55**, which is 1.7 ATR, comfortably above the 1 ATR minimum.
+*Stop:* the last daily swing low inside the range was $88.80. Minus 0.25 × ATR ($0.225) gives $88.575, rounded down to **$88.55** so the stop sits a whisker further away rather than a whisker closer. Risk per share is $90.10 − $88.55 = **$1.55**, which is 1.7 ATR, comfortably above the 1 ATR minimum.
 
-*Target:* $42.00 + $4.00 = **$46.00**. Reward is $3.90 per share. $3.90 ÷ $1.55 = **2.52R**, above the 2R minimum, so the trade is valid.
+*Target:* $90.00 + $4.00 = **$94.00**. Reward is $3.90 per share. $3.90 ÷ $1.55 = **2.52R**, above the 2R minimum, so the trade is valid.
 
 *Size:* $10,000 account, 1% = $100. $100 ÷ $1.55 = 64.5, rounded down to **64 shares**. Loss at the stop: 64 × $1.55 = $99.20.
 
-*Management:* +2R is $3.10 above entry, at **$45.20**. Price gets there; sell 32 shares for +$99.20 and move the stop on the remaining 32 to $42.10. Price continues to $46.00 and the rest closes for 32 × $3.90 = $124.80.
+*Management:* +2R is $3.10 above entry, at **$93.20**. Price gets there; sell 32 shares for +$99.20 and move the stop on the remaining 32 to $90.10. Price continues to $94.00 and the rest closes for 32 × $3.90 = $124.80.
 
 *Result:* $224.00 on a $99.20 risk, or **+2.26R**. Logged as planned 2.52R, realised 2.26R, all rules followed.
 
@@ -155,8 +155,8 @@ A plan earns its authority by being tested. Write it, then take it through the [
 <Quiz questions={[
   { q: "Which of these is a testable entry rule?", options: ["Enter when momentum looks strong", "Enter when price closes above the 20 EMA on the 15m chart", "Enter on a clean pullback", "Enter when the setup is obvious"], answer: 1, explain: "It names the indicator, the timeframe and a condition that is either true or false right now." },
   { q: "What is the difference between a setup and an entry trigger?", options: ["They are the same thing", "The setup is the state of the world that must exist; the trigger is the single event that places the order", "The setup is for longs and the trigger is for shorts", "The trigger comes before the setup"], answer: 1, explain: "You can have a perfect setup and never get a trigger, in which case the correct action is no trade." },
-  { q: "In the example plan, entry is $42.10 and the stop is $40.55 on a $10,000 account risking 1%. How many shares?", options: ["32", "64", "100", "155"], answer: 1, explain: "Risk per share is $1.55, and $100 divided by $1.55 is 64.5, rounded down to 64." },
-  { q: "The same trade has a measured-move target at $46.00. What R does it offer at entry?", options: ["1.5R", "2.0R", "2.5R", "3.9R"], answer: 2, explain: "Reward is $3.90 and risk is $1.55, so 3.90 divided by 1.55 is about 2.52R." },
+  { q: "In the example plan, entry is $90.10 and the stop is $88.55 on a $10,000 account risking 1%. How many shares?", options: ["32", "64", "100", "155"], answer: 1, explain: "Risk per share is $1.55, and $100 divided by $1.55 is 64.5, rounded down to 64." },
+  { q: "The same trade has a measured-move target at $94.00. What R does it offer at entry?", options: ["1.5R", "2.0R", "2.5R", "3.9R"], answer: 2, explain: "Reward is $3.90 and risk is $1.55, so 3.90 divided by 1.55 is about 2.52R." },
   { q: "A rule reads: close below the 20 EMA, unless momentum still looks good. What is wrong with it?", options: ["Nothing, flexibility is useful", "The exception is where every loss will live, because momentum always looks good enough in the moment", "The EMA period is too short", "It should use the SMA instead"], answer: 1, explain: "An escape hatch converts a rule back into a judgement call at exactly the moment judgement is worst." },
   { q: "You broke a plan rule and the trade made money. How should the weekly review count it?", options: ["As a success", "As a rule break", "It should not be counted", "As a success with a note to repeat it"], answer: 1, explain: "Rule breaks are counted regardless of profit, because a profitable break is the one most likely to be repeated." },
   { q: "Which section of a plan is most often missing and most often needed?", options: ["The entry rules", "The forbidden list and explicit risk limits", "The instrument list", "The chart colours"], answer: 1, explain: "Losses come mostly from things traders do, such as moving stops or adding to losers, rather than from setups they failed to find." }

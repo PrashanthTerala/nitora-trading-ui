@@ -36,17 +36,17 @@ A trend-following strategy that waits for a dip: the full specification of the m
 
 ### Worked example
 
-NOVA on the 15m, with the 1h filter passing. NOVA has printed higher highs at $214.00, $218.00 and $222.40, and higher lows at $210.00 and $215.00. The 20 EMA is rising at $217.60 and the 15m ATR is $1.10.
+NOVA on the 15m, with the 1h filter passing. NOVA has printed higher highs at $144.00, $148.00 and $152.40, and higher lows at $140.00 and $145.00. The 20 EMA is rising at $147.60 and the 15m ATR is $1.10.
 
-Price pulls back over four candles. The fourth wicks to $217.10, just under the EMA, and closes at $218.40 with a bullish body and a high of $218.50. Trigger.
+Price pulls back over four candles. The fourth wicks to $147.10, just under the EMA, and closes at $148.40 with a bullish body and a high of $148.50. Trigger.
 
-- **Entry:** $218.55, one tick above the trigger candle's high.
-- **Stop:** $217.10 − (0.2 × $1.10) = **$216.88**. Risk per share **$1.67**.
-- **First target:** $222.40. Reward $3.85, which is **2.31R**, above the 1.5R minimum, so the trade is valid.
-- **Extended target:** the previous leg ran $215.00 to $222.40, a $7.40 move, projected from $217.10 to give **$224.50**.
+- **Entry:** $148.55, one tick above the trigger candle's high.
+- **Stop:** $147.10 − (0.2 × $1.10) = **$146.88**. Risk per share **$1.67**.
+- **First target:** $152.40. Reward $3.85, which is **2.31R**, above the 1.5R minimum, so the trade is valid.
+- **Extended target:** the previous leg ran $145.00 to $152.40, a $7.40 move, projected from $147.10 to give **$154.50**.
 - **Size:** $100 ÷ $1.67 = 59.9, so **59 shares**. Loss at the stop: $98.53.
 
-Price reaches $222.40. Sell 30 shares for 30 × $3.85 = $115.50 and move the stop on the remaining 29 to $218.55. Price runs on to $224.50, closing the rest for 29 × $5.95 = $172.55. Total: **$288.05** on a $98.53 risk, or **+2.92R**.
+Price reaches $152.40. Sell 30 shares for 30 × $3.85 = $115.50 and move the stop on the remaining 29 to $148.55. Price runs on to $154.50, closing the rest for 29 × $5.95 = $172.55. Total: **$288.05** on a $98.53 risk, or **+2.92R**.
 
 **Expected performance.** A win rate around 45% to 55%, with the scale-out producing average winners near 2R against 1R losses, so roughly **+0.3R to +0.4R per trade** in genuinely trending conditions. In a chop it is negative, which is what the filters are for.
 
@@ -83,16 +83,16 @@ A mean reversion strategy that sells the top of a range and buys the bottom, fro
 
 ### Worked example
 
-BLUE on the 1h has ranged between $61.20 and $63.40 for three days, with three touches of each side. ADX is 16, the middle band is flat at $62.30, and ATR is $0.30.
+BLUE on the 1h has ranged between $87.20 and $89.40 for three days, with three touches of each side. ADX is 16, the middle band is flat at $88.30, and ATR is $0.30.
 
-A candle sells off and closes at $61.18, below the lower band at $61.25, with RSI at 28. The next candle wicks to $61.05 and closes at $61.42, back inside the bands with a bullish body. Trigger.
+A candle sells off and closes at $87.18, below the lower band at $87.25, with RSI at 28. The next candle wicks to $87.05 and closes at $87.42, back inside the bands with a bullish body. Trigger.
 
-- **Entry:** $61.42.
-- **Stop:** $61.05 − (0.5 × $0.30) = **$60.90**. Risk per share **$0.52**.
-- **Target:** the middle band at $62.30. Reward $0.88, or **1.69R**. Valid.
+- **Entry:** $87.42.
+- **Stop:** $87.05 − (0.5 × $0.30) = **$86.90**. Risk per share **$0.52**.
+- **Target:** the middle band at $88.30. Reward $0.88, or **1.69R**. Valid.
 - **Size:** $100 ÷ $0.52 = 192.3, so **192 shares**. Loss at the stop: $99.84.
 
-Price returns to $62.30 six candles later: 192 × $0.88 = **$168.96**, or **+1.69R**.
+Price returns to $88.30 six candles later: 192 × $0.88 = **$168.96**, or **+1.69R**.
 
 **Expected performance.** Win rates of 60% to 68% at 1R to 1.5R targets. At 62% with an average 1.2R win against a 1.05R loss: 0.62 × 1.2 − 0.38 × 1.05 = **+0.35R per trade**. It is fragile: a drop to a 55% win rate takes it to +0.19R, and costs eat much of what remains.
 
@@ -176,7 +176,7 @@ Those expectancies assume you follow the rules exactly and subtract costs, and n
 </KeyTakeaways>
 
 <Quiz questions={[
-  { q: "In Strategy A, entry is $218.55, the stop is $216.88 and the first target is $222.40. Is the trade valid under the rules?", options: ["No, the stop is too tight", "Yes, the reward of $3.85 against $1.67 of risk is 2.31R, above the 1.5R minimum", "No, the target must be at least 3R", "Only if ADX is above 25"], answer: 1, explain: "3.85 divided by 1.67 is about 2.31, which clears the 1.5R requirement." },
+  { q: "In Strategy A, entry is $148.55, the stop is $146.88 and the first target is $152.40. Is the trade valid under the rules?", options: ["No, the stop is too tight", "Yes, the reward of $3.85 against $1.67 of risk is 2.31R, above the 1.5R minimum", "No, the target must be at least 3R", "Only if ADX is above 25"], answer: 1, explain: "3.85 divided by 1.67 is about 2.31, which clears the 1.5R requirement." },
   { q: "In Strategy B, a candle closes below the lower Bollinger Band with RSI at 26. What do you do?", options: ["Buy immediately at the close", "Wait for the next candle to close back inside the bands with a bullish body", "Sell short", "Widen the stop and buy half"], answer: 1, explain: "The close outside is the setup. The close back inside is the trigger. Buying while price is still outside is catching a falling knife." },
   { q: "Strategy C: the opening range is 5,000 to 5,020 and the 5m ATR is 5 points. Where does the long stop go?", options: ["5,000", "5,009", "5,015", "5,019.5"], answer: 1, explain: "The stop is the midpoint of 5,010 minus 0.2 ATR, which is 1 point, giving 5,009." },
   { q: "With that stop and an entry at 5,020.25, what R does the first target at 5,040 offer?", options: ["1.00R", "1.76R", "2.50R", "3.53R"], answer: 1, explain: "Reward is 19.75 points against 11.25 points of risk, which is about 1.76R." },

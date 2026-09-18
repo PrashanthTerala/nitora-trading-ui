@@ -10,8 +10,9 @@
     "typecheck": "tsc -b",
     "lint:content": "node tools/lint-content.mjs",
     "test:engine": "node tools/test-engine.mjs",
-    "check": "tsc -b && node tools/lint-content.mjs && node tools/test-engine.mjs && node tools/test-figures.mjs",
-    "test:figures": "node tools/test-figures.mjs"
+    "check": "tsc -b && node tools/lint-content.mjs && node tools/check-prices.mjs && node tools/test-engine.mjs && node tools/test-figures.mjs",
+    "test:figures": "node tools/test-figures.mjs",
+    "check:prices": "node tools/check-prices.mjs"
   },
   "dependencies": {
     "@mdx-js/react": "^3.1.1",

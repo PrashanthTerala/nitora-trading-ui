@@ -74,16 +74,16 @@ The ATR distances above are there to scale the rules to the instrument's normal 
 
 ## A worked example
 
-BIOX on the 1h has ranged between $41 and $46 for four days, with three touches of $46. ATR(14) is $0.70. The range has been tightening; the last two days sat between $44 and $46. A 1h candle closes at $46.90 on volume double the average.
+PETR on the 1h has ranged between $71 and $76 for four days, with three touches of $76. ATR(14) is $0.70. The range has been tightening; the last two days sat between $74 and $76. A 1h candle closes at $76.90 on volume double the average.
 
-Price drifts back over the next three candles to $46.20, within 0.3 ATR of the level, and the next candle closes at $46.75 after a wick to $46.05. That is the retest hold.
+Price drifts back over the next three candles to $76.20, within 0.3 ATR of the level, and the next candle closes at $76.75 after a wick to $76.05. That is the retest hold.
 
-- **Entry**: $46.80.
-- **Stop**: retest candle low $46.05, or 0.5 ATR below $46 which is $45.65. The lower is $45.65. Risk per share: $1.15.
-- **Measured move**: range height $5 ($46 minus $41), projected from $46 = $51. Reward: $4.20, which is 3.65R. Well above the 2R minimum.
+- **Entry**: $76.80.
+- **Stop**: retest candle low $76.05, or 0.5 ATR below $76 which is $75.65. The lower is $75.65. Risk per share: $1.15.
+- **Measured move**: range height $5 ($76 minus $71), projected from $76 = $81. Reward: $4.20, which is 3.65R. Well above the 2R minimum.
 - **Size**: $10,000 account, $100 risk, divided by $1.15 = 86 shares.
 
-If the trade reaches $51, sell 43 shares for $180, move the stop to $46.80, and trail the rest.
+If the trade reaches $81, sell 43 shares for $180, move the stop to $76.80, and trail the rest.
 
 ## Known weaknesses
 
@@ -118,9 +118,9 @@ Sam used to buy every push through resistance the moment it happened. His journa
 <Quiz questions={[
   { q: "A 1h candle wicks $0.40 above a well-tested resistance but closes $0.10 below it. What does the strategy say?", options: ["Buy the breakout", "Not a breakout; a close above the level is required", "Short it immediately", "Wait for RSI to confirm"], answer: 1, explain: "A wick through a level with a close back below it is a fakeout in progress, not a breakout. The rule requires a close above." },
   { q: "After a valid breakout close, price keeps rising for 12 candles without returning to the level. What does the retest strategy say?", options: ["Chase it before it goes higher", "The setup expired after 8 candles; let it go", "Buy at market with a wide stop", "Short the exhaustion"], answer: 1, explain: "Missing runners that never retest is a known cost of the method. Chasing converts a missed trade into a real loss." },
-  { q: "A range is $5 tall and breaks out at $46. Entry on the retest is $46.80 with a stop at $45.65. Is the trade valid?", options: ["No, the target is too close", "Yes; the measured move to $51 is $4.20 reward against $1.15 risk, about 3.65R", "Only if the market is closed", "No, the stop is too wide"], answer: 1, explain: "The measured move from the breakout level gives 3.65R, comfortably above the 2R minimum." },
+  { q: "A range is $5 tall and breaks out at $76. Entry on the retest is $76.80 with a stop at $75.65. Is the trade valid?", options: ["No, the target is too close", "Yes; the measured move to $81 is $4.20 reward against $1.15 risk, about 3.65R", "Only if the market is closed", "No, the stop is too wide"], answer: 1, explain: "The measured move from the breakout level gives 3.65R, comfortably above the 2R minimum." },
   { q: "Which single filter removes the largest share of losing breakout trades?", options: ["Trading only on Fridays", "Requiring the breakout candle to close above the level rather than just wick through it", "Using a 200 EMA", "Doubling the position size"], answer: 1, explain: "Most fakeouts show up as wicks through the level with closes back inside. The close requirement filters them out." },
   { q: "Why does the strategy require volume above the 20-bar average on the breakout candle?", options: ["Because high volume guarantees success", "Because low-volume breakouts fail far more often; volume shows real participation", "Because brokers charge less on high volume", "It does not; volume is optional"], answer: 1, explain: "Volume above average suggests genuine buying rather than a thin push that will collapse. It improves the odds, not guarantees." }
 ]} />
 
-<TryIt to="/simulator">Open the simulator on BIOX, 1h, with volume showing. Replay at moderate speed and mark every resistance level with at least two touches. Take only breakouts with a close above the level on above-average volume, followed by a retest hold. Note in the journal how many breakouts never retested, and how many retests failed.</TryIt>
+<TryIt to="/simulator">Open the simulator on PETR, 1h, with volume showing. Replay at moderate speed and mark every resistance level with at least two touches. Take only breakouts with a close above the level on above-average volume, followed by a retest hold. Note in the journal how many breakouts never retested, and how many retests failed.</TryIt>
