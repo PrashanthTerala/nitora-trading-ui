@@ -57,6 +57,8 @@ export function TradingChart({ bars, symbol, timeframe, overlays, account, decim
   const markersRef = useRef<ISeriesMarkersPluginApi<Time> | null>(null);
   const lastKeyRef = useRef('');
   const prevLastTimeRef = useRef(0);
+  /** Bar count of the last render, to tell a normal tick from a replaced series. */
+  const prevLenRef = useRef(0);
   const themeRef = useRef('');
 
   // create chart once
@@ -103,6 +105,7 @@ export function TradingChart({ bars, symbol, timeframe, overlays, account, decim
       markersRef.current = null;
       lastKeyRef.current = '';
       prevLastTimeRef.current = 0;
+      prevLenRef.current = 0;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -211,8 +214,21 @@ export function TradingChart({ bars, symbol, timeframe, overlays, account, decim
      * "Cannot update oldest data" on every tick afterwards. Any backwards jump forces a
      * full setData instead.
      */
+    /**
+     * The incremental path is only valid when this render continues the last one: same
+     * series, and either the same forming bar or exactly one more. Anything else means
+     * the data underneath was replaced, and update() would either be rejected or leave
+     * the chart showing a stale window.
+     *
+     * Two ways that happens. Rolling a new market rewinds the clock, so the last bar's
+     * time moves backwards and update() throws "Cannot update oldest data". Loading real
+     * history arrives in two steps, a single forming bar and then the full series, so the
+     * bar count jumps by thousands; without this the chart would keep rendering the one
+     * bar it first saw.
+     */
     const wentBackwards = lastTime < prevLastTimeRef.current;
-    const full = key !== lastKeyRef.current || wentBackwards;
+    const jumped = prevLenRef.current > 0 && bars.length !== prevLenRef.current && bars.length !== prevLenRef.current + 1;
+    const full = key !== lastKeyRef.current || wentBackwards || jumped;
 
     const toCandle = (b: Bar) => ({ time: b.time as UTCTimestamp, open: b.open, high: b.high, low: b.low, close: b.close });
 
@@ -226,6 +242,7 @@ export function TradingChart({ bars, symbol, timeframe, overlays, account, decim
       candles.update(toCandle(bars[bars.length - 1]));
     }
     prevLastTimeRef.current = lastTime;
+    prevLenRef.current = bars.length;
 
     if (volRef.current) {
       const up = cssVar('--color-up', '#22c55e');

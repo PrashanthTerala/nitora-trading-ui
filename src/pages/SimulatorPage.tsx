@@ -163,7 +163,7 @@ export function SimulatorPage() {
             <span className="ml-auto hidden text-[11px] text-ink-soft xl:inline">{spec?.description}</span>
           </div>
           <div className="h-[clamp(300px,52vh,460px)] lg:h-auto lg:min-h-[320px] lg:flex-1">
-            <TradingChart bars={bars} symbol={symbol} timeframe={timeframe} overlays={overlays} account={account} decimals={spec?.decimals ?? 2} clock={clock} />
+            <TradingChart bars={bars} symbol={active} timeframe={timeframe} overlays={overlays} account={account} decimals={spec?.decimals ?? 2} clock={clock} />
           </div>
           {/* bottom panels */}
           <div className="h-64 shrink-0 border-t border-line lg:h-56">
@@ -195,8 +195,8 @@ export function SimulatorPage() {
         {/* right rail */}
         <aside className="scroll-thin w-full shrink-0 border-t border-line bg-surface lg:w-80 lg:overflow-y-auto lg:border-l lg:border-t-0">
           <div className="border-b border-line px-3 py-2 text-xs font-bold uppercase tracking-wide text-ink-soft">Order ticket</div>
-          <OrderTicket symbol={symbol} price={price} prices={prices} />
-          <div className="border-t border-line">
+          <OrderTicket symbol={active} price={price} prices={prices} />
+          <div className={`border-t border-line ${isReal ? 'hidden' : ''}`}>
             <div className="px-3 py-2 text-xs font-bold uppercase tracking-wide text-ink-soft">Watchlist</div>
             <ul className="pb-3">
               {SYMBOLS.map((s) => {
