@@ -65,6 +65,23 @@ export function GuidePage() {
         market that created it, so carrying it across would invent profit that was never made.
       </p>
 
+      <h3>Live</h3>
+      <p>
+        The third source follows the market as it trades now. The clock belongs to the market rather than to you, so there is no play, step or speed: the
+        candle on the right edge grows while you watch it. It is the mode to use when you want to feel what it is like to make a decision without knowing
+        what the next bar does, which is the one thing replay can never quite reproduce.
+      </p>
+      <p>
+        <strong>Crypto is genuinely live. Equities are not.</strong> Bitcoin and Ethereum trade continuously and arrive with no measurable delay. Shares,
+        index funds and the currency pair arrive roughly fifteen minutes behind, because real-time exchange data is licensed and expensive in a way that
+        would not teach you anything extra. The bar above the chart always says which you are looking at, including when it does not know.
+      </p>
+      <p>
+        That is a deliberate choice rather than an oversight. Nothing in this course depends on being fast. You are learning to read structure and manage
+        risk, and a chart fifteen minutes behind teaches both exactly as well as one that is instant. The moment being first actually matters, you have left
+        the kind of trading this site is trying to teach.
+      </p>
+
       <h2>3. Trainer</h2>
       <p>
         Two drills. <strong>Name the pattern</strong> shows a randomly generated candle snippet and asks which pattern it is. <strong>Next candle</strong> shows a real-looking chart

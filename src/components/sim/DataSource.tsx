@@ -96,13 +96,13 @@ export function RealSymbolPicker() {
   const realSymbol = useSim((s) => s.realSymbol);
   const realSymbols = useSim((s) => s.realSymbols);
   const setRealSymbol = useSim((s) => s.setRealSymbol);
-  const realStatus = useSim((s) => s.realStatus);
-  const loadReal = useSim((s) => s.loadReal);
+  const loadSymbols = useSim((s) => s.loadSymbols);
 
-  // Populate the list on first mount if the store has not fetched it yet.
+  // Populate the list on first mount. Deliberately not loadReal: the picker wants names, and
+  // fetching a series here would race whichever mode is already loading one.
   useEffect(() => {
-    if (realSymbols.length === 0 && realStatus === 'idle') void loadReal();
-  }, [realSymbols.length, realStatus, loadReal]);
+    void loadSymbols();
+  }, [loadSymbols]);
 
   if (realSymbols.length === 0) {
     return (

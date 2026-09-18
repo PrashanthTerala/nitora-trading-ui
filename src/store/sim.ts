@@ -109,6 +109,7 @@ interface SimState {
   setSource: (s: DataSource) => void;
   setRealSymbol: (s: string) => void;
   loadReal: () => Promise<void>;
+  loadSymbols: () => Promise<void>;
   startLive: () => void;
   stopLive: () => void;
   pollLive: () => Promise<void>;
@@ -160,7 +161,14 @@ export const useSim = create<SimState>()(
       clock: 0,
       hydrated: false,
       source: 'synthetic',
-      realSymbol: 'AAPL',
+      /**
+       * Crypto by default for both real modes, because it is the only instrument class that
+       * is genuinely live: it trades continuously and measured with no detectable feed delay.
+       * Starting on an equity meant a first click on Live landed on "Market closed" most
+       * hours of most days, or on delayed prices during a session. An equity is two clicks
+       * away and its replay history is just as good.
+       */
+      realSymbol: 'BTC-USD',
       realSymbols: [],
       realStatus: 'idle',
       realError: null,
@@ -425,6 +433,24 @@ export const useSim = create<SimState>()(
         set((st) => ({ realSymbol: sym, playing: false, account: createAccount(st.account.settings), clock: 0 }));
         if (get().source === 'live') get().startLive();
         else void get().loadReal();
+      },
+
+      /**
+       * Just the instrument catalogue, for the picker.
+       *
+       * Separate from loadReal because the picker needs a list of names, not a series. It used
+       * to bootstrap itself by calling loadReal, which in live mode fired a full history fetch
+       * that raced the live poll and overwrote its metadata, so the freshness bar never
+       * appeared. Fetching a list should not move the chart.
+       */
+      loadSymbols: async () => {
+        if (get().realSymbols.length > 0) return;
+        try {
+          set({ realSymbols: await fetchRealSymbols() });
+        } catch {
+          // The picker falls back to showing the current symbol as plain text, and whichever
+          // mode the user is in will surface the real error itself.
+        }
       },
 
       /**
