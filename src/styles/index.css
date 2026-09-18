@@ -130,10 +130,18 @@ body {
 .prose-lesson pre code {
   @apply bg-transparent p-0;
 }
+/* Scroll the table, not the page. See ScrollableTable in components/mdx. */
+.table-scroll {
+  @apply -mx-1 my-6 overflow-x-auto px-1;
+}
 .prose-lesson table,
 .callout-body table {
-  @apply my-6 w-full border-collapse overflow-hidden rounded-xl text-[15px];
+  @apply w-full border-collapse overflow-hidden rounded-xl text-[15px];
 }
+.table-scroll > table {
+  @apply my-0;
+}
+
 .prose-lesson th,
 .callout-body th {
   @apply border-b-2 border-line bg-panel px-3 py-2 text-left text-xs font-bold uppercase tracking-wide text-ink-soft;
