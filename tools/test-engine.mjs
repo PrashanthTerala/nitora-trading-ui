@@ -31,10 +31,11 @@ writeFileSync(
 import * as broker from '@/engine/broker/broker';
 import * as stats from '@/engine/broker/stats';
 import { Market } from '@/engine/market/feed';
+import { RealFeed } from '@/engine/market/realFeed';
 import { SYMBOLS, SYMBOL_MAP } from '@/engine/market/symbols';
 import { aggregate, bucketStart, nextSessionMinute, minuteOfSession } from '@/engine/market/generator';
 import * as ind from '@/engine/market/indicators';
-export { broker, stats, Market, SYMBOLS, SYMBOL_MAP, aggregate, bucketStart, nextSessionMinute, minuteOfSession, ind };
+export { broker, stats, Market, RealFeed, SYMBOLS, SYMBOL_MAP, aggregate, bucketStart, nextSessionMinute, minuteOfSession, ind };
 `,
 );
 
@@ -45,7 +46,7 @@ execSync(
 );
 
 const M = await import(pathToFileURL(bundle).href);
-const { broker, stats, Market, SYMBOLS, ind } = M;
+const { broker, stats, Market, RealFeed, SYMBOLS, ind } = M;
 
 let pass = 0;
 let fail = 0;
@@ -342,6 +343,65 @@ const near = (a, b, eps = 1e-6) => Math.abs(a - b) < eps;
   // 14. buying power respects leverage
   a = broker.createAccount({ startingCash: 10000, leverage: 3 });
   check('buying power is equity times leverage', near(broker.buyingPower(a, P('X', 50)), 30000));
+}
+
+// ---------------------------------------------------------------- real feed
+{
+  // A short, deliberately awkward set of real-looking bars: a gap up, a gap down,
+  // an inside bar and a doji, so the partial-bar logic is exercised on real shapes.
+  const bars = [
+    { time: 1700000000, open: 100, high: 104, low: 99, close: 103, volume: 1000 },
+    { time: 1700003600, open: 106, high: 108, low: 105, close: 105.5, volume: 1200 },
+    { time: 1700007200, open: 101, high: 102, low: 96, close: 97, volume: 2000 },
+    { time: 1700010800, open: 97.5, high: 98, low: 97.2, close: 97.6, volume: 800 },
+    { time: 1700014400, open: 97.6, high: 99, low: 96.4, close: 97.6, volume: 900 },
+  ];
+  const f = new RealFeed('TEST', '1h', bars, 2);
+  check('real feed reports its length', f.length === 5);
+  check('real feed clamps a cursor past the end', f.baseBar(99).time === bars[4].time);
+  check('real feed clamps a negative cursor', f.baseBar(-5).time === bars[0].time);
+
+  let partialsOk = true;
+  let convergesOk = true;
+  for (let i = 0; i < bars.length; i++) {
+    for (let k = 0; k < 4; k++) {
+      const p = f.partialBar(i, k);
+      const full = bars[i];
+      // A forming bar can never exceed the finished bar's extremes...
+      if (p.high > full.high + 1e-9 || p.low < full.low - 1e-9) partialsOk = false;
+      // ...and must itself be a valid candle at every step.
+      if (p.high < Math.max(p.open, p.close) - 1e-9 || p.low > Math.min(p.open, p.close) + 1e-9) partialsOk = false;
+      if (p.open !== full.open) partialsOk = false;
+    }
+    const last = f.partialBar(i, 3);
+    if (!near(last.close, bars[i].close) || !near(last.high, bars[i].high) || !near(last.low, bars[i].low) || !near(last.volume, bars[i].volume)) convergesOk = false;
+  }
+  check('real partial bars stay inside the finished bar and stay valid candles', partialsOk);
+  check('real partial bars converge exactly to the finished bar', convergesOk);
+
+  // The forming bar must visit both extremes before it settles, otherwise a stop
+  // sitting inside the bar would never trigger during replay.
+  let visitsExtremes = true;
+  for (let i = 0; i < bars.length; i++) {
+    const seen = [0, 1, 2, 3].map((k) => f.subPrice(i, k));
+    if (Math.max(...seen) < bars[i].high - 1e-9) visitsExtremes = false;
+    if (Math.min(...seen) > bars[i].low + 1e-9) visitsExtremes = false;
+  }
+  check('real sub-ticks visit both extremes of every bar', visitsExtremes);
+
+  const f2 = new RealFeed('TEST', '1h', bars, 2);
+  let deterministic = true;
+  for (let i = 0; i < bars.length; i++) for (let k = 0; k < 4; k++) if (!near(f.subPrice(i, k), f2.subPrice(i, k))) deterministic = false;
+  check('real sub-tick path is deterministic for the same bars', deterministic);
+
+  const mid = f.chartBars(2, 1);
+  check('real chart data ends at the forming bar', mid.length === 3 && mid[2].time === bars[2].time);
+  check('real chart data keeps completed bars intact', near(mid[0].close, 103) && near(mid[1].close, 105.5));
+  let ascending = true;
+  for (let i = 1; i < mid.length; i++) if (mid[i].time <= mid[i - 1].time) ascending = false;
+  check('real chart data is strictly ascending in time', ascending);
+
+  check('real feed reports exhaustion at the last bar', f.exhausted(4) && !f.exhausted(3));
 }
 
 // ---------------------------------------------------------------- stats
