@@ -159,6 +159,38 @@ const near = (a, b, eps = 1e-6) => Math.abs(a - b) < eps;
     if (k === 3 && (!near(p.close, full.close) || !near(p.high, full.high) || !near(p.low, full.low))) partialOk = false;
   }
   check('partial bars stay inside the final bar and converge to it', partialOk);
+
+  // Calibration: an instrument must realize roughly the volatility its spec claims,
+  // otherwise "a calm blue chip" is a lie and no lesson example can quote a price.
+  for (const spec of SYMBOLS) {
+    const ratios = [];
+    const ranges = [];
+    for (let k = 0; k < 4; k++) {
+      const ff = new Market('calib-' + k, SYMBOLS).feed(spec.symbol);
+      const NN = 40 * 390;
+      ff.ensure(NN + 5);
+      const c = ff.series.close;
+      let sum = 0;
+      let sum2 = 0;
+      let lo = Infinity;
+      let hi = -Infinity;
+      for (let i = 1; i < NN; i++) {
+        const r = Math.log(c.get(i) / c.get(i - 1));
+        sum += r;
+        sum2 += r * r;
+        lo = Math.min(lo, c.get(i));
+        hi = Math.max(hi, c.get(i));
+      }
+      const nn = NN - 1;
+      const mean = sum / nn;
+      ratios.push((Math.sqrt(sum2 / nn - mean * mean) * Math.sqrt(252 * 390)) / spec.annualVol);
+      ranges.push(hi / lo);
+    }
+    const med = [...ratios].sort((a, b) => a - b)[1];
+    check(`${spec.symbol} realizes close to its specified volatility`, med > 0.7 && med < 1.35, `ratio=${med.toFixed(2)}`);
+    const maxRange = Math.max(...ranges);
+    check(`${spec.symbol} stays within a believable price band`, maxRange < 6, `range=${maxRange.toFixed(1)}x`);
+  }
 }
 
 // ---------------------------------------------------------------- broker
