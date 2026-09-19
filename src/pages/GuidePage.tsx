@@ -72,20 +72,23 @@ export function GuidePage() {
         what the next bar does, which is the one thing replay can never quite reproduce.
       </p>
       <p>
-        <strong>Live means crypto.</strong> Bitcoin and Ethereum are what you can follow here, and they are genuinely live: the site holds one connection open
-        to the exchange and builds the forming candle out of actual trades as they happen, rather than asking every so often what the price is now. A trade
-        reaches the chart in well under a second, and the candle on the right edge really is the one being traded.
+        <strong>Live means crypto, and it means running your own copy.</strong> Bitcoin and Ethereum are what you can follow, and they are genuinely live: the
+        site holds one connection open to the exchange and builds the forming candle out of actual trades as they happen, rather than asking every so often
+        what the price is now. A trade reaches the chart in well under a second, and the candle on the right edge really is the one being traded.
       </p>
       <p>
-        That is a licensing boundary rather than a technical one. Crypto exchanges publish their trades openly, so this data can be shown to you without
-        anyone paying a fee for the privilege. Share, index and currency prices are licensed: they can be fetched for your own private use, but showing them
-        to somebody else is redistribution, and that needs a paid agreement with the exchange. So a copy of this site that anyone else can reach offers
-        crypto and the synthetic markets. Run your own copy and you can switch the rest on, delayed by roughly fifteen minutes and polled rather than
-        streamed, because that is what an unlicensed feed honestly provides.
+        Real data of any kind is a local feature, and that is a licensing boundary rather than a technical one. Market prices are licensed, and the licensed
+        act is the showing: looking at a chart yourself is one thing, putting it in front of a visitor is redistribution, and that needs permission you do
+        not get by default. This is true of share and index prices, and it is true of the crypto feed too, whose terms are free of charge but still bar
+        showing the data, or charts drawn from it, to anyone outside your own organisation without written consent.
       </p>
       <p>
         The bar above the chart always says what you are looking at — real time, delayed by a stated amount, or delay unknown — and it says the last of
         those rather than guessing. A <em>LIVE</em> badge over a fifteen-minute-old price is exactly the small lie this site exists to argue against.
+      </p>
+      <p>
+        So the version of this site you are most likely to meet runs on the synthetic market, which needs no permission from anyone: it is invented, it works
+        offline, and every worked example in all 128 lessons is written against it. Real replay and live mode are there for when you run your own copy.
       </p>
       <p>
         None of which should matter much to you. Nothing in this course depends on being fast: you are learning to read structure and manage risk, and a
