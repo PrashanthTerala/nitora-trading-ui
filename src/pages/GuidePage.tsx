@@ -72,14 +72,25 @@ export function GuidePage() {
         what the next bar does, which is the one thing replay can never quite reproduce.
       </p>
       <p>
-        <strong>Crypto is genuinely live. Equities are not.</strong> Bitcoin and Ethereum trade continuously and arrive with no measurable delay. Shares,
-        index funds and the currency pair arrive roughly fifteen minutes behind, because real-time exchange data is licensed and expensive in a way that
-        would not teach you anything extra. The bar above the chart always says which you are looking at, including when it does not know.
+        <strong>Live means crypto.</strong> Bitcoin and Ethereum are what you can follow here, and they are genuinely live: the site holds one connection open
+        to the exchange and builds the forming candle out of actual trades as they happen, rather than asking every so often what the price is now. A trade
+        reaches the chart in well under a second, and the candle on the right edge really is the one being traded.
       </p>
       <p>
-        That is a deliberate choice rather than an oversight. Nothing in this course depends on being fast. You are learning to read structure and manage
-        risk, and a chart fifteen minutes behind teaches both exactly as well as one that is instant. The moment being first actually matters, you have left
-        the kind of trading this site is trying to teach.
+        That is a licensing boundary rather than a technical one. Crypto exchanges publish their trades openly, so this data can be shown to you without
+        anyone paying a fee for the privilege. Share, index and currency prices are licensed: they can be fetched for your own private use, but showing them
+        to somebody else is redistribution, and that needs a paid agreement with the exchange. So a copy of this site that anyone else can reach offers
+        crypto and the synthetic markets. Run your own copy and you can switch the rest on, delayed by roughly fifteen minutes and polled rather than
+        streamed, because that is what an unlicensed feed honestly provides.
+      </p>
+      <p>
+        The bar above the chart always says what you are looking at — real time, delayed by a stated amount, or delay unknown — and it says the last of
+        those rather than guessing. A <em>LIVE</em> badge over a fifteen-minute-old price is exactly the small lie this site exists to argue against.
+      </p>
+      <p>
+        None of which should matter much to you. Nothing in this course depends on being fast: you are learning to read structure and manage risk, and a
+        chart fifteen minutes behind teaches both exactly as well as one that is instant. The moment being first actually matters, you have left the kind of
+        trading this site is trying to teach.
       </p>
 
       <h2>3. Trainer</h2>
