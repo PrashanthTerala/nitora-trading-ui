@@ -223,6 +223,81 @@ export function livePollMs(tf: Timeframe): number {
   }
 }
 
+/** What a bar event carries: one bar, and whether it is still open to more trades. */
+export interface LiveBarEvent {
+  bar: Bar;
+  forming: boolean;
+}
+
+export interface LiveStreamHandlers {
+  onSnapshot: (res: LiveResponse) => void;
+  onBar: (event: LiveBarEvent) => void;
+  /** Called when streaming is not available here, so the caller can go back to polling. */
+  onFallback: (reason: string) => void;
+}
+
+/**
+ * Follow an instrument over server-sent events instead of asking repeatedly.
+ *
+ * A trade reaches the chart in well under a second this way, against fifteen to sixty
+ * for polling, and one connection replaces one request per tab per interval.
+ *
+ * Streaming is an optimisation, never a requirement: only crypto has a feed the service
+ * may relay, the service can be configured with it switched off, and a browser may have
+ * no EventSource at all. Every one of those calls onFallback and live mode carries on
+ * polling, slower but correct.
+ *
+ * EventSource reconnects by itself, and the service replies to a reconnect with a fresh
+ * snapshot, so a dropped connection repairs without anything here noticing. The one case
+ * it cannot recover from is never having connected at all, which is what opened guards.
+ */
+export function openLiveStream(symbol: string, tf: Timeframe, handlers: LiveStreamHandlers): () => void {
+  if (typeof EventSource === 'undefined') {
+    handlers.onFallback('This browser cannot hold a stream open.');
+    return () => {};
+  }
+  const url = `${DEFAULT_BASE}/api/live/stream?symbol=${encodeURIComponent(symbol)}&interval=${intervalFor(tf)}`;
+  let source: EventSource;
+  try {
+    source = new EventSource(url);
+  } catch {
+    handlers.onFallback('The data service would not open a stream.');
+    return () => {};
+  }
+  let opened = false;
+  let closed = false;
+
+  source.addEventListener('snapshot', (e) => {
+    opened = true;
+    try {
+      handlers.onSnapshot(JSON.parse((e as MessageEvent).data) as LiveResponse);
+    } catch {
+      // A malformed frame is not worth tearing the stream down for; the next one will do.
+    }
+  });
+  source.addEventListener('bar', (e) => {
+    try {
+      handlers.onBar(JSON.parse((e as MessageEvent).data) as LiveBarEvent);
+    } catch {
+      // As above.
+    }
+  });
+  source.onerror = () => {
+    if (opened || closed) {
+      // Already streaming once, so this is a drop. EventSource retries on its own.
+      return;
+    }
+    closed = true;
+    source.close();
+    handlers.onFallback('This instrument has no live stream; following it by polling instead.');
+  };
+
+  return () => {
+    closed = true;
+    source.close();
+  };
+}
+
 /**
  * Merge a live reading into bars already on screen.
  *
