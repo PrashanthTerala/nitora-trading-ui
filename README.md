@@ -1,4 +1,4 @@
-# TradeLab Academy
+# Nitora Trading Academy
 
 A complete, plain-language school of trading with a realistic paper-trading simulator.
 

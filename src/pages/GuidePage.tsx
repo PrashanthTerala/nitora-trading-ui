@@ -4,7 +4,7 @@ import { SYMBOLS } from '@/engine/market/symbols';
 export function GuidePage() {
   return (
     <div className="prose-lesson mx-auto max-w-3xl">
-      <h1 className="text-3xl font-extrabold tracking-tight">How TradeLab Academy works</h1>
+      <h1 className="text-3xl font-extrabold tracking-tight">How Nitora Trading Academy works</h1>
       <p className="mt-3 text-lg text-ink-soft">The site has four rooms. Use them in this order the first time, then move between them freely.</p>
 
       <h2>1. Learn</h2>

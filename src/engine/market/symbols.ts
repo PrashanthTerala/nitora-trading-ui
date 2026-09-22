@@ -108,7 +108,7 @@ export const SYMBOLS: SymbolSpec[] = [
   },
   {
     symbol: 'IDX',
-    name: 'TradeLab 500 Index',
+    name: 'Nitora 500 Index',
     kind: 'index',
     description: 'A broad market index: smooth, trending, with occasional sharp sell-offs. The backdrop for everything else.',
     basePrice: 5120,

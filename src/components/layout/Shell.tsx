@@ -43,7 +43,7 @@ export function Shell() {
               <GraduationCap size={16} />
             </span>
             <span>
-              TradeLab <span className="text-ink-soft">Academy</span>
+              Nitora <span className="text-ink-soft">Trading Academy</span>
             </span>
           </Link>
           <nav className="ml-6 hidden items-center gap-1 md:flex">
@@ -89,7 +89,7 @@ export function Shell() {
       </main>
       {!isSim && (
         <footer className="border-t border-line py-8 text-center text-xs text-ink-soft">
-          <p>TradeLab Academy is an educational tool. Nothing here is financial advice. All market data in the simulator is synthetic.</p>
+          <p>Nitora Trading Academy is an educational tool. Nothing here is financial advice. All market data in the simulator is synthetic.</p>
           <p className="mt-1">
             <Link to="/guide" className="underline">How this site works</Link>
           </p>

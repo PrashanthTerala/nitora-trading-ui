@@ -135,7 +135,7 @@ async function getJson<T>(path: string, signal?: AbortSignal): Promise<T> {
   try {
     res = await fetch(`${DEFAULT_BASE}${path}`, { signal });
   } catch {
-    throw new DataApiError('Cannot reach the data service. Start the TradeLab_DataService project with "mvnw spring-boot:run".', 'offline');
+    throw new DataApiError('Cannot reach the data service. Start the TradeLab_DataService project with "docker compose up -d".', 'offline');
   }
   if (!res.ok) {
     let msg = `Data server returned ${res.status}`;

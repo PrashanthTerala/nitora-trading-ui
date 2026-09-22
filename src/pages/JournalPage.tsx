@@ -87,7 +87,7 @@ export function JournalPage() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'tradelab-journal.csv';
+    a.download = 'nitora-trading-journal.csv';
     // Some browsers ignore a click on an anchor that is not in the document, and revoking
     // the URL in the same tick can cancel the download before it starts.
     document.body.appendChild(a);
