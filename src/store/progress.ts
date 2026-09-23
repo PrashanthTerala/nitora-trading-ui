@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { ALL_LESSONS, CURRICULUM } from '@/content/curriculum';
+import { STORAGE_KEYS } from '@/lib/storageKeys';
 
 export const lessonKey = (moduleId: string, lessonId: string) => `${moduleId}/${lessonId}`;
 
@@ -42,7 +43,7 @@ export const useProgress = create<ProgressState>()(
         set((s) => (score > (s.trainerBest[game] ?? 0) ? { trainerBest: { ...s.trainerBest, [game]: score } } : {})),
       resetAll: () => set({ completed: {}, quizScores: {}, lastVisited: null, trainerBest: {} }),
     }),
-    { name: 'tradelab-progress-v1' },
+    { name: STORAGE_KEYS.progress },
   ),
 );
 

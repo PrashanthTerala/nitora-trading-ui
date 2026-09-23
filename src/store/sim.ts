@@ -25,10 +25,28 @@ import {
   type PriceMap,
 } from '@/engine/broker/broker';
 import type { AccountSettings, AccountState, Order, Trade } from '@/engine/broker/types';
+import { STORAGE_KEYS } from '@/lib/storageKeys';
 
 export const START_CURSOR = 80 * 390; // 80 trading days of history before "today"
 
-let market = new Market('tradelab-1', SYMBOLS);
+/**
+ * The market a first-time visitor gets. The string is the generator's input, not a label: change it
+ * and every price in the default market changes.
+ *
+ * Chosen, not arbitrary. Lessons describe typical price levels, and tools/check-prices.mjs holds
+ * their figures to bands sampled across many seeds -- but it never looks at this one, so a default
+ * that happens to open an instrument far from typical passes the check while making the lessons
+ * read wrong. The first candidate, 'nitora-1', opened BIOX at 33.83 against a base of 18.40.
+ * This seed was picked from 'nitora-1' to 'nitora-300' as the one whose opening market is most
+ * typical across all eight instruments: each opens between 27% and 89% of the way through its
+ * 5th-to-95th percentile range. The old default, 'tradelab-1', had two instruments outside it.
+ *
+ * A returning reader keeps whatever seed their saved session holds, so their open positions are
+ * still priced against the market that created them.
+ */
+export const DEFAULT_SEED = 'nitora-209';
+
+let market = new Market(DEFAULT_SEED, SYMBOLS);
 let lastPrices: PriceMap = {};
 
 /**
@@ -152,7 +170,7 @@ function relevantSymbols(acc: AccountState, active: string) {
 export const useSim = create<SimState>()(
   persist(
     (set, get) => ({
-      seed: 'tradelab-1',
+      seed: DEFAULT_SEED,
       symbol: 'NOVA',
       timeframe: '5m',
       cursor: START_CURSOR,
@@ -299,7 +317,7 @@ export const useSim = create<SimState>()(
        */
       newMarket: (seed) => {
         // Guard against being wired straight to an onClick, which would pass the event.
-        const s = typeof seed === 'string' && seed ? seed : `tradelab-${Math.random().toString(36).slice(2, 8)}`;
+        const s = typeof seed === 'string' && seed ? seed : `nitora-${Math.random().toString(36).slice(2, 8)}`;
         market = new Market(s, SYMBOLS);
         lastPrices = {};
         set((prev) => ({
@@ -542,7 +560,7 @@ export const useSim = create<SimState>()(
       },
     }),
     {
-      name: 'tradelab-sim-v1',
+      name: STORAGE_KEYS.sim,
       partialize: (s) => ({ seed: s.seed, symbol: s.symbol, timeframe: s.timeframe, cursor: s.cursor, subtick: s.subtick, speed: s.speed, account: s.account, overlays: s.overlays, source: s.source, realSymbol: s.realSymbol }),
       onRehydrateStorage: () => (state) => {
         if (state) {

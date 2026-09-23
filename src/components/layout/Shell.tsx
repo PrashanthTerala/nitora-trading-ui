@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { NavLink, Outlet, Link, useLocation } from 'react-router-dom';
 import { BookOpen, CandlestickChart, Brain, NotebookPen, Sun, Moon, Menu, X, BookA, GraduationCap } from 'lucide-react';
 import { useProgress, overallProgress } from '@/store/progress';
+import { STORAGE_KEYS } from '@/lib/storageKeys';
 
 const NAV = [
   { to: '/learn', label: 'Learn', icon: BookOpen },
@@ -16,7 +17,7 @@ function useTheme() {
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark);
     try {
-      localStorage.setItem('tradelab-theme', dark ? 'dark' : 'light');
+      localStorage.setItem(STORAGE_KEYS.theme, dark ? 'dark' : 'light');
     } catch {
       /* ignore */
     }

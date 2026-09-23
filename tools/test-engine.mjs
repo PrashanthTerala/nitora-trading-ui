@@ -33,12 +33,13 @@ import * as stats from '@/engine/broker/stats';
 import { Rng, shuffled } from '@/lib/rng';
 import { csvCell, toCsv } from '@/lib/csv';
 import { defaultQty } from '@/lib/sizing';
+import { migrateStorage, LEGACY_KEYS, STORAGE_KEYS } from '@/lib/storageKeys';
 import { Market } from '@/engine/market/feed';
 import { RealFeed } from '@/engine/market/realFeed';
 import { SYMBOLS, SYMBOL_MAP } from '@/engine/market/symbols';
 import { aggregate, bucketStart, nextSessionMinute, minuteOfSession } from '@/engine/market/generator';
 import * as ind from '@/engine/market/indicators';
-export { broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, Market, RealFeed, SYMBOLS, SYMBOL_MAP, aggregate, bucketStart, nextSessionMinute, minuteOfSession, ind };
+export { broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, migrateStorage, LEGACY_KEYS, STORAGE_KEYS, Market, RealFeed, SYMBOLS, SYMBOL_MAP, aggregate, bucketStart, nextSessionMinute, minuteOfSession, ind };
 `,
 );
 
@@ -49,7 +50,7 @@ execSync(
 );
 
 const M = await import(pathToFileURL(bundle).href);
-const { broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, Market, RealFeed, SYMBOLS, ind } = M;
+const { broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, migrateStorage, LEGACY_KEYS, STORAGE_KEYS, Market, RealFeed, SYMBOLS, ind } = M;
 
 let pass = 0;
 let fail = 0;
@@ -516,6 +517,62 @@ const near = (a, b, eps = 1e-6) => Math.abs(a - b) < eps;
   const dd = stats.maxDrawdown([{ equity: 100 }, { equity: 120 }, { equity: 90 }, { equity: 110 }]);
   check('max drawdown is 30 (25%)', near(dd.maxDd, 30) && near(dd.maxDdPct, 0.25));
 }
+
+// ---------------------------------------------------------------- storage migration
+// These keys hold a reader's progress, journal and open session. A rename that loses them is
+// silent: the site simply looks new. So the rule -- nothing destroyed that was not first
+// copied -- is pinned case by case.
+{
+  const memStore = (init = {}, opts = {}) => {
+    const m = new Map(Object.entries(init));
+    return {
+      getItem: (k) => (m.has(k) ? m.get(k) : null),
+      setItem: (k, v) => {
+        if (opts.throwOn === k) throw new Error('QuotaExceededError');
+        if (opts.dropWritesTo === k) return;
+        m.set(k, v);
+      },
+      removeItem: (k) => m.delete(k),
+    };
+  };
+  const [oldTheme, newTheme] = LEGACY_KEYS[0];
+  const [oldProgress, newProgress] = LEGACY_KEYS[1];
+  const [oldSim, newSim] = LEGACY_KEYS[2];
+
+  check('legacy table covers every current key',
+    LEGACY_KEYS.length === Object.keys(STORAGE_KEYS).length &&
+    Object.values(STORAGE_KEYS).every((k) => LEGACY_KEYS.some(([, to]) => to === k)));
+
+  const journal = JSON.stringify({ state: { seed: 'tradelab-1', trades: [{ id: 't1', pnl: 42 }] }, version: 0 });
+  const progress = JSON.stringify({ state: { done: ['m00/01'] }, version: 0 });
+  const a = memStore({ [oldTheme]: 'light', [oldProgress]: progress, [oldSim]: journal });
+  const movedA = migrateStorage(a);
+  check('moves all three keys when only the old names exist', movedA.length === 3);
+  check('the moved values are byte-for-byte intact',
+    a.getItem(newTheme) === 'light' && a.getItem(newProgress) === progress && a.getItem(newSim) === journal);
+  check('the old names are removed once copied',
+    a.getItem(oldTheme) === null && a.getItem(oldProgress) === null && a.getItem(oldSim) === null);
+  check('a saved session keeps its own seed, so open positions keep their market',
+    JSON.parse(a.getItem(newSim)).state.seed === 'tradelab-1');
+  check('running it again moves nothing', migrateStorage(a).length === 0 && a.getItem(newSim) === journal);
+
+  const b = memStore({ [oldProgress]: 'old', [newProgress]: 'new' });
+  migrateStorage(b);
+  check('never overwrites a value already under the new name', b.getItem(newProgress) === 'new');
+  check('and leaves the old copy alone rather than deleting it', b.getItem(oldProgress) === 'old');
+
+  const c = memStore({ [oldSim]: journal, [oldTheme]: 'dark' }, { throwOn: newSim });
+  const movedC = migrateStorage(c);
+  check('a write that throws keeps the original', c.getItem(oldSim) === journal && c.getItem(newSim) === null);
+  check('and does not stop the other keys moving', movedC.includes(oldTheme) && c.getItem(newTheme) === 'dark');
+
+  const d = memStore({ [oldSim]: journal }, { dropWritesTo: newSim });
+  migrateStorage(d);
+  check('a write that silently fails to land keeps the original', d.getItem(oldSim) === journal);
+
+  check('empty storage is a no-op', migrateStorage(memStore()).length === 0);
+}
+
 
 console.log(results.join('\n'));
 console.log(`\n${pass} passed, ${fail} failed\n`);
