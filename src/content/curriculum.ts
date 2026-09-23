@@ -8,20 +8,52 @@
 
 export type Level = 'foundation' | 'reading' | 'analysis' | 'execution' | 'mastery';
 
+/** What a lesson asks of the reader. Everything today is reading; the others are for later tracks. */
+export type LessonKind = 'reading' | 'interactive' | 'lab';
+
+/** How a lesson's presentation deck is made: generated from the MDX, hand-written, or none. */
+export type DeckMode = 'auto' | 'manual' | 'none';
+
 export interface LessonMeta {
   id: string;            // file name without .mdx, unique within module
   title: string;
   summary: string;       // one sentence, shown in lists
   minutes: number;       // estimated reading time
+  /** Optional. Defaults to 'reading'. */
+  kind?: LessonKind;
+  /**
+   * Optional. Lessons to read first, as "moduleId/lessonId". The content linter checks every
+   * one resolves, that no lesson requires itself, and that there is no cycle.
+   */
+  prerequisites?: string[];
+  /** Optional. Free-form topic tags, for search and cross-links. */
+  tags?: string[];
+  /** Optional. Defaults to 'auto'. */
+  deck?: DeckMode;
+}
+
+/**
+ * A module's cover art, rendered at build time (Phase 4). Until a module has it, pages draw a
+ * placeholder cover from its level colour, so an absent `art` is normal, not an error.
+ */
+export interface ModuleArt {
+  dark: string;          // e.g. /art/modules/<id>-dark.webp
+  light: string;
+  glyph?: string;        // 64 px SVG mark for lists and the sidebar
 }
 
 export interface ModuleMeta {
-  id: string;            // folder name
-  number: number;        // 0..12
+  id: string;            // folder name; globally unique, because routes are /learn/:moduleId
+  number: number;        // position within its track
   title: string;
   subtitle: string;
   level: Level;
-  emoji: string;
+  /** The track this module belongs to. See TRACKS. */
+  track: TrackId;
+  /** Cover art, once rendered. Absent means "draw the placeholder". */
+  art?: ModuleArt;
+  /** @deprecated Replaced by `art`. Kept so existing data still type-checks; no longer rendered. */
+  emoji?: string;
   description: string;
   lessons: LessonMeta[];
 }
@@ -34,6 +66,33 @@ export const LEVELS: Record<Level, { label: string; blurb: string }> = {
   mastery:    { label: 'Mastery', blurb: 'Strategy, derivatives and lasting consistency.' },
 };
 
+/**
+ * A track is a whole course: its own modules, its own levels. There is one today. A second --
+ * a Quantitative Trading track, say -- is added here and in CURRICULUM, with no page changes:
+ * every page that lists modules groups them by track, and the Learn page shows track tabs as
+ * soon as there is more than one.
+ */
+export type TrackId = 'trading-foundations';
+
+export interface Track {
+  id: TrackId;
+  title: string;
+  tagline: string;
+  /** Track cover art, once rendered. */
+  art?: ModuleArt;
+  /** This track's levels, in teaching order. */
+  levels: Level[];
+}
+
+export const TRACKS: Track[] = [
+  {
+    id: 'trading-foundations',
+    title: 'Trading Foundations',
+    tagline: 'From what a market is to trading consistently, one small step at a time.',
+    levels: ['foundation', 'reading', 'analysis', 'execution', 'mastery'],
+  },
+];
+
 export const CURRICULUM: ModuleMeta[] = [
   {
     id: 'm00-what-is-a-market',
@@ -41,6 +100,7 @@ export const CURRICULUM: ModuleMeta[] = [
     title: 'What Is a Market?',
     subtitle: 'Kindergarten',
     level: 'foundation',
+    track: 'trading-foundations',
     emoji: '🍋',
     description: 'Start here even if you have never bought a share. Markets explained with lemonade stands, playground swaps and zero jargon.',
     lessons: [
@@ -61,6 +121,7 @@ export const CURRICULUM: ModuleMeta[] = [
     title: 'Reading a Price Chart',
     subtitle: 'Grade 1',
     level: 'reading',
+    track: 'trading-foundations',
     emoji: '📈',
     description: 'A chart is just price history drawn as a picture. Learn to read line, bar and candlestick charts and what each part means.',
     lessons: [
@@ -80,6 +141,7 @@ export const CURRICULUM: ModuleMeta[] = [
     title: 'Candlestick Patterns',
     subtitle: 'Grade 2',
     level: 'reading',
+    track: 'trading-foundations',
     emoji: '🕯️',
     description: 'The complete candlestick vocabulary: single, double, triple and continuation patterns, with the honest truth about how reliable each one is.',
     lessons: [
@@ -107,6 +169,7 @@ export const CURRICULUM: ModuleMeta[] = [
     title: 'Market Structure',
     subtitle: 'Grade 3',
     level: 'analysis',
+    track: 'trading-foundations',
     emoji: '🏗️',
     description: 'Trends, ranges, support and resistance: the skeleton beneath every chart. Learn to see where price is likely to react.',
     lessons: [
@@ -128,6 +191,7 @@ export const CURRICULUM: ModuleMeta[] = [
     title: 'Chart Patterns',
     subtitle: 'Grade 4',
     level: 'analysis',
+    track: 'trading-foundations',
     emoji: '🔺',
     description: 'Bigger shapes built from many candles: head and shoulders, double tops, triangles, flags, wedges and cups, with measured targets.',
     lessons: [
@@ -149,6 +213,7 @@ export const CURRICULUM: ModuleMeta[] = [
     title: 'Technical Indicators',
     subtitle: 'Grade 5',
     level: 'analysis',
+    track: 'trading-foundations',
     emoji: '🧮',
     description: 'Moving averages, RSI, MACD, Bollinger Bands, ATR, VWAP, Fibonacci and more, explained by what they calculate, not just what they look like.',
     lessons: [
@@ -175,6 +240,7 @@ export const CURRICULUM: ModuleMeta[] = [
     title: 'Orders and Execution',
     subtitle: 'Grade 6',
     level: 'execution',
+    track: 'trading-foundations',
     emoji: '🎯',
     description: 'How a click becomes a trade: every order type, long and short, leverage, slippage, fees and the order book.',
     lessons: [
@@ -195,6 +261,7 @@ export const CURRICULUM: ModuleMeta[] = [
     title: 'Risk Management',
     subtitle: 'Grade 7',
     level: 'execution',
+    track: 'trading-foundations',
     emoji: '🛡️',
     description: 'The module that separates survivors from statistics. Position sizing, risk to reward, expectancy and drawdown, with the maths made simple.',
     lessons: [
@@ -216,6 +283,7 @@ export const CURRICULUM: ModuleMeta[] = [
     title: 'Trading Psychology',
     subtitle: 'Grade 8',
     level: 'execution',
+    track: 'trading-foundations',
     emoji: '🧠',
     description: 'Your brain evolved to survive tigers, not candles. Learn the biases that wreck traders and the routines that beat them.',
     lessons: [
@@ -235,6 +303,7 @@ export const CURRICULUM: ModuleMeta[] = [
     title: 'Strategies and Trading Styles',
     subtitle: 'Grade 9',
     level: 'mastery',
+    track: 'trading-foundations',
     emoji: '♟️',
     description: 'Scalping to position trading, trend following to mean reversion. Build a complete rule-based plan and test it properly.',
     lessons: [
@@ -256,6 +325,7 @@ export const CURRICULUM: ModuleMeta[] = [
     title: 'Fundamentals and the Big Picture',
     subtitle: 'Grade 10',
     level: 'mastery',
+    track: 'trading-foundations',
     emoji: '🌍',
     description: 'Earnings, valuation, interest rates, economic data and sentiment: the forces behind the candles.',
     lessons: [
@@ -275,6 +345,7 @@ export const CURRICULUM: ModuleMeta[] = [
     title: 'Options, Futures, Forex and Crypto',
     subtitle: 'Grade 11',
     level: 'mastery',
+    track: 'trading-foundations',
     emoji: '🧩',
     description: 'The instruments beyond plain shares. Enough to understand what you are looking at and to avoid the classic beginner blow-ups.',
     lessons: [
@@ -293,6 +364,7 @@ export const CURRICULUM: ModuleMeta[] = [
     title: 'Becoming Consistent',
     subtitle: 'Graduation',
     level: 'mastery',
+    track: 'trading-foundations',
     emoji: '🎓',
     description: 'Journaling, performance metrics, choosing a broker, avoiding scams, and the path from simulator to small real money.',
     lessons: [
@@ -312,7 +384,9 @@ export interface FlatLesson extends LessonMeta {
   moduleId: string;
   moduleTitle: string;
   moduleNumber: number;
-  moduleEmoji: string;
+  /** @deprecated See ModuleMeta.emoji. */
+  moduleEmoji?: string;
+  trackId: TrackId;
   index: number;
   path: string;
 }
@@ -324,6 +398,7 @@ export const ALL_LESSONS: FlatLesson[] = CURRICULUM.flatMap((m) =>
     moduleTitle: m.title,
     moduleNumber: m.number,
     moduleEmoji: m.emoji,
+    trackId: m.track,
     index: i,
     path: `/learn/${m.id}/${l.id}`,
   })),
@@ -346,3 +421,26 @@ export function findModule(moduleId: string) {
 
 export const TOTAL_LESSONS = ALL_LESSONS.length;
 export const TOTAL_MINUTES = ALL_LESSONS.reduce((s, l) => s + l.minutes, 0);
+
+export function findTrack(trackId: string) {
+  return TRACKS.find((t) => t.id === trackId) ?? null;
+}
+
+/** A track's modules, in order. */
+export function modulesInTrack(trackId: string): ModuleMeta[] {
+  return CURRICULUM.filter((m) => m.track === trackId);
+}
+
+/** A track's modules grouped by level, in the track's level order; empty levels are left out. */
+export function modulesByLevel(trackId: string): { level: Level; modules: ModuleMeta[] }[] {
+  const track = findTrack(trackId);
+  if (!track) return [];
+  return track.levels
+    .map((level) => ({ level, modules: modulesInTrack(trackId).filter((m) => m.level === level) }))
+    .filter((g) => g.modules.length > 0);
+}
+
+/** Total reading minutes in a module. */
+export function moduleMinutes(m: ModuleMeta): number {
+  return m.lessons.reduce((sum, l) => sum + l.minutes, 0);
+}

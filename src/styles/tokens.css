@@ -119,6 +119,15 @@
   /* ---- layout ---- */
   --container-lesson: 68ch; /* lesson prose measure */
   --spacing-section: clamp(4rem, 1.5rem + 7vw, 8rem); /* vertical rhythm between marketing sections */
+  --spacing-header: 3.75rem; /* sticky header height, 60px; pages that fill the viewport subtract it */
+  --spacing-tabbar: 4rem; /* mobile bottom tab bar; content pads by it so nothing hides underneath */
+
+  /* ---- radius: the design scale, named by what it rounds (md 10, lg 14, xl 20, 2xl 28 px) ---- */
+  --radius-control: 10px; /* buttons, inputs, segmented controls */
+  --radius-panel: 10px; /* panels and nested areas */
+  --radius-card: 14px; /* cards */
+  --radius-dialog: 20px; /* dialogs, sheets, the command palette */
+  --radius-feature: 28px; /* hero and feature blocks */
 
   /* ---- elevation: light theme uses soft layered shadows ---- */
   --shadow-1: 0 1px 2px oklch(0.2 0.02 255 / 0.06), 0 1px 1px oklch(0.2 0.02 255 / 0.04); /* resting card */

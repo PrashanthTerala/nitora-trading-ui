@@ -22,27 +22,47 @@ body {
   border-color: var(--color-line);
 }
 
-.btn-primary {
-  @apply inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-110 active:scale-[0.98];
+/* Every keyboard-reachable element shows where focus is. Mouse clicks do not trigger it
+   (:focus-visible), so it never flashes on an ordinary click.
+   In the base layer, so a component that draws its own focus ring (.input) can replace it. */
+@layer base {
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-accent-ring);
+    outline-offset: 2px;
+  }
 }
-.btn-ghost {
-  @apply inline-flex items-center gap-2 rounded-lg border border-line bg-surface px-3 py-2 text-sm font-medium text-ink transition hover:border-accent/60 hover:bg-accent/5;
-}
-.btn-up {
-  @apply inline-flex items-center justify-center gap-2 rounded-lg bg-up px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:brightness-110 active:scale-[0.98] disabled:opacity-40;
-}
-.btn-down {
-  @apply inline-flex items-center justify-center gap-2 rounded-lg bg-down px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:brightness-110 active:scale-[0.98] disabled:opacity-40;
-}
-.input {
-  @apply rounded-lg border border-line bg-surface px-3 py-2 text-sm text-ink outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/20;
-  font-variant-numeric: tabular-nums;
-}
-.chip {
-  @apply inline-flex items-center rounded-full border border-line bg-surface px-2.5 py-0.5 text-xs font-medium text-ink-soft;
-}
-.chip-on {
-  @apply border-accent/60 bg-accent/10 text-accent;
+
+/* ---------- legacy aliases ----------
+   Thin aliases of the components in src/components/ui, kept for one release so pages not
+   yet rebuilt keep working. They carry the new tokens, so the label contrast the audit found
+   failing (white on the accent at 2.5:1 in dark) is fixed everywhere at once. New code uses
+   the components; these go once no page does.
+   They sit in the components layer, as Tailwind intends, so a utility on the same element
+   (pl-9 on an .input, w-full justify-between on a .btn-ghost) overrides them rather than
+   silently losing to them. */
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-control bg-accent px-4 py-2 text-sm font-semibold text-on-accent shadow-1 transition hover:bg-accent-hover active:scale-[0.98];
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-control border border-line bg-surface-1 px-3 py-2 text-sm font-medium text-ink transition hover:border-line-strong hover:bg-surface-2;
+  }
+  .btn-up {
+    @apply inline-flex items-center justify-center gap-2 rounded-control bg-up px-4 py-2 text-sm font-bold text-on-up shadow-1 transition hover:brightness-110 active:scale-[0.98] disabled:opacity-40;
+  }
+  .btn-down {
+    @apply inline-flex items-center justify-center gap-2 rounded-control bg-down px-4 py-2 text-sm font-bold text-on-down shadow-1 transition hover:brightness-110 active:scale-[0.98] disabled:opacity-40;
+  }
+  .input {
+    @apply rounded-control border border-line-strong bg-surface-1 px-3 py-2 text-sm text-ink outline-none transition placeholder:text-ink-muted focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent-ring;
+    font-variant-numeric: tabular-nums;
+  }
+  .chip {
+    @apply inline-flex items-center rounded-full border border-line bg-surface-1 px-2.5 py-0.5 text-xs font-medium text-ink-soft;
+  }
+  .chip-on {
+    @apply border-accent/60 bg-accent-soft text-accent;
+  }
 }
 
 /* ---------- lesson prose ---------- */
@@ -147,6 +167,51 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .live-dot {
+    animation: none;
+  }
+}
+
+/* ---------- enter animations ----------
+   Driven by the motion tokens, so under prefers-reduced-motion every one of them takes 0ms
+   and simply appears. Only opacity and transform move. */
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+@keyframes dialog-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+}
+@keyframes sheet-in {
+  from { transform: translateY(100%); }
+}
+@keyframes route-progress {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(250%); }
+}
+.anim-fade-in {
+  animation: fade-in var(--duration-base) var(--ease-standard);
+}
+.anim-dialog-in {
+  animation: dialog-in var(--duration-base) var(--ease-emphasized);
+}
+.anim-sheet-in {
+  animation: sheet-in var(--duration-slow) var(--ease-emphasized);
+}
+
+/* ---------- home ticker ----------
+   The track holds the list twice and slides by exactly one copy, so the loop is seamless.
+   Hover or focus pauses it; under reduced motion it does not move at all. */
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 60s linear infinite;
+}
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
     animation: none;
   }
 }

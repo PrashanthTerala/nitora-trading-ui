@@ -22,6 +22,7 @@ export const PAGES = [
   ['home', '/'],
   ['learn', '/learn'],
   ['module', '/learn/m02-candlestick-patterns'],
+  ['track', '/learn/t/trading-foundations'],
   ['lesson', '/learn/m02-candlestick-patterns/06-engulfing'],
   ['simulator', '/simulator'],
   ['trainer', '/trainer'],
@@ -59,7 +60,7 @@ async function shoot(browser, path, width, height, theme) {
   try {
     const res = await page.goto(BASE + path, { waitUntil: 'networkidle', timeout: 30000 });
     await page.evaluate(() => document.fonts.ready);
-    await page.waitForTimeout(700); // charts and lazy chunks settle
+    await page.waitForTimeout(1500); // charts, lazy chunks, idle-time work and count-ups settle
     const scroll = await page.evaluate(() => document.documentElement.scrollHeight);
     return { status: res?.status() ?? 0, page, context, fullHeight: Math.min(scroll, MAX_HEIGHT) };
   } catch (e) {

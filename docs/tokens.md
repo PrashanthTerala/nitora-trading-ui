@@ -131,6 +131,18 @@ Durations fall to 0ms under `prefers-reduced-motion: reduce`.
 |---|---|---|---|
 | `--container-lesson` | `68ch` | same | lesson prose measure |
 | `--spacing-section` | `clamp(4rem, 1.5rem + 7vw, 8rem)` | same | vertical rhythm between marketing sections |
+| `--spacing-header` | `3.75rem` | same | sticky header height, 60px; pages that fill the viewport subtract it |
+| `--spacing-tabbar` | `4rem` | same | mobile bottom tab bar; content pads by it so nothing hides underneath |
+
+## Radius: the design scale, named by what it rounds (md 10, lg 14, xl 20, 2xl 28 px)
+
+| Token | Light | Dark | Use |
+|---|---|---|---|
+| `--radius-control` | `10px` | same | buttons, inputs, segmented controls |
+| `--radius-panel` | `10px` | same | panels and nested areas |
+| `--radius-card` | `14px` | same | cards |
+| `--radius-dialog` | `20px` | same | dialogs, sheets, the command palette |
+| `--radius-feature` | `28px` | same | hero and feature blocks |
 
 ## Elevation: light theme uses soft layered shadows
 

@@ -5,6 +5,10 @@ import { ArrowLeft, ArrowRight, CheckCircle2, Circle, Clock, List } from 'lucide
 import { findLesson, findModule } from '@/content/curriculum';
 import { mdxComponents } from '@/components/mdx';
 import { useProgress, lessonKey } from '@/store/progress';
+import { LessonBodySkeleton } from '@/components/layout/PageSkeletons';
+import { RouteFallback } from '@/components/layout/RouteProgress';
+import { toast } from '@/components/ui/Toast';
+import { t } from '@/i18n';
 
 const lessonModules = import.meta.glob('../content/modules/*/*.mdx') as Record<string, () => Promise<{ default: ComponentType }>>;
 
@@ -20,6 +24,10 @@ export function LessonPage() {
   const markComplete = useProgress((s) => s.markComplete);
   const unmarkComplete = useProgress((s) => s.unmarkComplete);
   const setLastVisited = useProgress((s) => s.setLastVisited);
+  const complete = (k: string) => {
+    markComplete(k);
+    toast({ title: t('toast.lessonComplete'), tone: 'up' });
+  };
   const quizScores = useProgress((s) => s.quizScores);
   const [Content, setContent] = useState<ComponentType | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -55,10 +63,10 @@ export function LessonPage() {
     <div className="lg:grid lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-10">
       {/* module sidebar */}
       <aside className="mb-6 lg:mb-0">
-        <div className="lg:sticky lg:top-20">
+        <div className="lg:sticky lg:top-[calc(var(--spacing-header)+1.5rem)]">
           <button type="button" onClick={() => setShowToc((s) => !s)} className="btn-ghost mb-2 w-full justify-between lg:hidden">
             <span className="flex items-center gap-2">
-              <List size={14} /> {mod.emoji} {mod.title}
+              <List size={14} /> {t('common.module', { number: mod.number })} · {mod.title}
             </span>
             <span className="text-xs text-ink-soft">
               {lesson.index + 1}/{mod.lessons.length}
@@ -66,7 +74,7 @@ export function LessonPage() {
           </button>
           <nav className={`${showToc ? 'block' : 'hidden'} rounded-2xl border border-line bg-surface p-3 lg:block`}>
             <Link to={`/learn/${mod.id}`} className="mb-2 block px-2 text-xs font-bold uppercase tracking-wider text-ink-soft hover:text-ink">
-              {mod.emoji} Module {mod.number} · {mod.title}
+              {t('common.module', { number: mod.number })} · {mod.title}
             </Link>
             <ol className="space-y-0.5">
               {sidebar.map((l, i) => {
@@ -121,7 +129,11 @@ export function LessonPage() {
             </div>
           )}
           {error && error !== 'missing' && <div className="rounded-xl border border-down/40 bg-down/10 p-5 text-sm">Failed to load lesson: {error}</div>}
-          {!error && !Content && <div className="h-40 animate-pulse rounded-xl bg-panel" />}
+          {!error && !Content && (
+            <RouteFallback label={t('loading.lesson')}>
+              <LessonBodySkeleton />
+            </RouteFallback>
+          )}
           {Content && (
             <MDXProvider components={mdxComponents}>
               <Content />
@@ -132,11 +144,18 @@ export function LessonPage() {
         <footer className="mt-12 space-y-6 border-t border-line pt-6">
           <div className="flex flex-wrap items-center gap-3">
             {done ? (
-              <button type="button" className="btn-ghost" onClick={() => unmarkComplete(key)}>
+              <button
+                type="button"
+                className="btn-ghost"
+                onClick={() => {
+                  unmarkComplete(key);
+                  toast({ title: t('toast.lessonUndone') });
+                }}
+              >
                 <CheckCircle2 size={16} className="text-up" /> Completed · mark as not done
               </button>
             ) : (
-              <button type="button" className="btn-primary" onClick={() => markComplete(key)}>
+              <button type="button" className="btn-primary" onClick={() => complete(key)}>
                 <CheckCircle2 size={16} /> Mark lesson complete
               </button>
             )}

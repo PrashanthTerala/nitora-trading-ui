@@ -90,7 +90,12 @@ All-caps labels are 11–12 px, tracked wide (`0.08em`).
 
 - A 4 px spacing base, which is Tailwind's default. Marketing sections breathe at 96–128 px on
   desktop and 64 px on mobile (`--spacing-section`).
-- Radii: `sm` 6, `md` 10, `lg` 14, `xl` 20, `2xl` 28 px. Cards `lg`, panels `md`, chips full.
+- Radii are named by what they round, not by size, so Tailwind's own `rounded-lg` and friends
+  keep their meaning on pages not yet rebuilt: `rounded-control` and `rounded-panel` 10 px,
+  `rounded-card` 14, `rounded-dialog` 20, `rounded-feature` 28. Chips are fully round.
+- Layout heights are tokens too: `--spacing-header` (60 px) and `--spacing-tabbar` (64 px), so
+  anything that sits under the header or above the mobile tab bar (`top-header`, `pb-tabbar`,
+  the simulator's full-height workspace) moves with them.
 - Elevation on dark comes from border lightness plus a faint inner top highlight, not from
   drop shadows — a shadow on a near-black page reads as a smudge. Light mode uses soft layered
   shadows. Both are the `--shadow-1` … `--shadow-4` tokens.
@@ -110,8 +115,13 @@ All-caps labels are 11–12 px, tracked wide (`0.08em`).
 - Animate only `transform` and `opacity`, never width, height or position.
 - Under `prefers-reduced-motion: reduce` every duration token becomes 0 ms, so no component has
   to remember to check.
-- Planned: route changes fade and rise 8 px; card grids stagger 40 ms (at most eight items);
-  changing numbers tween with a spring and flash their direction tint for 600 ms.
+- Route changes fade and rise 8 px over 200 ms, on enter only: there is no exit phase, so a
+  click never waits for the old page to leave. Card grids stagger 40 ms (at most eight items).
+- `motion/react` runs under `LazyMotion` (its features load after first paint) and
+  `MotionConfig reducedMotion="user"`, which turns transform animations off for readers who
+  ask for less motion. Hand-driven movement (the module cover's parallax, count-ups) checks
+  the preference itself.
+- Planned: changing numbers tween with a spring and flash their direction tint for 600 ms.
 
 ## Accessibility bar
 
@@ -156,8 +166,8 @@ screenshots at 390 and 1440 px in both themes under `docs/screenshots/phase-N/`.
 | Phase | Scope | Status |
 |---|---|---|
 | 0 | Audit, tokens, self-hosted fonts, motion tokens, token lint, `/__tokens` sheet | **done** |
-| 1 | Shell, command palette, toasts, Home, Learn, Module; tracks refactor | next |
-| 2 | Lesson read mode, MDX component restyle, component registry | |
+| 1 | Shell, command palette, toasts, Home, Learn, Module; tracks refactor | **done** |
+| 2 | Lesson read mode, MDX component restyle, component registry | next |
 | 3 | Presentation mode (auto-generated slide decks) | |
 | 4 | 3D hero and module artwork | |
 | 5 | Simulator, Trainer, Journal, Glossary, Guide, 404 | |
@@ -168,9 +178,9 @@ screenshots at 390 and 1440 px in both themes under `docs/screenshots/phase-N/`.
 - **Neutrals stay close to today's lightness.** Dark `bg` is L 0.15 against the brief's
   "~0.13", so that Phase 0 changes colour, not character. It can be deepened in one line once
   the rebuilt components are on screen to judge against.
-- **The radius scale is written down, not yet applied.** It uses Tailwind's own names
-  (`rounded-lg` 8 → 14 px), so defining it would restyle every card and button at once. It goes
-  live in Phase 1 alongside the components it rounds.
+- **The radius scale is written down, not yet applied.** Defining it under Tailwind's own
+  names (`rounded-lg` 8 → 14 px) would restyle every card and button at once. It went live in
+  Phase 1 under semantic names instead (see above).
 - **The type scale, display face, shadows and label colours are defined but not yet used** by
   existing components, for the same reason. The `/__tokens` sheet shows them in use.
 - **Labels on strong fills** (`on-accent`, `on-up`, `on-down`) were added to fix today's
@@ -184,9 +194,30 @@ screenshots at 390 and 1440 px in both themes under `docs/screenshots/phase-N/`.
   so no browser download is needed. `tools/screenshots.mjs` also diffs two sets pixel by
   pixel.
 
+### Decisions made in Phase 1
+
+- **Components live in `src/components/ui/`** (Button, Card, Chip, Ring, Segmented, Tabs,
+  Tooltip, Dialog, Sheet, Kbd, Skeleton, Toast, plus Switch, Sparkline and CountUp), with
+  variants written as literal class tables so Tailwind can see them. The old `.btn-*`,
+  `.input` and `.chip` classes remain as thin aliases in the components layer, where a
+  utility on the same element now overrides them, as intended; before, they silently won.
+- **Placeholder covers** are drawn from the module's level colour with a candle silhouette
+  seeded from the module id, so each module keeps its own shape until Phase 4 renders art.
+- **The home page shows only real data.** The ticker and the simulator preview are computed by
+  the engine at the simulator's default seed and opening clock (tested to match), after first
+  paint. The lesson showcase is read from the engulfing lesson at build time by a Vite
+  plugin, so it cannot drift from the lesson. The journal preview reads the reader's own
+  closed trades, or says it is empty.
+- **The hero poster is inline SVG, not WebP,** until Phase 4 has a 3D scene to render one from.
+  It follows the theme and costs no request.
+- **The command palette matches whole words**, not cmdk's default fuzzy score, which let
+  "engulf" match "Economic Calendar".
+- **Track tabs appear only with a second track.** `/learn/t/:trackId` exists now so a second
+  track is a content change.
+
 ### Known issues found in the audit, to fix as the components are rebuilt
 
-- Button labels fail contrast in the dark theme (2.5:1 on the accent, 2.3:1 on Buy, 3.8:1 on
-  Sell) and on Buy in light (3.3:1). Phase 1 (buttons) and Phase 5 (order ticket).
-- Input borders use the decorative `line` at 1.3:1; they need `line-strong`. Phase 1.
-- Callouts use Tailwind palette classes (28 of the 35 remaining). Phase 2.
+- Button labels failed contrast in the dark theme. Fixed for buttons in Phase 1; the order
+  ticket's Buy and Sell follow in Phase 5.
+- Input borders used the decorative `line`; fixed in Phase 1 (`line-strong`).
+- Callouts use Tailwind palette classes (28 of the 30 remaining). Phase 2.

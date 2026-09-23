@@ -76,7 +76,7 @@ export function SimulatorPage() {
   const clockTime = last ? new Date(last.time * 1000) : new Date();
 
   return (
-    <div className="flex flex-col lg:h-[calc(100vh-3.5rem)]">
+    <div className="flex flex-col lg:h-[calc(100vh-var(--spacing-header))]">
       {/* top bar */}
       <div className="flex shrink-0 flex-wrap items-center gap-3 border-b border-line bg-surface px-3 py-2">
         {isReal ? (

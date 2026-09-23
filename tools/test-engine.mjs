@@ -41,7 +41,13 @@ import { RealFeed, resolveDataApi } from '@/engine/market/realFeed';
 import { SYMBOLS, SYMBOL_MAP } from '@/engine/market/symbols';
 import { aggregate, bucketStart, nextSessionMinute, minuteOfSession } from '@/engine/market/generator';
 import * as ind from '@/engine/market/indicators';
-export { color, parseTokens, resolveToken, broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, migrateStorage, LEGACY_KEYS, STORAGE_KEYS, resolveDataApi, Market, RealFeed, SYMBOLS, SYMBOL_MAP, aggregate, bucketStart, nextSessionMinute, minuteOfSession, ind };
+import { parseFlags, FLAG_DEFAULTS } from '@/lib/flags';
+import { translate } from '@/i18n';
+import { en } from '@/i18n/en';
+import * as curriculum from '@/content/curriculum';
+import { computeSnapshot } from '@/pages/home/engineSnapshot';
+import { DEFAULT_SEED, START_CURSOR } from '@/lib/simDefaults';
+export { parseFlags, FLAG_DEFAULTS, translate, en, curriculum, computeSnapshot, DEFAULT_SEED, START_CURSOR, color, parseTokens, resolveToken, broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, migrateStorage, LEGACY_KEYS, STORAGE_KEYS, resolveDataApi, Market, RealFeed, SYMBOLS, SYMBOL_MAP, aggregate, bucketStart, nextSessionMinute, minuteOfSession, ind };
 `,
 );
 
@@ -52,7 +58,7 @@ execSync(
 );
 
 const M = await import(pathToFileURL(bundle).href);
-const { color, parseTokens, resolveToken, broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, migrateStorage, LEGACY_KEYS, STORAGE_KEYS, resolveDataApi, Market, RealFeed, SYMBOLS, ind } = M;
+const { parseFlags, FLAG_DEFAULTS, translate, en, curriculum, computeSnapshot, DEFAULT_SEED, START_CURSOR, color, parseTokens, resolveToken, broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, migrateStorage, LEGACY_KEYS, STORAGE_KEYS, resolveDataApi, Market, RealFeed, SYMBOLS, ind } = M;
 
 let pass = 0;
 let fail = 0;
@@ -640,6 +646,49 @@ const near = (a, b, eps = 1e-6) => Math.abs(a - b) < eps;
   check('token aliases resolve per theme', resolveToken(t, '--color-card', 'dark') === 'oklch(0.2 0 0)' && resolveToken(t, '--color-card', 'light') === 'oklch(0.9 0 0)');
   check('a multi-line comment in .dark does not hide the declarations after it', bg && bg.dark === 'oklch(0.2 0 0)');
   check(':root tokens are read too', t.some((x) => x.name === '--duration-fast' && x.light === '120ms'));
+}
+
+// ---------------------------------------------------------------- feature flags
+{
+  const d = parseFlags(undefined);
+  check('flags: nothing set gives the defaults', JSON.stringify(d.flags) === JSON.stringify(FLAG_DEFAULTS) && d.unknown.length === 0);
+  const p = parseFlags(' deck, -commandPalette ,3d,,');
+  check('flags: a name turns on, a leading minus turns off, spaces and empties ignored', p.flags.deck && !p.flags.commandPalette && p.flags['3d'] && !p.flags.quantTrack);
+  const u = parseFlags('dekc,-nope,deck');
+  check('flags: unknown names are reported, not applied', u.unknown.join() === 'dekc,nope' && u.flags.deck && !('dekc' in u.flags));
+}
+
+// ---------------------------------------------------------------- i18n
+{
+  const msgs = { a: { b: 'Hi {name}, {name}', n: { one: '{count} lesson', other: '{count} lessons' } } };
+  check('i18n: placeholders are filled, every occurrence', translate(msgs, 'a.b', { name: 'Ada' }) === 'Hi Ada, Ada');
+  check('i18n: a missing variable leaves its placeholder visible', translate(msgs, 'a.b') === 'Hi {name}, {name}');
+  check('i18n: plural picks one for 1 and other for 0 and 2', translate(msgs, 'a.n', { count: 1 }) === '1 lesson' && translate(msgs, 'a.n', { count: 0 }) === '0 lessons' && translate(msgs, 'a.n', { count: 2 }) === '2 lessons');
+  check('i18n: an unknown key comes back as the key', translate(msgs, 'a.zzz') === 'a.zzz' && translate(msgs, 'a.b.c') === 'a.b.c');
+  check('i18n: a section (not a message) is not rendered', translate(msgs, 'a') === 'a');
+  check('i18n: the disclaimer is word for word', translate(en, 'footer.disclaimer') === 'Nitora Trading Academy is an educational tool. Nothing here is financial advice. All market data in the simulator is synthetic.');
+}
+
+// ---------------------------------------------------------------- curriculum tracks
+{
+  const { TRACKS, CURRICULUM, ALL_LESSONS, findTrack, modulesInTrack, modulesByLevel, moduleMinutes } = curriculum;
+  check('tracks: every module belongs to a known track', CURRICULUM.every((m) => findTrack(m.track)));
+  check('tracks: the tracks partition the modules', TRACKS.reduce((n, t) => n + modulesInTrack(t.id).length, 0) === CURRICULUM.length);
+  const groups = modulesByLevel(TRACKS[0].id);
+  check("tracks: levels come in the track's order, with no empty groups", groups.map((g) => g.level).join() === TRACKS[0].levels.filter((l) => CURRICULUM.some((m) => m.level === l)).join() && groups.every((g) => g.modules.length > 0));
+  check('tracks: an unknown track has no modules and no levels', modulesInTrack('nope').length === 0 && modulesByLevel('nope').length === 0 && findTrack('nope') === null);
+  check('tracks: module minutes add up to the curriculum total', CURRICULUM.reduce((n, m) => n + moduleMinutes(m), 0) === ALL_LESSONS.reduce((n, l) => n + l.minutes, 0));
+  check("tracks: every flat lesson carries its module's track", ALL_LESSONS.every((l) => l.trackId === CURRICULUM.find((m) => m.id === l.moduleId).track));
+}
+
+// ---------------------------------------------------------------- home page engine snapshot
+{
+  const snap = computeSnapshot();
+  const market = new Market(DEFAULT_SEED, SYMBOLS);
+  check('home ticker: one row per simulator instrument', snap.ticker.length === SYMBOLS.length);
+  check("home ticker: prices are the simulator's opening prices", snap.ticker.every((r) => near(r.price, market.feed(r.symbol).price(START_CURSOR, 3))));
+  check('home ticker: day change is against the previous bar close', snap.ticker.every((r) => { const prev = market.feed(r.symbol).baseBar(START_CURSOR - 1).close; return near(r.changePct, ((r.price - prev) / prev) * 100); }));
+  check('home sparkline: 120 five-minute bars with sane OHLC', snap.spark.bars.length === 120 && snap.spark.bars.every((b) => b.l <= Math.min(b.o, b.c) && b.h >= Math.max(b.o, b.c)));
 }
 
 

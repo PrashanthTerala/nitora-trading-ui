@@ -5,33 +5,84 @@
  * Checks: file exists for every curriculum lesson, no H1, required components,
  * valid figure names, word count in range, quiz structure, and MDX hazards.
  */
-import { readFileSync, existsSync, readdirSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { execSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const verbose = process.argv.includes('--verbose');
 
 const src = (p) => readFileSync(join(root, p), 'utf8');
 
-// --- parse the curriculum without executing TypeScript ---
-const curr = src('src/content/curriculum.ts');
-const modules = [];
+// --- load the curriculum itself ---
+// Bundled with esbuild and imported, as tools/test-engine.mjs does, rather than matched with
+// regular expressions: the schema now carries tracks and optional lesson fields, and
+// prerequisites can only be checked against the real data.
+const tmp = mkdtempSync(join(tmpdir(), 'lint-content-'));
+writeFileSync(join(tmp, 'shim.ts'), "export * from '@/content/curriculum';\n");
+execSync(`npx esbuild "${join(tmp, 'shim.ts')}" --bundle --format=esm --platform=node --outfile="${join(tmp, 'c.mjs')}" --alias:@=./src --log-level=error`, { cwd: root });
+const C = await import(pathToFileURL(join(tmp, 'c.mjs')).href);
+rmSync(tmp, { recursive: true, force: true });
+const modules = C.CURRICULUM;
+
+const errors = [];
+const warnings = [];
+const missing = [];
+
+// --- curriculum schema: tracks, levels, ids, optional lesson fields, prerequisites ---
 {
-  const modRe = /\{\s*\n\s*id: '([^']+)',\s*\n\s*number: (\d+),\s*\n\s*title: '((?:[^'\\]|\\.)*)'/g;
-  let m;
-  while ((m = modRe.exec(curr))) {
-    const start = m.index;
-    const lessonsIdx = curr.indexOf('lessons: [', start);
-    const end = curr.indexOf('\n  },', lessonsIdx);
-    const block = curr.slice(lessonsIdx, end);
-    const lessons = [...block.matchAll(/\{ id: '([^']+)', title: '((?:[^'\\]|\\.)*)'[^}]*?minutes: (\d+)/g)].map((x) => ({
-      id: x[1],
-      title: x[2],
-      minutes: +x[3],
-    }));
-    modules.push({ id: m[1], number: +m[2], title: m[3], lessons });
+  const KINDS = new Set(['reading', 'interactive', 'lab']);
+  const DECKS = new Set(['auto', 'manual', 'none']);
+  const cerr = (msg) => errors.push(`curriculum: ${msg}`);
+  const trackIds = new Set(C.TRACKS.map((t) => t.id));
+  for (const t of C.TRACKS) {
+    for (const lv of t.levels) if (!C.LEVELS[lv]) cerr(`track ${t.id} lists unknown level "${lv}"`);
+    if (!modules.some((m) => m.track === t.id)) cerr(`track ${t.id} has no modules`);
   }
+  // Module ids are the route (/learn/:moduleId), so they must be unique across every track.
+  const seenModules = new Set();
+  const keys = new Set();
+  for (const m of modules) {
+    if (seenModules.has(m.id)) cerr(`module id ${m.id} is used twice`);
+    seenModules.add(m.id);
+    if (!trackIds.has(m.track)) cerr(`${m.id} belongs to unknown track "${m.track}"`);
+    else if (!C.TRACKS.find((t) => t.id === m.track).levels.includes(m.level)) cerr(`${m.id} has level "${m.level}", which its track ${m.track} does not list`);
+    const seenLessons = new Set();
+    for (const l of m.lessons) {
+      if (seenLessons.has(l.id)) cerr(`lesson id ${m.id}/${l.id} is used twice`);
+      seenLessons.add(l.id);
+      keys.add(`${m.id}/${l.id}`);
+      if (l.kind !== undefined && !KINDS.has(l.kind)) cerr(`${m.id}/${l.id} has unknown kind "${l.kind}"`);
+      if (l.deck !== undefined && !DECKS.has(l.deck)) cerr(`${m.id}/${l.id} has unknown deck mode "${l.deck}"`);
+      if (l.tags !== undefined && !(Array.isArray(l.tags) && l.tags.every((t) => typeof t === 'string' && t.trim()))) cerr(`${m.id}/${l.id} has tags that are not non-empty strings`);
+    }
+  }
+  // Prerequisites: each must name a real lesson, never the lesson itself, and never loop.
+  const prereqs = new Map();
+  for (const m of modules)
+    for (const l of m.lessons) {
+      const key = `${m.id}/${l.id}`;
+      const list = l.prerequisites ?? [];
+      prereqs.set(key, list);
+      for (const p of list) {
+        if (p === key) cerr(`${key} lists itself as a prerequisite`);
+        else if (!keys.has(p)) cerr(`${key} has prerequisite "${p}", which is not a lesson (use "moduleId/lessonId")`);
+      }
+    }
+  const state = new Map(); // 1 = visiting, 2 = done
+  const visit = (key, path) => {
+    if (state.get(key) === 2) return;
+    if (state.get(key) === 1) {
+      cerr(`prerequisite cycle: ${[...path.slice(path.indexOf(key)), key].join(' -> ')}`);
+      return;
+    }
+    state.set(key, 1);
+    for (const p of prereqs.get(key) ?? []) if (keys.has(p) && p !== key) visit(p, [...path, key]);
+    state.set(key, 2);
+  };
+  for (const key of keys) visit(key, []);
 }
 
 // --- collect valid figure names ---
@@ -51,9 +102,6 @@ try {
   /* optional */
 }
 
-const errors = [];
-const warnings = [];
-const missing = [];
 let totalWords = 0;
 let present = 0;
 

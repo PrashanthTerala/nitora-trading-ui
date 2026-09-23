@@ -83,8 +83,6 @@ const PALETTE =
 // tokens; never raise them. The callouts move in Phase 2, the buttons in Phase 1.
 const PALETTE_BASELINE = {
   'src/components/mdx/Callout.tsx': 28,
-  'src/styles/index.css': 3,
-  'src/components/layout/Shell.tsx': 2,
   'src/components/sim/OrderTicket.tsx': 1,
   'src/components/mdx/Quiz.tsx': 1,
 };
