@@ -103,7 +103,7 @@ export class RealFeed {
 // ---------------------------------------------------------------- API client
 
 /**
- * The market-data service is a separate project (TradeLab_DataService) with its own
+ * The market-data service is a separate project (nitora-trading-service) with its own
  * toolchain and release cadence, so it is addressed over HTTP rather than imported.
  * Override with VITE_DATA_API when it runs somewhere other than the default port.
  */
@@ -135,7 +135,7 @@ async function getJson<T>(path: string, signal?: AbortSignal): Promise<T> {
   try {
     res = await fetch(`${DEFAULT_BASE}${path}`, { signal });
   } catch {
-    throw new DataApiError('Cannot reach the data service. Start the TradeLab_DataService project with "docker compose up -d".', 'offline');
+    throw new DataApiError('Cannot reach the data service. Start the nitora-trading-service project with "docker compose up -d".', 'offline');
   }
   if (!res.ok) {
     let msg = `Data server returned ${res.status}`;

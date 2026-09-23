@@ -96,7 +96,7 @@ description: about 1.0x for the currency pair, 1.1x for the index, 2.0x for the 
 the description and every worked example a lie.
 
 **Real data is optional.** It replays actual historical bars served by the Spring Boot service in
-the separate TradeLab_DataService project. Because a provider offers roughly seven days of one-minute bars but ten years of daily
+the separate nitora-trading-service project. Because a provider offers roughly seven days of one-minute bars but ten years of daily
 ones, there is no single base resolution to aggregate from, so this mode fetches the bars for the
 chosen timeframe directly and changing timeframe refetches. Switching source starts a fresh
 account, for the same reason rolling a new market does: positions are priced against the market
@@ -106,10 +106,10 @@ That service is a standalone Spring Boot project, kept outside this repository b
 different toolchain, a different release cadence and a licensing position of its own:
 
 ```
-../TradeLab_DataService      Spring Boot market-data API, see its README
+../nitora-trading-service   Spring Boot market-data API, see its README
 ```
 
-Start it with `mvnw spring-boot:run` there. With the service down the simulator says so and offers
+Start it with `docker compose up -d` there. With the service down the simulator says so and offers
 a retry; nothing else on the site depends on it. Read that project's README for the API contract
 and, importantly, for the data licensing position.
 
