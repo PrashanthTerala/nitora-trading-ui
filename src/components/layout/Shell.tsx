@@ -35,8 +35,9 @@ const NAV = [
 function isFullBleed(pathname: string) {
   if (pathname === '/' || pathname.startsWith('/simulator')) return true;
   const parts = pathname.split('/').filter(Boolean);
-  // /learn/:moduleId and /learn/t/:trackId open with a hero band; lessons stay in the column.
-  return parts[0] === 'learn' && (parts.length === 2 || (parts.length === 3 && parts[1] === 't'));
+  // /learn/:moduleId and /learn/t/:trackId open with a hero band; a lesson lays out its own
+  // three columns, wider than the standard one.
+  return parts[0] === 'learn' && parts.length >= 2;
 }
 
 function usePaletteShortcut(onToggle: () => void) {

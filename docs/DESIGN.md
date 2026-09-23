@@ -167,8 +167,8 @@ screenshots at 390 and 1440 px in both themes under `docs/screenshots/phase-N/`.
 |---|---|---|
 | 0 | Audit, tokens, self-hosted fonts, motion tokens, token lint, `/__tokens` sheet | **done** |
 | 1 | Shell, command palette, toasts, Home, Learn, Module; tracks refactor | **done** |
-| 2 | Lesson read mode, MDX component restyle, component registry | next |
-| 3 | Presentation mode (auto-generated slide decks) | |
+| 2 | Lesson read mode, MDX component restyle, component registry | **done** |
+| 3 | Presentation mode (auto-generated slide decks) | next |
 | 4 | 3D hero and module artwork | |
 | 5 | Simulator, Trainer, Journal, Glossary, Guide, 404 | |
 | 6 | Lighthouse, axe, reduced-motion, keyboard and 360 px passes; bundle budgets | |
@@ -215,9 +215,38 @@ screenshots at 390 and 1440 px in both themes under `docs/screenshots/phase-N/`.
 - **Track tabs appear only with a second track.** `/learn/t/:trackId` exists now so a second
   track is a content change.
 
+### Decisions made in Phase 2
+
+- **Lessons load on demand.** The lesson page and everything it carries (the MDX registry,
+  figures, calculators, the glossary for term cards) is a lazy route, and the figure lightbox
+  loads on first use. Home's initial JavaScript fell from 198.5 to 155.0 kB gzipped.
+- **Heading anchors are made at build time** by a small rehype step (`src/lib/rehypeHeadingIds.ts`)
+  that numbers repeats, because one lesson repeats "Worked example" three times and lesson
+  prose is not edited to suit the page.
+- **Only registered components.** `src/components/mdx/names.ts` lists every component by group;
+  the registry is type-checked against it and the content linter reads it, so an unknown or
+  planned component fails `npm run check`, not the page.
+- **Two unlayered global rules were fixed.** The default border colour (`* { border-color }`)
+  and the lesson prose rules sat outside Tailwind's layers, so they silently beat utilities:
+  no `border-accent` or `border-up` had ever shown. Both now live in layers; a few borders
+  elsewhere (active chips, inputs) now show the colour their classes always asked for.
+- **Prose styles skip components.** Prose element rules are wrapped in `:where()` and exclude
+  anything inside `.not-prose`, except markdown a component wraps (marked `.md`: callout bodies,
+  takeaways, comparisons). Before, prose list and link styles leaked into the quiz and buttons.
+- **Figures redraw narrower on phones** (420 units instead of 640) so candles scale up rather
+  than shrink, and wider in the lightbox (960 × 400) so it adds detail, not just size.
+- **Callouts use status colours only** (accent, info, warn, danger, neutral), never up/down.
+- **Per-route metadata is set in place** on the tags index.html already has, so nothing is
+  duplicated and leaving a page restores the defaults. Crawlers that run no JavaScript see only
+  the defaults; per-page previews for them would need prerendering (not done).
+- **The sitemap needs the site's address.** `SITE_URL` at build time (a Docker build argument)
+  writes `sitemap.xml`; without it only `robots.txt` is written, since sitemaps need absolute URLs.
+- **Presentation mode is Phase 3.** The read/present toggle and the `p` shortcut arrive with it.
+
 ### Known issues found in the audit, to fix as the components are rebuilt
 
 - Button labels failed contrast in the dark theme. Fixed for buttons in Phase 1; the order
   ticket's Buy and Sell follow in Phase 5.
 - Input borders used the decorative `line`; fixed in Phase 1 (`line-strong`).
-- Callouts use Tailwind palette classes (28 of the 30 remaining). Phase 2.
+- Callouts used Tailwind palette classes (28 of the 30 remaining). Fixed in Phase 2; one
+  remains, in the order ticket (Phase 5).

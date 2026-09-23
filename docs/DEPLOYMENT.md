@@ -148,3 +148,8 @@ proxy. That means one change in **nitorastone-service** and one here.
 Order matters. Create the network before either stack refers to it: Compose refuses to
 start a service whose external network does not exist. That is also why the network is
 not declared in advance.
+
+5. **The sitemap.** In the repository's Actions variables, set `SITE_URL` to the new address
+   (e.g. `https://trading.example.com`, no trailing slash). The next build writes
+   `sitemap.xml` from the curriculum and names it in `robots.txt`. Until then the build
+   writes `robots.txt` only, because a sitemap may not list relative URLs.

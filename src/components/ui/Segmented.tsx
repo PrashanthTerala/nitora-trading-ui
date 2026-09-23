@@ -17,12 +17,14 @@ export function Segmented<T extends string>({
   options,
   label,
   className,
+  size = 'md',
 }: {
   value: T;
   onChange: (value: T) => void;
   options: SegmentOption<T>[];
   label: string;
   className?: string;
+  size?: 'sm' | 'md';
 }) {
   const id = useId();
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -58,7 +60,8 @@ export function Segmented<T extends string>({
             tabIndex={active ? 0 : -1}
             onClick={() => onChange(o.value)}
             className={cx(
-              'relative h-8 shrink-0 rounded-[8px] px-3 text-body-sm font-semibold transition-colors duration-(--duration-fast)',
+              'relative shrink-0 rounded-[8px] font-semibold transition-colors duration-(--duration-fast)',
+              size === 'sm' ? 'h-7 px-2.5 text-caption' : 'h-8 px-3 text-body-sm',
               active ? 'text-ink' : 'text-ink-soft hover:text-ink',
             )}
           >

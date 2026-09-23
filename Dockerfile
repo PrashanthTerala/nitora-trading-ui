@@ -14,6 +14,10 @@ COPY package.json package-lock.json ./
 RUN npm ci --no-audit --no-fund
 
 COPY . .
+# The site's public address, e.g. https://example.com, for sitemap.xml and robots.txt. Optional:
+# without it the build writes robots.txt only (a sitemap may not use relative URLs).
+ARG SITE_URL=
+ENV SITE_URL=$SITE_URL
 # Typecheck and bundle. The course's own checks -- content lint, the price check, the
 # engine and figure tests -- run in CI before this image is built, not in here.
 RUN npm run build

@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import { SYMBOLS } from '@/engine/market/symbols';
 import { hasDataService } from '@/engine/market/realFeed';
+import { usePageMeta } from '@/lib/pageMeta';
+import { t } from '@/i18n';
 
 export function GuidePage() {
+  usePageMeta({ title: t('nav.guide'), description: t('meta.guide') });
   return (
     <div className="prose-lesson mx-auto max-w-3xl">
       <h1 className="text-3xl font-extrabold tracking-tight">How Nitora Trading Academy works</h1>

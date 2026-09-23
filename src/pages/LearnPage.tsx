@@ -14,6 +14,7 @@ import { Switch } from '@/components/ui/Switch';
 import { Tabs } from '@/components/ui/Tabs';
 import { cx } from '@/components/ui/cx';
 import { t } from '@/i18n';
+import { usePageMeta } from '@/lib/pageMeta';
 
 type LevelFilter = Level | 'all';
 type Completed = Record<string, number>;
@@ -35,6 +36,7 @@ function useSlashToFocus(ref: RefObject<HTMLInputElement | null>) {
 }
 
 export function LearnPage() {
+  usePageMeta({ title: t('learn.title'), description: t('meta.learn') });
   const completed = useProgress((s) => s.completed);
   const quizScores = useProgress((s) => s.quizScores);
   const prog = overallProgress(completed);

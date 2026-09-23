@@ -5,8 +5,10 @@ import { LearningPath } from './home/LearningPath';
 import { LessonShowcase } from './home/LessonShowcase';
 import { HonestyBand, FinalCta } from './home/Bands';
 import { useEngineSnapshot } from './home/useEngineSnapshot';
+import { usePageMeta } from '@/lib/pageMeta';
 
 export function HomePage() {
+  usePageMeta({});
   const snapshot = useEngineSnapshot();
   return (
     <>

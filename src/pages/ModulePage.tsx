@@ -2,7 +2,7 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { m, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import type { ReactNode } from 'react';
 import { ArrowLeft, ArrowRight, Check, Clock } from 'lucide-react';
-import { findModule, modulesInTrack, moduleMinutes } from '@/content/curriculum';
+import { findModule, modulesInTrack, moduleMinutes, LEVELS } from '@/content/curriculum';
 import { useProgress, lessonKey, moduleProgress } from '@/store/progress';
 import { ModuleCover, LevelBadge } from '@/components/curriculum/ModuleCover';
 import { buttonClass } from '@/components/ui/Button';
@@ -11,6 +11,7 @@ import { Chip } from '@/components/ui/Chip';
 import { Ring } from '@/components/ui/Ring';
 import { cx } from '@/components/ui/cx';
 import { t } from '@/i18n';
+import { usePageMeta, publisher, isoMinutes } from '@/lib/pageMeta';
 
 /** The cover drifts 10 px against the scroll -- a hint of depth, and nothing under reduced motion. */
 function ParallaxCover({ children }: { children: ReactNode }) {
@@ -27,6 +28,27 @@ function ParallaxCover({ children }: { children: ReactNode }) {
 export function ModulePage() {
   const { moduleId = '' } = useParams();
   const mod = findModule(moduleId);
+  usePageMeta(
+    mod
+      ? {
+          title: mod.title,
+          description: mod.description,
+          image: mod.art?.dark,
+          jsonLd: {
+            '@type': 'Course',
+            name: mod.title,
+            description: mod.description,
+            educationalLevel: LEVELS[mod.level].label,
+            timeRequired: isoMinutes(moduleMinutes(mod)),
+            inLanguage: 'en',
+            isAccessibleForFree: true,
+            url: `${location.origin}/learn/${mod.id}`,
+            provider: publisher(),
+            hasPart: mod.lessons.map((l) => ({ '@type': 'LearningResource', name: l.title, url: `${location.origin}/learn/${mod.id}/${l.id}` })),
+          },
+        }
+      : {},
+  );
   const completed = useProgress((s) => s.completed);
   const quizScores = useProgress((s) => s.quizScores);
   if (!mod) return <Navigate to="/learn" replace />;

@@ -9,29 +9,42 @@ import { CandleSvg, type Annotation, type Overlay, type SubPanel } from '@/compo
 import type { OHLC } from '@/engine/market/types';
 import { FIGURES, regimeSeries, type Regime } from '@/content/figures';
 import * as ind from '@/engine/market/indicators';
+import { t } from '@/i18n';
+import { FigureFrame, type FigureMode } from './FigureFrame';
 
-export function FigureFrame({ title, caption, children }: { title?: string; caption?: ReactNode; children: ReactNode }) {
-  return (
-    <figure className="not-prose my-7 overflow-hidden rounded-2xl border border-line bg-surface">
-      {title && <figcaption className="border-b border-line px-4 py-2 text-sm font-semibold text-ink">{title}</figcaption>}
-      <div className="p-3">{children}</div>
-      {caption && <figcaption className="border-t border-line px-4 py-3 text-sm leading-relaxed text-ink-soft">{caption}</figcaption>}
-    </figure>
-  );
-}
+export { FigureFrame };
 
-export function PatternFigure({ name, caption, title, height, showVolume, mode }: { name: string; caption?: ReactNode; title?: string; height?: number; showVolume?: boolean; mode?: 'candles' | 'line' | 'bars' }) {
+/** In the lightbox a figure is drawn wider and taller, so it gains detail rather than just scale. */
+const LARGE = { width: 960, height: 400 };
+/**
+ * On a phone the drawing is made narrower (the default is 640 units wide), so when it is
+ * scaled to the screen its candles and labels come out larger instead of shrinking to fit.
+ */
+const NARROW_WIDTH = 420;
+const drawWidth = (large: boolean, narrow: boolean) => (large ? LARGE.width : narrow ? NARROW_WIDTH : undefined);
+
+export function PatternFigure({ name, caption, title, height, showVolume, mode }: { name: string; caption?: ReactNode; title?: string; height?: number; showVolume?: boolean; mode?: FigureMode }) {
   const preset = FIGURES[name];
   if (!preset) {
     return (
-      <div className="my-6 rounded-lg border border-down bg-down/10 p-3 text-sm">
-        Unknown figure <code>{name}</code>
+      <div role="alert" className="not-prose my-6 rounded-control border border-danger bg-danger-soft p-3 text-body-sm text-ink">
+        {t('mdx.figure.unknown')} <code className="font-mono">{name}</code>
       </div>
     );
   }
   return (
-    <FigureFrame title={title ?? preset.title} caption={caption ?? preset.caption}>
-      <CandleSvg bars={preset.bars} annotations={preset.annotations} showVolume={showVolume ?? preset.showVolume} height={height ?? 240} fadeBefore={preset.fadeBefore} mode={mode} />
+    <FigureFrame title={title ?? preset.title} caption={caption ?? preset.caption} modes defaultMode={mode}>
+      {({ mode: m, large, narrow }) => (
+        <CandleSvg
+          bars={preset.bars}
+          annotations={preset.annotations}
+          showVolume={showVolume ?? preset.showVolume}
+          height={large ? LARGE.height : (height ?? 240)}
+          width={drawWidth(large, narrow)}
+          fadeBefore={preset.fadeBefore}
+          mode={m}
+        />
+      )}
     </FigureFrame>
   );
 }
@@ -54,35 +67,47 @@ export function CandleFigure({
   title?: string;
   height?: number;
   showVolume?: boolean;
-  mode?: 'candles' | 'line' | 'bars';
+  mode?: FigureMode;
   hollow?: boolean;
 }) {
   return (
-    <FigureFrame title={title} caption={caption}>
-      <CandleSvg bars={bars} annotations={annotations} overlays={overlays} showVolume={showVolume} height={height ?? 220} mode={mode} hollow={hollow} />
+    <FigureFrame title={title} caption={caption} modes defaultMode={mode}>
+      {({ mode: m, large, narrow }) => (
+        <CandleSvg
+          bars={bars}
+          annotations={annotations}
+          overlays={overlays}
+          showVolume={showVolume}
+          height={large ? LARGE.height : (height ?? 220)}
+          width={drawWidth(large, narrow)}
+          mode={m}
+          hollow={hollow}
+        />
+      )}
     </FigureFrame>
   );
 }
 
-/** Same data drawn three ways, for the chart-types lesson. */
+/** Same data drawn three ways, for the chart-types lesson. It shows every mode, so no switch. */
 export function ChartTypesFigure({ regime = 'trend-up', caption }: { regime?: Regime; caption?: ReactNode }) {
   const bars = useMemo(() => regimeSeries(regime, 40), [regime]);
+  const panels = [
+    { mode: 'line' as const, label: t('mdx.figure.typesLine') },
+    { mode: 'bars' as const, label: t('mdx.figure.typesBars') },
+    { mode: 'candles' as const, label: t('mdx.figure.typesCandles') },
+  ];
   return (
-    <FigureFrame title="The same 40 days, drawn three ways" caption={caption}>
-      <div className="grid gap-3 md:grid-cols-3">
-        <div>
-          <p className="mb-1 text-xs font-semibold text-ink-soft">Line (closes only)</p>
-          <CandleSvg bars={bars} mode="line" height={180} axis={false} />
+    <FigureFrame title={t('mdx.figure.typesTitle')} caption={caption}>
+      {({ large }) => (
+        <div className="grid gap-3 md:grid-cols-3">
+          {panels.map((p) => (
+            <div key={p.mode}>
+              <p className="mb-1 text-caption font-semibold text-ink-soft">{p.label}</p>
+              <CandleSvg bars={bars} mode={p.mode} height={large ? 260 : 180} axis={false} />
+            </div>
+          ))}
         </div>
-        <div>
-          <p className="mb-1 text-xs font-semibold text-ink-soft">OHLC bars</p>
-          <CandleSvg bars={bars} mode="bars" height={180} axis={false} />
-        </div>
-        <div>
-          <p className="mb-1 text-xs font-semibold text-ink-soft">Candlesticks</p>
-          <CandleSvg bars={bars} mode="candles" height={180} axis={false} />
-        </div>
-      </div>
+      )}
     </FigureFrame>
   );
 }
@@ -205,7 +230,7 @@ export function IndicatorFigure({ indicator, regime, caption, title, period }: {
       }
       case 'adx': {
         const a = ind.adx(bars, 14);
-        panels.push({ name: 'ADX 14 (white), +DI (green), -DI (red)', series: [{ values: a.plusDI, color: 'var(--color-up)' }, { values: a.minusDI, color: 'var(--color-down)' }, { values: a.adx, color: 'var(--color-ink)' }], levels: [{ value: 25 }], range: [0, 60] });
+        panels.push({ name: 'ADX 14 (the plain line), +DI (green), -DI (red)', series: [{ values: a.plusDI, color: 'var(--color-up)' }, { values: a.minusDI, color: 'var(--color-down)' }, { values: a.adx, color: 'var(--color-ink)' }], levels: [{ value: 25 }], range: [0, 60] });
         defaultTitle = 'ADX and directional indicators';
         break;
       }
@@ -275,8 +300,19 @@ export function IndicatorFigure({ indicator, regime, caption, title, period }: {
   }, [indicator, bars, closes, period]);
 
   return (
-    <FigureFrame title={title ?? defaultTitle} caption={caption}>
-      <CandleSvg bars={bars} overlays={overlays} panels={panels} annotations={annotations} showVolume={showVolume} height={230} />
+    <FigureFrame title={title ?? defaultTitle} caption={caption} modes>
+      {({ mode, large, narrow }) => (
+        <CandleSvg
+          bars={bars}
+          overlays={overlays}
+          panels={panels}
+          annotations={annotations}
+          showVolume={showVolume}
+          height={large ? LARGE.height : 230}
+          width={drawWidth(large, narrow)}
+          mode={mode}
+        />
+      )}
     </FigureFrame>
   );
 }

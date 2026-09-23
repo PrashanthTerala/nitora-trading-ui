@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
+import { usePageMeta } from '@/lib/pageMeta';
+import { t } from '@/i18n';
 
 export function NotFoundPage() {
+  usePageMeta({ title: t('meta.notFound'), noindex: true });
   return (
     <div className="mx-auto max-w-md py-20 text-center">
       <div className="text-6xl">🕯️</div>

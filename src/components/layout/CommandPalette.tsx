@@ -104,6 +104,12 @@ export default function CommandPalette({ open, onOpenChange }: { open: boolean; 
               {t('palette.tokens')}
             </Command.Item>
           )}
+          {import.meta.env.DEV && (
+            <Command.Item value="page mdx components gallery" onSelect={() => go('/__mdx')} className={itemClass}>
+              <Palette size={16} strokeWidth={1.5} className="text-ink-soft" aria-hidden />
+              {t('palette.mdx')}
+            </Command.Item>
+          )}
         </Command.Group>
 
         <Command.Group heading={t('palette.actions')}>

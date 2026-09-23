@@ -96,3 +96,29 @@ export function LessonBodySkeleton() {
     </div>
   );
 }
+
+/** The whole lesson page while its code loads: outline, article header and body. */
+export function LessonSkeleton() {
+  return (
+    <div className="mx-auto max-w-[1440px] px-4 pb-16 pt-6 sm:px-6 lg:pt-10">
+      <div className="lg:grid lg:grid-cols-[232px_minmax(0,1fr)] lg:gap-10 xl:grid-cols-[232px_minmax(0,1fr)_208px] xl:gap-12">
+        <div className="mb-6 space-y-2 lg:mb-0">
+          <Skeleton className="h-12 lg:h-10" />
+          <div className="hidden space-y-2 lg:block">
+            {Array.from({ length: 8 }, (_, i) => (
+              <Skeleton key={i} className="h-7" />
+            ))}
+          </div>
+        </div>
+        <div className="mx-auto w-full max-w-(--container-lesson) space-y-4">
+          <Skeleton className="h-4 w-2/3" />
+          <Skeleton className="h-10 w-4/5" />
+          <Skeleton className="h-6 w-3/5" />
+          <div className="pt-6">
+            <LessonBodySkeleton />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -7,6 +7,7 @@ import { LevelRibbon } from '@/components/curriculum/ModuleCover';
 import { buttonClass } from '@/components/ui/Button';
 import { Ring } from '@/components/ui/Ring';
 import { t } from '@/i18n';
+import { usePageMeta } from '@/lib/pageMeta';
 
 /**
  * `/learn/t/:trackId`: one track's landing page. With a single track today it is reachable but
@@ -15,6 +16,7 @@ import { t } from '@/i18n';
 export function TrackPage() {
   const { trackId = '' } = useParams();
   const track = findTrack(trackId);
+  usePageMeta(track ? { title: track.title, description: track.tagline } : {});
   const completed = useProgress((s) => s.completed);
   if (!track) return <Navigate to="/learn" replace />;
 

@@ -47,7 +47,10 @@ import { en } from '@/i18n/en';
 import * as curriculum from '@/content/curriculum';
 import { computeSnapshot } from '@/pages/home/engineSnapshot';
 import { DEFAULT_SEED, START_CURSOR } from '@/lib/simDefaults';
-export { parseFlags, FLAG_DEFAULTS, translate, en, curriculum, computeSnapshot, DEFAULT_SEED, START_CURSOR, color, parseTokens, resolveToken, broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, migrateStorage, LEGACY_KEYS, STORAGE_KEYS, resolveDataApi, Market, RealFeed, SYMBOLS, SYMBOL_MAP, aggregate, bucketStart, nextSessionMinute, minuteOfSession, ind };
+import { slugify, textOf } from '@/lib/slug';
+import { buildSitemap, buildRobots, sitePaths } from '@/lib/sitemap';
+import { rehypeHeadingIds } from '@/lib/rehypeHeadingIds';
+export { slugify, textOf, buildSitemap, buildRobots, sitePaths, rehypeHeadingIds, parseFlags, FLAG_DEFAULTS, translate, en, curriculum, computeSnapshot, DEFAULT_SEED, START_CURSOR, color, parseTokens, resolveToken, broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, migrateStorage, LEGACY_KEYS, STORAGE_KEYS, resolveDataApi, Market, RealFeed, SYMBOLS, SYMBOL_MAP, aggregate, bucketStart, nextSessionMinute, minuteOfSession, ind };
 `,
 );
 
@@ -58,7 +61,7 @@ execSync(
 );
 
 const M = await import(pathToFileURL(bundle).href);
-const { parseFlags, FLAG_DEFAULTS, translate, en, curriculum, computeSnapshot, DEFAULT_SEED, START_CURSOR, color, parseTokens, resolveToken, broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, migrateStorage, LEGACY_KEYS, STORAGE_KEYS, resolveDataApi, Market, RealFeed, SYMBOLS, ind } = M;
+const { slugify, textOf, buildSitemap, buildRobots, sitePaths, rehypeHeadingIds, parseFlags, FLAG_DEFAULTS, translate, en, curriculum, computeSnapshot, DEFAULT_SEED, START_CURSOR, color, parseTokens, resolveToken, broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, migrateStorage, LEGACY_KEYS, STORAGE_KEYS, resolveDataApi, Market, RealFeed, SYMBOLS, ind } = M;
 
 let pass = 0;
 let fail = 0;
@@ -689,6 +692,35 @@ const near = (a, b, eps = 1e-6) => Math.abs(a - b) < eps;
   check("home ticker: prices are the simulator's opening prices", snap.ticker.every((r) => near(r.price, market.feed(r.symbol).price(START_CURSOR, 3))));
   check('home ticker: day change is against the previous bar close', snap.ticker.every((r) => { const prev = market.feed(r.symbol).baseBar(START_CURSOR - 1).close; return near(r.changePct, ((r.price - prev) / prev) * 100); }));
   check('home sparkline: 120 five-minute bars with sane OHLC', snap.spark.bars.length === 120 && snap.spark.bars.every((b) => b.l <= Math.min(b.o, b.c) && b.h >= Math.max(b.o, b.c)));
+}
+
+// ---------------------------------------------------------------- lesson anchors
+{
+  check('slug: words, lowercase, hyphens', slugify('What it looks like: the exact rules') === 'what-it-looks-like-the-exact-rules');
+  check("slug: apostrophes vanish rather than split a word", slugify("Don't chase: it's a trap") === 'dont-chase-its-a-trap');
+  check('slug: accents fold, symbols and edges trimmed', slugify('  Café % & 50/50 — rule!  ') === 'cafe-50-50-rule');
+  check('text of children: nested elements and numbers', textOf(['The ', { props: { children: ['RSI ', 14] } }, ' rule', null, false]) === 'The RSI 14 rule');
+  const h = (tag, ...kids) => ({ type: 'element', tagName: tag, properties: {}, children: kids });
+  const txt = (value) => ({ type: 'text', value });
+  const tree = { type: 'root', children: [h('h2', txt('Worked example')), h('p', txt('x')), h('h3', txt('Worked '), h('strong', txt('example'))), h('h2', txt('Quiz')), h('h2', txt('Key takeaways')), h('h4', txt('Not me'))] };
+  rehypeHeadingIds()(tree);
+  const ids = tree.children.map((n) => n.properties.id);
+  check('heading ids: repeats are numbered, in document order', ids[0] === 'worked-example' && ids[2] === 'worked-example-2');
+  check('heading ids: text inside inline elements counts', ids[2].startsWith('worked-example'));
+  check('heading ids: the page’s own section ids are never reused', ids[3] === 'quiz-2' && ids[4] === 'key-takeaways-2');
+  check('heading ids: only ## and ### get one', ids[1] === undefined && ids[5] === undefined);
+}
+
+// ---------------------------------------------------------------- sitemap and robots
+{
+  const paths = sitePaths(curriculum.CURRICULUM, curriculum.TRACKS);
+  const lessons = curriculum.ALL_LESSONS.length;
+  check('sitemap: every room, track, module and lesson, once', paths.length === 7 + curriculum.TRACKS.length + curriculum.CURRICULUM.length + lessons && new Set(paths).size === paths.length);
+  check('sitemap: no development pages', !paths.some((x) => x.startsWith('/__')));
+  const xml = buildSitemap('https://example.org/', ['/', '/learn/a&b']);
+  check('sitemap: absolute URLs, one slash, XML-escaped', xml.includes('<loc>https://example.org/</loc>') && xml.includes('<loc>https://example.org/learn/a&amp;b</loc>'));
+  check('robots: names the sitemap only when the site address is known', buildRobots('https://example.org').includes('Sitemap: https://example.org/sitemap.xml') && !buildRobots().includes('Sitemap'));
+  check('robots: development pages are disallowed', buildRobots().includes('Disallow: /__'));
 }
 
 

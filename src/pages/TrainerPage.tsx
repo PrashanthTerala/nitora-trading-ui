@@ -16,6 +16,8 @@ import { aggregate } from '@/engine/market/generator';
 import type { OHLC } from '@/engine/market/types';
 import { useProgress } from '@/store/progress';
 import { Rng, shuffled } from '@/lib/rng';
+import { usePageMeta } from '@/lib/pageMeta';
+import { t } from '@/i18n';
 
 /** Patterns eligible for the naming quiz, grouped so distractors are plausible. */
 const QUIZ_POOL: { name: string; label: string; group: string }[] = [
@@ -73,6 +75,7 @@ function newSeed() {
 }
 
 export function TrainerPage() {
+  usePageMeta({ title: t('nav.trainer'), description: t('meta.trainer') });
   const [mode, setMode] = useState<'name' | 'next'>('name');
   return (
     <div className="mx-auto max-w-4xl space-y-6">

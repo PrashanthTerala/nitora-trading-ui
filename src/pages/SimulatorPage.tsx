@@ -8,6 +8,8 @@ import { DataSourceBar, RealSymbolPicker } from '@/components/sim/DataSource';
 import { SYMBOLS } from '@/engine/market/symbols';
 import { TIMEFRAMES, type Timeframe } from '@/engine/market/types';
 import { SUBTICKS } from '@/engine/market/feed';
+import { usePageMeta } from '@/lib/pageMeta';
+import { t } from '@/i18n';
 
 const OVERLAY_LABELS: { key: keyof Overlays; label: string; group: 'overlay' | 'pane' }[] = [
   { key: 'ema9', label: 'EMA 9', group: 'overlay' },
@@ -24,6 +26,7 @@ const OVERLAY_LABELS: { key: keyof Overlays; label: string; group: 'overlay' | '
 const SPEEDS = [2, 8, 30, 120];
 
 export function SimulatorPage() {
+  usePageMeta({ title: t('nav.simulator'), description: t('meta.simulator') });
   const { symbol, timeframe, cursor, subtick, playing, speed, overlays, account, clock, source, realSymbol, realSymbols, realStatus } = useSim();
   const setSymbol = useSim((s) => s.setSymbol);
   const setTimeframe = useSim((s) => s.setTimeframe);

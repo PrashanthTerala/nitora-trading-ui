@@ -52,13 +52,16 @@ jobs:
             type=raw,value=latest,enable={{is_default_branch}}
             type=sha,format=long
 
-      # No build-args, deliberately. Without VITE_DATA_API this is the public build:
-      # synthetic market only, no request to any market-data service. See Dockerfile.
+      # Never VITE_DATA_API: without it this is the public build, synthetic market only, no
+      # request to any market-data service. See Dockerfile. SITE_URL is only the site's own
+      # address, for sitemap.xml; while the repository variable is unset, no sitemap is written.
       # On a pull request this builds without pushing, so a broken Dockerfile fails the
       # PR rather than master.
       - uses: docker/build-push-action@v6
         with:
           context: .
+          build-args: |
+            SITE_URL=${{ vars.SITE_URL }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

@@ -1,13 +1,20 @@
-import { useEffect, useMemo, useState, type ComponentType } from 'react';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { useCallback, useEffect, useRef, useState, type ComponentType } from 'react';
+import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { MDXProvider } from '@mdx-js/react';
-import { ArrowLeft, ArrowRight, CheckCircle2, Circle, Clock, List } from 'lucide-react';
-import { findLesson, findModule } from '@/content/curriculum';
+import { CheckCircle2, ChevronRight, Clock } from 'lucide-react';
+import { findLesson, findModule, LEVELS } from '@/content/curriculum';
 import { mdxComponents } from '@/components/mdx';
 import { useProgress, lessonKey } from '@/store/progress';
 import { LessonBodySkeleton } from '@/components/layout/PageSkeletons';
 import { RouteFallback } from '@/components/layout/RouteProgress';
+import { LessonOutline } from '@/components/lesson/LessonOutline';
+import { OnThisPage, ReadingProgressBar, useLessonScroll } from '@/components/lesson/OnThisPage';
+import { LessonFooter } from '@/components/lesson/LessonFooter';
+import { useLessonKeys } from '@/components/lesson/useLessonKeys';
+import { LevelBadge } from '@/components/curriculum/ModuleCover';
+import { Chip } from '@/components/ui/Chip';
 import { toast } from '@/components/ui/Toast';
+import { usePageMeta, publisher, isoMinutes } from '@/lib/pageMeta';
 import { t } from '@/i18n';
 
 const lessonModules = import.meta.glob('../content/modules/*/*.mdx') as Record<string, () => Promise<{ default: ComponentType }>>;
@@ -16,23 +23,27 @@ function loaderFor(moduleId: string, lessonId: string) {
   return lessonModules[`../content/modules/${moduleId}/${lessonId}.mdx`];
 }
 
-export function LessonPage() {
+/**
+ * A lesson, in read mode. Three columns on wide screens -- the module's lessons, the article at
+ * a 68ch measure, and an on-this-page list with reading progress -- collapsing to one column,
+ * with the outline as a disclosure and progress as a line under the header.
+ */
+export default function LessonPage() {
   const { moduleId = '', lessonId = '' } = useParams();
   const found = findLesson(moduleId, lessonId);
   const mod = findModule(moduleId);
-  const completed = useProgress((s) => s.completed);
+  const navigate = useNavigate();
+  const { hash } = useLocation();
+  const key = lessonKey(moduleId, lessonId);
+  const done = useProgress((s) => !!s.completed[key]);
+  const quiz = useProgress((s) => s.quizScores[key]);
   const markComplete = useProgress((s) => s.markComplete);
   const unmarkComplete = useProgress((s) => s.unmarkComplete);
   const setLastVisited = useProgress((s) => s.setLastVisited);
-  const complete = (k: string) => {
-    markComplete(k);
-    toast({ title: t('toast.lessonComplete'), tone: 'up' });
-  };
-  const quizScores = useProgress((s) => s.quizScores);
   const [Content, setContent] = useState<ComponentType | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const key = lessonKey(moduleId, lessonId);
-  const done = !!completed[key];
+  const articleRef = useRef<HTMLElement>(null);
+  const { items, active, progress } = useLessonScroll(articleRef, Content);
 
   useEffect(() => {
     setContent(null);
@@ -52,146 +63,143 @@ export function LessonPage() {
     };
   }, [moduleId, lessonId, key, setLastVisited]);
 
-  const [showToc, setShowToc] = useState(false);
-  const sidebar = useMemo(() => mod?.lessons ?? [], [mod]);
+  // A link to a heading or figure (#fig-...) can only land once the lesson's MDX has rendered.
+  useEffect(() => {
+    if (!Content || !hash) return;
+    const id = decodeURIComponent(hash.slice(1));
+    requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView());
+  }, [Content, hash]);
+
+  const toggleDone = useCallback(() => {
+    if (done) {
+      unmarkComplete(key);
+      toast({ title: t('toast.lessonUndone') });
+    } else {
+      markComplete(key);
+      toast({ title: t('toast.lessonComplete'), tone: 'up' });
+    }
+  }, [done, key, markComplete, unmarkComplete]);
+
+  const prevPath = found?.prev?.path;
+  const nextPath = found?.next?.path;
+  useLessonKeys({
+    prev: prevPath ? () => navigate(prevPath) : undefined,
+    next: nextPath
+      ? () => {
+          if (!done) markComplete(key);
+          navigate(nextPath);
+        }
+      : undefined,
+    toggleDone,
+  });
+
+  usePageMeta(
+    found && mod
+      ? {
+          title: found.lesson.title,
+          description: found.lesson.summary,
+          image: mod.art?.dark,
+          jsonLd: {
+            '@type': 'LearningResource',
+            name: found.lesson.title,
+            description: found.lesson.summary,
+            learningResourceType: 'Lesson',
+            educationalLevel: LEVELS[mod.level].label,
+            timeRequired: isoMinutes(found.lesson.minutes),
+            inLanguage: 'en',
+            isAccessibleForFree: true,
+            url: `${location.origin}${found.lesson.path}`,
+            isPartOf: { '@type': 'Course', name: mod.title, url: `${location.origin}/learn/${mod.id}` },
+            publisher: publisher(),
+          },
+        }
+      : {},
+  );
 
   if (!found || !mod) return <Navigate to="/learn" replace />;
   const { lesson, prev, next } = found;
-  const quiz = quizScores[key];
 
   return (
-    <div className="lg:grid lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-10">
-      {/* module sidebar */}
-      <aside className="mb-6 lg:mb-0">
-        <div className="lg:sticky lg:top-[calc(var(--spacing-header)+1.5rem)]">
-          <button type="button" onClick={() => setShowToc((s) => !s)} className="btn-ghost mb-2 w-full justify-between lg:hidden">
-            <span className="flex items-center gap-2">
-              <List size={14} /> {t('common.module', { number: mod.number })} · {mod.title}
-            </span>
-            <span className="text-xs text-ink-soft">
-              {lesson.index + 1}/{mod.lessons.length}
-            </span>
-          </button>
-          <nav className={`${showToc ? 'block' : 'hidden'} rounded-2xl border border-line bg-surface p-3 lg:block`}>
-            <Link to={`/learn/${mod.id}`} className="mb-2 block px-2 text-xs font-bold uppercase tracking-wider text-ink-soft hover:text-ink">
-              {t('common.module', { number: mod.number })} · {mod.title}
-            </Link>
-            <ol className="space-y-0.5">
-              {sidebar.map((l, i) => {
-                const active = l.id === lesson.id;
-                const d = !!completed[lessonKey(mod.id, l.id)];
-                return (
-                  <li key={l.id}>
-                    <Link to={`/learn/${mod.id}/${l.id}`} className={`flex items-start gap-2 rounded-md px-2 py-1.5 text-[13px] leading-snug ${active ? 'bg-accent/10 font-semibold text-accent' : 'text-ink-soft hover:bg-panel hover:text-ink'}`}>
-                      {d ? <CheckCircle2 size={14} className="mt-0.5 shrink-0 text-up" /> : <Circle size={14} className="mt-0.5 shrink-0 opacity-50" />}
-                      <span>
-                        <span className="mr-1 font-mono text-[11px] opacity-60">{i + 1}.</span>
-                        {l.title}
-                      </span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ol>
-          </nav>
-        </div>
-      </aside>
+    <div className="mx-auto max-w-[1440px] px-4 pb-16 pt-6 sm:px-6 lg:pt-10">
+      <ReadingProgressBar progress={progress} />
+      <div className="lg:grid lg:grid-cols-[232px_minmax(0,1fr)] lg:gap-10 xl:grid-cols-[232px_minmax(0,1fr)_208px] xl:gap-12">
+        <aside className="mb-6 lg:mb-0">
+          <LessonOutline module={mod} currentId={lesson.id} />
+        </aside>
 
-      {/* lesson */}
-      <article className="min-w-0 max-w-3xl">
-        <header className="mb-8 border-b border-line pb-6">
-          <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-ink-soft">
-            Module {mod.number} · {mod.subtitle} · Lesson {lesson.index + 1} of {mod.lessons.length}
-          </div>
-          <h1 className="text-3xl font-extrabold leading-tight tracking-tight md:text-4xl">{lesson.title}</h1>
-          <p className="mt-3 text-lg text-ink-soft">{lesson.summary}</p>
-          <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-ink-soft">
-            <span className="flex items-center gap-1">
-              <Clock size={14} /> {lesson.minutes} min read
-            </span>
-            {quiz && (
-              <span className="chip">
-                Quiz best: {quiz.score}/{quiz.total}
-              </span>
-            )}
-            {done && (
-              <span className="chip chip-on">
-                <CheckCircle2 size={12} className="mr-1" /> Completed
-              </span>
-            )}
-          </div>
-        </header>
-
-        <div className="prose-lesson">
-          {error === 'missing' && (
-            <div className="rounded-xl border border-warn/40 bg-warn/10 p-5 text-sm">
-              This lesson is still being written. Check back soon, or continue to the next lesson.
+        <article ref={articleRef} className="mx-auto w-full min-w-0 max-w-(--container-lesson)">
+          <header className="mb-10">
+            <nav aria-label={t('lesson.breadcrumb')}>
+              <ol className="flex flex-wrap items-center gap-1 text-body-sm text-ink-muted">
+                <li>
+                  <Link to="/learn" className="hover:text-ink">
+                    {t('nav.learn')}
+                  </Link>
+                </li>
+                <li aria-hidden>
+                  <ChevronRight size={14} strokeWidth={1.5} />
+                </li>
+                <li className="min-w-0">
+                  <Link to={`/learn/${mod.id}`} className="hover:text-ink">
+                    {t('common.module', { number: mod.number })}: {mod.title}
+                  </Link>
+                </li>
+                <li aria-hidden>
+                  <ChevronRight size={14} strokeWidth={1.5} />
+                </li>
+                <li aria-current="page" className="text-ink-soft">
+                  {t('lesson.lessonOf', { number: lesson.index + 1, total: mod.lessons.length })}
+                </li>
+              </ol>
+            </nav>
+            <div className="mt-6">
+              <LevelBadge level={mod.level} />
             </div>
-          )}
-          {error && error !== 'missing' && <div className="rounded-xl border border-down/40 bg-down/10 p-5 text-sm">Failed to load lesson: {error}</div>}
-          {!error && !Content && (
-            <RouteFallback label={t('loading.lesson')}>
-              <LessonBodySkeleton />
-            </RouteFallback>
-          )}
-          {Content && (
-            <MDXProvider components={mdxComponents}>
-              <Content />
-            </MDXProvider>
-          )}
-        </div>
+            <h1 className="mt-2 font-display text-h1 font-bold text-ink">{lesson.title}</h1>
+            <p className="mt-3 text-body-lg text-ink-soft">{lesson.summary}</p>
+            <div className="mt-5 flex flex-wrap items-center gap-2 border-b border-line pb-6 text-body-sm text-ink-soft">
+              <span className="mr-2 flex items-center gap-1.5">
+                <Clock size={14} strokeWidth={1.5} aria-hidden /> {t('lesson.minutes', { count: lesson.minutes })}
+              </span>
+              {quiz && (
+                <Chip tone={quiz.score === quiz.total ? 'up' : 'accent'} size="md">
+                  {t('common.quizBest', { score: quiz.score, total: quiz.total })}
+                </Chip>
+              )}
+              {done && (
+                <Chip tone="up" size="md">
+                  <CheckCircle2 size={13} strokeWidth={2} aria-hidden /> {t('common.completed')}
+                </Chip>
+              )}
+            </div>
+          </header>
 
-        <footer className="mt-12 space-y-6 border-t border-line pt-6">
-          <div className="flex flex-wrap items-center gap-3">
-            {done ? (
-              <button
-                type="button"
-                className="btn-ghost"
-                onClick={() => {
-                  unmarkComplete(key);
-                  toast({ title: t('toast.lessonUndone') });
-                }}
-              >
-                <CheckCircle2 size={16} className="text-up" /> Completed · mark as not done
-              </button>
-            ) : (
-              <button type="button" className="btn-primary" onClick={() => complete(key)}>
-                <CheckCircle2 size={16} /> Mark lesson complete
-              </button>
+          <div className="prose-lesson">
+            {error === 'missing' && <div className="not-prose rounded-card border-l-[3px] border-warn bg-warn-soft p-5 text-body-sm text-ink">{t('lesson.missing')}</div>}
+            {error && error !== 'missing' && (
+              <div role="alert" className="not-prose rounded-card border-l-[3px] border-danger bg-danger-soft p-5 text-body-sm text-ink">
+                {t('lesson.failed', { error })}
+              </div>
+            )}
+            {!error && !Content && (
+              <RouteFallback label={t('loading.lesson')}>
+                <LessonBodySkeleton />
+              </RouteFallback>
+            )}
+            {Content && (
+              <MDXProvider components={mdxComponents}>
+                <Content />
+              </MDXProvider>
             )}
           </div>
-          <div className="grid gap-3 sm:grid-cols-2">
-            {prev ? (
-              <Link to={prev.path} className="group rounded-xl border border-line bg-surface p-4 hover:border-accent/60">
-                <div className="flex items-center gap-1 text-xs text-ink-soft">
-                  <ArrowLeft size={12} /> Previous
-                </div>
-                <div className="mt-1 font-semibold group-hover:text-accent">{prev.title}</div>
-              </Link>
-            ) : (
-              <span />
-            )}
-            {next ? (
-              <Link
-                to={next.path}
-                onClick={() => !done && markComplete(key)}
-                className="group rounded-xl border border-line bg-surface p-4 text-right hover:border-accent/60"
-              >
-                <div className="flex items-center justify-end gap-1 text-xs text-ink-soft">
-                  Next <ArrowRight size={12} />
-                </div>
-                <div className="mt-1 font-semibold group-hover:text-accent">{next.title}</div>
-                {next.moduleId !== mod.id && <div className="text-xs text-ink-soft">Starts module {next.moduleNumber}: {next.moduleTitle}</div>}
-              </Link>
-            ) : (
-              <Link to="/simulator" className="rounded-xl border border-accent/40 bg-accent/5 p-4 text-right">
-                <div className="text-xs text-ink-soft">You finished the curriculum 🎓</div>
-                <div className="mt-1 font-semibold text-accent">Go practise in the simulator</div>
-              </Link>
-            )}
-          </div>
-        </footer>
-      </article>
+
+          <LessonFooter lesson={lesson} prev={prev} next={next} done={done} onToggleDone={toggleDone} />
+        </article>
+
+        <aside className="hidden xl:block">
+          <OnThisPage items={items} active={active} progress={progress} />
+        </aside>
+      </div>
     </div>
   );
 }

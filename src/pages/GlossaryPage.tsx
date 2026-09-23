@@ -2,8 +2,11 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import { GLOSSARY } from '@/content/glossary';
+import { usePageMeta } from '@/lib/pageMeta';
+import { t } from '@/i18n';
 
 export function GlossaryPage() {
+  usePageMeta({ title: t('nav.glossary'), description: t('meta.glossary') });
   const [q, setQ] = useState('');
   const loc = useLocation();
   const sorted = useMemo(() => [...GLOSSARY].sort((a, b) => a.term.localeCompare(b.term)), []);

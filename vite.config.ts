@@ -5,6 +5,9 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import mdx from '@mdx-js/rollup';
 import remarkGfm from 'remark-gfm';
+import { CURRICULUM, TRACKS } from './src/content/curriculum.ts';
+import { buildRobots, buildSitemap, sitePaths } from './src/lib/sitemap.ts';
+import { rehypeHeadingIds } from './src/lib/rehypeHeadingIds.ts';
 
 /**
  * `virtual:lesson-excerpt`: the home page's "Inside a lesson" showcase, read from a real lesson
@@ -46,12 +49,31 @@ function lessonExcerpt(): Plugin {
   };
 }
 
+/**
+ * robots.txt always; sitemap.xml when the build knows the site's public address (SITE_URL),
+ * because a sitemap may only list absolute URLs. Both come from the curriculum, so a new lesson
+ * is in the sitemap without anyone remembering to add it.
+ */
+function seoFiles(): Plugin {
+  return {
+    name: 'nitora:seo-files',
+    apply: 'build',
+    generateBundle() {
+      const origin = process.env.SITE_URL?.trim() || undefined;
+      this.emitFile({ type: 'asset', fileName: 'robots.txt', source: buildRobots(origin) });
+      if (origin) this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: buildSitemap(origin, sitePaths(CURRICULUM, TRACKS)) });
+      else this.info('SITE_URL is not set, so no sitemap.xml was written (it needs absolute URLs).');
+    },
+  };
+}
+
 export default defineConfig({
   plugins: [
-    { enforce: 'pre', ...mdx({ remarkPlugins: [remarkGfm], providerImportSource: '@mdx-js/react' }) },
+    { enforce: 'pre', ...mdx({ remarkPlugins: [remarkGfm], rehypePlugins: [rehypeHeadingIds], providerImportSource: '@mdx-js/react' }) },
     react({ include: /\.(jsx|js|mdx|md|tsx|ts)$/ }),
     tailwindcss(),
     lessonExcerpt(),
+    seoFiles(),
   ],
   resolve: { alias: { '@': '/src' } },
   build: {

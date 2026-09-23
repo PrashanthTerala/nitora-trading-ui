@@ -31,6 +31,7 @@ export const PAGES = [
   ['guide', '/guide'],
   ['not-found', '/this-page-does-not-exist'],
   ['tokens', '/__tokens'],
+  ['mdx', '/__mdx'],
 ];
 const WIDTHS = [
   [390, 844],

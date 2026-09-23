@@ -18,8 +18,14 @@ body {
   font-family: var(--font-sans);
 }
 
-* {
-  border-color: var(--color-line);
+/* The default border colour. In the base layer, so a border utility (border-accent) wins;
+   unlayered, this rule used to override every one of them. */
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-line);
+  }
 }
 
 /* Every keyboard-reachable element shows where focus is. Mouse clicks do not trigger it
@@ -65,87 +71,130 @@ body {
   }
 }
 
-/* ---------- lesson prose ---------- */
-.prose-lesson {
-  @apply text-[16.5px] leading-[1.75] text-ink;
-}
-.prose-lesson > p {
-  @apply my-4;
-}
-.prose-lesson h2 {
-  @apply mt-11 mb-4 text-2xl font-bold tracking-tight;
-}
-.prose-lesson h3 {
-  @apply mt-8 mb-3 text-lg font-bold;
-}
-.prose-lesson strong {
-  @apply font-semibold text-ink;
-}
-.prose-lesson a {
-  @apply text-accent underline decoration-accent/40 underline-offset-2 hover:decoration-accent;
-}
-.prose-lesson ul,
-.takeaways ul,
-.callout-body ul,
-.compare ul {
-  @apply my-4 list-disc space-y-1.5 pl-6;
-}
-.prose-lesson ol,
-.callout-body ol {
-  @apply my-4 list-decimal space-y-1.5 pl-6;
-}
-.takeaways ul {
-  @apply my-0;
-}
-.compare ul {
-  @apply my-0 text-[15px];
-}
-.callout-body p {
-  @apply my-2;
-}
-.callout-body p:first-child {
-  @apply mt-0;
-}
-.callout-body p:last-child {
-  @apply mb-0;
-}
-.prose-lesson blockquote {
-  @apply my-5 border-l-4 border-accent/40 pl-4 italic text-ink-soft;
-}
-.prose-lesson code {
-  @apply rounded bg-panel px-1.5 py-0.5 font-mono text-[0.9em];
-}
-.prose-lesson pre {
-  @apply my-5 overflow-x-auto rounded-xl bg-panel p-4 font-mono text-sm leading-relaxed;
-}
-.prose-lesson pre code {
-  @apply bg-transparent p-0;
-}
-/* Scroll the table, not the page. See ScrollableTable in components/mdx. */
-.table-scroll {
-  @apply -mx-1 my-6 overflow-x-auto px-1;
-}
-.prose-lesson table,
-.callout-body table {
-  @apply w-full border-collapse overflow-hidden rounded-xl text-[15px];
-}
-.table-scroll > table {
-  @apply my-0;
-}
+/* In the components layer, like the UI kit: a utility class on an element always wins. */
+@layer components {
+  /* ---------- lesson prose ----------
+     17 px on desktop and 16 px on phones at a 1.7 line height (the prose token), inside a 68ch
+     column set by the lesson page. Headings use the display face; everything else is tokens.
+     Element rules skip anything inside a .not-prose component (quiz, figures, calls to action),
+     which styles itself, except the markdown a component wraps (marked .md: callout bodies,
+     takeaways, comparisons). They are in :where(), so any component class outranks them. */
+  .prose-lesson {
+    @apply text-prose text-ink;
+  }
+  .prose-lesson > p {
+    @apply my-5;
+  }
+  .prose-lesson :where(h2):where(:not(.not-prose *), .md *) {
+    @apply mt-14 mb-4 font-display text-h2 font-semibold text-ink;
+  }
+  .prose-lesson :where(h3):where(:not(.not-prose *), .md *) {
+    @apply mt-10 mb-3 font-display text-h3 font-semibold text-ink;
+  }
+  .prose-lesson > :first-child {
+    @apply mt-0;
+  }
+  .prose-lesson :where(strong):where(:not(.not-prose *), .md *) {
+    @apply font-semibold text-ink;
+  }
+  .prose-lesson :where(a:not(.heading-anchor)):where(:not(.not-prose *), .md *) {
+    @apply text-accent underline decoration-accent/40 underline-offset-[3px] transition-[text-decoration-color] hover:decoration-accent;
+  }
+  .prose-lesson :where(ul):where(:not(.not-prose *), .md *),
+  .callout-body ul,
+  .compare ul {
+    @apply my-5 list-disc space-y-2 pl-6 marker:text-ink-muted;
+  }
+  .prose-lesson :where(ol):where(:not(.not-prose *), .md *),
+  .callout-body ol {
+    @apply my-5 list-decimal space-y-2 pl-6 marker:font-mono marker:text-ink-muted;
+  }
+  .compare ul {
+    @apply my-0 text-body-sm;
+  }
+  .callout-body p {
+    @apply my-2;
+  }
+  .callout-body p:first-child,
+  .callout-body ul:first-child {
+    @apply mt-0;
+  }
+  .callout-body p:last-child,
+  .callout-body ul:last-child {
+    @apply mb-0;
+  }
+  .prose-lesson :where(blockquote):where(:not(.not-prose *), .md *) {
+    @apply my-6 border-l-[3px] border-line-strong pl-5 text-ink-soft italic;
+  }
+  .prose-lesson :where(code):where(:not(.not-prose *), .md *) {
+    @apply rounded-[5px] border border-line-subtle bg-surface-2 px-1.5 py-0.5 font-mono text-[0.86em];
+  }
+  .prose-lesson :where(pre):where(:not(.not-prose *), .md *) {
+    @apply my-6 overflow-x-auto rounded-panel border border-line bg-surface-2 p-4 font-mono text-mono leading-relaxed;
+  }
+  .prose-lesson :where(pre code):where(:not(.not-prose *), .md *) {
+    @apply border-0 bg-transparent p-0;
+  }
+  /* Scroll the table, not the page. See ScrollableTable in components/mdx. */
+  .table-scroll {
+    @apply -mx-1 my-7 overflow-x-auto px-1;
+  }
+  .prose-lesson :where(table):where(:not(.not-prose *), .md *),
+  .callout-body table {
+    @apply w-full border-separate border-spacing-0 overflow-hidden rounded-panel border border-line text-body-sm;
+  }
+  .table-scroll > table {
+    @apply my-0;
+  }
+  .prose-lesson :where(th):where(:not(.not-prose *), .md *),
+  .callout-body th {
+    @apply border-b border-line bg-surface-2 px-3 py-2.5 text-left text-caption font-semibold uppercase tracking-[0.08em] text-ink-soft;
+  }
+  .prose-lesson :where(td):where(:not(.not-prose *), .md *),
+  .callout-body td {
+    @apply border-b border-line-subtle px-3 py-2.5 align-top;
+  }
+  .prose-lesson :where(tr:last-child td):where(:not(.not-prose *), .md *),
+  .callout-body tr:last-child td {
+    @apply border-b-0;
+  }
+  .prose-lesson :where(tbody tr:nth-child(even) td):where(:not(.not-prose *), .md *) {
+    @apply bg-surface-1;
+  }
+  .prose-lesson :where(hr):where(:not(.not-prose *), .md *) {
+    @apply my-12 border-line;
+  }
+  .prose-lesson :where(img):where(:not(.not-prose *), .md *) {
+    @apply rounded-card;
+  }
 
-.prose-lesson th,
-.callout-body th {
-  @apply border-b-2 border-line bg-panel px-3 py-2 text-left text-xs font-bold uppercase tracking-wide text-ink-soft;
-}
-.prose-lesson td,
-.callout-body td {
-  @apply border-b border-line px-3 py-2 align-top;
-}
-.prose-lesson hr {
-  @apply my-10 border-line;
-}
-.prose-lesson img {
-  @apply rounded-xl;
+  /* Anything a link or the on-this-page list can jump to stops below the sticky header. */
+  [data-toc],
+  figure[id] {
+    scroll-margin-top: calc(var(--spacing-header) + 1.5rem);
+  }
+
+  /* Key takeaways: each point numbered in a chip. */
+  .takeaways ul {
+    @apply m-0 list-none space-y-3 p-0;
+    counter-reset: takeaway;
+  }
+  .takeaways li {
+    @apply relative pl-10;
+    counter-increment: takeaway;
+  }
+  .takeaways li::before {
+    @apply absolute left-0 top-[0.1em] flex h-6 w-6 items-center justify-center rounded-full bg-accent-soft font-mono text-mono-sm font-semibold text-accent;
+    content: counter(takeaway);
+  }
+
+  /* Compare: on one column, each heading sits above its own list rather than both on top. */
+  @media (max-width: 639px) {
+    .compare-heads > :first-child { order: 1; }
+    .compare > ul:first-of-type { order: 2; }
+    .compare-heads > :last-child { order: 3; }
+    .compare > ul:last-of-type { order: 4; }
+  }
 }
 
 /* thin scrollbars for panels */

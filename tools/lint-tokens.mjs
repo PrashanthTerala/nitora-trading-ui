@@ -82,9 +82,7 @@ const PALETTE =
 // Counted on 2026-09-22, when the tokens were introduced. Lower these as components move to
 // tokens; never raise them. The callouts move in Phase 2, the buttons in Phase 1.
 const PALETTE_BASELINE = {
-  'src/components/mdx/Callout.tsx': 28,
   'src/components/sim/OrderTicket.tsx': 1,
-  'src/components/mdx/Quiz.tsx': 1,
 };
 const paletteCounts = {};
 for (const file of sources) {

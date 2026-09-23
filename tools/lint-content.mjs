@@ -3,7 +3,8 @@
  * Run: node tools/lint-content.mjs [--verbose]
  *
  * Checks: file exists for every curriculum lesson, no H1, required components,
- * valid figure names, word count in range, quiz structure, and MDX hazards.
+ * only registered components, unique heading anchors, valid figure names, word count
+ * in range, quiz structure, and MDX hazards.
  */
 import { readFileSync, existsSync, readdirSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs';
 import { execSync } from 'node:child_process';
@@ -21,7 +22,8 @@ const src = (p) => readFileSync(join(root, p), 'utf8');
 // regular expressions: the schema now carries tracks and optional lesson fields, and
 // prerequisites can only be checked against the real data.
 const tmp = mkdtempSync(join(tmpdir(), 'lint-content-'));
-writeFileSync(join(tmp, 'shim.ts'), "export * from '@/content/curriculum';\n");
+// The component registry's names and the heading slug come along: both are plain modules.
+writeFileSync(join(tmp, 'shim.ts'), "export * from '@/content/curriculum';\nexport { MDX_GROUPS, PLANNED_COMPONENTS } from '@/components/mdx/names';\nexport { slugify } from '@/lib/slug';\n");
 execSync(`npx esbuild "${join(tmp, 'shim.ts')}" --bundle --format=esm --platform=node --outfile="${join(tmp, 'c.mjs')}" --alias:@=./src --log-level=error`, { cwd: root });
 const C = await import(pathToFileURL(join(tmp, 'c.mjs')).href);
 rmSync(tmp, { recursive: true, force: true });
@@ -90,6 +92,11 @@ const figSrc = src('src/content/figures/candlePatterns.ts') + src('src/content/f
 const figureNames = new Set([...figSrc.matchAll(/^\s{2}'([a-z0-9-]+)': \{$/gm)].map((m) => m[1]));
 const INDICATORS = new Set(['sma', 'ema', 'sma-vs-ema', 'crossover', 'rsi', 'macd', 'stochastic', 'bollinger', 'atr', 'vwap', 'obv', 'adx', 'fibonacci', 'pivots', 'divergence', 'overload', 'clean']);
 const REGIMES = new Set(['trend-up', 'trend-down', 'range', 'reversal', 'volatile', 'crash', 'intraday']);
+// Every component a lesson may use, from the registry's own name list (src/components/mdx/names.ts).
+const REGISTERED = new Set(Object.values(C.MDX_GROUPS).flat());
+const PLANNED = new Set(C.PLANNED_COMPONENTS);
+// Ids the lesson page gives its own sections; a heading with the same slug would collide.
+const RESERVED_IDS = new Set(['key-takeaways', 'quiz']);
 const CALLOUTS = new Set(['tip', 'warning', 'danger', 'info', 'story', 'math', 'eli5']);
 /** Modules that teach shapes, where every lesson must carry at least one figure. */
 const VISUAL_MODULES = new Set(['m01-reading-price', 'm02-candlestick-patterns', 'm03-market-structure', 'm04-chart-patterns', 'm05-indicators']);
@@ -133,6 +140,23 @@ for (const mod of modules) {
     if (!/<KeyTakeaways>/.test(text)) err('missing <KeyTakeaways>');
     if (!/<Quiz\s/.test(text)) err('missing <Quiz>');
     if (!/<Callout type="eli5"/.test(text)) warn('no eli5 callout');
+
+    // Only registered components. MDX would otherwise fail on the page, at read time, with
+    // "Expected component X to be defined" -- the linter says so at build time instead.
+    const code = text.replace(/```[\s\S]*?```/g, '').replace(/`[^`\n]*`/g, '');
+    for (const name of new Set([...code.matchAll(/<([A-Z][A-Za-z0-9]*)/g)].map((m) => m[1]))) {
+      if (REGISTERED.has(name)) continue;
+      if (PLANNED.has(name)) err(`uses <${name}>, which is planned for the quant track but not built yet`);
+      else err(`uses <${name}>, which is not a registered component (see src/components/mdx/names.ts)`);
+    }
+
+    // Headings become anchors (#slug); the build numbers repeats (-2, -3), but a heading that
+    // takes a section id the lesson page itself uses would still collide.
+    for (const m of code.matchAll(/^#{2,3} +(.+?)\s*$/gm)) {
+      const plain = m[1].replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/<[^>]*>/g, '').replace(/[*_`]/g, '');
+      const slug = C.slugify(plain);
+      if (RESERVED_IDS.has(slug)) err(`heading "${m[1]}" would take the id "${slug}", which the lesson page uses for its own section`);
+    }
 
     // callout types
     for (const m of text.matchAll(/<Callout\s+type="([^"]+)"/g)) if (!CALLOUTS.has(m[1])) err(`unknown callout type "${m[1]}"`);

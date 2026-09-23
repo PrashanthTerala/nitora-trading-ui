@@ -6,11 +6,14 @@ import { computeStats, maxDrawdown, sharpeLike } from '@/engine/broker/stats';
 import { fmtMoney } from '@/components/sim/OrderTicket';
 import type { Trade } from '@/engine/broker/types';
 import { toCsv } from '@/lib/csv';
+import { usePageMeta } from '@/lib/pageMeta';
+import { t } from '@/i18n';
 
 const SETUP_TAGS = ['trend pullback', 'breakout', 'range fade', 'reversal', 'momentum', 'news', 'other'];
 const MISTAKE_TAGS = ['no plan', 'moved my stop', 'chased entry', 'oversized', 'exited early', 'revenge trade', 'ignored trend', 'no stop'];
 
 export function JournalPage() {
+  usePageMeta({ title: t('nav.journal'), description: t('meta.journal') });
   const account = useSim((s) => s.account);
   const updateTrade = useSim((s) => s.updateTrade);
   const trades = account.trades;

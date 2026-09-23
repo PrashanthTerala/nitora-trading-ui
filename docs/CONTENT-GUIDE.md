@@ -1,4 +1,4 @@
-# TradeLab Academy — Lesson Writing Guide
+# Nitora Trading Academy — Lesson Writing Guide
 
 This guide is the contract between the curriculum (`src/content/curriculum.ts`) and the lesson
 files (`src/content/modules/<module-id>/<lesson-id>.mdx`). Every lesson must follow it so the site
@@ -202,3 +202,67 @@ Each bar is `{ o, h, l, c, v? }`. Keep `h` ≥ max(o,c) and `l` ≤ min(o,c). An
 - [ ] `<KeyTakeaways>` then `<Quiz>` at the end; quiz is valid JS with double quotes.
 - [ ] No bare `<`, `>`, `{`, `}` in prose.
 - [ ] Word count in range for the lesson's minutes.
+
+## 7. Optional additions
+
+Everything in this section is optional. Lessons written to sections 1–6 need no changes.
+
+### Optional lesson fields (curriculum.ts)
+
+A lesson entry may also carry:
+
+- `kind`: `"reading"` (the default), `"interactive"` or `"lab"`.
+- `prerequisites`: lessons to read first, as `"moduleId/lessonId"`. The content linter checks
+  each one exists, that a lesson never lists itself, and that there are no cycles.
+- `tags`: free-form topic words, used by search.
+- `deck`: `"auto"` (the default), `"manual"` or `"none"`, for presentation mode.
+
+Every module belongs to a track (`track: "trading-foundations"` today). Module ids stay unique
+across all tracks, because routes are `/learn/<module-id>/<lesson-id>`.
+
+### Headings are anchors
+
+Every `##` and `###` becomes a link target and an entry in the lesson's "On this page" list.
+The anchor is made from the heading text: `## Where it is valid` becomes `#where-it-is-valid`.
+Repeated headings are numbered automatically (`#worked-example`, `#worked-example-2`). Two ids
+are taken by the page itself, so do not title a heading exactly "Quiz" or "Key takeaways".
+
+Figures can be linked too: a figure's anchor is `#fig-` plus its title, e.g.
+`#fig-bullish-engulfing`.
+
+### Only registered components
+
+A lesson may use only the components listed in `src/components/mdx/names.ts`. Anything else
+fails `npm run check` with a message naming the component, instead of failing on the page.
+
+### SeriesFigure
+
+For data that is not candles: returns, drawdowns, equity, exposures.
+
+```mdx
+<SeriesFigure
+  title="Equity after each trade"
+  series={[{ name: "Equity", kind: "area", values: [10000, 10150, 9980, 10240] }]}
+  format="currency"
+  decimals={0}
+/>
+```
+
+- `series` is a list of `{ name, kind?, values, tone?, signed? }`. `kind` is `"line"` (the
+  default), `"area"` or `"histogram"`. `values` is either plain numbers, drawn against their
+  position (1, 2, 3…), or `{ time, value }` points where `time` is `"YYYY-MM-DD"` or unix seconds.
+- `tone` picks a chart colour (`"chart-1"` … `"chart-6"`, or `"accent"`); by default each series
+  takes the next one. `signed: true` on a histogram colours bars up or down by their sign.
+- `format` is `"number"` (the default), `"percent"` or `"currency"`; `decimals` defaults to 2.
+- `baseline={0}` draws a dashed reference line.
+- `title`, `caption` and `height` work as on the other figures.
+
+### Planned components
+
+These names are reserved for the quantitative track and are **not built yet**. Using one today
+is a lint error that says so.
+
+- `<CodeBlock runnable>`: a code cell a reader can run.
+- `<Notebook>`: a sequence of runnable cells.
+- `<BacktestFigure>`: a strategy's results over historical data.
+- `<EquityCurveFigure>`: an equity curve with drawdown shading.
