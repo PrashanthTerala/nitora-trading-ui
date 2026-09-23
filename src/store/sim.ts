@@ -73,6 +73,12 @@ export const usesRealFeed = (s: DataSource) => s !== 'synthetic';
 let livePoll: number | null = null;
 let closeLiveStream: (() => void) | null = null;
 
+/** How a streamed bar arrived: whether it is still forming, and when the browser received it. */
+interface LiveTick {
+  forming: boolean;
+  receivedAt: number;
+}
+
 export interface Overlays {
   sma20: boolean;
   sma50: boolean;
@@ -133,7 +139,7 @@ interface SimState {
   startLivePolling: () => void;
   stopLive: () => void;
   pollLive: () => Promise<void>;
-  applyLive: (bars: Bar[], meta?: LiveResponse) => void;
+  applyLive: (bars: Bar[], meta?: LiveResponse, tick?: LiveTick) => void;
 }
 
 export function currentTime(cursor: number, subtick: number) {
@@ -400,7 +406,10 @@ export const useSim = create<SimState>()(
             // One bar at a time, merged the same way a polled tail is: the incoming bar
             // replaces any bar at or after its own timestamp, so the forming candle is
             // rewritten in place rather than appended over and over.
-            get().applyLive(mergeLive(realFeed.bars, [event.bar]));
+            get().applyLive(mergeLive(realFeed.bars, [event.bar]), undefined, {
+              forming: event.forming,
+              receivedAt: Math.floor(Date.now() / 1000),
+            });
           },
           onFallback: (reason) => {
             if (useSim.getState().source !== 'live') return;
@@ -440,7 +449,7 @@ export const useSim = create<SimState>()(
        * Shared by the stream and the poll so the two cannot drift: the only difference
        * between them is how often this runs and how many bars changed.
        */
-      applyLive: (bars, meta) => {
+      applyLive: (bars, meta, tick) => {
         const { realSymbol, timeframe } = get();
         if (!bars.length) return;
         const spec = get().realSymbols.find((x) => x.symbol === realSymbol);
@@ -451,10 +460,19 @@ export const useSim = create<SimState>()(
           realMeta: { source: meta?.source ?? st.realMeta?.source ?? 'stream', bars: bars.length },
           liveMeta: meta
             ? { marketOpen: meta.marketOpen, kind: meta.kind, delayHint: meta.delayHint, asOf: meta.asOf, forming: meta.forming }
-            : st.liveMeta
-              // A bar event carries no market metadata, so only the age is refreshed: the
-              // session and the delay are properties of the instrument, not of this bar.
-              ? { ...st.liveMeta, asOf: bars[bars.length - 1].time, forming: true }
+            : st.liveMeta && tick
+              ? {
+                  // A bar event carries no market metadata: the session and the delay belong to
+                  // the instrument, not to one bar, so only the age and the forming flag move.
+                  ...st.liveMeta,
+                  // Not the bar's own time. That is when its bucket opened, so using it made a
+                  // price arriving every second read as minutes old on a five-minute chart. A
+                  // forming bar is only published because a trade just happened, so its arrival
+                  // is the price's age to within the one-second coalescing window. A closed bar
+                  // can be published by the clock with no trade at all, so it leaves the age be.
+                  asOf: tick.forming ? tick.receivedAt : st.liveMeta.asOf,
+                  forming: tick.forming,
+                }
               : st.liveMeta,
           // Sit on the newest bar. Live mode has no cursor of its own: the edge is the point.
           cursor: bars.length - 1,
