@@ -13,6 +13,9 @@ const JournalPage = lazy(() => import('@/pages/JournalPage').then((m) => ({ defa
 // The glossary carries 258 entries of prose; keep it out of the initial bundle.
 const GlossaryPage = lazy(() => import('@/pages/GlossaryPage').then((m) => ({ default: m.GlossaryPage })));
 const GuidePage = lazy(() => import('@/pages/GuidePage').then((m) => ({ default: m.GuidePage })));
+// The design-token sheet, for review during development. `import.meta.env.DEV` is replaced
+// with false in a production build, so the page and its import are dropped from the bundle.
+const TokensPage = import.meta.env.DEV ? lazy(() => import('@/pages/TokensPage').then((m) => ({ default: m.TokensPage }))) : null;
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -66,6 +69,16 @@ export default function App() {
               </Suspense>
             }
           />
+          {TokensPage && (
+            <Route
+              path="__tokens"
+              element={
+                <Suspense fallback={<Loading />}>
+                  <TokensPage />
+                </Suspense>
+              }
+            />
+          )}
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

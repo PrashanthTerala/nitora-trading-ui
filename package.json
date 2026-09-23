@@ -10,9 +10,13 @@
     "typecheck": "tsc -b",
     "lint:content": "node tools/lint-content.mjs",
     "test:engine": "node tools/test-engine.mjs",
-    "check": "tsc -b && node tools/lint-content.mjs && node tools/check-prices.mjs && node tools/test-engine.mjs && node tools/test-figures.mjs",
+    "check": "tsc -b && node tools/lint-content.mjs && node tools/lint-tokens.mjs && node tools/check-prices.mjs && node tools/test-engine.mjs && node tools/test-figures.mjs",
     "test:figures": "node tools/test-figures.mjs",
-    "check:prices": "node tools/check-prices.mjs"
+    "check:prices": "node tools/check-prices.mjs",
+    "lint:tokens": "node tools/lint-tokens.mjs",
+    "tokens:doc": "node tools/lint-tokens.mjs --write-doc",
+    "fonts": "node tools/copy-fonts.mjs",
+    "shots": "node tools/screenshots.mjs"
   },
   "dependencies": {
     "@mdx-js/react": "^3.1.1",
@@ -24,6 +28,9 @@
     "zustand": "^5.0.15"
   },
   "devDependencies": {
+    "@fontsource-variable/geist": "^5.3.0",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
     "@mdx-js/rollup": "^3.1.1",
     "@tailwindcss/vite": "^4.3.3",
     "@types/mdx": "^2.0.13",
@@ -31,6 +38,7 @@
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^6.1.1",
+    "playwright-core": "^1.63.0",
     "remark-gfm": "^4.0.1",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.0",

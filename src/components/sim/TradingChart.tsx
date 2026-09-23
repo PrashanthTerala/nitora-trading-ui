@@ -28,6 +28,7 @@ import type { AccountState } from '@/engine/broker/types';
 import * as ind from '@/engine/market/indicators';
 import type { Overlays } from '@/store/sim';
 import { sessionDayStart } from '@/engine/market/generator';
+import { oklchToRgb, parseOklch, rgbToHex } from '@/lib/color';
 
 interface Props {
   bars: Bar[];
@@ -40,10 +41,19 @@ interface Props {
   clock: number;
 }
 
+/**
+ * A theme colour as a six-digit hex string, for lightweight-charts.
+ *
+ * The tokens are authored in OKLCH, and the chart parses colours itself without understanding
+ * oklch(): handed one, it throws and takes the whole simulator down. Hex specifically, not
+ * rgb(), because the volume and MACD series append an alpha byte to the string (`up + '80'`).
+ */
 function cssVar(name: string, fallback: string) {
   if (typeof window === 'undefined') return fallback;
   const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-  return v || fallback;
+  if (!v) return fallback;
+  const oklch = parseOklch(v);
+  return oklch ? rgbToHex(oklchToRgb(oklch)) : v;
 }
 
 export function TradingChart({ bars, symbol, timeframe, overlays, account, decimals, clock }: Props) {

@@ -1,0 +1,212 @@
+/*
+ * Design tokens: the contract every component styles against.
+ *
+ * Colours are OKLCH, because its lightness is perceptual: two colours at the same L look
+ * equally light, so a surface scale steps evenly and a chart palette stays balanced. Values
+ * here are the LIGHT theme; `.dark` below overrides them, and dark is the default theme.
+ *
+ * Rules (enforced by tools/lint-tokens.mjs, part of `npm run check`):
+ *   - no raw colour anywhere else in src/, and no new Tailwind palette class (bg-red-500);
+ *   - text pairs reach 4.5:1 and control borders, charts and identifiers 3:1, in BOTH themes;
+ *   - every opaque token is inside the sRGB gamut, so the contrast maths is what renders;
+ *   - docs/tokens.md is generated from this file (npm run tokens:doc) and must be current.
+ *
+ * Each declaration's trailing comment is its documentation. Keep them one line.
+ */
+
+@theme {
+  /* ---- type families ---- */
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif; /* body text and UI */
+  --font-display: 'Geist Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif; /* H1/H2 and hero numbers (from Phase 1) */
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace; /* prices, tickers, R-multiples, code */
+
+  /* ---- surfaces ---- */
+  --color-bg: oklch(0.975 0.004 255); /* page background */
+  --color-surface-1: oklch(0.992 0.002 255); /* cards */
+  --color-surface-2: oklch(0.956 0.006 255); /* nested panels, table headers, code */
+  --color-surface-3: oklch(0.996 0.001 255); /* popovers, menus */
+  --color-overlay: oklch(0.2 0.02 255 / 0.45); /* modal scrim, with backdrop blur */
+
+  /* ---- lines ---- */
+  --color-line-subtle: oklch(0.935 0.006 255); /* hairline dividers inside a card; decorative */
+  --color-line: oklch(0.905 0.009 255); /* card and panel borders; decorative */
+  --color-line-strong: oklch(0.6 0.016 255); /* input and control borders; 3:1 against surfaces */
+  --color-grid: oklch(0.945 0.006 255); /* chart grid lines */
+
+  /* ---- ink ---- */
+  --color-ink: oklch(0.21 0.03 262); /* primary text */
+  --color-ink-soft: oklch(0.47 0.03 262); /* secondary text, labels */
+  --color-ink-muted: oklch(0.52 0.02 262); /* captions, placeholders, meta; still 4.5:1 */
+  --color-ink-inverse: oklch(0.985 0.003 255); /* text on a strong fill */
+
+  /* ---- brand accent: the one hue for actions and active states ---- */
+  --color-accent: oklch(0.52 0.2 272); /* primary actions, links, active state */
+  --color-accent-hover: oklch(0.46 0.2 272); /* hover and pressed accent */
+  --color-accent-soft: oklch(0.94 0.027 272); /* tinted background behind accent content */
+  --color-accent-ring: oklch(0.52 0.2 272 / 0.85); /* focus ring; 3:1 against surfaces */
+  --color-on-accent: oklch(0.99 0.002 272); /* label on an accent fill */
+
+  /* ---- market semantics: price direction, P&L and order sides ONLY ---- */
+  --color-up: oklch(0.52 0.14 150); /* rising price, profit, buy */
+  --color-up-soft: oklch(0.955 0.04 150); /* tint behind up content */
+  --color-on-up: oklch(0.99 0.002 150); /* label on an up fill */
+  --color-down: oklch(0.54 0.19 25); /* falling price, loss, sell */
+  --color-down-soft: oklch(0.955 0.021 25); /* tint behind down content */
+  --color-on-down: oklch(0.99 0.002 25); /* label on a down fill */
+  --color-neutral: oklch(0.55 0.015 255); /* unchanged price */
+  --color-neutral-soft: oklch(0.945 0.006 255); /* tint behind neutral content */
+
+  /* ---- status: never used for price direction ---- */
+  --color-warn: oklch(0.54 0.121 60); /* caution */
+  --color-warn-soft: oklch(0.955 0.039 80); /* tint behind a caution */
+  --color-danger: oklch(0.52 0.2 358); /* a real mistake; deliberately more magenta than down */
+  --color-danger-soft: oklch(0.955 0.023 358); /* tint behind a danger note */
+  --color-info: oklch(0.52 0.105 235); /* neutral information */
+  --color-info-soft: oklch(0.955 0.024 235); /* tint behind information */
+
+  /* ---- curriculum levels: small identifiers only, never large fills ---- */
+  --color-level-foundation: oklch(0.55 0.08 190); /* level 1 dot, ribbon, cover tint */
+  --color-level-reading: oklch(0.55 0.08 240); /* level 2 */
+  --color-level-analysis: oklch(0.55 0.09 300); /* level 3 */
+  --color-level-execution: oklch(0.56 0.09 75); /* level 4 */
+  --color-level-mastery: oklch(0.55 0.09 350); /* level 5 */
+
+  /* ---- chart overlays: colour-blind-safe hues, none green or red ---- */
+  --color-chart-1: oklch(0.52 0.16 255); /* first overlay: blue */
+  --color-chart-2: oklch(0.62 0.147 55); /* orange */
+  --color-chart-3: oklch(0.54 0.15 340); /* reddish purple */
+  --color-chart-4: oklch(0.6 0.104 220); /* sky */
+  --color-chart-5: oklch(0.6 0.12 95); /* olive gold */
+  --color-chart-6: oklch(0.55 0.02 255); /* slate: envelopes and reference lines */
+
+  /* ---- legacy names, kept so existing classes keep working ---- */
+  --color-surface: var(--color-surface-1); /* alias of surface-1 */
+  --color-panel: var(--color-surface-2); /* alias of surface-2 */
+
+  /* ---- type scale: fluid display and heading sizes, fixed body sizes ---- */
+  --text-display-xl: clamp(2.75rem, 1.6rem + 4.4vw, 5rem); /* hero headline */
+  --text-display-xl--line-height: 1.05;
+  --text-display-xl--letter-spacing: -0.02em;
+  --text-display: clamp(2.25rem, 1.5rem + 3vw, 3.75rem); /* section headlines */
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.02em;
+  --text-h1: clamp(1.875rem, 1.4rem + 1.8vw, 2.75rem); /* page title */
+  --text-h1--line-height: 1.2;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h2: clamp(1.5rem, 1.25rem + 1vw, 2rem); /* section heading */
+  --text-h2--line-height: 1.2;
+  --text-h2--letter-spacing: -0.02em;
+  --text-h3: clamp(1.1875rem, 1.1rem + 0.4vw, 1.375rem); /* sub-heading */
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.01em;
+  --text-body-lg: 1.125rem; /* lead paragraphs */
+  --text-body-lg--line-height: 1.6;
+  --text-body: 1rem; /* UI body */
+  --text-body--line-height: 1.6;
+  --text-prose: clamp(1rem, 0.95rem + 0.25vw, 1.0625rem); /* lesson prose: 16px mobile, 17px desktop */
+  --text-prose--line-height: 1.7;
+  --text-body-sm: 0.875rem; /* secondary UI */
+  --text-body-sm--line-height: 1.5;
+  --text-caption: 0.75rem; /* captions, all-caps labels (track 0.08em) */
+  --text-caption--line-height: 1.4;
+  --text-mono-lg: 1.25rem; /* large readouts: equity, prices */
+  --text-mono-lg--line-height: 1.3;
+  --text-mono: 0.875rem; /* tickers, table numbers */
+  --text-mono--line-height: 1.4;
+  --text-mono-sm: 0.75rem; /* chart labels, small figures */
+  --text-mono-sm--line-height: 1.4;
+
+  /* ---- layout ---- */
+  --container-lesson: 68ch; /* lesson prose measure */
+  --spacing-section: clamp(4rem, 1.5rem + 7vw, 8rem); /* vertical rhythm between marketing sections */
+
+  /* ---- elevation: light theme uses soft layered shadows ---- */
+  --shadow-1: 0 1px 2px oklch(0.2 0.02 255 / 0.06), 0 1px 1px oklch(0.2 0.02 255 / 0.04); /* resting card */
+  --shadow-2: 0 2px 6px oklch(0.2 0.02 255 / 0.07), 0 1px 2px oklch(0.2 0.02 255 / 0.05); /* raised card, hover */
+  --shadow-3: 0 8px 24px oklch(0.2 0.02 255 / 0.1), 0 2px 6px oklch(0.2 0.02 255 / 0.06); /* popover, menu */
+  --shadow-4: 0 20px 48px oklch(0.2 0.02 255 / 0.16), 0 4px 12px oklch(0.2 0.02 255 / 0.08); /* modal, palette */
+
+  /* ---- motion: easings (durations are below, outside the theme) ---- */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1); /* most movement */
+  --ease-emphasized: cubic-bezier(0.3, 0, 0, 1); /* entrances that should feel deliberate */
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1); /* things leaving */
+}
+
+.dark {
+  --color-bg: oklch(0.15 0.014 255);
+  --color-surface-1: oklch(0.19 0.016 255);
+  --color-surface-2: oklch(0.22 0.017 255);
+  --color-surface-3: oklch(0.255 0.018 255);
+  --color-overlay: oklch(0.08 0.01 255 / 0.7);
+
+  --color-line-subtle: oklch(0.245 0.016 255);
+  --color-line: oklch(0.29 0.018 255);
+  --color-line-strong: oklch(0.55 0.02 255);
+  --color-grid: oklch(0.24 0.016 255);
+
+  --color-ink: oklch(0.94 0.008 255);
+  --color-ink-soft: oklch(0.73 0.022 255);
+  --color-ink-muted: oklch(0.66 0.02 255);
+  --color-ink-inverse: oklch(0.17 0.015 255);
+
+  --color-accent: oklch(0.7 0.155 272);
+  --color-accent-hover: oklch(0.76 0.117 272);
+  --color-accent-soft: oklch(0.3 0.075 272);
+  --color-accent-ring: oklch(0.7 0.155 272 / 0.6);
+  --color-on-accent: oklch(0.17 0.02 272);
+
+  --color-up: oklch(0.74 0.17 150);
+  --color-up-soft: oklch(0.28 0.06 150);
+  --color-on-up: oklch(0.17 0.02 150);
+  --color-down: oklch(0.68 0.19 25);
+  --color-down-soft: oklch(0.29 0.07 25);
+  --color-on-down: oklch(0.17 0.02 25);
+  --color-neutral: oklch(0.66 0.015 255);
+  --color-neutral-soft: oklch(0.27 0.012 255);
+
+  --color-warn: oklch(0.8 0.15 75);
+  --color-warn-soft: oklch(0.3 0.06 75);
+  --color-danger: oklch(0.69 0.19 358);
+  --color-danger-soft: oklch(0.29 0.07 358);
+  --color-info: oklch(0.76 0.11 230);
+  --color-info-soft: oklch(0.29 0.05 230);
+
+  --color-level-foundation: oklch(0.74 0.08 190);
+  --color-level-reading: oklch(0.74 0.08 240);
+  --color-level-analysis: oklch(0.74 0.08 300);
+  --color-level-execution: oklch(0.78 0.09 75);
+  --color-level-mastery: oklch(0.74 0.08 350);
+
+  --color-chart-1: oklch(0.72 0.14 250);
+  --color-chart-2: oklch(0.78 0.15 60);
+  --color-chart-3: oklch(0.74 0.13 340);
+  --color-chart-4: oklch(0.82 0.1 220);
+  --color-chart-5: oklch(0.88 0.15 100);
+  --color-chart-6: oklch(0.68 0.02 255);
+
+  /* Elevation on dark is border lightness plus a faint inner top highlight, not shadow: a
+     drop shadow on a near-black page reads as a smudge, not as height. */
+  --shadow-1: inset 0 1px 0 oklch(1 0 0 / 0.04);
+  --shadow-2: inset 0 1px 0 oklch(1 0 0 / 0.06);
+  --shadow-3: inset 0 1px 0 oklch(1 0 0 / 0.06), 0 12px 32px oklch(0 0 0 / 0.45);
+  --shadow-4: inset 0 1px 0 oklch(1 0 0 / 0.08), 0 24px 64px oklch(0 0 0 / 0.55);
+}
+
+/* ---- motion: durations ---- */
+:root {
+  --duration-fast: 120ms; /* hover, press */
+  --duration-base: 200ms; /* most transitions, route change */
+  --duration-slow: 320ms; /* panels, sheets */
+  --duration-deliberate: 600ms; /* number flashes, emphasis */
+}
+
+/* Reduced motion: movement collapses to nothing, at the token, so no component has to
+   remember. Opacity-only fades that must stay use their own short fixed timing. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-slow: 0ms;
+    --duration-deliberate: 0ms;
+  }
+}

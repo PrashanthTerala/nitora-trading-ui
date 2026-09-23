@@ -106,9 +106,14 @@ export type IndicatorName =
   | 'overload'
   | 'clean';
 
-const C1 = '#3b82f6';
-const C2 = '#f59e0b';
-const C3 = '#a855f7';
+// Overlay colours come from the chart palette in tokens.css: colour-blind-safe, none of
+// them green or red, so an indicator line is never mistaken for price direction.
+const C1 = 'var(--color-chart-1)';
+const C2 = 'var(--color-chart-2)';
+const C3 = 'var(--color-chart-3)';
+// Envelopes and reference series (Bollinger bands) in the palette's neutral slate.
+const C_BAND = 'var(--color-chart-6)';
+const C_VWAP = 'var(--color-chart-4)';
 
 export function IndicatorFigure({ indicator, regime, caption, title, period }: { indicator: IndicatorName; regime?: Regime; caption?: ReactNode; title?: string; period?: number }) {
   const bars = useMemo(() => regimeSeries(regime ?? defaultRegime(indicator)), [regime, indicator]);
@@ -247,9 +252,9 @@ export function IndicatorFigure({ indicator, regime, caption, title, period }: {
         overlays.push({ values: ind.sma(closes, 20), color: C2, name: 'SMA 20' });
         overlays.push({ values: ind.ema(closes, 50), color: C3, name: 'EMA 50' });
         const b = ind.bollinger(closes, 20, 2);
-        overlays.push({ values: b.upper, color: '#64748b', name: 'BB' });
-        overlays.push({ values: b.lower, color: '#64748b' });
-        overlays.push({ values: ind.vwap(bars), color: '#ec4899', name: 'VWAP' });
+        overlays.push({ values: b.upper, color: C_BAND, name: 'BB' });
+        overlays.push({ values: b.lower, color: C_BAND });
+        overlays.push({ values: ind.vwap(bars), color: C_VWAP, name: 'VWAP' });
         const m = ind.macd(closes);
         panels.push({ name: 'RSI', series: [{ values: ind.rsi(closes, 14), color: C3 }], range: [0, 100] });
         panels.push({ name: 'MACD', series: [{ values: m.histogram, color: C1, kind: 'histogram' }, { values: m.line, color: C1 }, { values: m.signal, color: C2 }] });

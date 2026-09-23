@@ -34,12 +34,14 @@ import { Rng, shuffled } from '@/lib/rng';
 import { csvCell, toCsv } from '@/lib/csv';
 import { defaultQty } from '@/lib/sizing';
 import { migrateStorage, LEGACY_KEYS, STORAGE_KEYS } from '@/lib/storageKeys';
+import * as color from '@/lib/color';
+import { parseTokens, resolve as resolveToken } from '@/lib/tokens';
 import { Market } from '@/engine/market/feed';
 import { RealFeed, resolveDataApi } from '@/engine/market/realFeed';
 import { SYMBOLS, SYMBOL_MAP } from '@/engine/market/symbols';
 import { aggregate, bucketStart, nextSessionMinute, minuteOfSession } from '@/engine/market/generator';
 import * as ind from '@/engine/market/indicators';
-export { broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, migrateStorage, LEGACY_KEYS, STORAGE_KEYS, resolveDataApi, Market, RealFeed, SYMBOLS, SYMBOL_MAP, aggregate, bucketStart, nextSessionMinute, minuteOfSession, ind };
+export { color, parseTokens, resolveToken, broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, migrateStorage, LEGACY_KEYS, STORAGE_KEYS, resolveDataApi, Market, RealFeed, SYMBOLS, SYMBOL_MAP, aggregate, bucketStart, nextSessionMinute, minuteOfSession, ind };
 `,
 );
 
@@ -50,7 +52,7 @@ execSync(
 );
 
 const M = await import(pathToFileURL(bundle).href);
-const { broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, migrateStorage, LEGACY_KEYS, STORAGE_KEYS, resolveDataApi, Market, RealFeed, SYMBOLS, ind } = M;
+const { color, parseTokens, resolveToken, broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, migrateStorage, LEGACY_KEYS, STORAGE_KEYS, resolveDataApi, Market, RealFeed, SYMBOLS, ind } = M;
 
 let pass = 0;
 let fail = 0;
@@ -586,6 +588,58 @@ const near = (a, b, eps = 1e-6) => Math.abs(a - b) < eps;
   check('an empty address switches the service off, even in dev', resolveDataApi('', LOCAL) === null);
   check('a whitespace-only address is treated as empty', resolveDataApi('   ', LOCAL) === null);
   check('trailing slashes are trimmed so paths do not double up', resolveDataApi('https://data.example.com//', undefined) === 'https://data.example.com');
+}
+
+
+// ---------------------------------------------------------------- colour maths
+// tools/lint-tokens.mjs reports contrast and gamut through these functions, so they are held
+// to published reference values rather than to themselves.
+{
+  const near = (a, b, tol) => Math.abs(a - b) <= tol;
+  const ok = (hex) => color.rgbToOklch(color.parseHex(hex));
+  const red = ok('#ff0000');
+  // CSS Color 4 gives sRGB red as oklch(62.8% 0.2577 29.23).
+  check('sRGB red converts to the published OKLCH value', near(red.l, 0.628, 0.001) && near(red.c, 0.2577, 0.001) && near(red.h, 29.23, 0.1));
+  check('white is L 1, chroma 0', near(ok('#ffffff').l, 1, 1e-4) && ok('#ffffff').c < 1e-4);
+  check('black is L 0', near(ok('#000000').l, 0, 1e-4));
+  const roundTrip = ['#2563eb', '#0b0f17', '#f59e0b', '#16a34a', '#94a0b8', '#ec4899'].every(
+    (hex) => color.rgbToHex(color.oklchToRgb(ok(hex))) === hex,
+  );
+  check('hex -> OKLCH -> hex round-trips exactly', roundTrip);
+  check('white on black is 21:1', near(color.contrast(color.parseHex('#ffffff'), color.parseHex('#000000')), 21, 1e-9));
+  // #2563eb on white is the widely published 5.17:1.
+  check('blue-600 on white is 5.17:1', near(color.contrast(color.parseHex('#2563eb'), color.parseHex('#ffffff')), 5.17, 0.01));
+  const p = color.parseOklch('oklch(50% 0.1 200 / 0.4)');
+  check('oklch() parses percentage lightness and alpha', p && near(p.l, 0.5, 1e-9) && near(p.alpha, 0.4, 1e-9));
+  check('an out-of-gamut colour is reported as such', !color.inSrgbGamut(color.parseOklch('oklch(0.52 0.3 255)')));
+  check('an in-gamut colour is not', color.inSrgbGamut(color.parseOklch('oklch(0.52 0.16 255)')));
+  const grey = color.over({ r: 0, g: 0, b: 0, alpha: 0.5 }, color.parseHex('#ffffff'));
+  check('half-transparent black over white composites to mid grey', near(grey.r, 0.5, 1e-9) && grey.alpha === 1);
+
+  const css = [
+    '@theme {',
+    '  /* ---- surfaces ---- */',
+    '  --color-bg: oklch(0.9 0 0); /* page */',
+    '  --color-card: var(--color-bg); /* alias */',
+    '  --text-h1: 2rem; /* title */',
+    '  --text-h1--line-height: 1.2;',
+    '}',
+    '.dark {',
+    '  /* a comment that',
+    '     spans lines */',
+    '  --color-bg: oklch(0.2 0 0);',
+    '}',
+    ':root {',
+    '  --duration-fast: 120ms; /* hover */',
+    '}',
+  ].join('\n');
+  const t = parseTokens(css);
+  const bg = t.find((x) => x.name === '--color-bg');
+  check('token parser reads both themes, group and doc', bg && bg.light === 'oklch(0.9 0 0)' && bg.dark === 'oklch(0.2 0 0)' && bg.group === 'surfaces' && bg.doc === 'page');
+  check('token parser folds sub-properties into their token', t.find((x) => x.name === '--text-h1')?.extras['line-height'] === '1.2' && !t.some((x) => x.name === '--text-h1--line-height'));
+  check('token aliases resolve per theme', resolveToken(t, '--color-card', 'dark') === 'oklch(0.2 0 0)' && resolveToken(t, '--color-card', 'light') === 'oklch(0.9 0 0)');
+  check('a multi-line comment in .dark does not hide the declarations after it', bg && bg.dark === 'oklch(0.2 0 0)');
+  check(':root tokens are read too', t.some((x) => x.name === '--duration-fast' && x.light === '120ms'));
 }
 
 
