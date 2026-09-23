@@ -168,8 +168,8 @@ screenshots at 390 and 1440 px in both themes under `docs/screenshots/phase-N/`.
 | 0 | Audit, tokens, self-hosted fonts, motion tokens, token lint, `/__tokens` sheet | **done** |
 | 1 | Shell, command palette, toasts, Home, Learn, Module; tracks refactor | **done** |
 | 2 | Lesson read mode, MDX component restyle, component registry | **done** |
-| 3 | Presentation mode (auto-generated slide decks) | next |
-| 4 | 3D hero and module artwork | |
+| 3 | Presentation mode (auto-generated slide decks) | **done** |
+| 4 | 3D hero and module artwork | next |
 | 5 | Simulator, Trainer, Journal, Glossary, Guide, 404 | |
 | 6 | Lighthouse, axe, reduced-motion, keyboard and 360 px passes; bundle budgets | |
 
@@ -241,7 +241,37 @@ screenshots at 390 and 1440 px in both themes under `docs/screenshots/phase-N/`.
   the defaults; per-page previews for them would need prerendering (not done).
 - **The sitemap needs the site's address.** `SITE_URL` at build time (a Docker build argument)
   writes `sitemap.xml`; without it only `robots.txt` is written, since sitemaps need absolute URLs.
-- **Presentation mode is Phase 3.** The read/present toggle and the `p` shortcut arrive with it.
+
+### Decisions made in Phase 3
+
+- **Slides are built with the site, from the lesson itself.** `tools/remark-slides.mjs` runs in
+  the MDX pipeline. It wraps the reading content in `<LessonBody>`, appends the deck as
+  `<DeckSource>` with one `<Slide>` per slide, and exports `slides` (the deck's outline). The
+  page renders LessonBody; the presentation view renders DeckSource. The brief asked for the
+  slides themselves as the named export, but JSX in an MDX export cannot reach the MDX provider's
+  components (figures, glossary terms), so the export carries the outline and the slide bodies
+  stay compiled JSX in the same module. Each lesson grows by about 1.4 kB gzipped; nothing is
+  parsed at runtime.
+- **Nothing is lost or said twice.** `tools/test-decks.mjs` (in `npm run check`) builds all 128
+  decks and checks, beyond the brief's three rules, that every figure, callout and widget is on
+  a slide and that the words on the prose slides are exactly the lesson's prose. Removing one
+  quiz slide or dropping a prose chunk in the transform fails it for every lesson.
+- **Split points respect sentences.** Prose is packed to about 90 words per slide; a single
+  paragraph or list is only split past 135 words, at a sentence or between items. The longest
+  text slide across the course is 135 words, and tables stay whole on their own slide.
+- **Presenting remembers itself.** The Read / Present choice is kept in `nitora-lesson-mode`
+  (outside `STORAGE_KEYS`, which the migration test requires to have old names), and the slide
+  is in the address (`?slide=5`), so a reload or a shared link lands on it.
+- **The deck's quiz counts.** Answering every question slide saves the attempt, exactly as
+  the page's quiz does.
+- **Print is a real document.** "Print, or save as PDF" renders every slide into a print-only
+  copy, one landscape page each; the engulfing lesson prints as 28 pages.
+- **Figures on a slide** draw large (narrow on a phone) and drop the expand and copy-link
+  buttons; callouts and widgets are scaled with CSS `zoom`, because they are sized in rem for
+  the page.
+- **The `deck` flag is now on by default**; `VITE_FLAGS=-deck` turns presentation mode off.
+- **Fixed on the way:** a bracket drawn under the candles ("downtrend") had its label cut off
+  below the drawing, in lessons as well as slides.
 
 ### Known issues found in the audit, to fix as the components are rebuilt
 

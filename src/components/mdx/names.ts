@@ -12,6 +12,8 @@ export const MDX_GROUPS = {
   figures: ['PatternFigure', 'CandleFigure', 'IndicatorFigure', 'ChartTypesFigure', 'SeriesFigure'],
   /** Interactive calculators. */
   calculators: ['PositionSizer', 'ExpectancyCalc', 'RecoveryTable', 'StreakSimulator'],
+  /** A hand-made presentation deck (otherwise the build makes one from the lesson). */
+  deck: ['Deck', 'Slide', 'SlideFigure', 'SlideNotes'],
   /** The quantitative track. Nothing is built yet; see PLANNED. */
   quant: [],
 } as const;

@@ -5,6 +5,7 @@ import { Tooltip } from '@/components/ui/Tooltip';
 import { toast } from '@/components/ui/Toast';
 import { slugify, textOf } from '@/lib/slug';
 import { t } from '@/i18n';
+import { useDeck } from '@/components/deck/context';
 
 const FigureLightbox = lazy(() => import('./FigureLightbox'));
 
@@ -62,9 +63,13 @@ export function FigureFrame({
   const [mode, setMode] = useState<FigureMode>(defaultMode);
   const [expanded, setExpanded] = useState(false);
   const narrow = useNarrow();
+  // On a slide the figure already has the screen: draw it large (narrow on a phone), and drop
+  // the buttons that only make sense on the reading page.
+  const { inDeck } = useDeck();
   const label = title ?? textOf(caption).slice(0, 60);
   const id = label ? `fig-${slugify(label)}` : undefined;
   const render = (large: boolean) => (typeof children === 'function' ? children({ mode, large, narrow }) : children);
+  const inline = render(inDeck && !narrow);
 
   const copyLink = async () => {
     if (!id) return;
@@ -94,28 +99,30 @@ export function FigureFrame({
   const toolbar = (
     <div className="flex items-center gap-1">
       {modeSwitch}
-      {id && (
+      {id && !inDeck && (
         <Tooltip content={t('mdx.figure.copy')} align="end">
           <button type="button" onClick={copyLink} className={iconButton} aria-label={t('mdx.figure.copy')}>
             <Link2 size={15} strokeWidth={1.75} aria-hidden />
           </button>
         </Tooltip>
       )}
-      <Tooltip content={t('mdx.figure.expand')} align="end">
-        <button type="button" onClick={() => setExpanded(true)} className={iconButton} aria-label={t('mdx.figure.expand')} aria-haspopup="dialog">
-          <Maximize2 size={15} strokeWidth={1.75} aria-hidden />
-        </button>
-      </Tooltip>
+      {!inDeck && (
+        <Tooltip content={t('mdx.figure.expand')} align="end">
+          <button type="button" onClick={() => setExpanded(true)} className={iconButton} aria-label={t('mdx.figure.expand')} aria-haspopup="dialog">
+            <Maximize2 size={15} strokeWidth={1.75} aria-hidden />
+          </button>
+        </Tooltip>
+      )}
     </div>
   );
 
   return (
-    <figure id={id} className="not-prose group/figure my-8 overflow-hidden rounded-card border border-line bg-surface-1 shadow-1">
+    <figure id={inDeck ? undefined : id} className="not-prose group/figure my-8 overflow-hidden rounded-card border border-line bg-surface-1 shadow-1">
       <div className="flex min-h-11 flex-wrap items-center gap-x-3 gap-y-1 border-b border-line-subtle bg-surface-2 py-1.5 pl-4 pr-2">
         <p className="min-w-0 flex-1 py-1 text-body-sm font-semibold text-ink">{title}</p>
         {toolbar}
       </div>
-      <div className="p-3">{render(false)}</div>
+      <div className="p-3">{inline}</div>
       {caption && <figcaption className="border-t border-line-subtle px-4 py-3 text-body-sm leading-relaxed text-ink-soft">{caption}</figcaption>}
 
       {expanded && (

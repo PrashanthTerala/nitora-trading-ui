@@ -4,8 +4,8 @@
  * VITE_FLAGS is a comma list read at build time. A name turns a flag on; a leading minus
  * turns it off:
  *
- *   VITE_FLAGS=deck,3d npm run build          presentation mode and 3D on
- *   VITE_FLAGS=-commandPalette npm run dev    the palette off
+ *   VITE_FLAGS=3d npm run build               3D on
+ *   VITE_FLAGS=-deck,-commandPalette npm run dev   presentation mode and the palette off
  *
  * Anything not mentioned keeps its default below. Unknown names are ignored, and reported in
  * development so a typo does not silently do nothing.
@@ -13,8 +13,8 @@
 export const FLAG_DEFAULTS = {
   /** The Ctrl K / Cmd K palette. Built in Phase 1, on by default. */
   commandPalette: true,
-  /** Lesson presentation mode (Phase 3). */
-  deck: false,
+  /** Lesson presentation mode. Built in Phase 3, on by default. */
+  deck: true,
   /** 3D hero scene and module covers (Phase 4). */
   '3d': false,
   /** The Quantitative Trading track, once it has content. */

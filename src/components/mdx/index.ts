@@ -16,6 +16,7 @@ import { PatternFigure, CandleFigure, IndicatorFigure, ChartTypesFigure } from '
 import { SeriesFigure } from './SeriesFigure';
 import { PositionSizer, ExpectancyCalc, RecoveryTable, StreakSimulator } from './Calculators';
 import { H2, H3 } from './Heading';
+import { Deck, DeckSource, LessonBody, Slide, SlideFigure, SlideNotes } from '@/components/deck/readComponents';
 import { MDX_GROUPS, type MdxGroup } from './names';
 
 /**
@@ -36,12 +37,17 @@ type Group<G extends MdxGroup> = { [K in (typeof MDX_GROUPS)[G][number]]: Compon
 export const core = { Callout, KeyTakeaways, Quiz, Term, TryIt, Compare, Stat, StatRow } satisfies Group<'core'>;
 export const figures = { PatternFigure, CandleFigure, IndicatorFigure, ChartTypesFigure, SeriesFigure } satisfies Group<'figures'>;
 export const calculators = { PositionSizer, ExpectancyCalc, RecoveryTable, StreakSimulator } satisfies Group<'calculators'>;
+export const deck = { Deck, Slide, SlideFigure, SlideNotes } satisfies Group<'deck'>;
 /** Planned: CodeBlock, Notebook, BacktestFigure, EquityCurveFigure. See names.ts. */
 export const quant = {} satisfies Group<'quant'>;
 
-export const registry = { core, figures, calculators, quant };
+export const registry = { core, figures, calculators, deck, quant };
 
-/** Markdown elements the lesson page renders its own way. */
-const elements = { table: ScrollableTable, h2: H2, h3: H3 };
+/**
+ * Markdown elements the lesson page renders its own way, and the two wrappers the build adds to
+ * every lesson (tools/remark-slides.mjs): LessonBody, the reading content, and DeckSource, the
+ * slides, which only the presentation view draws.
+ */
+const elements = { table: ScrollableTable, h2: H2, h3: H3, LessonBody, DeckSource };
 
-export const mdxComponents: MDXComponents = { ...elements, ...core, ...figures, ...calculators, ...quant };
+export const mdxComponents: MDXComponents = { ...elements, ...core, ...figures, ...calculators, ...deck, ...quant };

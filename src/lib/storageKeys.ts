@@ -28,6 +28,15 @@ export const LEGACY_KEYS: ReadonlyArray<readonly [string, string]> = [
   ['tradelab-sim-v1', STORAGE_KEYS.sim],
 ];
 
+/**
+ * Preferences added after the rename. They never had an old name, so they are kept apart from
+ * STORAGE_KEYS, whose every entry the migration below must account for.
+ */
+export const PREF_KEYS = {
+  /** "read" or "present": how the reader last chose to view lessons. */
+  lessonMode: 'nitora-lesson-mode',
+} as const;
+
 /** The part of Storage the migration uses, so a test can hand it a plain object. */
 export interface KeyValueStore {
   getItem(key: string): string | null;

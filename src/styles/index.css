@@ -264,3 +264,101 @@ body {
     animation: none;
   }
 }
+
+/* ---------- presentation mode ----------
+   Slides reuse the lesson's own components and prose rules, a size up. */
+@layer components {
+  .prose-lesson.deck-prose,
+  .deck-prose {
+    font-size: clamp(1.125rem, 0.85rem + 0.8vw, 1.5rem);
+    line-height: 1.55;
+  }
+  .deck-prose > p:first-child,
+  .deck-prose > ul:first-child,
+  .deck-prose > ol:first-child {
+    margin-top: 0;
+  }
+  /* Callouts and widgets are sized in rem for the page; zoom scales them whole on a slide. */
+  .deck-zoom {
+    zoom: 1;
+  }
+  @media (min-width: 1024px) {
+    .deck-zoom {
+      zoom: 1.2;
+    }
+  }
+  @media (min-width: 1440px) {
+    .deck-zoom {
+      zoom: 1.35;
+    }
+  }
+  .deck-figure > figure {
+    margin: 0;
+  }
+  /* The summary slide: takeaways rise one after another. */
+  .deck-stagger li {
+    animation: deck-rise var(--duration-slow) var(--ease-emphasized) both;
+  }
+  .deck-stagger li:nth-child(2) { animation-delay: 70ms; }
+  .deck-stagger li:nth-child(3) { animation-delay: 140ms; }
+  .deck-stagger li:nth-child(4) { animation-delay: 210ms; }
+  .deck-stagger li:nth-child(5) { animation-delay: 280ms; }
+  .deck-stagger li:nth-child(6) { animation-delay: 350ms; }
+  .deck-stagger li:nth-child(n + 7) { animation-delay: 420ms; }
+  .deck-stagger li::before {
+    top: 0.2em;
+  }
+}
+@keyframes deck-rise {
+  from { opacity: 0; transform: translateY(12px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .deck-stagger li {
+    animation: none;
+  }
+}
+
+/* Print / save as PDF: only the deck's print copy, one slide per landscape page. */
+.deck-print {
+  display: none;
+}
+@media print {
+  @page {
+    size: landscape;
+    margin: 14mm;
+  }
+  body:has(.deck-print) > :not(.deck-print) {
+    display: none !important;
+  }
+  .deck-print {
+    display: block;
+  }
+  .deck-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100vh - 28mm);
+    break-after: page;
+    break-inside: avoid;
+  }
+  .deck-page:last-child {
+    break-after: auto;
+  }
+  .deck-page-number {
+    margin-top: auto;
+    padding-top: 8mm;
+    font-size: 9pt;
+    color: var(--color-ink-muted);
+  }
+  .deck-print * {
+    animation: none !important;
+    transition: none !important;
+  }
+  .deck-print .deck-zoom {
+    zoom: 1;
+  }
+  /* On paper the chart-style switch is just noise. */
+  .deck-print figure [role='radiogroup'] {
+    display: none;
+  }
+}

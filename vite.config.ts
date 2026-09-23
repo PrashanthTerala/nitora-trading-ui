@@ -8,6 +8,7 @@ import remarkGfm from 'remark-gfm';
 import { CURRICULUM, TRACKS } from './src/content/curriculum.ts';
 import { buildRobots, buildSitemap, sitePaths } from './src/lib/sitemap.ts';
 import { rehypeHeadingIds } from './src/lib/rehypeHeadingIds.ts';
+import remarkSlides from './tools/remark-slides.mjs';
 
 /**
  * `virtual:lesson-excerpt`: the home page's "Inside a lesson" showcase, read from a real lesson
@@ -69,7 +70,7 @@ function seoFiles(): Plugin {
 
 export default defineConfig({
   plugins: [
-    { enforce: 'pre', ...mdx({ remarkPlugins: [remarkGfm], rehypePlugins: [rehypeHeadingIds], providerImportSource: '@mdx-js/react' }) },
+    { enforce: 'pre', ...mdx({ remarkPlugins: [remarkGfm, remarkSlides], rehypePlugins: [rehypeHeadingIds], providerImportSource: '@mdx-js/react' }) },
     react({ include: /\.(jsx|js|mdx|md|tsx|ts)$/ }),
     tailwindcss(),
     lessonExcerpt(),

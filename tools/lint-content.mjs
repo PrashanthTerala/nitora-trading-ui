@@ -158,6 +158,11 @@ for (const mod of modules) {
       if (RESERVED_IDS.has(slug)) err(`heading "${m[1]}" would take the id "${slug}", which the lesson page uses for its own section`);
     }
 
+    // A hand-made deck and the curriculum must agree, so `deck: "manual"` always means one exists.
+    const handMade = /^<Deck>/m.test(code);
+    if (handMade && lesson.deck !== 'manual') err('has a hand-made <Deck>; set deck: "manual" on the lesson in curriculum.ts');
+    if (!handMade && lesson.deck === 'manual') err('is marked deck: "manual" in curriculum.ts but has no <Deck>');
+
     // callout types
     for (const m of text.matchAll(/<Callout\s+type="([^"]+)"/g)) if (!CALLOUTS.has(m[1])) err(`unknown callout type "${m[1]}"`);
 

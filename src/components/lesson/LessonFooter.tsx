@@ -45,7 +45,9 @@ export function LessonFooter({
   next,
   done,
   onToggleDone,
+  canPresent = false,
 }: {
+  canPresent?: boolean;
   lesson: FlatLesson;
   prev: FlatLesson | null;
   next: FlatLesson | null;
@@ -68,6 +70,11 @@ export function LessonFooter({
           <span className="flex items-center gap-1">
             <Kbd>M</Kbd> {t('lesson.keysComplete')}
           </span>
+          {canPresent && (
+            <span className="flex items-center gap-1">
+              <Kbd>P</Kbd> {t('lesson.keysPresent')}
+            </span>
+          )}
         </p>
       </div>
 

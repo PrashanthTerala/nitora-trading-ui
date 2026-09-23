@@ -266,3 +266,60 @@ is a lint error that says so.
 - `<Notebook>`: a sequence of runnable cells.
 - `<BacktestFigure>`: a strategy's results over historical data.
 - `<EquityCurveFigure>`: an equity curve with drawdown shading.
+
+### Presentation mode
+
+Every lesson can also be presented as slides (the Read / Present switch in the lesson header,
+or the P key). The deck is built from the lesson when the site is built; nothing needs adding.
+
+**The automatic deck**
+
+- The paragraphs before the first `##` become the title slide, under the lesson's title and
+  summary. If they run long, they continue on further slides.
+- Each `##` section becomes slides of about 90 words, titled with the section heading and
+  numbered "(2/3)" when a section needs more than one. A `###` starts a new slide when the
+  current one already has some substance. A single paragraph or list is only split past 135
+  words, at a sentence or between items, never mid-sentence.
+- Every figure, callout, table, `<TryIt>` and widget gets a slide of its own, in the order it
+  appears.
+- `<KeyTakeaways>` becomes a summary slide, and each quiz question its own slide. Answering
+  them all in the deck saves the quiz score, as the page's quiz does.
+- A closing slide offers "Mark complete" and the next lesson.
+
+Write lessons as sections 2–6 say and the deck follows. Short paragraphs make better slides,
+which is one more reason for the 2–4 sentence rule.
+
+**A hand-made deck** replaces the automatic one when a lesson needs a different shape:
+
+```mdx
+<Deck>
+<Slide title="A market is people agreeing">
+
+A price is what a buyer and a seller **agree** on.
+
+<SlideNotes>
+
+Ask the room what they paid for lunch.
+
+</SlideNotes>
+</Slide>
+<Slide title="The lemonade stand">
+
+<SlideFigure>
+<PatternFigure name="hammer" />
+</SlideFigure>
+
+</Slide>
+</Deck>
+```
+
+- `<Deck>` holds `<Slide title="...">` elements. It appears only in presentation mode, never on
+  the page, and can go anywhere in the file (the end is tidiest). Also set `deck: "manual"` on
+  the lesson in `curriculum.ts`; the content check requires the two to agree.
+- Inside a `<Slide>`, write markdown and use any component, as in the lesson.
+- `<SlideFigure>` gives a figure the whole slide.
+- `<SlideNotes>` holds notes for whoever presents; they show when notes are switched on
+  (the N key) and never on the page.
+- The closing slide is added automatically.
+
+To turn presentation mode off for one lesson, set `deck: "none"` on it in `curriculum.ts`.

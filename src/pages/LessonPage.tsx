@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState, type ComponentType } from 'react';
-import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { lazy, Suspense, useCallback, useEffect, useRef, useState, type ComponentType } from 'react';
+import { Link, Navigate, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { MDXProvider } from '@mdx-js/react';
 import { CheckCircle2, ChevronRight, Clock } from 'lucide-react';
 import { findLesson, findModule, LEVELS } from '@/content/curriculum';
@@ -13,20 +13,40 @@ import { LessonFooter } from '@/components/lesson/LessonFooter';
 import { useLessonKeys } from '@/components/lesson/useLessonKeys';
 import { LevelBadge } from '@/components/curriculum/ModuleCover';
 import { Chip } from '@/components/ui/Chip';
+import { Segmented } from '@/components/ui/Segmented';
+import type { DeckMeta } from '@/components/deck/context';
+import { flag } from '@/lib/flags';
+import { PREF_KEYS } from '@/lib/storageKeys';
 import { toast } from '@/components/ui/Toast';
 import { usePageMeta, publisher, isoMinutes } from '@/lib/pageMeta';
 import { t } from '@/i18n';
 
-const lessonModules = import.meta.glob('../content/modules/*/*.mdx') as Record<string, () => Promise<{ default: ComponentType }>>;
+// Each lesson module also exports `slides`, the deck remark-slides built from it.
+const lessonModules = import.meta.glob('../content/modules/*/*.mdx') as Record<string, () => Promise<{ default: ComponentType; slides?: DeckMeta }>>;
+
+// Presentation mode, loaded the first time a reader presents a lesson.
+const DeckView = lazy(() => import('@/components/deck/DeckView'));
+
+type LessonMode = 'read' | 'present';
+
+function readMode(): LessonMode {
+  try {
+    return localStorage.getItem(PREF_KEYS.lessonMode) === 'present' ? 'present' : 'read';
+  } catch {
+    return 'read';
+  }
+}
 
 function loaderFor(moduleId: string, lessonId: string) {
   return lessonModules[`../content/modules/${moduleId}/${lessonId}.mdx`];
 }
 
 /**
- * A lesson, in read mode. Three columns on wide screens -- the module's lessons, the article at
- * a 68ch measure, and an on-this-page list with reading progress -- collapsing to one column,
- * with the outline as a disclosure and progress as a line under the header.
+ * A lesson. Read mode: three columns on wide screens -- the module's lessons, the article at a
+ * 68ch measure, and an on-this-page list with reading progress -- collapsing to one column,
+ * with the outline as a disclosure and progress as a line under the header. Present mode: the
+ * same lesson as full-screen slides (components/deck), chosen from the header or with P and
+ * remembered; `?slide=N` in the address opens it on a given slide.
  */
 export default function LessonPage() {
   const { moduleId = '', lessonId = '' } = useParams();
@@ -41,12 +61,17 @@ export default function LessonPage() {
   const unmarkComplete = useProgress((s) => s.unmarkComplete);
   const setLastVisited = useProgress((s) => s.setLastVisited);
   const [Content, setContent] = useState<ComponentType | null>(null);
+  const [slides, setSlides] = useState<DeckMeta | null>(null);
+  const [mode, setModeState] = useState<LessonMode>(readMode);
+  const [params] = useSearchParams();
+  const slideParam = params.get('slide');
   const [error, setError] = useState<string | null>(null);
   const articleRef = useRef<HTMLElement>(null);
   const { items, active, progress } = useLessonScroll(articleRef, Content);
 
   useEffect(() => {
     setContent(null);
+    setSlides(null);
     setError(null);
     const loader = loaderFor(moduleId, lessonId);
     if (!loader) {
@@ -55,7 +80,11 @@ export default function LessonPage() {
     }
     let alive = true;
     loader()
-      .then((m) => alive && setContent(() => m.default))
+      .then((m) => {
+        if (!alive) return;
+        setContent(() => m.default);
+        setSlides(m.slides ?? null);
+      })
       .catch((e) => alive && setError(String(e)));
     setLastVisited(key);
     return () => {
@@ -80,6 +109,32 @@ export default function LessonPage() {
     }
   }, [done, key, markComplete, unmarkComplete]);
 
+  // Present when the reader chose it (remembered), or when the link names a slide.
+  const canPresent = flag('deck') && found?.lesson.deck !== 'none' && !!slides;
+  const presenting = canPresent && !!Content && (mode === 'present' || slideParam !== null);
+  const setMode = useCallback(
+    (next: LessonMode) => {
+      setModeState(next);
+      try {
+        localStorage.setItem(PREF_KEYS.lessonMode, next);
+      } catch {
+        /* private mode: the choice lasts for this page only */
+      }
+      if (next === 'read' && new URLSearchParams(window.location.search).has('slide')) navigate(window.location.pathname, { replace: true });
+    },
+    [navigate],
+  );
+  // The slide being shown, in the address (?slide=3), so a reload or a shared link lands on it.
+  const onSlideChange = useCallback(
+    (index: number) => {
+      const url = new URL(window.location.href);
+      if (url.searchParams.get('slide') === String(index + 1)) return;
+      url.searchParams.set('slide', String(index + 1));
+      navigate(url.pathname + url.search, { replace: true });
+    },
+    [navigate],
+  );
+
   const prevPath = found?.prev?.path;
   const nextPath = found?.next?.path;
   useLessonKeys({
@@ -91,6 +146,7 @@ export default function LessonPage() {
         }
       : undefined,
     toggleDone,
+    present: canPresent ? () => setMode('present') : undefined,
   });
 
   usePageMeta(
@@ -122,6 +178,22 @@ export default function LessonPage() {
   return (
     <div className="mx-auto max-w-[1440px] px-4 pb-16 pt-6 sm:px-6 lg:pt-10">
       <ReadingProgressBar progress={progress} />
+      {presenting && Content && slides && (
+        <Suspense fallback={null}>
+          <DeckView
+            Content={Content}
+            meta={slides}
+            lesson={lesson}
+            module={mod}
+            next={next}
+            done={done}
+            onToggleDone={toggleDone}
+            onExit={() => setMode('read')}
+            initialSlide={slideParam ? Number(slideParam) - 1 : 0}
+            onSlideChange={onSlideChange}
+          />
+        </Suspense>
+      )}
       <div className="lg:grid lg:grid-cols-[232px_minmax(0,1fr)] lg:gap-10 xl:grid-cols-[232px_minmax(0,1fr)_208px] xl:gap-12">
         <aside className="mb-6 lg:mb-0">
           <LessonOutline module={mod} currentId={lesson.id} />
@@ -158,6 +230,19 @@ export default function LessonPage() {
             <h1 className="mt-2 font-display text-h1 font-bold text-ink">{lesson.title}</h1>
             <p className="mt-3 text-body-lg text-ink-soft">{lesson.summary}</p>
             <div className="mt-5 flex flex-wrap items-center gap-2 border-b border-line pb-6 text-body-sm text-ink-soft">
+              {canPresent && (
+                <Segmented
+                  size="sm"
+                  label={t('deck.modeLabel')}
+                  value={presenting ? 'present' : 'read'}
+                  onChange={(v) => setMode(v)}
+                  options={[
+                    { value: 'read' as LessonMode, label: t('deck.read') },
+                    { value: 'present' as LessonMode, label: t('deck.present') },
+                  ]}
+                  className="order-last ml-auto"
+                />
+              )}
               <span className="mr-2 flex items-center gap-1.5">
                 <Clock size={14} strokeWidth={1.5} aria-hidden /> {t('lesson.minutes', { count: lesson.minutes })}
               </span>
@@ -193,7 +278,7 @@ export default function LessonPage() {
             )}
           </div>
 
-          <LessonFooter lesson={lesson} prev={prev} next={next} done={done} onToggleDone={toggleDone} />
+          <LessonFooter lesson={lesson} prev={prev} next={next} done={done} onToggleDone={toggleDone} canPresent={canPresent} />
         </article>
 
         <aside className="hidden xl:block">

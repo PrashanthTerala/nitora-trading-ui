@@ -68,7 +68,10 @@ export function CandleSvg({
   const padL = 12;
   const padR = axis ? 54 : 12;
   const padT = 18;
-  const padB = 14;
+  // A bracket drawn under the candles puts its label below the plot; leave room for it, or the
+  // label falls outside the drawing and is cut off.
+  const belowBracket = annotations.some((a) => a.type === 'bracket' && (a.position ?? 'below') === 'below');
+  const padB = belowBracket ? 30 : 14;
   const volH = showVolume ? 44 : 0;
   const panelH = panels.length ? 70 : 0;
   const totalH = height + volH + panels.length * (panelH + 6);

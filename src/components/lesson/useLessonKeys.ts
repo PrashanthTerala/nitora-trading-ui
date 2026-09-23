@@ -2,10 +2,10 @@ import { useEffect, useLayoutEffect, useRef } from 'react';
 
 /**
  * Lesson shortcuts: ← and → move to the previous and next lesson, M marks the lesson complete
- * (or not). They stand aside whenever a key belongs to something else: typing in a field, a
+ * (or not), P presents it as slides. They stand aside whenever a key belongs to something else: typing in a field, a
  * control that uses arrows itself (segmented switches, tabs), an open dialog, or any modifier.
  */
-export function useLessonKeys(handlers: { prev?: () => void; next?: () => void; toggleDone: () => void }) {
+export function useLessonKeys(handlers: { prev?: () => void; next?: () => void; toggleDone: () => void; present?: () => void }) {
   // The latest handlers, without re-binding the listener on every render.
   const ref = useRef(handlers);
   useLayoutEffect(() => {
@@ -22,6 +22,7 @@ export function useLessonKeys(handlers: { prev?: () => void; next?: () => void; 
       if (e.key === 'ArrowLeft' && h.prev) h.prev();
       else if (e.key === 'ArrowRight' && h.next) h.next();
       else if (e.key === 'm' || e.key === 'M') h.toggleDone();
+      else if ((e.key === 'p' || e.key === 'P') && h.present) h.present();
       else return;
       e.preventDefault();
     };
