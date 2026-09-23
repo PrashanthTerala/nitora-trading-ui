@@ -1,0 +1,28 @@
+# Runs the public Nitora Trading Academy site on the server.
+#
+#   cd ~/nitora-trading-ui && docker compose up -d
+#
+# The deploy job copies this file to ~/nitora-trading-ui and restarts it. Nothing else
+# about the site lives on the server: it is static, with no database, no secrets and no
+# market-data service. See docs/DEPLOYMENT.md.
+#
+# Its own Compose project, separate from the nitorastone stack, so deploying one can
+# never pull, restart or break the other.
+
+name: nitora-trading
+
+services:
+  web:
+    image: ${REGISTRY:-ghcr.io/prashanthterala}/nitora-trading-ui:${TAG:-latest}
+    container_name: nitora-trading-ui
+    restart: unless-stopped
+    ports:
+      # On every interface for now, because the site is reached by IP address. Once it
+      # has a domain it moves behind the same Caddy as nitorastone.com and this becomes
+      # 127.0.0.1 -- set TRADING_BIND in .env; docs/DEPLOYMENT.md has the steps.
+      - "${TRADING_BIND:-0.0.0.0}:${TRADING_PORT:-8090}:8080"
+    # nginx needs to write only its pid and temp files, and the unprivileged image
+    # keeps all of those in /tmp. Everything else stays read-only.
+    read_only: true
+    tmpfs:
+      - /tmp

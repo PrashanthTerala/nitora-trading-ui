@@ -55,6 +55,9 @@ anything. `VITE_DATA_API` decides it:
 A saved session left in Real replay or Live reopens on the synthetic market in a build without
 a service, with a fresh account, rather than trying to connect on load.
 
+Deploying: see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). Every push to `master` is tested, built
+into an image and, once enabled, deployed to the server as the public build.
+
 ## The four rooms
 
 **Learn** — Thirteen modules named like school years, from "what is a market" to options Greeks.

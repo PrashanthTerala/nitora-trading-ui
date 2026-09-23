@@ -1,0 +1,10 @@
+# The image installs its own dependencies and produces its own build.
+node_modules
+dist
+*.tsbuildinfo
+.vite
+
+# Not part of the site.
+.git
+.github
+docs
