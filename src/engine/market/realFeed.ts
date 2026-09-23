@@ -103,11 +103,36 @@ export class RealFeed {
 // ---------------------------------------------------------------- API client
 
 /**
- * The market-data service is a separate project (nitora-trading-service) with its own
- * toolchain and release cadence, so it is addressed over HTTP rather than imported.
- * Override with VITE_DATA_API when it runs somewhere other than the default port.
+ * Decide where the market-data service is, or that this build has none.
+ *
+ * A production build gets no service unless one is named. The data that service fetches may
+ * not be shown to anyone but its operator, so a public build must not offer it -- and the old
+ * rule, "default to localhost:5300", sent every visitor's browser to their OWN machine, where
+ * nothing answered, and then told them to start a Docker container.
+ *
+ * `npm run dev` keeps the local default, because that is the operator on their own machine.
+ * VITE_DATA_API names a service explicitly in either mode, and set to an empty string it
+ * switches the service off even in dev. Kept pure so the rule itself can be tested.
  */
-const DEFAULT_BASE = (import.meta.env?.VITE_DATA_API as string | undefined) ?? 'http://localhost:5300';
+export function resolveDataApi(configured: string | undefined, devDefault: string | undefined): string | null {
+  let base = (configured !== undefined ? configured : (devDefault ?? '')).trim();
+  while (base.endsWith('/')) base = base.slice(0, -1);
+  return base === '' ? null : base;
+}
+
+/**
+ * The service's base URL, or null when this build has none.
+ *
+ * `typeof` guards rather than optional chaining: the engine tests bundle this file for Node,
+ * where import.meta.env does not exist, and a bare import.meta.env.DEV would throw there.
+ */
+export const DATA_API: string | null = resolveDataApi(
+  typeof import.meta.env === 'undefined' ? undefined : (import.meta.env.VITE_DATA_API as string | undefined),
+  typeof import.meta.env !== 'undefined' && import.meta.env.DEV ? 'http://localhost:5300' : undefined,
+);
+
+/** Whether real replay and live mode exist in this build at all. */
+export const hasDataService = DATA_API !== null;
 
 export interface HistoryResponse {
   symbol: string;
@@ -124,16 +149,18 @@ export interface HistoryResponse {
 export class DataApiError extends Error {
   constructor(
     message: string,
-    readonly kind: 'offline' | 'http' | 'empty',
+    readonly kind: 'offline' | 'http' | 'empty' | 'disabled',
   ) {
     super(message);
   }
 }
 
 async function getJson<T>(path: string, signal?: AbortSignal): Promise<T> {
+  // Outside the try below, so "this build has no service" is not reported as "unreachable".
+  if (DATA_API === null) throw new DataApiError('This build has no market-data service.', 'disabled');
   let res: Response;
   try {
-    res = await fetch(`${DEFAULT_BASE}${path}`, { signal });
+    res = await fetch(`${DATA_API}${path}`, { signal });
   } catch {
     throw new DataApiError('Cannot reach the data service. Start the nitora-trading-service project with "docker compose up -d".', 'offline');
   }
@@ -256,7 +283,11 @@ export function openLiveStream(symbol: string, tf: Timeframe, handlers: LiveStre
     handlers.onFallback('This browser cannot hold a stream open.');
     return () => {};
   }
-  const url = `${DEFAULT_BASE}/api/live/stream?symbol=${encodeURIComponent(symbol)}&interval=${intervalFor(tf)}`;
+  if (DATA_API === null) {
+    handlers.onFallback('This build has no market-data service.');
+    return () => {};
+  }
+  const url = `${DATA_API}/api/live/stream?symbol=${encodeURIComponent(symbol)}&interval=${intervalFor(tf)}`;
   let source: EventSource;
   try {
     source = new EventSource(url);

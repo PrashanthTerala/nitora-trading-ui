@@ -40,6 +40,21 @@ npm run dev
 
 Then open the printed URL. `npm run build` produces a static `dist/` that can be hosted anywhere.
 
+**A production build has no market-data service unless you name one.** That is the safe default
+for a public site: the data the service fetches may not be shown to anyone but you, so a public
+build offers the synthetic market only, with no Real replay or Live buttons and no requests to
+anything. `VITE_DATA_API` decides it:
+
+| Command | Data service | Simulator offers |
+|---|---|---|
+| `npm run dev` | `http://localhost:5300` | Synthetic, Real replay, Live |
+| `npm run build` | none | Synthetic only |
+| `VITE_DATA_API=https://... npm run build` | that address | all three, for your own deployment |
+| `VITE_DATA_API= npm run dev` | none | Synthetic only, to preview the public build |
+
+A saved session left in Real replay or Live reopens on the synthetic market in a build without
+a service, with a fresh account, rather than trying to connect on load.
+
 ## The four rooms
 
 **Learn** — Thirteen modules named like school years, from "what is a market" to options Greeks.

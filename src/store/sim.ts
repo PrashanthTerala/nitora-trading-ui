@@ -6,7 +6,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { Market, SUBTICKS } from '@/engine/market/feed';
-import { RealFeed, fetchRealHistory, fetchRealSymbols, fetchLive, livePollMs, mergeLive, openLiveStream, type RealSymbolSpec, type LiveResponse } from '@/engine/market/realFeed';
+import { RealFeed, fetchRealHistory, fetchRealSymbols, fetchLive, livePollMs, mergeLive, openLiveStream, hasDataService, type RealSymbolSpec, type LiveResponse } from '@/engine/market/realFeed';
 import { SYMBOLS, SYMBOL_MAP } from '@/engine/market/symbols';
 import { bucketStart, minuteOfSession } from '@/engine/market/generator';
 import type { Bar, Timeframe } from '@/engine/market/types';
@@ -392,6 +392,9 @@ export const useSim = create<SimState>()(
        * candle grows in front of you the way it does on a real platform.
        */
       startLive: () => {
+        // No service in this build: never reach for one. The UI does not offer real or
+        // live mode here, so this only matters for a caller that gets past it.
+        if (!hasDataService) return;
         get().stopLive();
         const { realSymbol, timeframe } = get();
         set({ realStatus: 'loading', realError: null });
@@ -483,6 +486,9 @@ export const useSim = create<SimState>()(
       },
 
       pollLive: async () => {
+        // No service in this build: never reach for one. The UI does not offer real or
+        // live mode here, so this only matters for a caller that gets past it.
+        if (!hasDataService) return;
         const token = ++realLoadToken;
         const { realSymbol, timeframe } = get();
         try {
@@ -499,6 +505,7 @@ export const useSim = create<SimState>()(
       },
 
       setSource: (next) => {
+        if (next !== 'synthetic' && !hasDataService) return;
         if (next === get().source) return;
         // Positions and orders are priced against the market that created them, so
         // carrying them across would invent profit exactly as a new market would.
@@ -532,6 +539,9 @@ export const useSim = create<SimState>()(
        * appeared. Fetching a list should not move the chart.
        */
       loadSymbols: async () => {
+        // No service in this build: never reach for one. The UI does not offer real or
+        // live mode here, so this only matters for a caller that gets past it.
+        if (!hasDataService) return;
         if (get().realSymbols.length > 0) return;
         try {
           set({ realSymbols: await fetchRealSymbols() });
@@ -547,6 +557,9 @@ export const useSim = create<SimState>()(
        * away from cannot overwrite the current one.
        */
       loadReal: async () => {
+        // No service in this build: never reach for one. The UI does not offer real or
+        // live mode here, so this only matters for a caller that gets past it.
+        if (!hasDataService) return;
         const token = ++realLoadToken;
         const { realSymbol, timeframe } = get();
         set({ realStatus: 'loading', realError: null });
@@ -584,6 +597,14 @@ export const useSim = create<SimState>()(
         if (state) {
           market = new Market(state.seed, SYMBOLS);
           state.setHydrated();
+          if (state.source !== 'synthetic' && !hasDataService) {
+            // A session saved where real data was available, reopened in a build with none.
+            // Its account is priced against a market this build cannot load, so it starts
+            // afresh on the synthetic one -- exactly as switching source by hand would --
+            // rather than reaching on load for a service that is not there.
+            state.setSource('synthetic');
+            return;
+          }
           // Bars are never persisted, so a session resumed in real mode has no feed yet.
           if (state.source === 'real') void state.loadReal();
           // Live holds no bars across a reload either, and its clock is the wall clock.

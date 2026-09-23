@@ -35,11 +35,11 @@ import { csvCell, toCsv } from '@/lib/csv';
 import { defaultQty } from '@/lib/sizing';
 import { migrateStorage, LEGACY_KEYS, STORAGE_KEYS } from '@/lib/storageKeys';
 import { Market } from '@/engine/market/feed';
-import { RealFeed } from '@/engine/market/realFeed';
+import { RealFeed, resolveDataApi } from '@/engine/market/realFeed';
 import { SYMBOLS, SYMBOL_MAP } from '@/engine/market/symbols';
 import { aggregate, bucketStart, nextSessionMinute, minuteOfSession } from '@/engine/market/generator';
 import * as ind from '@/engine/market/indicators';
-export { broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, migrateStorage, LEGACY_KEYS, STORAGE_KEYS, Market, RealFeed, SYMBOLS, SYMBOL_MAP, aggregate, bucketStart, nextSessionMinute, minuteOfSession, ind };
+export { broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, migrateStorage, LEGACY_KEYS, STORAGE_KEYS, resolveDataApi, Market, RealFeed, SYMBOLS, SYMBOL_MAP, aggregate, bucketStart, nextSessionMinute, minuteOfSession, ind };
 `,
 );
 
@@ -50,7 +50,7 @@ execSync(
 );
 
 const M = await import(pathToFileURL(bundle).href);
-const { broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, migrateStorage, LEGACY_KEYS, STORAGE_KEYS, Market, RealFeed, SYMBOLS, ind } = M;
+const { broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, migrateStorage, LEGACY_KEYS, STORAGE_KEYS, resolveDataApi, Market, RealFeed, SYMBOLS, ind } = M;
 
 let pass = 0;
 let fail = 0;
@@ -571,6 +571,21 @@ const near = (a, b, eps = 1e-6) => Math.abs(a - b) < eps;
   check('a write that silently fails to land keeps the original', d.getItem(oldSim) === journal);
 
   check('empty storage is a no-op', migrateStorage(memStore()).length === 0);
+}
+
+
+// ---------------------------------------------------------------- data service address
+// A public build must not reach for a data service it was never given: the old default sent
+// every visitor's browser to their own localhost:5300.
+{
+  const LOCAL = 'http://localhost:5300';
+  check('dev build with nothing configured uses the local service', resolveDataApi(undefined, LOCAL) === LOCAL);
+  check('production build with nothing configured has no service', resolveDataApi(undefined, undefined) === null);
+  check('an explicit address wins in production', resolveDataApi('https://data.example.com', undefined) === 'https://data.example.com');
+  check('an explicit address wins over the dev default', resolveDataApi('http://10.0.0.5:5300', LOCAL) === 'http://10.0.0.5:5300');
+  check('an empty address switches the service off, even in dev', resolveDataApi('', LOCAL) === null);
+  check('a whitespace-only address is treated as empty', resolveDataApi('   ', LOCAL) === null);
+  check('trailing slashes are trimmed so paths do not double up', resolveDataApi('https://data.example.com//', undefined) === 'https://data.example.com');
 }
 
 

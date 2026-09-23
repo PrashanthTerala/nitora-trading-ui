@@ -9,6 +9,7 @@
 import { useEffect, useState } from 'react';
 import { AlertTriangle, Database, FlaskConical, Loader2, Radio, RefreshCw } from 'lucide-react';
 import { useSim } from '@/store/sim';
+import { hasDataService } from '@/engine/market/realFeed';
 
 export function DataSourceBar() {
   const source = useSim((s) => s.source);
@@ -20,6 +21,21 @@ export function DataSourceBar() {
   const loadReal = useSim((s) => s.loadReal);
   const timeframe = useSim((s) => s.timeframe);
   const liveMeta = useSim((s) => s.liveMeta);
+
+  if (!hasDataService) {
+    // Nothing to switch to in this build, so no switch. Real replay and Live here would be
+    // two buttons that could only fail.
+    return (
+      <div className="flex shrink-0 flex-wrap items-center gap-3 border-b border-line bg-panel/30 px-3 py-1.5 text-xs">
+        <span className="flex items-center gap-1.5 font-semibold text-accent">
+          <FlaskConical size={12} /> Synthetic market
+        </span>
+        <span className="text-ink-soft">
+          Invented instruments, generated from a seed. Unlimited history, no network, and the prices lessons refer to.
+        </span>
+      </div>
+    );
+  }
 
   return (
     <div className="flex shrink-0 flex-wrap items-center gap-3 border-b border-line bg-panel/30 px-3 py-1.5 text-xs">

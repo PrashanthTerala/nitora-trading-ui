@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { SYMBOLS } from '@/engine/market/symbols';
+import { hasDataService } from '@/engine/market/realFeed';
 
 export function GuidePage() {
   return (
@@ -49,52 +50,71 @@ export function GuidePage() {
         Everything is deterministic from a seed. The same seed always produces the same market, so you can replay a session. <strong>New market</strong> rolls a fresh seed. Your
         account, orders and clock position are saved in this browser.
       </p>
-      <h3>Replaying real history</h3>
-      <p>
-        The toggle above the chart switches between <strong>Synthetic</strong> and <strong>Real data</strong>. Synthetic is the default and needs nothing: it works offline, it
-        generates unlimited history at any timeframe, and it is the market every worked example in the lessons is written against.
-      </p>
-      <p>
-        Real data replays actual historical bars for instruments you will recognise, one bar at a time, with the same order ticket and the same clock. It is worth using once the
-        mechanics are second nature, because real markets do things invented ones do not: earnings gaps, holiday sessions, the same level failing three times and holding the
-        fourth. It needs a small service running alongside the site, and if that service is not running the simulator says so and carries on in synthetic mode.
-      </p>
-      <p>
-        Two honest limits. History is bounded by what the data provider gives, which is roughly a week of one-minute bars but years of daily ones, so changing timeframe reloads
-        rather than re-slicing. And switching between the two markets starts a fresh account, for the same reason rolling a new market does: a position is priced against the
-        market that created it, so carrying it across would invent profit that was never made.
-      </p>
+      {/* Real replay and live mode exist only in a build that has a data service. */}
+      {hasDataService ? (
+        <>
+          <h3>Replaying real history</h3>
+          <p>
+            The toggle above the chart switches between <strong>Synthetic</strong> and <strong>Real data</strong>. Synthetic is the default and needs nothing: it works offline, it
+            generates unlimited history at any timeframe, and it is the market every worked example in the lessons is written against.
+          </p>
+          <p>
+            Real data replays actual historical bars for instruments you will recognise, one bar at a time, with the same order ticket and the same clock. It is worth using once the
+            mechanics are second nature, because real markets do things invented ones do not: earnings gaps, holiday sessions, the same level failing three times and holding the
+            fourth. It needs a small service running alongside the site, and if that service is not running the simulator says so and carries on in synthetic mode.
+          </p>
+          <p>
+            Two honest limits. History is bounded by what the data provider gives, which is roughly a week of one-minute bars but years of daily ones, so changing timeframe reloads
+            rather than re-slicing. And switching between the two markets starts a fresh account, for the same reason rolling a new market does: a position is priced against the
+            market that created it, so carrying it across would invent profit that was never made.
+          </p>
 
-      <h3>Live</h3>
-      <p>
-        The third source follows the market as it trades now. The clock belongs to the market rather than to you, so there is no play, step or speed: the
-        candle on the right edge grows while you watch it. It is the mode to use when you want to feel what it is like to make a decision without knowing
-        what the next bar does, which is the one thing replay can never quite reproduce.
-      </p>
-      <p>
-        <strong>Live means crypto, and it means running your own copy.</strong> Bitcoin and Ethereum are what you can follow, and they are genuinely live: the
-        site holds one connection open to the exchange and builds the forming candle out of actual trades as they happen, rather than asking every so often
-        what the price is now. A trade reaches the chart in well under a second, and the candle on the right edge really is the one being traded.
-      </p>
-      <p>
-        Real data of any kind is a local feature, and that is a licensing boundary rather than a technical one. Market prices are licensed, and the licensed
-        act is the showing: looking at a chart yourself is one thing, putting it in front of a visitor is redistribution, and that needs permission you do
-        not get by default. This is true of share and index prices, and it is true of the crypto feed too, whose terms are free of charge but still bar
-        showing the data, or charts drawn from it, to anyone outside your own organisation without written consent.
-      </p>
-      <p>
-        The bar above the chart always says what you are looking at — real time, delayed by a stated amount, or delay unknown — and it says the last of
-        those rather than guessing. A <em>LIVE</em> badge over a fifteen-minute-old price is exactly the small lie this site exists to argue against.
-      </p>
-      <p>
-        So the version of this site you are most likely to meet runs on the synthetic market, which needs no permission from anyone: it is invented, it works
-        offline, and every worked example in all 128 lessons is written against it. Real replay and live mode are there for when you run your own copy.
-      </p>
-      <p>
-        None of which should matter much to you. Nothing in this course depends on being fast: you are learning to read structure and manage risk, and a
-        chart fifteen minutes behind teaches both exactly as well as one that is instant. The moment being first actually matters, you have left the kind of
-        trading this site is trying to teach.
-      </p>
+          <h3>Live</h3>
+          <p>
+            The third source follows the market as it trades now. The clock belongs to the market rather than to you, so there is no play, step or speed: the
+            candle on the right edge grows while you watch it. It is the mode to use when you want to feel what it is like to make a decision without knowing
+            what the next bar does, which is the one thing replay can never quite reproduce.
+          </p>
+          <p>
+            <strong>Live means crypto, and it means running your own copy.</strong> Bitcoin and Ethereum are what you can follow, and they are genuinely live: the
+            site holds one connection open to the exchange and builds the forming candle out of actual trades as they happen, rather than asking every so often
+            what the price is now. A trade reaches the chart in well under a second, and the candle on the right edge really is the one being traded.
+          </p>
+          <p>
+            Real data of any kind is a local feature, and that is a licensing boundary rather than a technical one. Market prices are licensed, and the licensed
+            act is the showing: looking at a chart yourself is one thing, putting it in front of a visitor is redistribution, and that needs permission you do
+            not get by default. This is true of share and index prices, and it is true of the crypto feed too, whose terms are free of charge but still bar
+            showing the data, or charts drawn from it, to anyone outside your own organisation without written consent.
+          </p>
+          <p>
+            The bar above the chart always says what you are looking at — real time, delayed by a stated amount, or delay unknown — and it says the last of
+            those rather than guessing. A <em>LIVE</em> badge over a fifteen-minute-old price is exactly the small lie this site exists to argue against.
+          </p>
+          <p>
+            So the version of this site you are most likely to meet runs on the synthetic market, which needs no permission from anyone: it is invented, it works
+            offline, and every worked example in all 128 lessons is written against it. Real replay and live mode are there for when you run your own copy.
+          </p>
+          <p>
+            None of which should matter much to you. Nothing in this course depends on being fast: you are learning to read structure and manage risk, and a
+            chart fifteen minutes behind teaches both exactly as well as one that is instant. The moment being first actually matters, you have left the kind of
+            trading this site is trying to teach.
+          </p>
+        </>
+      ) : (
+        <>
+          <h3>Real market data</h3>
+          <p>
+            This copy of the site runs on the synthetic market only, and that is deliberate rather than unfinished. Market prices are licensed, and the
+            licensed act is the showing: a chart of real prices put in front of a visitor is redistribution, which needs permission this site does not
+            have. That holds for share and index prices and, despite being free to fetch, for the crypto feeds too.
+          </p>
+          <p>
+            Nothing in the course depends on it. The synthetic market is deterministic, works offline, has unlimited history at every timeframe, and every
+            worked example in all 128 lessons is written against it. Run your own copy of the site alongside its data service and it gains real
+            historical replay and a live crypto feed, for your own use.
+          </p>
+        </>
+      )}
 
       <h2>3. Trainer</h2>
       <p>
