@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { AlertTriangle, Database, FlaskConical, Loader2, Radio, RefreshCw } from 'lucide-react';
 import { useSim } from '@/store/sim';
 import { hasDataService } from '@/engine/market/realFeed';
+import { chipClass } from '@/components/ui/Chip';
 
 export function DataSourceBar() {
   const source = useSim((s) => s.source);
@@ -26,7 +27,7 @@ export function DataSourceBar() {
     // Nothing to switch to in this build, so no switch. Real replay and Live here would be
     // two buttons that could only fail.
     return (
-      <div className="flex shrink-0 flex-wrap items-center gap-3 border-b border-line bg-panel/30 px-3 py-1.5 text-xs">
+      <div className="flex shrink-0 flex-wrap items-center gap-3 border-b border-line bg-surface px-3 py-1.5 text-caption">
         <span className="flex items-center gap-1.5 font-semibold text-accent">
           <FlaskConical size={12} /> Synthetic market
         </span>
@@ -38,12 +39,12 @@ export function DataSourceBar() {
   }
 
   return (
-    <div className="flex shrink-0 flex-wrap items-center gap-3 border-b border-line bg-panel/30 px-3 py-1.5 text-xs">
-      <div className="flex gap-0.5 rounded-lg bg-panel p-0.5">
+    <div className="flex shrink-0 flex-wrap items-center gap-3 border-b border-line bg-surface px-3 py-1.5 text-caption">
+      <div className="flex gap-0.5 rounded-control border border-line bg-surface-2 p-0.5">
         <button
           type="button"
           onClick={() => setSource('synthetic')}
-          className={`flex items-center gap-1.5 rounded px-2.5 py-1 font-semibold transition ${source === 'synthetic' ? 'bg-surface text-accent shadow-sm' : 'text-ink-soft hover:text-ink'}`}
+          className={`flex items-center gap-1.5 rounded-[8px] px-2.5 py-1 font-semibold transition-colors duration-(--duration-fast) ${source === 'synthetic' ? 'bg-surface-1 text-ink shadow-1' : 'text-ink-soft hover:text-ink'}`}
           title="Deterministic invented markets. Works offline and matches the lesson examples."
         >
           <FlaskConical size={12} /> Synthetic
@@ -51,7 +52,7 @@ export function DataSourceBar() {
         <button
           type="button"
           onClick={() => setSource('real')}
-          className={`flex items-center gap-1.5 rounded px-2.5 py-1 font-semibold transition ${source === 'real' ? 'bg-surface text-accent shadow-sm' : 'text-ink-soft hover:text-ink'}`}
+          className={`flex items-center gap-1.5 rounded-[8px] px-2.5 py-1 font-semibold transition-colors duration-(--duration-fast) ${source === 'real' ? 'bg-surface-1 text-ink shadow-1' : 'text-ink-soft hover:text-ink'}`}
           title="Replay real historical bars. Needs the local data service running."
         >
           <Database size={12} /> Real replay
@@ -59,7 +60,7 @@ export function DataSourceBar() {
         <button
           type="button"
           onClick={() => setSource('live')}
-          className={`flex items-center gap-1.5 rounded px-2.5 py-1 font-semibold transition ${source === 'live' ? 'bg-surface text-accent shadow-sm' : 'text-ink-soft hover:text-ink'}`}
+          className={`flex items-center gap-1.5 rounded-[8px] px-2.5 py-1 font-semibold transition-colors duration-(--duration-fast) ${source === 'live' ? 'bg-surface-1 text-ink shadow-1' : 'text-ink-soft hover:text-ink'}`}
           title="Follow the market as it trades now. The clock is real time, so there is no play, step or speed."
         >
           <Radio size={12} /> Live
@@ -79,7 +80,7 @@ export function DataSourceBar() {
           <span className="flex items-center gap-1.5 font-semibold text-down">
             <AlertTriangle size={12} /> {realError}
           </span>
-          <button type="button" onClick={() => void loadReal()} className="btn-ghost px-2 py-0.5 text-[11px]">
+          <button type="button" onClick={() => void loadReal()} className="inline-flex h-6 items-center gap-1 rounded-control px-2 font-semibold text-ink-soft hover:bg-surface-2 hover:text-ink">
             <RefreshCw size={11} /> Retry
           </button>
         </span>
@@ -88,9 +89,9 @@ export function DataSourceBar() {
           <span>
             {realMeta.bars.toLocaleString()} real {timeframe} bars via {realMeta.source}
           </span>
-          {realMeta.cached && <span className="chip text-[10px]">cached</span>}
-          {realMeta.stale && <span className="chip border-warn/50 text-[10px] text-warn">stale, upstream unavailable</span>}
-          <button type="button" onClick={() => void loadReal()} className="btn-ghost px-2 py-0.5 text-[11px]">
+          {realMeta.cached && <span className={chipClass()}>cached</span>}
+          {realMeta.stale && <span className={chipClass({ tone: 'warn' })}>stale, upstream unavailable</span>}
+          <button type="button" onClick={() => void loadReal()} className="inline-flex h-6 items-center gap-1 rounded-control px-2 font-semibold text-ink-soft hover:bg-surface-2 hover:text-ink">
             <RefreshCw size={11} /> Refresh
           </button>
         </span>
@@ -99,7 +100,7 @@ export function DataSourceBar() {
       {source === 'live' && liveMeta && <LiveFreshness meta={liveMeta} />}
 
       {source !== 'synthetic' && (
-        <span className="ml-auto hidden text-[11px] text-ink-soft xl:inline">
+        <span className="ml-auto hidden text-caption text-ink-soft xl:inline">
           Switching source starts a fresh account: positions are priced against the market that created them.
         </span>
       )}
@@ -122,13 +123,13 @@ export function RealSymbolPicker() {
 
   if (realSymbols.length === 0) {
     return (
-      <span className="input flex items-center py-1 font-mono font-bold text-ink-soft" title="The data service has not returned an instrument list">
+      <span className="flex h-8 items-center rounded-control border border-line-strong bg-surface-1 px-2 font-mono text-mono font-semibold text-ink-soft" title="The data service has not returned an instrument list">
         {realSymbol}
       </span>
     );
   }
   return (
-    <select value={realSymbol} onChange={(e) => setRealSymbol(e.target.value)} className="input py-1 font-mono font-bold">
+    <select value={realSymbol} onChange={(e) => setRealSymbol(e.target.value)} className="h-8 rounded-control border border-line-strong bg-surface-1 px-2 font-mono text-mono font-semibold text-ink outline-none focus:border-accent">
       {realSymbols.map((s) => (
         <option key={s.symbol} value={s.symbol}>
           {s.symbol} · {s.name}
@@ -163,19 +164,19 @@ function LiveFreshness({ meta }: { meta: NonNullable<ReturnType<typeof useSim.ge
           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-up" /> Market open
         </span>
       ) : (
-        <span className="chip border-warn/50 text-[10px] text-warn">Market closed · nothing is moving</span>
+        <span className={chipClass({ tone: 'warn' })}>Market closed · nothing is moving</span>
       )}
       <span className="text-ink-soft">
         last price {age < 90 ? age + 's' : Math.round(age / 60) + 'm'} ago
       </span>
-      {delay === 0 && <span className="chip text-[10px]">real time</span>}
+      {delay === 0 && <span className={chipClass()}>real time</span>}
       {delay !== null && delay > 0 && (
-        <span className="chip border-warn/50 text-[10px] text-warn" title="Set from what this instrument class was measured at, not from a guarantee.">
+        <span className={chipClass({ tone: 'warn' })} title="Set from what this instrument class was measured at, not from a guarantee.">
           delayed ~{Math.round(delay / 60)} min
         </span>
       )}
-      {delay === null && <span className="chip text-[10px]">delay unknown</span>}
-      {!meta.forming && meta.marketOpen && <span className="chip text-[10px]">waiting for the next bar</span>}
+      {delay === null && <span className={chipClass()}>delay unknown</span>}
+      {!meta.forming && meta.marketOpen && <span className={chipClass()}>waiting for the next bar</span>}
     </span>
   );
 }

@@ -32,7 +32,7 @@ import * as broker from '@/engine/broker/broker';
 import * as stats from '@/engine/broker/stats';
 import { Rng, shuffled } from '@/lib/rng';
 import { csvCell, toCsv } from '@/lib/csv';
-import { defaultQty } from '@/lib/sizing';
+import { defaultQty, riskQty, valueQty, ticketIssues } from '@/lib/sizing';
 import { migrateStorage, LEGACY_KEYS, STORAGE_KEYS } from '@/lib/storageKeys';
 import * as color from '@/lib/color';
 import { parseTokens, resolve as resolveToken } from '@/lib/tokens';
@@ -50,7 +50,7 @@ import { DEFAULT_SEED, START_CURSOR } from '@/lib/simDefaults';
 import { slugify, textOf } from '@/lib/slug';
 import { buildSitemap, buildRobots, sitePaths } from '@/lib/sitemap';
 import { rehypeHeadingIds } from '@/lib/rehypeHeadingIds';
-export { slugify, textOf, buildSitemap, buildRobots, sitePaths, rehypeHeadingIds, parseFlags, FLAG_DEFAULTS, translate, en, curriculum, computeSnapshot, DEFAULT_SEED, START_CURSOR, color, parseTokens, resolveToken, broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, migrateStorage, LEGACY_KEYS, STORAGE_KEYS, resolveDataApi, Market, RealFeed, SYMBOLS, SYMBOL_MAP, aggregate, bucketStart, nextSessionMinute, minuteOfSession, ind };
+export { slugify, textOf, buildSitemap, buildRobots, sitePaths, rehypeHeadingIds, parseFlags, FLAG_DEFAULTS, translate, en, curriculum, computeSnapshot, DEFAULT_SEED, START_CURSOR, color, parseTokens, resolveToken, broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, riskQty, valueQty, ticketIssues, migrateStorage, LEGACY_KEYS, STORAGE_KEYS, resolveDataApi, Market, RealFeed, SYMBOLS, SYMBOL_MAP, aggregate, bucketStart, nextSessionMinute, minuteOfSession, ind };
 `,
 );
 
@@ -61,7 +61,7 @@ execSync(
 );
 
 const M = await import(pathToFileURL(bundle).href);
-const { slugify, textOf, buildSitemap, buildRobots, sitePaths, rehypeHeadingIds, parseFlags, FLAG_DEFAULTS, translate, en, curriculum, computeSnapshot, DEFAULT_SEED, START_CURSOR, color, parseTokens, resolveToken, broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, migrateStorage, LEGACY_KEYS, STORAGE_KEYS, resolveDataApi, Market, RealFeed, SYMBOLS, ind } = M;
+const { slugify, textOf, buildSitemap, buildRobots, sitePaths, rehypeHeadingIds, parseFlags, FLAG_DEFAULTS, translate, en, curriculum, computeSnapshot, DEFAULT_SEED, START_CURSOR, color, parseTokens, resolveToken, broker, stats, Rng, shuffled, csvCell, toCsv, defaultQty, riskQty, valueQty, ticketIssues, migrateStorage, LEGACY_KEYS, STORAGE_KEYS, resolveDataApi, Market, RealFeed, SYMBOLS, ind } = M;
 
 let pass = 0;
 let fail = 0;
@@ -451,6 +451,25 @@ const near = (a, b, eps = 1e-6) => Math.abs(a - b) < eps;
   check('survives a nonsense price', defaultQty(0, EQ) === 1 && defaultQty(-5, EQ) === 1 && defaultQty(NaN, EQ) === 1);
   check('survives a nonsense account', defaultQty(100, 0) === 1 && defaultQty(100, NaN) === 1);
   check('scales with the account, not just the price', defaultQty(147, 1000000) > defaultQty(147, 100000));
+
+  // The ticket's size presets.
+  check('1% risk with a $2 stop on $100k is 500 units', riskQty(EQ, 1, 2) === 500);
+  check('risk sizing rounds down, never up', riskQty(EQ, 1, 3) === 333);
+  check('risk sizing without a stop is zero', riskQty(EQ, 1, 0) === 0 && riskQty(EQ, 1, NaN) === 0);
+  check('value sizing: 25% of $100k at $147 is 170 units', valueQty(EQ, 25, 147) === 170);
+  check('value sizing on a nonsense price is zero', valueQty(EQ, 25, 0) === 0);
+
+  const base = { side: 'buy', type: 'market', qty: 100, price: 50, limitPrice: 50, stopPrice: 50, entry: 50, buyingPower: 10000, held: 0, bracket: true, riskPct: 1 };
+  const codes = (o) => ticketIssues({ ...base, ...o }).map((i) => i.code).join(',');
+  check('a sane order has no issues', codes({}) === '', codes({}));
+  check('zero size is an error', codes({ qty: 0 }).includes('qty'));
+  check('an order larger than buying power is an error', codes({ qty: 300 }) === 'buyingPower');
+  check('closing a position needs no buying power', codes({ side: 'sell', qty: 300, held: 300, buyingPower: 0 }) === '');
+  check('flipping needs buying power only for the new side', codes({ side: 'sell', qty: 500, held: 300, buyingPower: 9000 }) === 'buyingPower' && codes({ side: 'sell', qty: 400, held: 300, buyingPower: 9000 }) === '');
+  check('a buy stop below the market is flagged', codes({ type: 'stop', stopPrice: 49 }) === 'stopSide');
+  check('a buy limit above the market is flagged', codes({ type: 'limit', limitPrice: 51 }) === 'limitCross');
+  check('no stop is a warning, not an error', ticketIssues({ ...base, bracket: false }).every((i) => i.level === 'warn'));
+  check('more than 2% at risk is a warning', codes({ riskPct: 2.5 }) === 'risk');
 }
 
 // ---------------------------------------------------------------- real feed

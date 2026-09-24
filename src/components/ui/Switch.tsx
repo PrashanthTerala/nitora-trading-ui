@@ -13,8 +13,9 @@ export function Switch({ checked, onChange, label, className }: { checked: boole
       <span className={cx('relative h-5 w-9 shrink-0 rounded-full border transition-colors duration-(--duration-fast)', checked ? 'border-accent bg-accent' : 'border-line-strong bg-surface-2')}>
         <span
           className={cx(
-            'absolute top-0.5 h-3.5 w-3.5 rounded-full shadow-1 transition-transform duration-(--duration-fast) ease-standard',
-            checked ? 'translate-x-[1.125rem] bg-on-accent' : 'translate-x-0.5 bg-ink-soft',
+            // Anchored at left-0.5: an absolute box's static position is not dependable here.
+            'absolute left-0.5 top-0.5 h-3.5 w-3.5 rounded-full shadow-1 transition-[translate] duration-(--duration-fast) ease-standard',
+            checked ? 'translate-x-4 bg-on-accent' : 'translate-x-0 bg-ink-soft',
           )}
         />
       </span>

@@ -13,6 +13,7 @@
  *   public/art/modules/<id>-{dark,light}.webp         module cover, 1200x800
  *   public/art/modules/<id>-{dark,light}-600.webp     the same at 600x400, for cards
  *   public/art/og/<id>.jpg, og/default.jpg            1200x630 link previews (dark theme)
+ *   public/art/illustrations/<id>-{dark,light}.webp   empty states and the 404, 960x720 (and -480)
  *
  * The output is committed; run this again only when a scene changes.
  */
@@ -42,6 +43,9 @@ const MODULES = [
   'm11-derivatives-and-other-markets',
   'm12-becoming-consistent',
 ];
+
+/** Scenes drawn on the page background, for empty states and the 404. */
+const ILLUSTRATIONS = ['broken-candle', 'empty-journal'];
 
 async function launch() {
   for (const channel of ['msedge', 'chrome']) {
@@ -88,6 +92,19 @@ try {
         outputs: [
           [join(OUT, 'modules', `${id}-${theme}.webp`), 1200, 'image/webp', 0.86],
           [join(OUT, 'modules', `${id}-${theme}-600.webp`), 600, 'image/webp', 0.86],
+        ],
+      });
+    }
+    for (const id of ILLUSTRATIONS) {
+      if (only && !only.has(id)) continue;
+      await render(browser, id, {
+        theme,
+        frame: 'hero',
+        width: 960,
+        height: 720,
+        outputs: [
+          [join(OUT, 'illustrations', `${id}-${theme}.webp`), 960, 'image/webp', 0.86],
+          [join(OUT, 'illustrations', `${id}-${theme}-480.webp`), 480, 'image/webp', 0.86],
         ],
       });
     }

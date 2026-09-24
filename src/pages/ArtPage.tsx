@@ -15,6 +15,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { findModule, LEVELS } from '@/content/curriculum';
 import { cssColor } from '@/lib/cssColor';
 import { ArtCanvas } from '@/components/three/ArtCanvas';
+import { ILLUSTRATIONS } from '@/components/three/scenes';
 import { t } from '@/i18n';
 
 type Frame = 'cover' | 'hero' | 'og';
@@ -45,8 +46,9 @@ export function ArtPage() {
   const { id = 'hero' } = useParams();
   const [params] = useSearchParams();
   const dark = params.get('theme') !== 'light';
-  const frame = (params.get('frame') ?? (id === 'hero' ? 'hero' : 'cover')) as Frame;
-  const mod = id === 'hero' ? null : findModule(id);
+  const illustration = id in ILLUSTRATIONS;
+  const frame = (params.get('frame') ?? (id === 'hero' || illustration ? 'hero' : 'cover')) as Frame;
+  const mod = id === 'hero' || illustration ? null : findModule(id);
   const [themed, setThemed] = useState(false);
   const holder = useRef<HTMLDivElement>(null);
 

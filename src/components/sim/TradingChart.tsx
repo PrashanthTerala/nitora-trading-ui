@@ -5,14 +5,19 @@
  * The chart instance is created once and then fed incrementally. Data is rebuilt
  * with setData when the symbol or timeframe changes, and updated with update()
  * on every clock tick so the forming candle animates.
+ *
+ * Every colour is a design token: candles from up/down, indicator lines from the chart
+ * palette (colour-blind safe, never green or red), chrome from grid/line/ink. A theme change
+ * re-reads all of them and repaints, series included.
  */
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   createChart,
   CandlestickSeries,
   HistogramSeries,
   LineSeries,
   createSeriesMarkers,
+  createTextWatermark,
   LineStyle,
   CrosshairMode,
   type IChartApi,
@@ -20,6 +25,7 @@ import {
   type IPriceLine,
   type UTCTimestamp,
   type ISeriesMarkersPluginApi,
+  type ITextWatermarkPluginApi,
   type SeriesMarker,
   type Time,
 } from 'lightweight-charts';
@@ -28,7 +34,7 @@ import type { AccountState } from '@/engine/broker/types';
 import * as ind from '@/engine/market/indicators';
 import type { Overlays } from '@/store/sim';
 import { sessionDayStart } from '@/engine/market/generator';
-import { oklchToRgb, parseOklch, rgbToHex } from '@/lib/color';
+import { cssColor } from '@/lib/cssColor';
 
 interface Props {
   bars: Bar[];
@@ -42,18 +48,51 @@ interface Props {
 }
 
 /**
- * A theme colour as a six-digit hex string, for lightweight-charts.
- *
- * The tokens are authored in OKLCH, and the chart parses colours itself without understanding
- * oklch(): handed one, it throws and takes the whole simulator down. Hex specifically, not
- * rgb(), because the volume and MACD series append an alpha byte to the string (`up + '80'`).
+ * The chart's colours, read from the tokens as six-digit hex. lightweight-charts cannot parse
+ * oklch() (handed one, it throws and takes the simulator down), and hex specifically because
+ * the volume and MACD bars append an alpha byte to the string (`up + '80'`).
  */
-function cssVar(name: string, fallback: string) {
-  if (typeof window === 'undefined') return fallback;
-  const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-  if (!v) return fallback;
-  const oklch = parseOklch(v);
-  return oklch ? rgbToHex(oklchToRgb(oklch)) : v;
+function readColors() {
+  return {
+    text: cssColor('--color-ink-soft'),
+    muted: cssColor('--color-ink-muted'),
+    grid: cssColor('--color-grid'),
+    line: cssColor('--color-line'),
+    label: cssColor('--color-surface-3'),
+    up: cssColor('--color-up'),
+    down: cssColor('--color-down'),
+    accent: cssColor('--color-accent'),
+    ink: cssColor('--color-ink'),
+    c1: cssColor('--color-chart-1'),
+    c2: cssColor('--color-chart-2'),
+    c3: cssColor('--color-chart-3'),
+    c4: cssColor('--color-chart-4'),
+    c5: cssColor('--color-chart-5'),
+    c6: cssColor('--color-chart-6'),
+  };
+}
+type Colors = ReturnType<typeof readColors>;
+
+/** Which chart-palette colour each overlay takes. */
+const OVERLAY_TONE = { sma20: 'c1', sma50: 'c5', ema9: 'c2', ema21: 'c4', bbUpper: 'c6', bbMiddle: 'c6', bbLower: 'c6', vwap: 'c3' } as const;
+
+const monoFont = () => getComputedStyle(document.documentElement).getPropertyValue('--font-mono').trim() || 'ui-monospace, monospace';
+
+function chartChrome(c: Colors) {
+  return {
+    layout: { textColor: c.text, panes: { separatorColor: c.line, separatorHoverColor: c.label } },
+    grid: { vertLines: { color: c.grid }, horzLines: { color: c.grid } },
+    rightPriceScale: { borderColor: c.line },
+    timeScale: { borderColor: c.line },
+    crosshair: {
+      vertLine: { color: c.muted, labelBackgroundColor: c.label },
+      horzLine: { color: c.muted, labelBackgroundColor: c.label },
+    },
+  };
+}
+
+function candleColors(c: Colors) {
+  return { upColor: c.up, downColor: c.down, borderUpColor: c.up, borderDownColor: c.down, wickUpColor: c.up, wickDownColor: c.down };
 }
 
 export function TradingChart({ bars, symbol, timeframe, overlays, account, decimals, clock }: Props) {
@@ -69,41 +108,48 @@ export function TradingChart({ bars, symbol, timeframe, overlays, account, decim
   const prevLastTimeRef = useRef(0);
   /** Bar count of the last render, to tell a normal tick from a replaced series. */
   const prevLenRef = useRef(0);
-  const themeRef = useRef('');
+  const watermarkRef = useRef<ITextWatermarkPluginApi<Time> | null>(null);
+  const colorsRef = useRef<Colors | null>(null);
+  const [theme, setTheme] = useState(() => (document.documentElement.classList.contains('dark') ? 'dark' : 'light'));
 
   // create chart once
   useEffect(() => {
     if (!containerRef.current) return;
+    const c = readColors();
+    colorsRef.current = c;
     const chart = createChart(containerRef.current, {
       autoSize: true,
       layout: {
         background: { color: 'transparent' },
-        textColor: cssVar('--color-ink-soft', '#94a0b8'),
-        fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+        textColor: c.text,
+        fontFamily: monoFont(),
         fontSize: 11,
         attributionLogo: false,
+        panes: { separatorColor: c.line, separatorHoverColor: c.label },
       },
-      grid: {
-        vertLines: { color: cssVar('--color-grid', '#1b2435') },
-        horzLines: { color: cssVar('--color-grid', '#1b2435') },
+      grid: { vertLines: { color: c.grid }, horzLines: { color: c.grid } },
+      crosshair: {
+        mode: CrosshairMode.Normal,
+        vertLine: { color: c.muted, labelBackgroundColor: c.label },
+        horzLine: { color: c.muted, labelBackgroundColor: c.label },
       },
-      crosshair: { mode: CrosshairMode.Normal },
-      rightPriceScale: { borderColor: cssVar('--color-line', '#263044'), scaleMargins: { top: 0.08, bottom: 0.08 } },
-      timeScale: { borderColor: cssVar('--color-line', '#263044'), timeVisible: true, secondsVisible: false, rightOffset: 6, barSpacing: 8 },
+      // Fewer, better-spaced price labels than the default density.
+      rightPriceScale: { borderColor: c.line, scaleMargins: { top: 0.08, bottom: 0.08 }, tickMarkDensity: 3.2 },
+      timeScale: { borderColor: c.line, timeVisible: true, secondsVisible: false, rightOffset: 6, barSpacing: 8 },
       localization: { priceFormatter: (p: number) => p.toFixed(decimals) },
+      hoveredSeriesOnTop: true,
     });
     chartRef.current = chart;
     const candles = chart.addSeries(CandlestickSeries, {
-      upColor: cssVar('--color-up', '#22c55e'),
-      downColor: cssVar('--color-down', '#ef4444'),
-      borderUpColor: cssVar('--color-up', '#22c55e'),
-      borderDownColor: cssVar('--color-down', '#ef4444'),
-      wickUpColor: cssVar('--color-up', '#22c55e'),
-      wickDownColor: cssVar('--color-down', '#ef4444'),
+      ...candleColors(c),
+      // The last price, as a line across the chart and a label on the scale.
+      priceLineVisible: true,
+      lastValueVisible: true,
       priceFormat: { type: 'price', precision: decimals, minMove: 1 / 10 ** decimals },
     });
     candleRef.current = candles;
     markersRef.current = createSeriesMarkers(candles, []);
+    watermarkRef.current = createTextWatermark(chart.panes()[0], { horzAlign: 'center', vertAlign: 'center', lines: [] });
     return () => {
       chart.remove();
       chartRef.current = null;
@@ -113,6 +159,7 @@ export function TradingChart({ bars, symbol, timeframe, overlays, account, decim
       paneRefs.current = {};
       priceLinesRef.current = [];
       markersRef.current = null;
+      watermarkRef.current = null;
       lastKeyRef.current = '';
       prevLastTimeRef.current = 0;
       prevLenRef.current = 0;
@@ -120,23 +167,36 @@ export function TradingChart({ bars, symbol, timeframe, overlays, account, decim
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // react to theme changes
+  // A theme change re-reads every colour: chrome and candles here, and everything drawn per
+  // bar (volume, MACD) or per series (overlays, panes) through `theme` in their effects.
   useEffect(() => {
     const obs = new MutationObserver(() => {
-      const isDark = document.documentElement.classList.contains('dark');
-      const key = isDark ? 'dark' : 'light';
-      if (key === themeRef.current) return;
-      themeRef.current = key;
-      chartRef.current?.applyOptions({
-        layout: { textColor: cssVar('--color-ink-soft', '#94a0b8') },
-        grid: { vertLines: { color: cssVar('--color-grid', '#1b2435') }, horzLines: { color: cssVar('--color-grid', '#1b2435') } },
-        rightPriceScale: { borderColor: cssVar('--color-line', '#263044') },
-        timeScale: { borderColor: cssVar('--color-line', '#263044') },
+      const key = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+      setTheme((prev) => {
+        if (prev === key) return prev;
+        const c = readColors();
+        colorsRef.current = c;
+        chartRef.current?.applyOptions(chartChrome(c));
+        candleRef.current?.applyOptions(candleColors(c));
+        lastKeyRef.current = '';
+        return key;
       });
     });
     obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
     return () => obs.disconnect();
   }, []);
+
+  // The symbol and timeframe, faintly, behind the candles.
+  useEffect(() => {
+    const c = colorsRef.current;
+    if (!c) return;
+    watermarkRef.current?.applyOptions({
+      lines: [
+        { text: symbol, color: `${c.ink}0f`, fontSize: 56, fontStyle: '700', fontFamily: monoFont() },
+        { text: timeframe, color: `${c.ink}0f`, fontSize: 22, fontFamily: monoFont() },
+      ],
+    });
+  }, [symbol, timeframe, theme]);
 
   // price precision follows the symbol
   useEffect(() => {
@@ -151,7 +211,8 @@ export function TradingChart({ bars, symbol, timeframe, overlays, account, decim
    */
   useEffect(() => {
     const chart = chartRef.current;
-    if (!chart) return;
+    const c = colorsRef.current;
+    if (!chart || !c) return;
     if (volRef.current) {
       chart.removeSeries(volRef.current);
       volRef.current = null;
@@ -166,49 +227,53 @@ export function TradingChart({ bars, symbol, timeframe, overlays, account, decim
       pane++;
     }
     if (overlays.rsi) {
-      paneRefs.current.rsi = chart.addSeries(LineSeries, { color: '#a855f7', lineWidth: 2, priceLineVisible: false }, pane);
+      paneRefs.current.rsi = chart.addSeries(LineSeries, { color: c.c3, lineWidth: 2, priceLineVisible: false }, pane);
       chart.panes()[pane]?.setHeight(92);
       pane++;
     }
     if (overlays.macd) {
       paneRefs.current.macdHist = chart.addSeries(HistogramSeries, { priceLineVisible: false, lastValueVisible: false }, pane);
-      paneRefs.current.macdLine = chart.addSeries(LineSeries, { color: '#3b82f6', lineWidth: 2, priceLineVisible: false }, pane);
-      paneRefs.current.macdSignal = chart.addSeries(LineSeries, { color: '#f59e0b', lineWidth: 1, priceLineVisible: false, lastValueVisible: false }, pane);
+      paneRefs.current.macdLine = chart.addSeries(LineSeries, { color: c.c1, lineWidth: 2, priceLineVisible: false }, pane);
+      paneRefs.current.macdSignal = chart.addSeries(LineSeries, { color: c.c2, lineWidth: 1, priceLineVisible: false, lastValueVisible: false }, pane);
       chart.panes()[pane]?.setHeight(92);
       pane++;
     }
     lastKeyRef.current = '';
-  }, [overlays.volume, overlays.rsi, overlays.macd]);
+  }, [overlays.volume, overlays.rsi, overlays.macd, theme]);
 
   // overlay lines
   useEffect(() => {
     const chart = chartRef.current;
-    if (!chart) return;
-    const defs: Record<string, { on: boolean; color: string; dashed?: boolean }> = {
-      sma20: { on: overlays.sma20, color: '#3b82f6' },
-      sma50: { on: overlays.sma50, color: '#8b5cf6' },
-      ema9: { on: overlays.ema9, color: '#f59e0b' },
-      ema21: { on: overlays.ema21, color: '#14b8a6' },
-      bbUpper: { on: overlays.bb, color: '#64748b', dashed: true },
-      bbMiddle: { on: overlays.bb, color: '#64748b', dashed: true },
-      bbLower: { on: overlays.bb, color: '#64748b', dashed: true },
-      vwap: { on: overlays.vwap, color: '#ec4899' },
+    const c = colorsRef.current;
+    if (!chart || !c) return;
+    const on: Record<keyof typeof OVERLAY_TONE, boolean> = {
+      sma20: overlays.sma20,
+      sma50: overlays.sma50,
+      ema9: overlays.ema9,
+      ema21: overlays.ema21,
+      bbUpper: overlays.bb,
+      bbMiddle: overlays.bb,
+      bbLower: overlays.bb,
+      vwap: overlays.vwap,
     };
-    for (const [k, d] of Object.entries(defs)) {
-      const has = !!overlayRefs.current[k];
-      if (d.on && !has) {
+    for (const k of Object.keys(OVERLAY_TONE) as (keyof typeof OVERLAY_TONE)[]) {
+      const color = c[OVERLAY_TONE[k]];
+      const has = overlayRefs.current[k];
+      if (on[k] && !has) {
         overlayRefs.current[k] = chart.addSeries(
           LineSeries,
-          { color: d.color, lineWidth: 1, lineStyle: d.dashed ? LineStyle.Dashed : LineStyle.Solid, priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false },
+          { color, lineWidth: 1, lineStyle: k.startsWith('bb') ? LineStyle.Dashed : LineStyle.Solid, priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false },
           0,
         );
-      } else if (!d.on && has) {
-        chart.removeSeries(overlayRefs.current[k]);
+      } else if (!on[k] && has) {
+        chart.removeSeries(has);
         delete overlayRefs.current[k];
+      } else if (has) {
+        has.applyOptions({ color });
       }
     }
     lastKeyRef.current = '';
-  }, [overlays.sma20, overlays.sma50, overlays.ema9, overlays.ema21, overlays.bb, overlays.vwap]);
+  }, [overlays.sma20, overlays.sma50, overlays.ema9, overlays.ema21, overlays.bb, overlays.vwap, theme]);
 
   // data: full reset when symbol/timeframe changes, incremental otherwise
   useEffect(() => {
@@ -254,9 +319,10 @@ export function TradingChart({ bars, symbol, timeframe, overlays, account, decim
     prevLastTimeRef.current = lastTime;
     prevLenRef.current = bars.length;
 
-    if (volRef.current) {
-      const up = cssVar('--color-up', '#22c55e');
-      const dn = cssVar('--color-down', '#ef4444');
+    const colors = colorsRef.current;
+    if (volRef.current && colors) {
+      const up = colors.up;
+      const dn = colors.down;
       const toVol = (b: Bar) => ({ time: b.time as UTCTimestamp, value: b.volume, color: (b.close >= b.open ? up : dn) + '80' });
       if (full) volRef.current.setData(bars.map(toVol));
       else volRef.current.update(toVol(bars[bars.length - 1]));
@@ -307,10 +373,10 @@ export function TradingChart({ bars, symbol, timeframe, overlays, account, decim
       const r = ind.rsi(closes, 14);
       s.setData(r.map((v, i) => ({ time: t(i), value: v })).filter((d) => Number.isFinite(d.value)));
     }
-    if (paneRefs.current.macdLine) {
+    if (paneRefs.current.macdLine && colors) {
       const m = ind.macd(closes);
-      const up = cssVar('--color-up', '#22c55e');
-      const dn = cssVar('--color-down', '#ef4444');
+      const up = colors.up;
+      const dn = colors.down;
       (paneRefs.current.macdLine as ISeriesApi<'Line'>).setData(m.line.map((v, i) => ({ time: t(i), value: v })).filter((d) => Number.isFinite(d.value)));
       if (paneRefs.current.macdSignal) (paneRefs.current.macdSignal as ISeriesApi<'Line'>).setData(m.signal.map((v, i) => ({ time: t(i), value: v })).filter((d) => Number.isFinite(d.value)));
       if (paneRefs.current.macdHist)
@@ -318,12 +384,13 @@ export function TradingChart({ bars, symbol, timeframe, overlays, account, decim
           m.histogram.map((v, i) => ({ time: t(i), value: v, color: (v >= 0 ? up : dn) + '99' })).filter((d) => Number.isFinite(d.value)),
         );
     }
-  }, [bars, symbol, timeframe, clock, overlays]);
+  }, [bars, symbol, timeframe, clock, overlays, theme]);
 
   // price lines for position, orders and brackets + entry markers
   useEffect(() => {
     const candles = candleRef.current;
-    if (!candles) return;
+    const c = colorsRef.current;
+    if (!candles || !c) return;
     for (const pl of priceLinesRef.current) candles.removePriceLine(pl);
     priceLinesRef.current = [];
 
@@ -332,7 +399,7 @@ export function TradingChart({ bars, symbol, timeframe, overlays, account, decim
       priceLinesRef.current.push(
         candles.createPriceLine({
           price: pos.avgPrice,
-          color: cssVar('--color-accent', '#60a5fa'),
+          color: c.accent,
           lineWidth: 2,
           lineStyle: LineStyle.Solid,
           axisLabelVisible: true,
@@ -349,7 +416,7 @@ export function TradingChart({ bars, symbol, timeframe, overlays, account, decim
       priceLinesRef.current.push(
         candles.createPriceLine({
           price,
-          color: isStopLoss ? cssVar('--color-down', '#ef4444') : isTp ? cssVar('--color-up', '#22c55e') : cssVar('--color-ink-soft', '#94a0b8'),
+          color: isStopLoss ? c.down : isTp ? c.up : c.text,
           lineWidth: 1,
           lineStyle: LineStyle.Dashed,
           axisLabelVisible: true,
@@ -366,7 +433,7 @@ export function TradingChart({ bars, symbol, timeframe, overlays, account, decim
       .map((f) => ({
         time: alignToBar(f.time, bars) as Time,
         position: f.side === 'buy' ? ('belowBar' as const) : ('aboveBar' as const),
-        color: f.side === 'buy' ? cssVar('--color-up', '#22c55e') : cssVar('--color-down', '#ef4444'),
+        color: f.side === 'buy' ? c.up : c.down,
         shape: f.side === 'buy' ? ('arrowUp' as const) : ('arrowDown' as const),
         text: `${f.side === 'buy' ? 'B' : 'S'} ${f.qty}`,
       }));
@@ -381,7 +448,7 @@ export function TradingChart({ bars, symbol, timeframe, overlays, account, decim
       })
       .sort((a, b) => (a.time as number) - (b.time as number));
     markersRef.current?.setMarkers(clean);
-  }, [account, symbol, bars]);
+  }, [account, symbol, bars, theme]);
 
   return <div ref={containerRef} className="tv-chart" />;
 }

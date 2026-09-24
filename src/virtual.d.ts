@@ -10,3 +10,12 @@ declare module 'virtual:lesson-excerpt' {
   };
   export default excerpt;
 }
+
+/** See contentIndex() in vite.config.ts. Values are lesson paths, in curriculum order. */
+declare module 'virtual:content-index' {
+  const index: {
+    patterns: Record<string, string[]>;
+    terms: Record<string, string[]>;
+  };
+  export default index;
+}

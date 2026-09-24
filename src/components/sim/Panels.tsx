@@ -1,9 +1,13 @@
-import { useMemo, useState } from 'react';
-import { X, TrendingUp, TrendingDown } from 'lucide-react';
+import { useMemo, useState, type ReactNode } from 'react';
+import { X, TrendingUp, TrendingDown, Inbox } from 'lucide-react';
 import { useSim, specOf } from '@/store/sim';
 import { unrealized } from '@/engine/broker/broker';
-import { fmtMoney } from './OrderTicket';
+import { fmtMoney, fmtUsd } from './OrderTicket';
 import type { AccountState } from '@/engine/broker/types';
+import { AnimatedNumber } from '@/components/ui/AnimatedNumber';
+import { chipClass } from '@/components/ui/Chip';
+import { cx } from '@/components/ui/cx';
+import { t } from '@/i18n';
 
 export function PositionsPanel({ prices }: { prices: Record<string, number> }) {
   const account = useSim((s) => s.account);
@@ -17,8 +21,8 @@ export function PositionsPanel({ prices }: { prices: Record<string, number> }) {
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-xs">
-        <thead className="sticky top-0 bg-panel text-left text-[10px] uppercase tracking-wide text-ink-soft">
+      <table className="w-full text-body-sm">
+        <thead className="sticky top-0 z-10 bg-surface-2 text-left text-caption font-semibold uppercase tracking-wide text-ink-soft">
           <tr>
             <th className="px-3 py-2">Symbol</th>
             <th className="px-2 py-2">Side</th>
@@ -41,7 +45,7 @@ export function PositionsPanel({ prices }: { prices: Record<string, number> }) {
             const tpOrder = account.orders.find((o) => o.id === p.tpOrderId && o.status === 'working');
             const rNow = p.initialRiskPerUnit && p.initialRiskPerUnit > 0 ? pnl / (p.initialRiskPerUnit * Math.abs(p.qty)) : null;
             return (
-              <tr key={p.symbol} className="border-t border-line hover:bg-panel/60">
+              <tr key={p.symbol} className="border-t border-line-subtle hover:bg-surface-2">
                 <td className="px-3 py-2">
                   <button type="button" className="font-mono font-bold hover:text-accent" onClick={() => setSymbol(p.symbol)}>
                     {p.symbol}
@@ -59,7 +63,7 @@ export function PositionsPanel({ prices }: { prices: Record<string, number> }) {
                 <td className={`px-2 py-2 text-right font-mono font-bold ${pnl >= 0 ? 'text-up' : 'text-down'}`}>
                   {pnl >= 0 ? '+' : ''}
                   {fmtMoney(pnl)}
-                  <span className="block text-[10px] font-normal opacity-70">
+                  <span className="block text-caption font-normal opacity-80">
                     {pct >= 0 ? '+' : ''}
                     {pct.toFixed(2)}%{rNow !== null && ` · ${rNow >= 0 ? '+' : ''}${rNow.toFixed(2)}R`}
                   </span>
@@ -89,7 +93,7 @@ export function PositionsPanel({ prices }: { prices: Record<string, number> }) {
                   }}
                 />
                 <td className="px-2 py-2 text-right">
-                  <button type="button" onClick={() => closePosition(p.symbol)} className="rounded border border-line px-2 py-0.5 text-[11px] font-semibold hover:border-down hover:text-down">
+                  <button type="button" onClick={() => closePosition(p.symbol)} className="h-7 rounded-control border border-line-strong px-2.5 text-caption font-semibold text-ink-soft transition-colors duration-(--duration-fast) hover:border-down hover:text-down">
                     Close
                   </button>
                 </td>
@@ -131,7 +135,7 @@ function PriceCell({
             if (e.key === 'Enter') onCommit();
             if (e.key === 'Escape') onChange('');
           }}
-          className="w-20 rounded border border-accent bg-surface px-1 py-0.5 text-right font-mono text-xs"
+          className="h-7 w-24 rounded-control border border-accent bg-surface-1 px-1.5 text-right font-mono text-mono-sm"
         />
       ) : (
         <button type="button" onClick={onStart} className={`font-mono hover:underline ${order ? (tone === 'up' ? 'text-up' : 'text-down') : 'text-ink-soft'}`}>
@@ -148,8 +152,8 @@ export function OrdersPanel() {
   const working = account.orders.filter((o) => o.status === 'working');
   if (working.length === 0) return <Empty text="No working orders. Limit and stop orders wait here until price reaches them." />;
   return (
-    <table className="w-full text-xs">
-      <thead className="sticky top-0 bg-panel text-left text-[10px] uppercase tracking-wide text-ink-soft">
+    <table className="w-full text-body-sm">
+      <thead className="sticky top-0 z-10 bg-surface-2 text-left text-caption font-semibold uppercase tracking-wide text-ink-soft">
         <tr>
           <th className="px-3 py-2">Symbol</th>
           <th className="px-2 py-2">Side</th>
@@ -165,19 +169,19 @@ export function OrdersPanel() {
         {working.map((o) => {
           const dp = specOf(o.symbol)?.decimals ?? 2;
           return (
-            <tr key={o.id} className="border-t border-line">
+            <tr key={o.id} className="border-t border-line-subtle hover:bg-surface-2">
               <td className="px-3 py-2 font-mono font-bold">{o.symbol}</td>
               <td className={`px-2 py-2 font-semibold ${o.side === 'buy' ? 'text-up' : 'text-down'}`}>{o.side}</td>
               <td className="px-2 py-2">
                 {o.type.replace('_', '-')}
-                {o.role && o.role !== 'entry' && <span className="ml-1 chip text-[9px]">{o.role.replace('_', ' ')}</span>}
+                {o.role && o.role !== 'entry' && <span className={chipClass({ tone: o.role === 'stop_loss' ? 'down' : o.role === 'take_profit' ? 'up' : 'neutral' }, 'ml-1.5')}>{o.role.replace('_', ' ')}</span>}
               </td>
               <td className="px-2 py-2 text-right font-mono">{o.qty}</td>
               <td className="px-2 py-2 text-right font-mono">{o.stopPrice?.toFixed(dp) ?? '—'}</td>
               <td className="px-2 py-2 text-right font-mono">{o.limitPrice?.toFixed(dp) ?? '—'}</td>
               <td className="px-2 py-2 text-ink-soft">{o.tif}</td>
               <td className="px-2 py-2 text-right">
-                <button type="button" onClick={() => cancelOrder(o.id)} className="rounded p-1 text-ink-soft hover:text-down" title="Cancel">
+                <button type="button" onClick={() => cancelOrder(o.id)} className="rounded-control p-1.5 text-ink-soft hover:bg-down-soft hover:text-down" title="Cancel" aria-label="Cancel order">
                   <X size={13} />
                 </button>
               </td>
@@ -194,8 +198,8 @@ export function HistoryPanel() {
   const trades = [...account.trades].reverse().slice(0, 100);
   if (trades.length === 0) return <Empty text="Closed trades appear here, and in the Journal with full statistics." />;
   return (
-    <table className="w-full text-xs">
-      <thead className="sticky top-0 bg-panel text-left text-[10px] uppercase tracking-wide text-ink-soft">
+    <table className="w-full text-body-sm">
+      <thead className="sticky top-0 z-10 bg-surface-2 text-left text-caption font-semibold uppercase tracking-wide text-ink-soft">
         <tr>
           <th className="px-3 py-2">Symbol</th>
           <th className="px-2 py-2">Side</th>
@@ -211,7 +215,7 @@ export function HistoryPanel() {
         {trades.map((t) => {
           const dp = specOf(t.symbol)?.decimals ?? 2;
           return (
-            <tr key={t.id} className="border-t border-line">
+            <tr key={t.id} className="border-t border-line-subtle hover:bg-surface-2">
               <td className="px-3 py-2 font-mono font-bold">{t.symbol}</td>
               <td className={`px-2 py-2 font-semibold ${t.direction === 'long' ? 'text-up' : 'text-down'}`}>{t.direction}</td>
               <td className="px-2 py-2 text-right font-mono">{t.qty}</td>
@@ -236,11 +240,11 @@ export function EventsPanel() {
   const events = [...account.events].reverse().slice(0, 80);
   if (events.length === 0) return <Empty text="Fills, rejections and margin calls are logged here." />;
   return (
-    <ul className="divide-y divide-line text-xs">
+    <ul className="divide-y divide-line-subtle text-body-sm">
       {events.map((e) => (
         <li key={e.id} className="flex items-start gap-2 px-3 py-1.5">
           <span
-            className={`mt-1 h-1.5 w-1.5 shrink-0 rounded-full ${e.kind === 'fill' ? 'bg-accent' : e.kind === 'reject' ? 'bg-down' : e.kind === 'margin_call' ? 'bg-down' : 'bg-ink-soft'}`}
+            className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${e.kind === 'fill' ? 'bg-accent' : e.kind === 'reject' ? 'bg-down' : e.kind === 'margin_call' ? 'bg-down' : 'bg-ink-soft'}`}
           />
           <span className={e.kind === 'margin_call' ? 'font-bold text-down' : e.kind === 'reject' ? 'text-down' : ''}>{e.text}</span>
         </li>
@@ -249,7 +253,12 @@ export function EventsPanel() {
   );
 }
 
-export function AccountBar({ prices, account }: { prices: Record<string, number>; account: AccountState }) {
+/**
+ * The account at a glance: every figure a mono readout that springs to its new value and
+ * flashes the direction it moved. Day P&L is measured from the last equity reading before
+ * the current bar's UTC day began (or from the starting cash, on an account's first day).
+ */
+export function AccountBar({ prices, account, time }: { prices: Record<string, number>; account: AccountState; time: number }) {
   const stats = useMemo(() => {
     let eq = account.cash;
     let open = 0;
@@ -262,32 +271,61 @@ export function AccountBar({ prices, account }: { prices: Record<string, number>
     }
     const start = account.settings.startingCash;
     const dd = account.peakEquity > 0 ? ((account.peakEquity - eq) / account.peakEquity) * 100 : 0;
-    return { eq, open, gross, pnl: eq - start, pnlPct: ((eq - start) / start) * 100, dd, used: gross / (eq * account.settings.leverage || 1) };
-  }, [account, prices]);
+    const lev = account.settings.leverage || 1;
+    const margin = gross / lev;
+    const dayStart = Math.floor(time / 86400) * 86400;
+    let base = start;
+    for (const pt of account.equityCurve) {
+      if (pt.time >= dayStart) break;
+      base = pt.equity;
+    }
+    return { eq, open, gross, margin, marginPct: eq > 0 ? (margin / eq) * 100 : 0, day: eq - base, pnl: eq - start, pnlPct: ((eq - start) / start) * 100, dd };
+  }, [account, prices, time]);
 
+  const signed = (v: number) => `${v >= 0 ? '+' : ''}${fmtMoney(v)}`;
   return (
-    <div className="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs">
-      <Metric label="Equity" value={`$${fmtMoney(stats.eq)}`} strong />
-      <Metric label="Cash" value={`$${fmtMoney(account.cash)}`} />
-      <Metric label="Open P&L" value={`${stats.open >= 0 ? '+' : ''}${fmtMoney(stats.open)}`} tone={stats.open >= 0 ? 'up' : 'down'} />
-      <Metric label="Total P&L" value={`${stats.pnl >= 0 ? '+' : ''}${fmtMoney(stats.pnl)} (${stats.pnlPct >= 0 ? '+' : ''}${stats.pnlPct.toFixed(2)}%)`} tone={stats.pnl >= 0 ? 'up' : 'down'} />
-      <Metric label="Exposure" value={`$${fmtMoney(stats.gross)}`} tone={stats.used > 0.9 ? 'down' : undefined} />
-      <Metric label="Drawdown" value={`${stats.dd.toFixed(1)}%`} tone={stats.dd > 20 ? 'down' : stats.dd > 10 ? 'warn' : undefined} />
-      <Metric label="Trades" value={String(account.trades.length)} />
+    <dl aria-label={t('sim.account.label')} className="flex flex-wrap items-baseline gap-x-6 gap-y-1">
+      <Metric label={t('sim.account.equity')} strong>
+        <AnimatedNumber value={stats.eq} format={fmtUsd} />
+      </Metric>
+      <Metric label={t('sim.account.cash')}>
+        <AnimatedNumber value={account.cash} format={fmtUsd} />
+      </Metric>
+      <Metric label={t('sim.account.margin')} tone={stats.marginPct > 90 ? 'down' : stats.marginPct > 60 ? 'warn' : undefined}>
+        <AnimatedNumber value={stats.margin} format={fmtUsd} flash={false} />
+      </Metric>
+      <Metric label={t('sim.account.day')} tone={stats.day > 0 ? 'up' : stats.day < 0 ? 'down' : undefined}>
+        <AnimatedNumber value={stats.day} format={signed} />
+      </Metric>
+      <Metric label={t('sim.account.open')} tone={stats.open > 0 ? 'up' : stats.open < 0 ? 'down' : undefined}>
+        <AnimatedNumber value={stats.open} format={signed} />
+      </Metric>
+      <Metric label={t('sim.account.total')} tone={stats.pnl > 0 ? 'up' : stats.pnl < 0 ? 'down' : undefined}>
+        <AnimatedNumber value={stats.pnlPct} format={(v) => `${v >= 0 ? '+' : ''}${v.toFixed(2)}%`} flash={false} />
+      </Metric>
+      <Metric label={t('sim.account.drawdown')} tone={stats.dd > 20 ? 'down' : stats.dd > 10 ? 'warn' : undefined}>
+        {`${stats.dd.toFixed(1)}%`}
+      </Metric>
+      <Metric label={t('sim.account.trades')}>{String(account.trades.length)}</Metric>
+    </dl>
+  );
+}
+
+function Metric({ label, children, tone, strong }: { label: string; children: ReactNode; tone?: 'up' | 'down' | 'warn'; strong?: boolean }) {
+  const cls = tone === 'up' ? 'text-up' : tone === 'down' ? 'text-down' : tone === 'warn' ? 'text-warn' : 'text-ink';
+  return (
+    <div className="flex items-baseline gap-1.5">
+      <dt className="text-caption text-ink-soft">{label}</dt>
+      <dd className={cx('font-mono tabular-nums', strong ? 'text-mono-lg font-semibold' : 'text-mono font-medium', cls)}>{children}</dd>
     </div>
   );
 }
 
-function Metric({ label, value, tone, strong }: { label: string; value: string; tone?: 'up' | 'down' | 'warn'; strong?: boolean }) {
-  const cls = tone === 'up' ? 'text-up' : tone === 'down' ? 'text-down' : tone === 'warn' ? 'text-warn' : 'text-ink';
-  return (
-    <span className="flex items-baseline gap-1.5">
-      <span className="text-[10px] uppercase tracking-wide text-ink-soft">{label}</span>
-      <span className={`font-mono ${strong ? 'text-sm font-bold' : 'font-semibold'} ${cls}`}>{value}</span>
-    </span>
-  );
-}
-
 function Empty({ text }: { text: string }) {
-  return <p className="px-4 py-8 text-center text-xs text-ink-soft">{text}</p>;
+  return (
+    <div className="flex h-full min-h-32 flex-col items-center justify-center gap-2 px-4 py-6 text-center">
+      <Inbox size={20} strokeWidth={1.5} className="text-ink-muted" aria-hidden />
+      <p className="max-w-sm text-body-sm text-ink-soft">{text}</p>
+    </div>
+  );
 }

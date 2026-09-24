@@ -1,5 +1,5 @@
 /**
- * The hero and the thirteen module scenes. Each is a small arrangement of the shared
+ * The hero, the thirteen module scenes and two illustrations. Each is a small arrangement of the shared
  * primitives, tinted with the module's level colour, so the covers read as one family.
  */
 import type { ReactNode } from 'react';
@@ -326,9 +326,78 @@ export const MODULE_SCENES: Record<string, SceneDef> = {
   'm12-becoming-consistent': { ...cover([0, 2.1, 8], [0, 1.55, 0]), render: (p) => <ConsistentScene p={p} /> },
 };
 
+// ---------------------------------------------------------------- illustrations
+
+/** The 404: one tall down candle snapped in two, its top half fallen beside it. */
+function BrokenCandleScene({ p }: { p: ScenePalette }) {
+  const wick = useGlow(p.down, p.dark ? 0.55 : 0.25);
+  return (
+    <>
+      <Floor p={p} />
+      {/* the half still standing, on its lower wick, broken off at a slant */}
+      <mesh position={[-0.6, 0.18, 0]} material={wick}>
+        <cylinderGeometry args={[0.028, 0.028, 0.36, 12]} />
+      </mesh>
+      <GlassBlock size={[0.62, 1.2, 0.62]} position={[-0.6, 0.95, 0]} color={p.down} dark={p.dark} radius={0.06} />
+      <GlassBlock size={[0.62, 0.2, 0.62]} position={[-0.62, 1.58, 0]} rotation={[0, 0, 0.3]} color={p.down} dark={p.dark} radius={0.05} />
+      {/* the half that fell, lying on its side, its upper wick along the floor */}
+      <group position={[0.85, 0.31, 0.3]} rotation={[0, 0.45, -Math.PI / 2 + 0.06]}>
+        <GlassBlock size={[0.62, 1.05, 0.62]} position={[0, 0, 0]} color={p.down} dark={p.dark} radius={0.06} />
+        <mesh position={[0, 0.88, 0]} material={wick}>
+          <cylinderGeometry args={[0.028, 0.028, 0.7, 12]} />
+        </mesh>
+      </group>
+      {/* shards */}
+      <GlassBlock size={[0.16, 0.07, 0.13]} position={[0.02, 0.04, 0.55]} rotation={[0, 0.8, 0]} color={p.down} dark={p.dark} radius={0.02} />
+      <GlassBlock size={[0.12, 0.06, 0.18]} position={[-0.25, 0.03, 0.85]} rotation={[0, -0.4, 0]} color={p.down} dark={p.dark} radius={0.02} />
+      <GlassBlock size={[0.1, 0.05, 0.09]} position={[0.3, 0.03, 0.95]} rotation={[0, 0.3, 0]} color={p.down} dark={p.dark} radius={0.02} />
+      <Glow color={p.down} position={[0.2, 1.2, -2]} size={6} opacity={p.dark ? 0.26 : 0.12} />
+      <Glow color={p.accent} position={[-1.4, 1.8, -2.4]} size={4.5} opacity={p.dark ? 0.2 : 0.1} />
+    </>
+  );
+}
+
+/** The empty journal: an open book of glass pages, ruled and blank, and one candle waiting above it. */
+function EmptyJournalScene({ p }: { p: ScenePalette }) {
+  const wick = useGlow(p.accent, p.dark ? 0.7 : 0.35);
+  const spine = useGlass(p.level, { dark: p.dark });
+  const page = (side: 1 | -1) => (
+    <group position={[side * 0.88, 0.36, 0]} rotation={[0, 0, side * 0.24]}>
+      <GlassBlock size={[1.7, 0.07, 2.2]} position={[0, 0, 0]} color={p.level} dark={p.dark} radius={0.03} />
+      {[-0.7, -0.35, 0, 0.35, 0.7].map((z) => (
+        <mesh key={z} position={[0, 0.045, z]}>
+          <boxGeometry args={[1.35, 0.006, 0.012]} />
+          <meshBasicMaterial color={p.line} transparent opacity={0.7} />
+        </mesh>
+      ))}
+    </group>
+  );
+  return (
+    <>
+      <Floor p={p} />
+      {page(-1)}
+      {page(1)}
+      <mesh position={[0, 0.17, 0]} rotation={[Math.PI / 2, 0, 0]} material={spine}>
+        <cylinderGeometry args={[0.07, 0.07, 2.2, 16]} />
+      </mesh>
+      <mesh position={[0, 1.8, -0.1]} material={wick}>
+        <cylinderGeometry args={[0.025, 0.025, 1.05, 12]} />
+      </mesh>
+      <GlassBlock size={[0.36, 0.5, 0.36]} position={[0, 1.78, -0.1]} color={p.accent} dark={p.dark} radius={0.05} />
+      <Glow color={p.accent} position={[0, 1.7, -1.6]} size={5} opacity={p.dark ? 0.34 : 0.18} />
+    </>
+  );
+}
+
+/** Scenes drawn on the page background rather than a cover, for empty states and the 404. */
+export const ILLUSTRATIONS: Record<string, SceneDef> = {
+  'broken-candle': { camera: { position: [0.1, 1.9, 5.8], fov: 32 }, target: [0.1, 0.7, 0.2], sway: 10, render: (p) => <BrokenCandleScene p={p} /> },
+  'empty-journal': { camera: { position: [0, 2.3, 5.8], fov: 32 }, target: [0, 0.85, 0], sway: 10, render: (p) => <EmptyJournalScene p={p} /> },
+};
+
 export type SceneId = 'hero' | keyof typeof MODULE_SCENES;
 
 export function sceneFor(id: string): SceneDef | null {
-  return id === 'hero' ? HERO : (MODULE_SCENES[id] ?? null);
+  return id === 'hero' ? HERO : (MODULE_SCENES[id] ?? ILLUSTRATIONS[id] ?? null);
 }
 

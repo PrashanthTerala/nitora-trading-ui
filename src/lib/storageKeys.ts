@@ -35,6 +35,10 @@ export const LEGACY_KEYS: ReadonlyArray<readonly [string, string]> = [
 export const PREF_KEYS = {
   /** "read" or "present": how the reader last chose to view lessons. */
   lessonMode: 'nitora-lesson-mode',
+  /** Height in pixels of the simulator's bottom dock. */
+  simDock: 'nitora-sim-dock',
+  /** "open" or "closed": the simulator's order-ticket rail. */
+  simRail: 'nitora-sim-rail',
 } as const;
 
 /** The part of Storage the migration uses, so a test can hand it a plain object. */

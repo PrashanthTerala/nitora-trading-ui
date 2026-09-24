@@ -3,6 +3,7 @@ import { Link2, Maximize2 } from 'lucide-react';
 import { Segmented } from '@/components/ui/Segmented';
 import { Tooltip } from '@/components/ui/Tooltip';
 import { toast } from '@/components/ui/Toast';
+import { cx } from '@/components/ui/cx';
 import { slugify, textOf } from '@/lib/slug';
 import { t } from '@/i18n';
 import { useDeck } from '@/components/deck/context';
@@ -51,6 +52,8 @@ export function FigureFrame({
   caption,
   modes = false,
   defaultMode = 'candles',
+  linkable = true,
+  className,
   children,
 }: {
   title?: string;
@@ -58,6 +61,10 @@ export function FigureFrame({
   /** Offer the candles / line / bars switch. */
   modes?: boolean;
   defaultMode?: FigureMode;
+  /** Offer "copy a link to this figure". Off where the figure is not a place worth linking to. */
+  linkable?: boolean;
+  /** Replaces the default vertical margin. */
+  className?: string;
   children: Render;
 }) {
   const [mode, setMode] = useState<FigureMode>(defaultMode);
@@ -99,7 +106,7 @@ export function FigureFrame({
   const toolbar = (
     <div className="flex items-center gap-1">
       {modeSwitch}
-      {id && !inDeck && (
+      {id && linkable && !inDeck && (
         <Tooltip content={t('mdx.figure.copy')} align="end">
           <button type="button" onClick={copyLink} className={iconButton} aria-label={t('mdx.figure.copy')}>
             <Link2 size={15} strokeWidth={1.75} aria-hidden />
@@ -117,7 +124,7 @@ export function FigureFrame({
   );
 
   return (
-    <figure id={inDeck ? undefined : id} className="not-prose group/figure my-8 overflow-hidden rounded-card border border-line bg-surface-1 shadow-1">
+    <figure id={inDeck || !linkable ? undefined : id} className={cx('not-prose group/figure overflow-hidden rounded-card border border-line bg-surface-1 shadow-1', className ?? 'my-8')}>
       <div className="flex min-h-11 flex-wrap items-center gap-x-3 gap-y-1 border-b border-line-subtle bg-surface-2 py-1.5 pl-4 pr-2">
         <p className="min-w-0 flex-1 py-1 text-body-sm font-semibold text-ink">{title}</p>
         {toolbar}

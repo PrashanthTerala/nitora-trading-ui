@@ -245,6 +245,12 @@ body {
 .anim-sheet-in {
   animation: sheet-in var(--duration-slow) var(--ease-emphasized);
 }
+@keyframes panel-in {
+  from { transform: translateX(100%); }
+}
+.anim-panel-in {
+  animation: panel-in var(--duration-slow) var(--ease-emphasized);
+}
 
 /* ---------- home ticker ----------
    The track holds the list twice and slides by exactly one copy, so the loop is seamless.
@@ -361,4 +367,15 @@ body {
   .deck-print figure [role='radiogroup'] {
     display: none;
   }
+}
+
+/* ---------- changing numbers ----------
+   A value that moves flashes its direction tint and fades it out over 600 ms (the
+   "deliberate" duration, which is 0 under reduced motion, so the flash is skipped). */
+@keyframes num-flash {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+.num-flash {
+  animation: num-flash var(--duration-deliberate) var(--ease-exit) forwards;
 }

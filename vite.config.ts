@@ -51,6 +51,41 @@ function lessonExcerpt(): Plugin {
 }
 
 /**
+ * `virtual:content-index`: which lessons show each pattern figure and use each glossary term,
+ * read from the MDX at build time. The Trainer links a pattern to the lesson that teaches it,
+ * and the Glossary lists every lesson a term appears in, without either loading lesson MDX.
+ * Lessons are listed in curriculum order, each once.
+ */
+function contentIndex(): Plugin {
+  const id = 'virtual:content-index';
+  const resolved = `\0${id}`;
+  return {
+    name: 'nitora:content-index',
+    resolveId: (source) => (source === id ? resolved : undefined),
+    load(loadId) {
+      if (loadId !== resolved) return;
+      const patterns: Record<string, string[]> = {};
+      const terms: Record<string, string[]> = {};
+      const add = (map: Record<string, string[]>, key: string, path: string) => {
+        const list = (map[key] ??= []);
+        if (!list.includes(path)) list.push(path);
+      };
+      for (const m of CURRICULUM) {
+        for (const l of m.lessons) {
+          const file = fileURLToPath(new URL(`./src/content/modules/${m.id}/${l.id}.mdx`, import.meta.url));
+          this.addWatchFile(file);
+          const src = readFileSync(file, 'utf8');
+          const path = `/learn/${m.id}/${l.id}`;
+          for (const x of src.matchAll(/<PatternFigure\s+name="([^"]+)"/g)) add(patterns, x[1], path);
+          for (const x of src.matchAll(/<Term\s+id="([^"]+)"/g)) add(terms, x[1], path);
+        }
+      }
+      return `export default ${JSON.stringify({ patterns, terms })};`;
+    },
+  };
+}
+
+/**
  * robots.txt always; sitemap.xml and an absolute link-preview image when the build knows the
  * site's public address (SITE_URL), because both need absolute URLs. Both come from the curriculum, so a new lesson
  * is in the sitemap without anyone remembering to add it.
@@ -79,6 +114,7 @@ export default defineConfig({
     react({ include: /\.(jsx|js|mdx|md|tsx|ts)$/ }),
     tailwindcss(),
     lessonExcerpt(),
+    contentIndex(),
     seoFiles(),
   ],
   resolve: { alias: { '@': '/src' } },

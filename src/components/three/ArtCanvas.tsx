@@ -4,7 +4,7 @@ import { ACESFilmicToneMapping, SRGBColorSpace } from 'three';
 import type { Level } from '@/content/curriculum';
 import { readPalette } from './palette';
 import { Stage } from './Stage';
-import { sceneFor } from './scenes';
+import { ILLUSTRATIONS, sceneFor } from './scenes';
 
 /**
  * One scene on a canvas. `live` scenes sway and follow the pointer and only draw while
@@ -50,7 +50,7 @@ export function ArtCanvas({
         requestAnimationFrame(() => requestAnimationFrame(() => onFirstFrame?.()));
       }}
     >
-      <Stage palette={palette} live={live} sway={def.sway} target={def.target} backdrop={scene === 'hero' ? 'hero' : 'cover'}>
+      <Stage palette={palette} live={live} sway={def.sway} target={def.target} backdrop={scene === 'hero' || scene in ILLUSTRATIONS ? 'hero' : 'cover'}>
         {def.render(palette)}
       </Stage>
     </Canvas>

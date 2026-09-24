@@ -170,8 +170,8 @@ screenshots at 390 and 1440 px in both themes under `docs/screenshots/phase-N/`.
 | 2 | Lesson read mode, MDX component restyle, component registry | **done** |
 | 3 | Presentation mode (auto-generated slide decks) | **done** |
 | 4 | 3D hero and module artwork | **done** |
-| 5 | Simulator, Trainer, Journal, Glossary, Guide, 404 | next |
-| 6 | Lighthouse, axe, reduced-motion, keyboard and 360 px passes; bundle budgets | |
+| 5 | Simulator, Trainer, Journal, Glossary, Guide, 404 | **done** |
+| 6 | Lighthouse, axe, reduced-motion, keyboard and 360 px passes; bundle budgets | next |
 
 ### Decisions made in Phase 0
 
@@ -310,6 +310,54 @@ screenshots at 390 and 1440 px in both themes under `docs/screenshots/phase-N/`.
 - **Glyphs** are 24-unit line drawings in `src/assets/glyphs/`, inlined so they take the text
   colour. They mark each module in the lesson outline, the command palette and search results.
 - **The `3d` flag is on by default**; `VITE_FLAGS=-3d` keeps the posters only.
+
+### Decisions made in Phase 5
+
+- **The simulator is a terminal.** A 44-pixel bar (instrument, price, timeframe, transport, bar
+  time), the account strip, the chart, a dock of positions, orders, history and events, and the
+  order ticket in a 320-pixel rail. The dock drags (or arrow-keys) between 160 pixels and most of
+  the workspace; its height and whether the rail is open are kept in the browser. Below 1024
+  pixels the ticket and watchlist move into a bottom sheet behind a Trade button. Every control
+  and behaviour from before is still there; `?` lists the shortcuts, which gained `.` (one tick),
+  `1`-`4` (speed) and `T` (ticket).
+- **The chart is all tokens.** Candles from up/down, indicator lines from the six chart colours
+  (never green or red), chrome from grid and line, crosshair labels in mono on surface-3. A theme
+  change re-reads every colour and repaints series as well as chrome; before, only the grid and
+  scales followed the theme. The symbol and timeframe sit behind the candles as a faint watermark.
+- **One side, one button.** The ticket used to show Buy and Sell side by side at the bottom,
+  which made the side the last and least considered decision. Now the side is chosen first, in a
+  switch filled with its own colour, and a single button sends "Buy 70 NOVA". Size presets are
+  0.5, 1 and 2 percent of equity at risk when a stop is attached, and 10, 25 and 50 percent of
+  equity in value when not, since without a stop there is no risk to size by. Risk in dollars,
+  risk as a share of the account and R to target are three readouts. Problems are shown before
+  the click: `ticketIssues` in `src/lib/sizing.ts` (tested) blocks a zero size, a missing price
+  and an order larger than buying power, and warns about more than 2% at risk, no stop, a stop
+  already through the market and a limit that would fill at once.
+- **Numbers that move.** `AnimatedNumber` springs to its new value and flashes the direction
+  tint for 600 ms; under reduced motion it simply changes. Used in the account strip, the price,
+  the ticket's readouts and the journal's figures.
+- **Money is US dollars, formatted as such.** Amounts were grouped in the reader's locale, which
+  on an Indian-English machine printed "$1,00,000"; they are now grouped the US way, with the
+  sign before the symbol ("-$1,056", not "$-1,056").
+- **Trainer sessions.** Ten rounds, with a stats rail (round, accuracy, streak, time), keys 1-4
+  and Enter, a one-line explanation after each answer with a link to the lesson that shows the
+  pattern, and a results screen whose summary copies to the clipboard. Which lesson teaches which
+  pattern, and which lessons use which glossary term, is read from the MDX at build time
+  (`virtual:content-index`), so neither page loads lesson content to know it.
+- **Journal charts on lightweight-charts**, as the brief asks, in a chunk of their own that an
+  empty journal never loads; the library is one chunk shared with the simulator. The equity curve
+  is a baseline series around the starting cash. The R histogram's end buckets are now open, so a
+  trade beyond -3R or +4R is no longer silently dropped. Each KPI tile carries a sparkline of how
+  that statistic moved as trades were added. An expanded trade shows the market around it in a
+  timeframe chosen to fit, never past the simulator's present.
+- **Glossary terms open in a side panel** driven by the URL hash, so the `/glossary#spread` links
+  every `<Term>` already makes open the panel directly, and Back closes it. Letters scroll rather
+  than set the hash, so the two never collide.
+- **Two illustrations** join the 3D family: a candle snapped in two for the 404 and an open, blank
+  journal for the empty journal, rendered like the covers into `public/art/illustrations`.
+- **`FigureFrame` gained `linkable` and `className`.** A quiz question is not a place worth
+  linking to, and the trainer needs the frame without its lesson margin.
+- **The palette ratchet reached zero.** No Tailwind palette class is left anywhere in `src`.
 
 ### Known issues found in the audit, to fix as the components are rebuilt
 

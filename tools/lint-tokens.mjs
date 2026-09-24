@@ -81,9 +81,8 @@ const PALETTE =
   /\b(?:text|bg|border|ring|fill|stroke|from|to|via|outline|decoration|shadow|divide|placeholder|caret)-(?:white|black|(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-\d{2,3})(?:\/\d+)?\b/g;
 // Counted on 2026-09-22, when the tokens were introduced. Lower these as components move to
 // tokens; never raise them. The callouts move in Phase 2, the buttons in Phase 1.
-const PALETTE_BASELINE = {
-  'src/components/sim/OrderTicket.tsx': 1,
-};
+// Reached zero in Phase 5; the ratchet stays so none come back.
+const PALETTE_BASELINE = {};
 const paletteCounts = {};
 for (const file of sources) {
   // tokens.css defines variables, not classes; its comments may name a class to forbid it.
