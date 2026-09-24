@@ -276,11 +276,13 @@ export function JournalPage() {
           </h2>
           <Segmented size="sm" label={t('journal.table.filter')} value={filter} onChange={setFilter} options={FILTERS.map((f) => ({ value: f, label: t(`journal.table.filters.${f}`) }))} />
         </div>
-        <div className="rounded-card border border-line bg-surface-1 max-md:overflow-x-auto">
+        <div className="rounded-card border border-line bg-surface-1 max-lg:overflow-x-auto">
           <table className="w-full text-body-sm">
             <thead className="text-left text-caption font-semibold uppercase tracking-wide text-ink-soft">
-              <tr className="[&>th]:sticky [&>th]:top-header [&>th]:z-10 [&>th]:border-b [&>th]:border-line [&>th]:bg-surface-2 [&>th]:py-2.5 max-md:[&>th]:static">
-                <th className="w-8 rounded-tl-card pl-3" aria-hidden />
+              <tr className="[&>th]:sticky [&>th]:top-header [&>th]:z-10 [&>th]:border-b [&>th]:border-line [&>th]:bg-surface-2 [&>th]:py-2.5 max-lg:[&>th]:static">
+                <th className="w-8 rounded-tl-card pl-3">
+                  <span className="sr-only">{t('journal.table.details')}</span>
+                </th>
                 <th className="px-2">{t('journal.table.closed')}</th>
                 <th className="px-2">{t('journal.table.symbol')}</th>
                 <th className="px-2">{t('journal.table.side')}</th>
@@ -307,7 +309,7 @@ export function JournalPage() {
                 const toggle = () => setExpanded(open ? null : x.id);
                 return (
                   <Fragment key={x.id}>
-                    <tr onClick={toggle} className={cx('cursor-pointer border-t border-line-subtle transition-colors duration-(--duration-fast) hover:bg-accent-soft', i % 2 === 1 && 'bg-ink/3', open && 'bg-accent-soft')}>
+                    <tr onClick={toggle} className={cx('cursor-pointer border-t border-line-subtle transition-colors duration-(--duration-fast) hover:bg-surface-2', i % 2 === 1 && 'bg-ink/3', open && 'bg-surface-2')}>
                       <td className="pl-3">
                         <button
                           type="button"
@@ -555,7 +557,7 @@ function TradeEditor({ trade, onChange }: { trade: Trade; onChange: (p: Partial<
         placeholder={t('journal.detail.notes')}
         aria-label={t('journal.detail.notes')}
         rows={3}
-        className="w-full resize-y rounded-control border border-line-strong bg-surface-1 px-3 py-2 text-body-sm text-ink outline-none focus:border-accent"
+        className="w-full resize-y rounded-control border border-line-strong bg-surface-1 px-3 py-2 text-body-sm text-ink focus:border-accent"
       />
     </div>
   );

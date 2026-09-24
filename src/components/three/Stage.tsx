@@ -1,6 +1,6 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { PMREMGenerator, type Group } from 'three';
+import { CubeUVReflectionMapping, DataTexture, HalfFloatType, LinearFilter, LinearSRGBColorSpace, PMREMGenerator, RGBAFormat, type Group, type Texture } from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import type { ScenePalette } from './palette';
 import { Backdrop } from './primitives';
@@ -28,20 +28,45 @@ const DEG = Math.PI / 180;
  * a procedural room for glass to reflect (no image is fetched), fog in the page colour so the
  * floor fades out, and -- when live -- a slow sway plus ±4° of pointer parallax.
  */
-export function Stage({ palette, children, live, sway = 12, target = [0, 1, 0], backdrop }: { palette: ScenePalette; children: ReactNode; live: boolean; sway?: number; target?: [number, number, number]; backdrop: 'hero' | 'cover' }) {
+export function Stage({ palette, children, live, sway = 12, target = [0, 1, 0], backdrop, onWarm }: { palette: ScenePalette; children: ReactNode; live: boolean; sway?: number; target?: [number, number, number]; backdrop: 'hero' | 'cover'; onWarm?: () => void }) {
   const { gl, scene, camera } = useThree();
   const pivot = useRef<Group>(null);
 
+  // The environment map, then every shader, before the first frame, and none of it as one long
+  // task the page cannot interrupt. A live scene gets its map from a worker (see envWorker);
+  // stills, and browsers without WebGL in workers, build it here in a task of its own. Then
+  // compileAsync builds the programs off the main thread where the driver allows
+  // (KHR_parallel_shader_compile); drawn straight away, the glass and its transmission pass
+  // compiled synchronously inside the first frame. The canvas does not draw until `onWarm`.
+  const warmed = useRef(onWarm);
+  warmed.current = onWarm;
   useEffect(() => {
-    const pmrem = new PMREMGenerator(gl);
-    const env = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-    scene.environment = env;
+    let alive = true;
+    let env: Texture | null = null;
+    let pmrem: PMREMGenerator | null = null;
+    const buildHere = () =>
+      new Promise<Texture>((resolve) =>
+        window.setTimeout(() => {
+          pmrem = new PMREMGenerator(gl);
+          resolve(pmrem.fromScene(new RoomEnvironment(), 0.04).texture);
+        }, 0),
+      );
+    const source: Promise<Texture> = live ? workerEnvironment().then((t) => t ?? buildHere()) : buildHere();
+    source.then((texture) => {
+      if (!alive) return texture.dispose();
+      env = texture;
+      scene.environment = texture;
+      gl.compileAsync(scene, camera)
+        .catch(() => undefined)
+        .then(() => alive && warmed.current?.());
+    });
     return () => {
+      alive = false;
       scene.environment = null;
-      env.dispose();
-      pmrem.dispose();
+      env?.dispose();
+      pmrem?.dispose();
     };
-  }, [gl, scene]);
+  }, [gl, scene, camera, live]);
 
   useEffect(() => {
     camera.lookAt(...target);
@@ -75,4 +100,43 @@ export function Stage({ palette, children, live, sway = 12, target = [0, 1, 0], 
       <group ref={pivot}>{children}</group>
     </>
   );
+}
+
+
+type EnvPixels = { width: number; height: number; data: Uint16Array };
+let envPixels: Promise<EnvPixels | null> | null = null;
+
+/**
+ * The prefiltered room as a texture, built in a worker; null where that is not possible. The
+ * pixels are made once per page and shared: each live scene has its own WebGL context, so each
+ * gets its own texture over the same data.
+ */
+async function workerEnvironment(): Promise<Texture | null> {
+  if (typeof Worker === 'undefined' || typeof OffscreenCanvas === 'undefined') return null;
+  envPixels ??= new Promise<EnvPixels | null>((resolve) => {
+    try {
+      const worker = new Worker(new URL('./envWorker.ts', import.meta.url), { type: 'module' });
+      worker.onmessage = (e: MessageEvent<EnvPixels | { error: string }>) => {
+        worker.terminate();
+        resolve('error' in e.data ? null : e.data);
+      };
+      worker.onerror = () => {
+        worker.terminate();
+        resolve(null);
+      };
+      worker.postMessage(null);
+    } catch {
+      resolve(null);
+    }
+  });
+  const px = await envPixels;
+  if (!px) return null;
+  const tex = new DataTexture(px.data, px.width, px.height, RGBAFormat, HalfFloatType);
+  tex.mapping = CubeUVReflectionMapping;
+  tex.colorSpace = LinearSRGBColorSpace;
+  tex.minFilter = LinearFilter;
+  tex.magFilter = LinearFilter;
+  tex.generateMipmaps = false;
+  tex.needsUpdate = true;
+  return tex;
 }

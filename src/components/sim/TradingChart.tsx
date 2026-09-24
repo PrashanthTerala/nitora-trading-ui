@@ -35,6 +35,7 @@ import * as ind from '@/engine/market/indicators';
 import type { Overlays } from '@/store/sim';
 import { sessionDayStart } from '@/engine/market/generator';
 import { cssColor } from '@/lib/cssColor';
+import { t } from '@/i18n';
 
 interface Props {
   bars: Bar[];
@@ -140,6 +141,8 @@ export function TradingChart({ bars, symbol, timeframe, overlays, account, decim
       hoveredSeriesOnTop: true,
     });
     chartRef.current = chart;
+    // lightweight-charts lays its panes out with a <table>; it is layout, not data.
+    containerRef.current.querySelector('table')?.setAttribute('role', 'presentation');
     const candles = chart.addSeries(CandlestickSeries, {
       ...candleColors(c),
       // The last price, as a line across the chart and a label on the scale.
@@ -450,7 +453,18 @@ export function TradingChart({ bars, symbol, timeframe, overlays, account, decim
     markersRef.current?.setMarkers(clean);
   }, [account, symbol, bars, theme]);
 
-  return <div ref={containerRef} className="tv-chart" />;
+  // A canvas chart has nothing a screen reader can read, and the library lays it out with a
+  // table that would otherwise be announced as data. One image with a description instead;
+  // the price, the account and every position are in text around it.
+  const last = bars[bars.length - 1];
+  return (
+    <div
+      ref={containerRef}
+      className="tv-chart"
+      role="img"
+      aria-label={t('sim.chartLabel', { symbol, timeframe, price: last ? last.close.toFixed(decimals) : '—' })}
+    />
+  );
 }
 
 /** Snap an arbitrary timestamp to the nearest bar time at or before it. */

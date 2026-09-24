@@ -4,6 +4,7 @@
  * straight lines, indicator overlays, sub-panels) and stays crisp at any width.
  */
 import type { OHLC } from '@/engine/market/types';
+import { t } from '@/i18n';
 
 export type Annotation =
   | { type: 'label'; index: number; text: string; position?: 'above' | 'below'; color?: string }
@@ -45,6 +46,11 @@ export interface CandleSvgProps {
   mode?: 'candles' | 'line' | 'bars';
   fadeBefore?: number;
   className?: string;
+  /**
+   * The text alternative. Without one the chart describes itself from its data (kind, bar count,
+   * first and last close, range), which is what a sighted reader takes from it at a glance.
+   */
+  label?: string;
 }
 
 const UP = 'var(--color-up)';
@@ -64,6 +70,7 @@ export function CandleSvg({
   mode = 'candles',
   fadeBefore,
   className,
+  label,
 }: CandleSvgProps) {
   const padL = 12;
   const padR = axis ? 54 : 12;
@@ -131,6 +138,7 @@ export function CandleSvg({
       role="img"
       style={{ fontFamily: 'var(--font-mono)', fontSize: 11 }}
     >
+      <title>{label ?? describe(bars, mode)}</title>
       {/* grid + axis */}
       {axis &&
         ticks.map((t) => (
@@ -407,6 +415,21 @@ function niceTicks(min: number, max: number, count: number) {
   const out: number[] = [];
   for (let t = Math.ceil(min / step) * step; t <= max; t += step) out.push(+t.toFixed(6));
   return out;
+}
+
+/** A one-sentence description of a series, for its text alternative. */
+function describe(bars: OHLC[], mode: 'candles' | 'line' | 'bars') {
+  if (bars.length === 0) return t(mode === 'line' ? 'mdx.figure.altLine' : mode === 'bars' ? 'mdx.figure.altBars' : 'mdx.figure.altCandles');
+  const low = Math.min(...bars.map((b) => b.l));
+  const high = Math.max(...bars.map((b) => b.h));
+  return t('mdx.figure.alt', {
+    kind: t(mode === 'line' ? 'mdx.figure.altLine' : mode === 'bars' ? 'mdx.figure.altBars' : 'mdx.figure.altCandles'),
+    count: bars.length,
+    first: fmt(bars[0].o),
+    last: fmt(bars[bars.length - 1].c),
+    low: fmt(low),
+    high: fmt(high),
+  });
 }
 
 export function fmt(v: number) {

@@ -10,6 +10,8 @@ import tokensCss from '@/styles/tokens.css?raw';
 import { isColorToken, parseTokens, resolve, type Theme, type Token } from '@/lib/tokens';
 import { contrastResults, DECORATIVE, NON_TEXT, TEXT, type ContrastResult } from '@/lib/tokenPolicy';
 import { ALL_LESSONS, CURRICULUM, LEVELS } from '@/content/curriculum';
+import { Button } from '@/components/ui/Button';
+import { Chip } from '@/components/ui/Chip';
 
 const TOKENS = parseTokens(tokensCss);
 const RESULTS = contrastResults(TOKENS);
@@ -275,10 +277,10 @@ function MotionSection() {
         <h2 id="motion" className="font-display text-h2 font-bold">
           Motion
         </h2>
-        <button type="button" className="btn-ghost" onClick={() => setOn((v) => !v)} aria-pressed={on}>
+        <Button variant="secondary" size="sm" onClick={() => setOn((v) => !v)} aria-pressed={on}>
           {on ? 'Reset' : 'Play'}
-        </button>
-        {reduced && <span className="chip">Reduced motion is on: every duration is 0ms</span>}
+        </Button>
+        {reduced && <Chip size="md">Reduced motion is on: every duration is 0ms</Chip>}
       </div>
       <div className="divide-y divide-line-subtle overflow-hidden rounded-xl border border-line">
         {durations.map((d) => (

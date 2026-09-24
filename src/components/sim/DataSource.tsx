@@ -129,7 +129,7 @@ export function RealSymbolPicker() {
     );
   }
   return (
-    <select value={realSymbol} onChange={(e) => setRealSymbol(e.target.value)} className="h-8 rounded-control border border-line-strong bg-surface-1 px-2 font-mono text-mono font-semibold text-ink outline-none focus:border-accent">
+    <select value={realSymbol} onChange={(e) => setRealSymbol(e.target.value)} className="h-8 rounded-control border border-line-strong bg-surface-1 px-2 font-mono text-mono font-semibold text-ink focus:border-accent">
       {realSymbols.map((s) => (
         <option key={s.symbol} value={s.symbol}>
           {s.symbol} · {s.name}

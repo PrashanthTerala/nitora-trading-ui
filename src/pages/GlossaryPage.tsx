@@ -65,7 +65,7 @@ export function GlossaryPage() {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder={t('glossary.searchPlaceholder')}
-            className="h-12 w-full rounded-control border border-line-strong bg-surface-1 pl-11 pr-4 text-body text-ink shadow-1 outline-none transition-colors duration-(--duration-fast) placeholder:text-ink-muted focus:border-accent"
+            className="h-12 w-full rounded-control border border-line-strong bg-surface-1 pl-11 pr-4 text-body text-ink shadow-1 transition-colors duration-(--duration-fast) placeholder:text-ink-muted focus:border-accent"
           />
         </label>
         <p className="mt-2 text-caption text-ink-soft" aria-live="polite">
@@ -75,7 +75,7 @@ export function GlossaryPage() {
 
       <div className="mt-4 lg:grid lg:grid-cols-[2.5rem_minmax(0,1fr)] lg:gap-8">
         {/* A–Z: a column that stays in view on large screens, a strip under the header on small ones */}
-        <nav aria-label={t('glossary.letters')} className="sticky top-header z-20 -mx-4 border-b border-line bg-bg/95 px-4 py-2 backdrop-blur-sm lg:top-[calc(var(--spacing-header)+1.5rem)] lg:mx-0 lg:self-start lg:border-0 lg:bg-transparent lg:p-0 lg:backdrop-blur-none">
+        <nav data-subheader aria-label={t('glossary.letters')} className="sticky top-header z-20 -mx-4 border-b border-line bg-bg/95 px-4 py-2 backdrop-blur-sm lg:top-[calc(var(--spacing-header)+1.5rem)] lg:mx-0 lg:self-start lg:border-0 lg:bg-transparent lg:p-0 lg:backdrop-blur-none">
           <ol className="flex gap-0.5 overflow-x-auto lg:flex-col lg:overflow-visible">
             {ALPHABET.map((L) => {
               const has = groups.has(L);

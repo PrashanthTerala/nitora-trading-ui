@@ -151,7 +151,7 @@ export function GuidePage() {
           </Link>
         </p>
       </article>
-      <aside className="hidden xl:block">
+      <aside aria-label={t('guide.toc')} className="hidden xl:block">
         <OnThisPage items={items} active={active} progress={progress} />
       </aside>
     </div>

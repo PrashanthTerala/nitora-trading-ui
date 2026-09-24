@@ -28,46 +28,30 @@ body {
   }
 }
 
+/* Focus is never hidden under the sticky header or the phone's tab bar (WCAG 2.4.11): when Tab
+   moves to something off screen, the browser scrolls it clear of both. A page with a second
+   sticky strip under the header (the glossary's letters) marks it data-subheader. */
+@layer base {
+  html {
+    scroll-padding-top: calc(var(--spacing-header) + 1rem);
+  }
+  html:has([data-subheader]) {
+    scroll-padding-top: calc(var(--spacing-header) + 4rem);
+  }
+  @media (max-width: 767px) {
+    html {
+      scroll-padding-bottom: calc(var(--spacing-tabbar) + env(safe-area-inset-bottom) + 1rem);
+    }
+  }
+}
+
 /* Every keyboard-reachable element shows where focus is. Mouse clicks do not trigger it
    (:focus-visible), so it never flashes on an ordinary click.
-   In the base layer, so a component that draws its own focus ring (.input) can replace it. */
+   In the base layer, so a component that draws its own focus ring can replace it. */
 @layer base {
   :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
     outline: 2px solid var(--color-accent-ring);
     outline-offset: 2px;
-  }
-}
-
-/* ---------- legacy aliases ----------
-   Thin aliases of the components in src/components/ui, kept for one release so pages not
-   yet rebuilt keep working. They carry the new tokens, so the label contrast the audit found
-   failing (white on the accent at 2.5:1 in dark) is fixed everywhere at once. New code uses
-   the components; these go once no page does.
-   They sit in the components layer, as Tailwind intends, so a utility on the same element
-   (pl-9 on an .input, w-full justify-between on a .btn-ghost) overrides them rather than
-   silently losing to them. */
-@layer components {
-  .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-control bg-accent px-4 py-2 text-sm font-semibold text-on-accent shadow-1 transition hover:bg-accent-hover active:scale-[0.98];
-  }
-  .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-control border border-line bg-surface-1 px-3 py-2 text-sm font-medium text-ink transition hover:border-line-strong hover:bg-surface-2;
-  }
-  .btn-up {
-    @apply inline-flex items-center justify-center gap-2 rounded-control bg-up px-4 py-2 text-sm font-bold text-on-up shadow-1 transition hover:brightness-110 active:scale-[0.98] disabled:opacity-40;
-  }
-  .btn-down {
-    @apply inline-flex items-center justify-center gap-2 rounded-control bg-down px-4 py-2 text-sm font-bold text-on-down shadow-1 transition hover:brightness-110 active:scale-[0.98] disabled:opacity-40;
-  }
-  .input {
-    @apply rounded-control border border-line-strong bg-surface-1 px-3 py-2 text-sm text-ink outline-none transition placeholder:text-ink-muted focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent-ring;
-    font-variant-numeric: tabular-nums;
-  }
-  .chip {
-    @apply inline-flex items-center rounded-full border border-line bg-surface-1 px-2.5 py-0.5 text-xs font-medium text-ink-soft;
-  }
-  .chip-on {
-    @apply border-accent/60 bg-accent-soft text-accent;
   }
 }
 

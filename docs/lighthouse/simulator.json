@@ -1,0 +1,16 @@
+{
+  "url": "/simulator",
+  "categories": {
+    "performance": 98,
+    "accessibility": 100,
+    "best-practices": 100,
+    "seo": 100
+  },
+  "metrics": {
+    "FCP": "0.7 s",
+    "LCP": "0.9 s",
+    "TBT": "60 ms",
+    "CLS": "0"
+  },
+  "failing": []
+}

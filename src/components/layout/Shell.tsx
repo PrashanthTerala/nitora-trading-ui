@@ -88,7 +88,7 @@ export function Shell() {
         <div className="mx-auto flex h-header max-w-[1600px] items-center gap-2 px-4 sm:px-6">
           <Logo />
 
-          <nav aria-label={t('nav.label')} className="ml-6 hidden items-center gap-0.5 md:flex">
+          <nav aria-label={t('nav.label')} className="ml-2 hidden items-center gap-0.5 md:flex lg:ml-6">
             {NAV.map((n) => (
               <NavLink
                 key={n.to}
@@ -124,13 +124,17 @@ export function Shell() {
                 onClick={openPalette}
                 onPointerEnter={() => void loadPalette()}
                 onFocus={() => void loadPalette()}
-                aria-label={t('header.searchLabel')}
                 aria-haspopup="dialog"
-                className="flex h-9 items-center gap-2 rounded-control text-ink-soft transition-colors duration-(--duration-fast) hover:bg-surface-2 hover:text-ink max-md:w-9 max-md:justify-center md:border md:border-line md:bg-surface-1 md:pl-3 md:pr-1.5 md:hover:border-line-strong"
+                aria-keyshortcuts="Control+K Meta+K"
+                className="flex h-9 items-center gap-2 rounded-control text-ink-soft transition-colors duration-(--duration-fast) hover:bg-surface-2 hover:text-ink max-lg:w-9 max-lg:justify-center lg:border lg:border-line lg:bg-surface-1 lg:pl-3 lg:pr-1.5 lg:hover:border-line-strong"
               >
                 <Search size={16} strokeWidth={1.5} aria-hidden />
-                <span className="hidden pr-6 text-body-sm lg:inline">{t('header.search')}</span>
-                <span className="hidden items-center gap-0.5 md:flex" aria-hidden>
+                {/* Named by its content, so the name starts with the word on screen (WCAG 2.5.3). */}
+                <span className="pr-6 text-body-sm max-lg:sr-only">
+                  {t('header.search')}
+                  <span className="sr-only"> {t('header.searchRest')}</span>
+                </span>
+                <span className="hidden items-center gap-0.5 lg:flex" aria-hidden>
                   <Kbd>{modKeyLabel()}</Kbd>
                   <Kbd>K</Kbd>
                 </span>
@@ -140,7 +144,7 @@ export function Shell() {
             <Tooltip content={t('header.progress', { done: prog.done, total: prog.total })} align="end">
               <Link to="/learn" className="flex h-9 items-center gap-2 rounded-control px-2 text-ink-soft transition-colors duration-(--duration-fast) hover:bg-surface-2 hover:text-ink">
                 <Ring value={prog.done / Math.max(1, prog.total)} size={22} stroke={2.5} label={t('header.progress', { done: prog.done, total: prog.total })} />
-                <span className="font-mono text-mono-sm tabular-nums max-sm:hidden">
+                <span className="font-mono text-mono-sm tabular-nums max-lg:hidden">
                   {prog.done}/{prog.total}
                 </span>
               </Link>

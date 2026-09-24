@@ -230,6 +230,19 @@ are taken by the page itself, so do not title a heading exactly "Quiz" or "Key t
 Figures can be linked too: a figure's anchor is `#fig-` plus its title, e.g.
 `#fig-bullish-engulfing`.
 
+### What your components feed elsewhere
+
+Nothing to do here; this is so the effects are not a surprise. The build reads every lesson and:
+
+- lists your lesson in the glossary panel of every term you mark with `<Term id="...">`;
+- makes the first lesson (in curriculum order) that shows a `<PatternFigure name="...">` the
+  one the Trainer links to after a question on that pattern.
+
+Every candle figure describes itself to screen readers from its data ("Candlestick chart of 12
+bars, from 100.00 to 104.20, ranging 98.10 to 106.30"), and wide tables become keyboard-scrollable
+regions on small screens, so neither needs anything from you. A table's first header cell should
+still not be left empty: write a word such as "Pattern" instead.
+
 ### Only registered components
 
 A lesson may use only the components listed in `src/components/mdx/names.ts`. Anything else

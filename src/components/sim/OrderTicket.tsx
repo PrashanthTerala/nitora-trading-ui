@@ -38,7 +38,7 @@ const RISK_PRESETS = [0.5, 1, 2];
 const VALUE_PRESETS = [10, 25, 50];
 
 const label = 'mb-1 flex items-center justify-between text-caption font-semibold uppercase tracking-wide text-ink-soft';
-const input = 'h-9 w-full rounded-control border border-line-strong bg-surface-1 px-2.5 font-mono text-mono text-ink tabular-nums outline-none transition-colors duration-(--duration-fast) focus:border-accent';
+const input = 'h-9 w-full rounded-control border border-line-strong bg-surface-1 px-2.5 font-mono text-mono text-ink tabular-nums transition-colors duration-(--duration-fast) focus:border-accent';
 
 export function OrderTicket({ symbol, price, prices }: Props) {
   const account = useSim((s) => s.account);

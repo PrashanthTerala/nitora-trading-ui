@@ -7,6 +7,8 @@ import { RotateCcw, SlidersHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Chip } from '@/components/ui/Chip';
 import { cx } from '@/components/ui/cx';
+import { inputClass } from '@/components/ui/Input';
+import { ScrollRegion } from '@/components/ui/ScrollRegion';
 import { t } from '@/i18n';
 
 export function WidgetFrame({ title, children, footer }: { title: string; children: ReactNode; footer?: ReactNode }) {
@@ -14,7 +16,7 @@ export function WidgetFrame({ title, children, footer }: { title: string; childr
     <section className="not-prose my-8 overflow-hidden rounded-card border border-line bg-surface-1 shadow-1">
       <header className="flex items-center gap-2.5 border-b border-line-subtle bg-surface-2 px-5 py-3">
         <SlidersHorizontal size={16} strokeWidth={1.75} className="text-accent" aria-hidden />
-        <h4 className="flex-1 font-semibold text-ink">{title}</h4>
+        <h3 className="flex-1 font-semibold text-ink">{title}</h3>
         <Chip tone="accent">{t('mdx.interactive')}</Chip>
       </header>
       <div className="p-5">{children}</div>
@@ -40,7 +42,7 @@ function Field({ label, value, onChange, step = 1, min }: { label: string; value
       <label htmlFor={id} className="mb-1.5 block text-caption font-semibold text-ink-soft">
         {label}
       </label>
-      <input id={id} type="number" inputMode="decimal" step={step} min={min} value={value} onChange={(e) => onChange(parseFloat(e.target.value) || 0)} className="input w-full font-mono" />
+      <input id={id} type="number" inputMode="decimal" step={step} min={min} value={value} onChange={(e) => onChange(parseFloat(e.target.value) || 0)} className={inputClass('w-full font-mono')} />
     </div>
   );
 }
@@ -106,7 +108,7 @@ export function RecoveryTable() {
   const rows = useMemo(() => [5, 10, 20, 30, 40, 50, 60, 75, 90].map((l) => ({ loss: l, gain: (l / (100 - l)) * 100 })), []);
   return (
     <WidgetFrame title={t('mdx.recovery.title')}>
-      <div className="table-scroll -mx-1 my-0">
+      <ScrollRegion label={t('mdx.recovery.title')} className="table-scroll -mx-1 my-0">
         <table className="w-full text-body-sm">
           <thead>
             <tr className="text-left text-caption uppercase tracking-[0.08em] text-ink-muted">
@@ -130,7 +132,7 @@ export function RecoveryTable() {
             ))}
           </tbody>
         </table>
-      </div>
+      </ScrollRegion>
     </WidgetFrame>
   );
 }

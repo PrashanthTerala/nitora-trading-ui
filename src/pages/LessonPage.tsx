@@ -195,7 +195,7 @@ export default function LessonPage() {
         </Suspense>
       )}
       <div className="lg:grid lg:grid-cols-[232px_minmax(0,1fr)] lg:gap-10 xl:grid-cols-[232px_minmax(0,1fr)_208px] xl:gap-12">
-        <aside className="mb-6 lg:mb-0">
+        <aside aria-label={t('lesson.outline')} className="mb-6 lg:mb-0">
           <LessonOutline module={mod} currentId={lesson.id} />
         </aside>
 
@@ -281,7 +281,7 @@ export default function LessonPage() {
           <LessonFooter lesson={lesson} prev={prev} next={next} done={done} onToggleDone={toggleDone} canPresent={canPresent} />
         </article>
 
-        <aside className="hidden xl:block">
+        <aside aria-label={t('lesson.onThisPage')} className="hidden xl:block">
           <OnThisPage items={items} active={active} progress={progress} />
         </aside>
       </div>

@@ -133,6 +133,24 @@ function Stage({
   const rootRef = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
 
+  // Modal in fact, not only in its aria-modal: while the deck is open nothing outside it can be
+  // focused or read. The deck renders inside the lesson page, so without this Tab walked out
+  // into the page hidden underneath it.
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const made: HTMLElement[] = [];
+    for (let el: HTMLElement | null = root; el && el !== document.body; el = el.parentElement) {
+      for (const sib of Array.from(el.parentElement?.children ?? [])) {
+        if (sib !== el && sib instanceof HTMLElement && !sib.inert) {
+          sib.inert = true;
+          made.push(sib);
+        }
+      }
+    }
+    return () => made.forEach((s) => (s.inert = false));
+  }, []);
+
   const go = useCallback(
     (to: number) => {
       const target = Math.min(Math.max(0, to), count - 1);
@@ -293,7 +311,7 @@ function Stage({
 
       <header className="relative flex h-14 shrink-0 items-center gap-2 border-b border-line-subtle bg-bg/80 px-3 sm:px-5">
         <Tooltip content={t('deck.exitKey')}>
-          <button type="button" onClick={onExit} className="flex h-9 items-center gap-2 rounded-control px-2.5 text-body-sm font-medium text-ink-soft hover:bg-surface-2 hover:text-ink">
+          <button type="button" onClick={onExit} aria-label={t('deck.exit')} className="flex h-9 items-center gap-2 rounded-control px-2.5 text-body-sm font-medium text-ink-soft hover:bg-surface-2 hover:text-ink">
             <BookOpen size={16} strokeWidth={1.5} aria-hidden /> <span className="max-sm:hidden">{t('deck.exit')}</span>
           </button>
         </Tooltip>

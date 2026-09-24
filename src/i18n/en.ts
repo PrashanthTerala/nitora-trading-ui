@@ -40,6 +40,7 @@ export const en = {
     themeToDark: 'Switch to the dark theme',
     search: 'Search',
     searchLabel: 'Search lessons, glossary terms, symbols and pages',
+    searchRest: 'lessons, glossary terms, symbols and pages',
   },
   palette: {
     placeholder: 'Search lessons, terms, symbols and pages…',
@@ -232,6 +233,7 @@ export const en = {
     clickHint: 'Clicking the right half of a slide goes forward; the left half goes back.',
   },
   mdx: {
+    table: 'Table (scrolls sideways)',
     callout: {
       eli5: 'Explain it like I am five',
       tip: 'Tip',
@@ -251,6 +253,10 @@ export const en = {
     interactive: 'Interactive',
     figure: {
       modeLabel: 'Chart style',
+      alt: { one: '{kind} of {count} bar, from {first} to {last}, ranging {low} to {high}.', other: '{kind} of {count} bars, from {first} to {last}, ranging {low} to {high}.' },
+      altCandles: 'Candlestick chart',
+      altLine: 'Line chart',
+      altBars: 'OHLC bar chart',
       candles: 'Candles',
       line: 'Line',
       bars: 'Bars',
@@ -342,6 +348,7 @@ export const en = {
     ticket: 'Order ticket',
     watchlist: 'Watchlist',
     indicators: 'Indicators',
+    chartLabel: '{symbol} price chart, {timeframe} candles, last close {price}',
     resize: 'Resize the trade panels',
     openPosition: 'Open position',
     account: {
@@ -529,6 +536,7 @@ export const en = {
       reason: 'Exit',
       tags: 'Tags',
       expand: 'Show details for this trade',
+      details: 'Details',
       long: 'Long',
       short: 'Short',
       none: 'No trades match this filter.',

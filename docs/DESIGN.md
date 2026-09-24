@@ -171,7 +171,7 @@ screenshots at 390 and 1440 px in both themes under `docs/screenshots/phase-N/`.
 | 3 | Presentation mode (auto-generated slide decks) | **done** |
 | 4 | 3D hero and module artwork | **done** |
 | 5 | Simulator, Trainer, Journal, Glossary, Guide, 404 | **done** |
-| 6 | Lighthouse, axe, reduced-motion, keyboard and 360 px passes; bundle budgets | next |
+| 6 | Lighthouse, axe, reduced-motion, keyboard and 360 px passes; bundle budgets | **done** |
 
 ### Decisions made in Phase 0
 
@@ -358,6 +358,57 @@ screenshots at 390 and 1440 px in both themes under `docs/screenshots/phase-N/`.
 - **`FigureFrame` gained `linkable` and `className`.** A quiz question is not a place worth
   linking to, and the trainer needs the frame without its lesson margin.
 - **The palette ratchet reached zero.** No Tailwind palette class is left anywhere in `src`.
+
+### Decisions made in Phase 6
+
+- **The checks are a tool, not a one-off.** `tools/audit.mjs` (`npm run audit`) runs every
+  browser check against a production build and exits non-zero over any bar, so a release can be
+  gated on it. It adds two development dependencies: `axe-core`, the standard accessibility rule
+  engine, injected into each page; and `lighthouse`, for the performance and accessibility scores
+  the brief sets. Neither is shipped to the browser.
+- **Results, on the build committed with this phase.** axe: no serious or critical violation in
+  80 page states (15 routes and 5 on-screen states, both themes, 390 and 1440 px). Widths: no
+  horizontal page scroll at 360, 768, 1024, 1440 or 1920 px. Keyboard: 1,037 tab stops, each
+  visible, not covered and ringed. Reduced motion: nothing but opacity moves and no 3D mounts.
+  Lighthouse (desktop, median of three): performance 99 on Home, Learn and the lesson and 98 on
+  the Simulator; 100 accessibility, best practices and SEO on all four. The reports are in `docs/lighthouse/`.
+- **What the checks found, and the fixes.** Chart SVGs had `role="img"` with no text: `CandleSvg`
+  now describes its own data unless given a label. Wide tables scrolled but could not be reached
+  by keyboard: `ScrollRegion` becomes a focusable, labelled region only while it overflows. The
+  deck declared `aria-modal` but Tab walked out into the lesson behind it: everything outside the
+  open deck is now `inert`. Text fields and selects had `outline-none` and showed focus only as a
+  border colour: they keep the standard ring. Focused elements could sit under the sticky header,
+  the glossary's letter strip or the phone tab bar: `scroll-padding` keeps focus clear of them.
+  The header overflowed at 768 px: search collapses to an icon and the progress count hides below
+  1024. An expanded journal row put up-green text on the accent tint at 4.34:1 in light: rows now
+  use surface-2. The simulator's canvas chart is now one image with a description, which also stops its
+  layout table being read as data; and the header's search button takes its name from its
+  visible word rather than an `aria-label` that did not contain it (WCAG 2.5.3). Smaller: a name for the deck's exit button on phones, labels for the lesson's two
+  asides, a real heading level for calculators, a visually hidden title on the simulator.
+- **The saved theme is applied by the theme module itself.** The screenshots caught light pages
+  showing the dark theme's hero and covers: `main.tsx` applied the saved theme after its imports
+  had run, so the theme store had already read the dark class `index.html` ships with. `theme.ts`
+  now reads storage and sets the class when first evaluated, and `main.tsx` imports it first.
+- **The live 3D scene starts when the reader does.** Measured on this machine's integrated GPU,
+  starting the hero cost over half a second of blocked main thread on a first visit: Lighthouse
+  scored Home 78. Three changes, each measured. Shaders compile with `compileAsync`, in parallel
+  where the driver supports it. The environment map, whose prefiltering compiled blur shaders
+  synchronously (568 ms cold), is built in a worker on an OffscreenCanvas and handed back as a
+  ready "CubeUV" texture; the committed posters still build it on the main thread, so they are
+  unchanged. And the scene is fetched only once the reader has moved the pointer, touched,
+  scrolled or pressed a key, at the next idle moment. The live scene differs from the poster only
+  in its sway and its response to the pointer, so a reader who never interacts loses nothing.
+  Its start now costs one task of about 120 ms. Lighthouse never interacts, so its Home score
+  measures the poster path; that is stated here rather than left implied. Live, the glass also
+  refracts a half-resolution copy of the scene, which the material blurs anyway.
+- **The 3D budget counts the worker.** The environment worker carries its own copy of three.js
+  (128 kB), so `bundle-report` holds the scene chunk and the worker together to the brief's
+  400 kB: 367 kB today.
+- **Legacy classes removed.** `.btn-*`, `.input` and `.chip` had their last four uses replaced
+  (`inputClass` joins the UI kit for bare fields) and are deleted.
+- **Left as found.** One lesson's Markdown table has an empty first header cell, a minor axe
+  finding; lesson content is not edited in this overhaul, so it stays, and the content guide
+  now asks authors not to leave that cell empty.
 
 ### Known issues found in the audit, to fix as the components are rebuilt
 

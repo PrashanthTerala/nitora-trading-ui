@@ -18,6 +18,8 @@ import { PositionSizer, ExpectancyCalc, RecoveryTable, StreakSimulator } from '.
 import { H2, H3 } from './Heading';
 import { Deck, DeckSource, LessonBody, Slide, SlideFigure, SlideNotes } from '@/components/deck/readComponents';
 import { MDX_GROUPS, type MdxGroup } from './names';
+import { ScrollRegion } from '@/components/ui/ScrollRegion';
+import { t } from '@/i18n';
 
 /**
  * Tables get their own scroll container.
@@ -28,7 +30,7 @@ import { MDX_GROUPS, type MdxGroup } from './names';
  * keeps the scrolling inside the table, where it reads as deliberate rather than broken.
  */
 function ScrollableTable(props: ComponentPropsWithoutRef<'table'>) {
-  return createElement('div', { className: 'table-scroll' }, createElement('table', props));
+  return createElement(ScrollRegion, { className: 'table-scroll', label: t('mdx.table'), children: createElement('table', props) });
 }
 
 // Each group must hold exactly the components its list in names.ts names: none missing, none extra.

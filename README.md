@@ -4,8 +4,10 @@ A complete, plain-language school of trading with a realistic paper-trading simu
 
 **128 lessons · 13 modules · ~179,000 words · 258 glossary terms · 8 synthetic markets**
 
-Built with React 19, TypeScript, Vite 8, Tailwind 4, MDX and TradingView lightweight-charts v5.
-Everything runs in the browser. No backend, no accounts, no real money, no data leaves the device.
+Built with React 19, TypeScript, Vite 8, Tailwind 4, MDX and TradingView lightweight-charts v5,
+with `motion` for UI animation, React Three Fiber and three.js for the 3D artwork, `cmdk` for the
+command palette and Radix for dialogs. Everything runs in the browser. No backend, no accounts, no
+real money, no analytics, and no data leaves the device.
 
 ```
 src/
@@ -18,17 +20,31 @@ src/
     market/              Synthetic market: generator, timeframe aggregation, indicators
     broker/              Paper-trading broker: orders, positions, fills, margin, statistics
   components/
+    ui/                  The UI kit: Button, Card, Chip, Ring, Segmented, Tabs, Tooltip, Dialog,
+                         Sheet, Kbd, Skeleton, Toast, AnimatedNumber, ScrollRegion, Illustration
+    layout/              Shell, header, mobile tab bar, command palette, route progress
     figures/CandleSvg    Dependency-free SVG candlestick renderer used by lessons
-    mdx/                 Components lessons may use (callouts, quizzes, figures, calculators)
-    sim/                 Chart, order ticket and panels for the simulator
-  pages/                 Home, Learn, Module, Lesson, Simulator, Trainer, Journal, Glossary
+    mdx/                 The component registry lessons may use (callouts, quizzes, figures, calculators)
+    deck/                Presentation mode: every lesson as a slide deck
+    three/, art/         The 3D scenes, and the poster-first slot that shows them
+    sim/, journal/       Chart, order ticket and panels for the simulator; the journal's charts
+  pages/                 Home, Learn, Track, Module, Lesson, Simulator, Trainer, Journal, Glossary, Guide
+  styles/tokens.css      The design tokens: every colour, size, radius, shadow and duration
+  i18n/en.ts             Every interface string, read through t()
 tools/
   lint-content.mjs       Validates all 128 lessons against docs/CONTENT-GUIDE.md
-  test-engine.mjs        82 tests over the market generator, indicators and broker
+  lint-tokens.mjs        No raw colours outside the token files; every contrast pair, both themes
+  test-engine.mjs        Tests over the market generator, indicators, broker, sizing and helpers
   test-figures.mjs       Checks all 85 teaching figures draw valid candles
+  test-decks.mjs         Builds every lesson's deck and checks every slide, question and word
   check-prices.mjs       Checks lesson examples quote prices the engine actually produces
+  render-art.mjs         Renders the 3D scenes to the committed posters, covers and preview cards
+  audit.mjs              Release checks in a real browser: axe, widths, keyboard, motion, Lighthouse
+  screenshots.mjs        Screenshots of every page at 390 and 1440 px in both themes
 docs/
   CONTENT-GUIDE.md       The contract every lesson file follows
+  DESIGN.md              The design system, and the decisions made building it
+  tokens.md              The token table, generated from tokens.css
 ```
 
 ## Run it
@@ -55,14 +71,19 @@ anything. `VITE_DATA_API` decides it:
 A saved session left in Real replay or Live reopens on the synthetic market in a build without
 a service, with a fresh account, rather than trying to connect on load.
 
+Features can ship dark with `VITE_FLAGS`, a comma list read at build time: `VITE_FLAGS=-3d`
+keeps the rendered posters and never loads the live 3D, `-deck` and `-commandPalette` turn off
+presentation mode and the palette, and `quantTrack` turns on the (still empty) second track.
+
 Deploying: see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). Every push to `master` is tested, built
 into an image and, once enabled, deployed to the server as the public build.
 
 ## The four rooms
 
 **Learn** — Thirteen modules named like school years, from "what is a market" to options Greeks.
-Each lesson has figures, an explain-it-like-I-am-five callout, key takeaways and a quiz. Progress
-and best quiz scores are saved in the browser.
+Each lesson has figures, an explain-it-like-I-am-five callout, key takeaways and a quiz, and every
+lesson can also be read as a slide deck (press P). Progress and best quiz scores are saved in the
+browser. Ctrl K (⌘K on a Mac) searches lessons, glossary terms, symbols and pages.
 
 | # | Module | Lessons |
 |---|--------|---------|
@@ -85,13 +106,19 @@ and best quiz scores are saved in the browser.
 (index), PETR (energy), BIOX (event-driven biotech) and FXEU (low-volatility currency pair).
 Market, limit, stop and stop-limit orders, brackets, long and short, leverage, commissions,
 slippage and margin calls. A clock you can play at four speeds or step one candle at a time.
+Laid out as a trading terminal: the order ticket sizes by risk and shows what a trade costs if it
+is wrong before it can be sent; press ? for the keyboard shortcuts.
 
-**Trainer** — Two drills: name the pattern from a chart, and guess where price goes next. The
-second one is designed to be humbling.
+**Trainer** — Two drills in sessions of ten: name the pattern from a chart, and guess where price
+goes next. Each answer links to the lesson that teaches it; the second drill is designed to be
+humbling.
 
 **Journal** — Every closed trade with its R-multiple, exit reason and duration, plus expectancy,
 profit factor, win rate, maximum drawdown, an equity curve, an R-distribution histogram and
-tagging for setups and mistakes. Exports to CSV.
+tagging for setups and mistakes. Open a trade to see the market around it. Exports to CSV.
+
+**Glossary and guide** — 258 terms, each opening in a panel with every lesson that uses it; and a
+guide to how the site works.
 
 ## Two markets
 
@@ -149,15 +176,17 @@ the wrong lesson.
 ## Checks
 
 ```bash
-npm run check   # typecheck, then all three suites below
+npm run check   # typecheck, then every suite below
 ```
 
 | Suite | What it proves |
 |-------|----------------|
 | `npm run lint:content` | All 128 lessons present and structurally valid |
-| `npm run test:engine` | 82 tests: generator, indicators, broker, statistics |
-| `npm run test:figures` | All 85 teaching figures draw valid candles with in-range annotations |
+| `npm run lint:tokens` | No raw colour outside the token files; every text and control pair passes contrast in both themes |
 | `npm run check:prices` | Lesson examples quote prices the instruments actually trade at |
+| `npm run test:engine` | Generator, indicators, broker, statistics, order sizing, flags, i18n, sitemap |
+| `npm run test:figures` | All 85 teaching figures draw valid candles with in-range annotations |
+| `npm run test:decks` | Every lesson builds a deck; no empty slide, every quiz question present |
 
 A figure with an out-of-range annotation index renders silently wrong, so that is
 checked mechanically rather than by eye. The price checker derives each instrument's real
@@ -166,6 +195,26 @@ trading band from the engine itself, so lesson examples cannot drift when the ge
 The content linter enforces the contract in `docs/CONTENT-GUIDE.md`: correct file paths, no H1,
 required components, valid figure and indicator names, resolvable internal links, quiz arrays
 that parse as JavaScript with in-range answer indices, and word counts near target.
+
+### Release checks
+
+Some things only a real browser can check. Build, serve the build, then audit it:
+
+```bash
+npm run build && npx vite preview --port 4173
+npm run audit          # or: node tools/audit.mjs a11y | responsive | keyboard | motion | lighthouse
+```
+
+| Pass | Bar |
+|------|-----|
+| `a11y` | axe-core on every route and on-screen state, both themes, 390 and 1440 px: no serious or critical violation |
+| `responsive` | No horizontal page scroll at 360, 768, 1024, 1440 or 1920 px |
+| `keyboard` | Tab through every route: each stop visible, not covered, with a focus ring |
+| `motion` | With reduced motion, nothing moves but opacity and no 3D scene mounts |
+| `lighthouse` | Desktop, median of three: Performance ≥ 90 and Accessibility ≥ 95 on Home, Learn, a lesson and the Simulator |
+
+`npm run bundle:report` prints the home route's initial JavaScript against its 250 kB budget
+and the 3D chunk against its 400 kB budget.
 
 ## Adding a lesson
 

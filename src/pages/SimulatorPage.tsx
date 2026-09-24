@@ -60,7 +60,7 @@ function writePref(key: string, value: string) {
   }
 }
 
-const selectClass = 'h-8 rounded-control border border-line-strong bg-surface-1 px-2 font-mono text-mono font-semibold text-ink outline-none focus:border-accent';
+const selectClass = 'h-8 rounded-control border border-line-strong bg-surface-1 px-2 font-mono text-mono font-semibold text-ink focus:border-accent';
 
 /**
  * The simulator, laid out as a trading terminal: a 44-pixel bar of instrument, timeframe and
@@ -160,6 +160,8 @@ export function SimulatorPage() {
 
   return (
     <div className="flex flex-col max-lg:pb-20 lg:h-[calc(100dvh-var(--spacing-header))] lg:overflow-hidden">
+      {/* A terminal has no room for a visible title; the page still has one for screen readers. */}
+      <h1 className="sr-only">{t('nav.simulator')}</h1>
       {/* top bar */}
       <div className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-2 border-b border-line bg-surface-1 px-3 py-2 xl:h-11 xl:flex-nowrap xl:py-0">
         {isReal ? (

@@ -9,6 +9,7 @@ import { LessonRow } from '@/components/curriculum/LessonRow';
 import { ModuleGlyph } from '@/components/curriculum/ModuleGlyph';
 import { cardClass } from '@/components/ui/Card';
 import { Kbd } from '@/components/ui/Kbd';
+import { inputClass } from '@/components/ui/Input';
 import { Ring } from '@/components/ui/Ring';
 import { Segmented } from '@/components/ui/Segmented';
 import { Switch } from '@/components/ui/Switch';
@@ -95,7 +96,7 @@ export function LearnPage() {
               }}
               placeholder={t('learn.search')}
               aria-keyshortcuts="/"
-              className="input h-10 w-full pl-9 pr-10"
+              className={inputClass('w-full pl-9 pr-10')}
             />
             <Kbd className="absolute right-2.5 top-1/2 -translate-y-1/2 max-sm:hidden">/</Kbd>
           </label>
