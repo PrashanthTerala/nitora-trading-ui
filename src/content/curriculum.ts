@@ -33,14 +33,28 @@ export interface LessonMeta {
 }
 
 /**
- * A module's cover art, rendered at build time (Phase 4). Until a module has it, pages draw a
- * placeholder cover from its level colour, so an absent `art` is normal, not an error.
+ * A module's artwork, rendered from its 3D scene by tools/render-art.mjs and committed under
+ * public/art. A module without `art` draws a placeholder cover from its level colour, so a new
+ * module works before its scene exists.
  */
 export interface ModuleArt {
-  dark: string;          // e.g. /art/modules/<id>-dark.webp
+  dark: string;          // cover, 1200x800: /art/modules/<id>-dark.webp
   light: string;
-  glyph?: string;        // 64 px SVG mark for lists and the sidebar
+  darkSmall?: string;    // the same at 600x400, for cards
+  lightSmall?: string;
+  og?: string;           // 1200x630 link preview: /art/og/<id>.jpg
+  glyph?: string;        // id of the 64 px line glyph in src/assets/glyphs/, for lists and the outline
 }
+
+/** The standard artwork paths for a module rendered by tools/render-art.mjs. */
+const moduleArt = (id: string): ModuleArt => ({
+  dark: `/art/modules/${id}-dark.webp`,
+  light: `/art/modules/${id}-light.webp`,
+  darkSmall: `/art/modules/${id}-dark-600.webp`,
+  lightSmall: `/art/modules/${id}-light-600.webp`,
+  og: `/art/og/${id}.jpg`,
+  glyph: id,
+});
 
 export interface ModuleMeta {
   id: string;            // folder name; globally unique, because routes are /learn/:moduleId
@@ -50,9 +64,9 @@ export interface ModuleMeta {
   level: Level;
   /** The track this module belongs to. See TRACKS. */
   track: TrackId;
-  /** Cover art, once rendered. Absent means "draw the placeholder". */
+  /** Cover art and glyph. Absent means "draw the placeholder". */
   art?: ModuleArt;
-  /** @deprecated Replaced by `art`. Kept so existing data still type-checks; no longer rendered. */
+  /** @deprecated Replaced by `art`, and no longer set or rendered; kept so older data type-checks. */
   emoji?: string;
   description: string;
   lessons: LessonMeta[];
@@ -101,7 +115,7 @@ export const CURRICULUM: ModuleMeta[] = [
     subtitle: 'Kindergarten',
     level: 'foundation',
     track: 'trading-foundations',
-    emoji: '🍋',
+    art: moduleArt('m00-what-is-a-market'),
     description: 'Start here even if you have never bought a share. Markets explained with lemonade stands, playground swaps and zero jargon.',
     lessons: [
       { id: '01-the-lemonade-stand', title: 'The Lemonade Stand: Why Prices Exist', summary: 'Prices come from people agreeing to swap. That is the whole secret.', minutes: 6 },
@@ -122,7 +136,7 @@ export const CURRICULUM: ModuleMeta[] = [
     subtitle: 'Grade 1',
     level: 'reading',
     track: 'trading-foundations',
-    emoji: '📈',
+    art: moduleArt('m01-reading-price'),
     description: 'A chart is just price history drawn as a picture. Learn to read line, bar and candlestick charts and what each part means.',
     lessons: [
       { id: '01-what-is-a-chart', title: 'What a Chart Actually Shows', summary: 'Time on the bottom, price on the side, and a story in between.', minutes: 6 },
@@ -142,7 +156,7 @@ export const CURRICULUM: ModuleMeta[] = [
     subtitle: 'Grade 2',
     level: 'reading',
     track: 'trading-foundations',
-    emoji: '🕯️',
+    art: moduleArt('m02-candlestick-patterns'),
     description: 'The complete candlestick vocabulary: single, double, triple and continuation patterns, with the honest truth about how reliable each one is.',
     lessons: [
       { id: '01-how-to-read-patterns', title: 'How to Think About Candlestick Patterns', summary: 'Patterns are psychology snapshots, not magic buttons. Context decides everything.', minutes: 8 },
@@ -170,7 +184,7 @@ export const CURRICULUM: ModuleMeta[] = [
     subtitle: 'Grade 3',
     level: 'analysis',
     track: 'trading-foundations',
-    emoji: '🏗️',
+    art: moduleArt('m03-market-structure'),
     description: 'Trends, ranges, support and resistance: the skeleton beneath every chart. Learn to see where price is likely to react.',
     lessons: [
       { id: '01-trends', title: 'Trends: Higher Highs and Higher Lows', summary: 'The definition of an uptrend and a downtrend in one picture.', minutes: 8 },
@@ -192,7 +206,7 @@ export const CURRICULUM: ModuleMeta[] = [
     subtitle: 'Grade 4',
     level: 'analysis',
     track: 'trading-foundations',
-    emoji: '🔺',
+    art: moduleArt('m04-chart-patterns'),
     description: 'Bigger shapes built from many candles: head and shoulders, double tops, triangles, flags, wedges and cups, with measured targets.',
     lessons: [
       { id: '01-chart-patterns-intro', title: 'How Chart Patterns Form', summary: 'Patterns are crowd behaviour drawn over days and weeks.', minutes: 6 },
@@ -214,7 +228,7 @@ export const CURRICULUM: ModuleMeta[] = [
     subtitle: 'Grade 5',
     level: 'analysis',
     track: 'trading-foundations',
-    emoji: '🧮',
+    art: moduleArt('m05-indicators'),
     description: 'Moving averages, RSI, MACD, Bollinger Bands, ATR, VWAP, Fibonacci and more, explained by what they calculate, not just what they look like.',
     lessons: [
       { id: '01-what-indicators-are', title: 'What Indicators Are (and Are Not)', summary: 'Every indicator is maths applied to price. None of them know the future.', minutes: 7 },
@@ -241,7 +255,7 @@ export const CURRICULUM: ModuleMeta[] = [
     subtitle: 'Grade 6',
     level: 'execution',
     track: 'trading-foundations',
-    emoji: '🎯',
+    art: moduleArt('m06-orders-and-execution'),
     description: 'How a click becomes a trade: every order type, long and short, leverage, slippage, fees and the order book.',
     lessons: [
       { id: '01-market-and-limit-orders', title: 'Market Orders vs Limit Orders', summary: 'Speed versus price. The first decision on every trade.', minutes: 8 },
@@ -262,7 +276,7 @@ export const CURRICULUM: ModuleMeta[] = [
     subtitle: 'Grade 7',
     level: 'execution',
     track: 'trading-foundations',
-    emoji: '🛡️',
+    art: moduleArt('m07-risk-management'),
     description: 'The module that separates survivors from statistics. Position sizing, risk to reward, expectancy and drawdown, with the maths made simple.',
     lessons: [
       { id: '01-why-risk-first', title: 'Why Risk Comes Before Reward', summary: 'Lose 50% and you need 100% to get back. The asymmetry of losses.', minutes: 8 },
@@ -284,7 +298,7 @@ export const CURRICULUM: ModuleMeta[] = [
     subtitle: 'Grade 8',
     level: 'execution',
     track: 'trading-foundations',
-    emoji: '🧠',
+    art: moduleArt('m08-trading-psychology'),
     description: 'Your brain evolved to survive tigers, not candles. Learn the biases that wreck traders and the routines that beat them.',
     lessons: [
       { id: '01-fear-and-greed', title: 'Fear and Greed: The Two Engines', summary: 'Every mistake in trading is one of these two wearing a costume.', minutes: 7 },
@@ -304,7 +318,7 @@ export const CURRICULUM: ModuleMeta[] = [
     subtitle: 'Grade 9',
     level: 'mastery',
     track: 'trading-foundations',
-    emoji: '♟️',
+    art: moduleArt('m09-strategies'),
     description: 'Scalping to position trading, trend following to mean reversion. Build a complete rule-based plan and test it properly.',
     lessons: [
       { id: '01-trading-styles', title: 'Scalping, Day Trading, Swing Trading, Position Trading', summary: 'Pick the style that fits your life, not the one that looks exciting.', minutes: 9 },
@@ -326,7 +340,7 @@ export const CURRICULUM: ModuleMeta[] = [
     subtitle: 'Grade 10',
     level: 'mastery',
     track: 'trading-foundations',
-    emoji: '🌍',
+    art: moduleArt('m10-fundamentals-and-macro'),
     description: 'Earnings, valuation, interest rates, economic data and sentiment: the forces behind the candles.',
     lessons: [
       { id: '01-technical-vs-fundamental', title: 'Technical vs Fundamental Analysis', summary: 'Two lenses, and why most traders end up using both.', minutes: 6 },
@@ -346,7 +360,7 @@ export const CURRICULUM: ModuleMeta[] = [
     subtitle: 'Grade 11',
     level: 'mastery',
     track: 'trading-foundations',
-    emoji: '🧩',
+    art: moduleArt('m11-derivatives-and-other-markets'),
     description: 'The instruments beyond plain shares. Enough to understand what you are looking at and to avoid the classic beginner blow-ups.',
     lessons: [
       { id: '01-options-basics', title: 'Options: Calls and Puts', summary: 'The right, not the obligation. Strike, expiry and premium.', minutes: 10 },
@@ -365,7 +379,7 @@ export const CURRICULUM: ModuleMeta[] = [
     subtitle: 'Graduation',
     level: 'mastery',
     track: 'trading-foundations',
-    emoji: '🎓',
+    art: moduleArt('m12-becoming-consistent'),
     description: 'Journaling, performance metrics, choosing a broker, avoiding scams, and the path from simulator to small real money.',
     lessons: [
       { id: '01-the-trading-journal', title: 'The Trading Journal', summary: 'The single highest-return habit in trading.', minutes: 8 },

@@ -4,6 +4,7 @@ import { CheckCircle2, ChevronDown, Circle } from 'lucide-react';
 import type { ModuleMeta } from '@/content/curriculum';
 import { useProgress, lessonKey, moduleProgress } from '@/store/progress';
 import { LevelRibbon } from '@/components/curriculum/ModuleCover';
+import { ModuleGlyph } from '@/components/curriculum/ModuleGlyph';
 import { Ring } from '@/components/ui/Ring';
 import { cx } from '@/components/ui/cx';
 import { t } from '@/i18n';
@@ -42,6 +43,7 @@ export function LessonOutline({ module: mod, currentId }: { module: ModuleMeta; 
       <div id={listId} className={cx(open ? 'mt-2 block rounded-card border border-line bg-surface-1 p-2' : 'hidden', 'lg:mt-0 lg:block lg:border-0 lg:bg-transparent lg:p-0')}>
         <Link to={`/learn/${mod.id}`} className="group mb-3 hidden items-start gap-3 rounded-control px-2 py-1 lg:flex">
           <LevelRibbon level={mod.level} className="mt-1 h-8 w-[3px] shrink-0 rounded-full" />
+          <ModuleGlyph module={mod} className="mt-1 h-7 w-7 text-ink-soft group-hover:text-accent" />
           <span className="min-w-0 flex-1">
             <span className="block text-caption font-semibold uppercase tracking-[0.08em] text-ink-muted">{t('common.module', { number: mod.number })}</span>
             <span className="block text-body-sm font-semibold leading-snug text-ink group-hover:text-accent">{mod.title}</span>

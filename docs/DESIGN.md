@@ -169,8 +169,8 @@ screenshots at 390 and 1440 px in both themes under `docs/screenshots/phase-N/`.
 | 1 | Shell, command palette, toasts, Home, Learn, Module; tracks refactor | **done** |
 | 2 | Lesson read mode, MDX component restyle, component registry | **done** |
 | 3 | Presentation mode (auto-generated slide decks) | **done** |
-| 4 | 3D hero and module artwork | next |
-| 5 | Simulator, Trainer, Journal, Glossary, Guide, 404 | |
+| 4 | 3D hero and module artwork | **done** |
+| 5 | Simulator, Trainer, Journal, Glossary, Guide, 404 | next |
 | 6 | Lighthouse, axe, reduced-motion, keyboard and 360 px passes; bundle budgets | |
 
 ### Decisions made in Phase 0
@@ -272,6 +272,44 @@ screenshots at 390 and 1440 px in both themes under `docs/screenshots/phase-N/`.
 - **The `deck` flag is now on by default**; `VITE_FLAGS=-deck` turns presentation mode off.
 - **Fixed on the way:** a bracket drawn under the candles ("downtrend") had its label cut off
   below the drawing, in lessons as well as slides.
+
+### Decisions made in Phase 4
+
+- **React Three Fiber 9.8 and three 0.186, without drei.** R3F 9.8 declares React
+  `>=19 <19.4`, so it installs on 19.3 without forcing anything. drei was left out: its
+  `Environment` brings HDR loaders and presets fetched from a CDN, and the site makes no
+  third-party requests. Reflections come from three's own procedural `RoomEnvironment`
+  instead. The live chunk (three, R3F and every scene) is 238 kB gzipped against a 400 kB
+  budget, and loads only when a scene is about to be shown.
+- **One scene family.** Every scene is built from the same primitives in
+  `src/components/three/primitives.tsx` (tinted glass, candles, blocks, a staircase, a shield,
+  rings, tubes, a height-field surface, the floor grid, an additive glow sprite as fake bloom),
+  lit by one cool key light and one warm rim, with the level colour as the tint.
+- **Glass needs a backdrop.** A transmissive material can only refract what is actually in the
+  scene. So each scene carries its own backdrop plane (the page colour for the hero, the level-
+  tinted surface for covers) rather than being composited over a background afterwards; that
+  first attempt rendered the glass as opaque plastic.
+- **Posters first, always.** `SceneSlot` renders the build-time poster and only then, where
+  `can3D()` allows (flag on, no reduced motion, WebGL, device memory of 4 GB or more if reported,
+  no data saver) and once the slot scrolls into view, loads the live scene over it and
+  crossfades when its first frame is drawn. It stops drawing whenever it is off screen. The
+  poster and the live scene share the same box and camera, so the change is invisible except
+  for the motion.
+- **Rendered, committed art.** `tools/render-art.mjs` photographs `/__art/<id>` (a dev-only
+  route) in Edge or Chrome and has the browser encode the images, so no image library is
+  needed: covers at 1200 and 600 px wide in both themes (WebP, about 19 kB and 8 kB each),
+  the hero poster per theme, and 1200×630 JPEG preview cards with the module's title set in
+  the site's fonts. 2.3 MB in all, committed under `public/art`.
+- **Module hero, framed.** The brief puts the cover full-width behind the module's title. With
+  real art the object sits in the middle of the image, behind the text, under the legibility
+  gradient. The cover is now a 3:2 frame beside the title (above it on phones) over a
+  level-coloured wash, which also lets the live scene replace it exactly.
+- **Link previews.** Module and lesson pages use their module's card, every other page the
+  site's. index.html carries the default for crawlers that run no JavaScript, made absolute at
+  build time when `SITE_URL` is set.
+- **Glyphs** are 24-unit line drawings in `src/assets/glyphs/`, inlined so they take the text
+  colour. They mark each module in the lesson outline, the command palette and search results.
+- **The `3d` flag is on by default**; `VITE_FLAGS=-3d` keeps the posters only.
 
 ### Known issues found in the audit, to fix as the components are rebuilt
 

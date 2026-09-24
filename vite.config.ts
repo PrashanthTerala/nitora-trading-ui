@@ -51,14 +51,19 @@ function lessonExcerpt(): Plugin {
 }
 
 /**
- * robots.txt always; sitemap.xml when the build knows the site's public address (SITE_URL),
- * because a sitemap may only list absolute URLs. Both come from the curriculum, so a new lesson
+ * robots.txt always; sitemap.xml and an absolute link-preview image when the build knows the
+ * site's public address (SITE_URL), because both need absolute URLs. Both come from the curriculum, so a new lesson
  * is in the sitemap without anyone remembering to add it.
  */
 function seoFiles(): Plugin {
   return {
     name: 'nitora:seo-files',
     apply: 'build',
+    // Open Graph wants an absolute image URL; the page's own address is only known here.
+    transformIndexHtml(html) {
+      const origin = process.env.SITE_URL?.trim().replace(/\/+$/, '');
+      return origin ? html.replace('content="/art/og/default.jpg"', `content="${origin}/art/og/default.jpg"`) : html;
+    },
     generateBundle() {
       const origin = process.env.SITE_URL?.trim() || undefined;
       this.emitFile({ type: 'asset', fileName: 'robots.txt', source: buildRobots(origin) });

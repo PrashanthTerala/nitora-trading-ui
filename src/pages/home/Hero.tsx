@@ -6,7 +6,24 @@ import { buttonClass } from '@/components/ui/Button';
 import { chipClass } from '@/components/ui/Chip';
 import { CountUp } from '@/components/ui/CountUp';
 import { t } from '@/i18n';
-import { HeroPoster } from './HeroPoster';
+import { SceneSlot } from '@/components/art/SceneSlot';
+import { useTheme } from '@/lib/theme';
+
+/** The hero scene rendered at build time: the page's largest image, so it loads first. */
+function HeroPosterImage() {
+  const dark = useTheme((s) => s.dark);
+  return (
+    <img
+      src={dark ? '/art/hero-dark.webp' : '/art/hero-light.webp'}
+      width={1120}
+      height={960}
+      alt={t('home.posterLabel')}
+      fetchPriority="high"
+      decoding="async"
+      className="h-full w-full object-cover"
+    />
+  );
+}
 
 export function Hero() {
   const completed = useProgress((s) => s.completed);
@@ -49,9 +66,11 @@ export function Hero() {
             ))}
           </dl>
         </div>
-        <div className="mx-auto w-full max-w-[560px] lg:max-w-none">
-          <HeroPoster />
-        </div>
+        <SceneSlot
+          scene="hero"
+          className="mx-auto aspect-[7/6] w-full max-w-[560px] [mask-image:radial-gradient(ellipse_at_center,black_58%,transparent_78%)] lg:max-w-none"
+          poster={<HeroPosterImage />}
+        />
       </div>
     </section>
   );

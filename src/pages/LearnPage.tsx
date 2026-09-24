@@ -6,6 +6,7 @@ import { ALL_LESSONS, LEVELS, TRACKS, findModule, moduleMinutes, modulesByLevel,
 import { useProgress, lessonKey, moduleProgress, overallProgress, nextLesson } from '@/store/progress';
 import { ModuleCover, LevelBadge, LevelRibbon } from '@/components/curriculum/ModuleCover';
 import { LessonRow } from '@/components/curriculum/LessonRow';
+import { ModuleGlyph } from '@/components/curriculum/ModuleGlyph';
 import { cardClass } from '@/components/ui/Card';
 import { Kbd } from '@/components/ui/Kbd';
 import { Ring } from '@/components/ui/Ring';
@@ -262,7 +263,8 @@ function SearchResults({ results, completed, quizScores }: { results: typeof ALL
             const key = lessonKey(l.moduleId, l.id);
             return (
               <li key={l.path}>
-                <p className="px-3 pt-2 text-caption text-ink-muted">
+                <p className="flex items-center gap-1.5 px-3 pt-2 text-caption text-ink-muted">
+                  <ModuleGlyph module={findModule(l.moduleId) ?? {}} className="h-3.5 w-3.5" />
                   {t('common.module', { number: l.moduleNumber })} · {l.moduleTitle}
                 </p>
                 <LessonRow to={l.path} lesson={l} index={l.index} done={!!completed[key]} quiz={quizScores[key]} showSummary className="pt-1" />

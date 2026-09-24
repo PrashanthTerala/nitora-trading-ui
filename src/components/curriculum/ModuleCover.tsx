@@ -1,24 +1,45 @@
 import type { CSSProperties } from 'react';
 import { LEVELS, type Level, type ModuleMeta } from '@/content/curriculum';
 import { cx } from '@/components/ui/cx';
+import { useTheme } from '@/lib/theme';
 
 /**
- * A module's cover. Until Phase 4 renders real artwork into `module.art`, this draws a
- * placeholder from the module's level colour: a tinted gradient over a faint grid, and a
- * silhouette of candles unique to the module (seeded from its id, so it never changes between
- * visits). Decorative either way -- the module's title is always printed beside it.
+ * A module's cover: its rendered artwork (public/art, from tools/render-art.mjs) in the current
+ * theme, or, for a module without art yet, a placeholder drawn from its level colour -- a tinted
+ * gradient over a faint grid and a candle silhouette seeded from the module id. Decorative
+ * either way: the module's title is always printed beside it.
  */
 type Variant = 'thumb' | 'card' | 'hero';
 
 const levelVar = (level: Level) => `var(--color-level-${level})`;
 
-export function ModuleCover({ module: mod, variant = 'card', className }: { module: ModuleMeta; variant?: Variant; className?: string }) {
+/** How wide the cover is drawn, so the browser picks the 600 or the 1200 px image. */
+const SIZES: Record<Variant, string> = {
+  thumb: '160px',
+  card: '(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw',
+  hero: '(min-width: 1024px) 60vw, 100vw',
+};
+
+export function ModuleCover({ module: mod, variant = 'card', className, eager = false }: { module: ModuleMeta; variant?: Variant; className?: string; eager?: boolean }) {
+  const dark = useTheme((s) => s.dark);
   const style = { '--lv': levelVar(mod.level) } as CSSProperties;
   if (mod.art) {
+    // One image for the theme in use; hiding the other with CSS would still download it.
+    const large = dark ? mod.art.dark : mod.art.light;
+    const small = dark ? mod.art.darkSmall : mod.art.lightSmall;
     return (
       <div className={cx('relative overflow-hidden bg-surface-2', className)} style={style} aria-hidden>
-        <img src={mod.art.dark} alt="" loading="lazy" decoding="async" className="hidden h-full w-full object-cover dark:block" />
-        <img src={mod.art.light} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover dark:hidden" />
+        <img
+          src={small ?? large}
+          srcSet={small ? `${small} 600w, ${large} 1200w` : undefined}
+          sizes={SIZES[variant]}
+          width={1200}
+          height={800}
+          alt=""
+          loading={eager ? 'eager' : 'lazy'}
+          decoding="async"
+          className="h-full w-full object-cover"
+        />
       </div>
     );
   }

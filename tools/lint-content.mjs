@@ -112,6 +112,21 @@ try {
 let totalWords = 0;
 let present = 0;
 
+// Module artwork: every file a module's `art` names must exist (tools/render-art.mjs writes the
+// images, src/assets/glyphs holds the glyphs). A module without art is allowed -- it shows a
+// placeholder cover -- but is worth knowing about.
+for (const mod of modules) {
+  if (!mod.art) {
+    warnings.push(`curriculum: ${mod.id} has no art yet (run tools/render-art.mjs once its scene exists)`);
+    continue;
+  }
+  for (const key of ['dark', 'light', 'darkSmall', 'lightSmall', 'og']) {
+    const path = mod.art[key];
+    if (path && !existsSync(join(root, 'public', path))) errors.push(`curriculum: ${mod.id} art.${key} names ${path}, which does not exist in public/`);
+  }
+  if (mod.art.glyph && !existsSync(join(root, 'src/assets/glyphs', `${mod.art.glyph}.svg`))) errors.push(`curriculum: ${mod.id} names glyph "${mod.art.glyph}", but src/assets/glyphs/${mod.art.glyph}.svg does not exist`);
+}
+
 for (const mod of modules) {
   for (const lesson of mod.lessons) {
     const rel = `src/content/modules/${mod.id}/${lesson.id}.mdx`;

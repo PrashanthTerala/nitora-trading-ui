@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, Check, Clock } from 'lucide-react';
 import { findModule, modulesInTrack, moduleMinutes, LEVELS } from '@/content/curriculum';
 import { useProgress, lessonKey, moduleProgress } from '@/store/progress';
 import { ModuleCover, LevelBadge } from '@/components/curriculum/ModuleCover';
+import { SceneSlot } from '@/components/art/SceneSlot';
 import { buttonClass } from '@/components/ui/Button';
 import { cardClass } from '@/components/ui/Card';
 import { Chip } from '@/components/ui/Chip';
@@ -19,7 +20,7 @@ function ParallaxCover({ children }: { children: ReactNode }) {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 400], [0, reduce ? 0 : 10]);
   return (
-    <m.div aria-hidden className="absolute inset-x-0 -top-3 bottom-0" style={{ y }}>
+    <m.div aria-hidden className="max-lg:order-first" style={{ y }}>
       {children}
     </m.div>
   );
@@ -33,7 +34,7 @@ export function ModulePage() {
       ? {
           title: mod.title,
           description: mod.description,
-          image: mod.art?.dark,
+          image: mod.art?.og,
           jsonLd: {
             '@type': 'Course',
             name: mod.title,
@@ -63,42 +64,51 @@ export function ModulePage() {
 
   return (
     <div>
-      <section className="relative isolate overflow-hidden border-b border-line">
-        <ParallaxCover>
-          <ModuleCover module={mod} variant="hero" className="h-full w-full" />
-        </ParallaxCover>
-        {/* keeps the text legible over any cover: the page colour rises from the left and bottom */}
+      <section className="relative isolate overflow-hidden border-b border-line bg-surface-1">
+        {/* the level's colour, as a wash across the band */}
         <div
           aria-hidden
           className="absolute inset-0"
-          style={{ backgroundImage: 'linear-gradient(90deg, var(--color-bg) 25%, color-mix(in oklch, var(--color-bg) 55%, transparent) 70%, transparent), linear-gradient(0deg, var(--color-bg), transparent 45%)' }}
+          style={{ backgroundImage: `radial-gradient(70% 100% at 80% 0%, color-mix(in oklch, var(--color-level-${mod.level}) 22%, transparent), transparent 70%)` }}
         />
         <div className="relative mx-auto max-w-[1200px] px-4 pb-12 pt-8 sm:px-6 md:pb-16">
           <Link to="/learn" className="inline-flex items-center gap-1.5 rounded-control text-body-sm text-ink-soft hover:text-ink">
             <ArrowLeft size={14} strokeWidth={1.5} aria-hidden /> {t('module.back')}
           </Link>
-          <div className="mt-10 max-w-2xl md:mt-16">
-            <div className="flex flex-wrap items-center gap-3">
-              <LevelBadge level={mod.level} />
-              <span className="text-caption font-semibold uppercase tracking-[0.08em] text-ink-muted">
-                {t('common.module', { number: mod.number })} · {mod.subtitle}
-              </span>
+          <div className="mt-8 grid items-center gap-8 lg:mt-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,540px)] lg:gap-12">
+            <div className="max-w-2xl">
+              <div className="flex flex-wrap items-center gap-3">
+                <LevelBadge level={mod.level} />
+                <span className="text-caption font-semibold uppercase tracking-[0.08em] text-ink-muted">
+                  {t('common.module', { number: mod.number })} · {mod.subtitle}
+                </span>
+              </div>
+              <h1 className="mt-3 font-display text-display font-bold text-ink">{mod.title}</h1>
+              <p className="mt-4 text-body-lg text-ink-soft">{mod.description}</p>
+              <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-body-sm text-ink-soft">
+                <span className="flex items-center gap-1.5">
+                  <Clock size={14} strokeWidth={1.5} aria-hidden /> {t('common.minutes', { count: moduleMinutes(mod) })}
+                </span>
+                <span>{t('common.lessons', { count: mod.lessons.length })}</span>
+                <span className="flex items-center gap-2">
+                  <Ring value={mp.pct / 100} size={24} stroke={2.5} label={t('common.percentComplete', { pct: mp.pct })} tone={mp.pct === 100 ? 'up' : 'accent'} />
+                  {t('common.percentComplete', { pct: mp.pct })}
+                </span>
+              </div>
+              <Link to={`/learn/${mod.id}/${firstUndone.id}`} className={buttonClass({ size: 'lg' }, 'mt-8')}>
+                {cta} <ArrowRight size={18} strokeWidth={1.5} aria-hidden />
+              </Link>
             </div>
-            <h1 className="mt-3 font-display text-display font-bold text-ink">{mod.title}</h1>
-            <p className="mt-4 text-body-lg text-ink-soft">{mod.description}</p>
-            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-body-sm text-ink-soft">
-              <span className="flex items-center gap-1.5">
-                <Clock size={14} strokeWidth={1.5} aria-hidden /> {t('common.minutes', { count: moduleMinutes(mod) })}
-              </span>
-              <span>{t('common.lessons', { count: mod.lessons.length })}</span>
-              <span className="flex items-center gap-2">
-                <Ring value={mp.pct / 100} size={24} stroke={2.5} label={t('common.percentComplete', { pct: mp.pct })} tone={mp.pct === 100 ? 'up' : 'accent'} />
-                {t('common.percentComplete', { pct: mp.pct })}
-              </span>
-            </div>
-            <Link to={`/learn/${mod.id}/${firstUndone.id}`} className={buttonClass({ size: 'lg' }, 'mt-8')}>
-              {cta} <ArrowRight size={18} strokeWidth={1.5} aria-hidden />
-            </Link>
+            <ParallaxCover>
+              {/* The cover, and on a desktop with live 3D the same scene, interactive, in its place. */}
+              <SceneSlot
+                scene={mod.id}
+                level={mod.level}
+                desktopOnly
+                className="aspect-[3/2] overflow-hidden rounded-feature border border-line shadow-3"
+                poster={<ModuleCover module={mod} variant="hero" eager className="h-full w-full" />}
+              />
+            </ParallaxCover>
           </div>
         </div>
       </section>

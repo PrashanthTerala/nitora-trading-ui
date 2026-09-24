@@ -4,7 +4,7 @@
  * VITE_FLAGS is a comma list read at build time. A name turns a flag on; a leading minus
  * turns it off:
  *
- *   VITE_FLAGS=3d npm run build               3D on
+ *   VITE_FLAGS=-3d npm run build              live 3D off (the rendered posters stay)
  *   VITE_FLAGS=-deck,-commandPalette npm run dev   presentation mode and the palette off
  *
  * Anything not mentioned keeps its default below. Unknown names are ignored, and reported in
@@ -15,8 +15,8 @@ export const FLAG_DEFAULTS = {
   commandPalette: true,
   /** Lesson presentation mode. Built in Phase 3, on by default. */
   deck: true,
-  /** 3D hero scene and module covers (Phase 4). */
-  '3d': false,
+  /** Live 3D for the home hero and module pages (Phase 4), on by default. Off, the rendered posters stay. */
+  '3d': true,
   /** The Quantitative Trading track, once it has content. */
   quantTrack: false,
 } as const;

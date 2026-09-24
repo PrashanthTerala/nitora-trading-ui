@@ -154,7 +154,7 @@ export default function LessonPage() {
       ? {
           title: found.lesson.title,
           description: found.lesson.summary,
-          image: mod.art?.dark,
+          image: mod.art?.og,
           jsonLd: {
             '@type': 'LearningResource',
             name: found.lesson.title,

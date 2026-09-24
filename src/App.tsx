@@ -22,6 +22,8 @@ const GuidePage = lazy(() => import('@/pages/GuidePage').then((m) => ({ default:
 // The design-token sheet, for review during development. `import.meta.env.DEV` is replaced
 // with false in a production build, so the page and its import are dropped from the bundle.
 const TokensPage = import.meta.env.DEV ? lazy(() => import('@/pages/TokensPage').then((m) => ({ default: m.TokensPage }))) : null;
+// And the scene page tools/render-art.mjs photographs.
+const ArtPage = import.meta.env.DEV ? lazy(() => import('@/pages/ArtPage').then((m) => ({ default: m.ArtPage }))) : null;
 // Likewise the MDX component gallery.
 const MdxGalleryPage = import.meta.env.DEV ? lazy(() => import('@/pages/MdxGalleryPage').then((m) => ({ default: m.MdxGalleryPage }))) : null;
 
@@ -46,6 +48,16 @@ export default function App() {
       <LazyMotion features={loadMotionFeatures} strict>
         <ScrollToTop />
         <Routes>
+          {ArtPage && (
+            <Route
+              path="__art/:id"
+              element={
+                <Suspense fallback={null}>
+                  <ArtPage />
+                </Suspense>
+              }
+            />
+          )}
           <Route element={<Shell />}>
             <Route index element={<HomePage />} />
             <Route path="learn" element={<LearnPage />} />

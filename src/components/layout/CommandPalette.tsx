@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Command } from 'cmdk';
 import { BookA, BookOpen, CandlestickChart, Compass, FileText, Home, Moon, Palette, Search, NotebookPen, Brain } from 'lucide-react';
-import { ALL_LESSONS } from '@/content/curriculum';
+import { ALL_LESSONS, CURRICULUM } from '@/content/curriculum';
+import { ModuleGlyph } from '@/components/curriculum/ModuleGlyph';
 import { SYMBOLS } from '@/engine/market/symbols';
 import type { GlossaryEntry } from '@/content/glossary';
 import { useTheme } from '@/lib/theme';
@@ -20,6 +21,9 @@ const itemClass =
   'flex cursor-pointer items-center gap-3 rounded-control px-3 py-2 text-body-sm text-ink data-[selected=true]:bg-surface-2 data-[selected=true]:shadow-[inset_2px_0_0_var(--color-accent)]';
 const groupClass =
   '[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:pb-1 [&_[cmdk-group-heading]]:pt-3 [&_[cmdk-group-heading]]:text-caption [&_[cmdk-group-heading]]:font-semibold [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-[0.08em] [&_[cmdk-group-heading]]:text-ink-muted';
+
+// Each lesson row shows its module's glyph.
+const glyphs = Object.fromEntries(CURRICULUM.map((m) => [m.id, m]));
 
 const PAGES = [
   { to: '/', label: 'palette.home', icon: Home },
@@ -129,7 +133,7 @@ export default function CommandPalette({ open, onOpenChange }: { open: boolean; 
         <Command.Group heading={t('palette.lessons')}>
           {ALL_LESSONS.map((l) => (
             <Command.Item key={l.path} value={`${l.title} ${l.moduleTitle} ${l.path}`} keywords={[l.summary]} onSelect={() => go(l.path)} className={itemClass}>
-              <FileText size={16} strokeWidth={1.5} className="shrink-0 text-ink-soft" aria-hidden />
+              {glyphs[l.moduleId] ? <ModuleGlyph module={glyphs[l.moduleId]} className="h-4 w-4 text-ink-soft" /> : <FileText size={16} strokeWidth={1.5} className="shrink-0 text-ink-soft" aria-hidden />}
               <span className="min-w-0 flex-1 truncate">{l.title}</span>
               <span className="shrink-0 font-mono text-mono-sm text-ink-muted">{t('palette.moduleShort', { number: l.moduleNumber })}</span>
             </Command.Item>

@@ -12,7 +12,7 @@ export interface PageMeta {
   /** The page's own title; the site name is appended. Omit on the home page. */
   title?: string;
   description?: string;
-  /** Absolute or root-relative image URL for link previews. */
+  /** Absolute or root-relative image URL for link previews; the site's own card when absent. */
   image?: string;
   /** Structured data (schema.org), serialised into one ld+json script. */
   jsonLd?: Record<string, unknown>;
@@ -21,6 +21,7 @@ export interface PageMeta {
 }
 
 const JSON_LD_ID = 'page-jsonld';
+const DEFAULT_IMAGE = '/art/og/default.jpg';
 
 function setMeta(attr: 'name' | 'property', key: string, value: string | null) {
   let el = document.head.querySelector<HTMLMetaElement>(`meta[${attr}="${key}"]`);
@@ -55,8 +56,11 @@ function apply(meta: PageMeta) {
   setMeta('property', 'og:description', description);
   setMeta('property', 'og:type', meta.jsonLd ? 'article' : 'website');
   setMeta('property', 'og:site_name', t('brand.full'));
-  setMeta('property', 'og:image', meta.image ? new URL(meta.image, location.origin).href : null);
-  setMeta('name', 'twitter:card', meta.image ? 'summary_large_image' : 'summary');
+  // Every card is rendered at 1200x630 by tools/render-art.mjs.
+  setMeta('property', 'og:image', new URL(meta.image ?? DEFAULT_IMAGE, location.origin).href);
+  setMeta('property', 'og:image:width', '1200');
+  setMeta('property', 'og:image:height', '630');
+  setMeta('name', 'twitter:card', 'summary_large_image');
   setMeta('name', 'robots', meta.noindex ? 'noindex' : null);
   setCanonical(location.origin + location.pathname);
 

@@ -323,3 +323,22 @@ Ask the room what they paid for lunch.
 - The closing slide is added automatically.
 
 To turn presentation mode off for one lesson, set `deck: "none"` on it in `curriculum.ts`.
+
+### Module artwork
+
+Each module has a cover, a link-preview card and a glyph, set by `art` on the module in
+`curriculum.ts`. A module without `art` still works: it shows a placeholder cover drawn from
+its level colour, and the content check lists it as a warning.
+
+To give a new module its artwork:
+
+1. Add its scene to `MODULE_SCENES` in `src/components/three/scenes.tsx`, built from the shared
+   primitives in `primitives.tsx` (glass blocks, candles, a staircase, a shield, rings, tubes,
+   a surface) so it matches the others. `npm run dev`, then open `/__art/<module-id>` to see it.
+2. Render it: with the dev server running, `npm run art -- --only <module-id>` writes the cover
+   (1200×800 and 600×400, dark and light) to `public/art/modules/` and the preview card to
+   `public/art/og/`.
+3. Draw a 24-unit line glyph, in the style of the others, as `src/assets/glyphs/<module-id>.svg`.
+4. Add `art: moduleArt("<module-id>")` to the module.
+
+The content check fails if `art` names a file that does not exist.

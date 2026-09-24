@@ -286,9 +286,9 @@ function Stage({
       tabIndex={-1}
       className="deck-root fixed inset-0 z-[55] flex flex-col bg-bg outline-none"
     >
-      {/* the module's cover, as a faint wash behind every slide */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.12]">
-        <ModuleCover module={mod} variant="thumb" className="h-full w-full" />
+      {/* the module's cover, blurred into a faint wash of its colours behind every slide */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden opacity-[0.22]">
+        <ModuleCover module={mod} variant="thumb" className="h-full w-full scale-110 blur-2xl" />
       </div>
 
       <header className="relative flex h-14 shrink-0 items-center gap-2 border-b border-line-subtle bg-bg/80 px-3 sm:px-5">
