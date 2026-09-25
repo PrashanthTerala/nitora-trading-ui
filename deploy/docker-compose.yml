@@ -17,12 +17,22 @@ services:
     container_name: nitora-trading-ui
     restart: unless-stopped
     ports:
-      # On every interface for now, because the site is reached by IP address. Once it
-      # has a domain it moves behind the same Caddy as nitorastone.com and this becomes
-      # 127.0.0.1 -- set TRADING_BIND in .env; docs/DEPLOYMENT.md has the steps.
+      # The public address is https://nitoratrading.com, served by the Caddy in the
+      # nitorastone stack over the nitora-edge network below. This port stays for the
+      # deploy job's own check from the server; set TRADING_BIND=127.0.0.1 in .env so it
+      # answers only there. docs/DEPLOYMENT.md has the steps.
       - "${TRADING_BIND:-0.0.0.0}:${TRADING_PORT:-8090}:8080"
+    # Shared with the nitorastone Caddy, which proxies to this container by name
+    # (nitora-trading-ui:8080). Created once on the server; see docs/DEPLOYMENT.md.
+    networks: [default, nitora-edge]
     # nginx needs to write only its pid and temp files, and the unprivileged image
     # keeps all of those in /tmp. Everything else stays read-only.
     read_only: true
     tmpfs:
       - /tmp
+
+networks:
+  # External: it must exist before this stack starts (docker network create nitora-edge),
+  # and Compose refuses to start otherwise.
+  nitora-edge:
+    external: true

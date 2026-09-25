@@ -13,7 +13,8 @@ push to master
                docker compose pull && up -d, then smoke-test the running site
 
 server: ~/nitora-trading-ui/docker-compose.yml   Compose project "nitora-trading"
-        container nitora-trading-ui   ->   http://<server-ip>:8090
+        container nitora-trading-ui  <-  nitorastone Caddy (network nitora-edge)
+                                     <-  https://nitoratrading.com
 ```
 
 It runs as its own Compose project, separate from the nitorastone stack, so deploying one
@@ -66,7 +67,7 @@ nothing reaches the server. That makes it safe to push before the server is read
 ## Deploying
 
 Push to `master`, or run **Actions -> build -> Run workflow**. Then open
-`http://<server-ip>:8090`.
+<https://nitoratrading.com>.
 
 The deploy job checks the running site before it reports success:
 
@@ -78,20 +79,27 @@ The deploy job checks the running site before it reports success:
 To roll back, set `TAG` in `~/nitora-trading-ui/.env` to an earlier `sha-...` tag from
 the package page, then `docker compose up -d` in that directory.
 
-## Plain HTTP, for now
+## The domain: nitoratrading.com
 
-Served by IP, the site is plain HTTP and browsers will mark it "Not secure". That is
-tolerable for a while because the site has no accounts and no forms, and sends nothing to
-the server. Lesson progress and the trade journal stay in the visitor's own browser. It
-is not a permanent state: move to a domain with TLS before sending anyone the link.
+The site is served at **https://nitoratrading.com**, with `www.nitoratrading.com`
+redirecting to it. The name is registered with Cloudflare, which also hosts its DNS.
 
-## When the domain is ready
-
-Ports 80 and 443 belong to the Caddy in the nitorastone stack, which already issues
+Ports 80 and 443 belong to the Caddy in the nitorastone stack, which issues and renews
 certificates automatically. The site goes behind that Caddy rather than running a second
-proxy. That means one change in **nitorastone-service** and one here.
+proxy: one change in **nitorastone-service** and one here. Do the steps in this order.
 
-1. **DNS.** Point an A record for the new name at the server.
+1. **DNS, in Cloudflare.** Two records, both **DNS only** (grey cloud), not proxied:
+
+   | Type | Name | Content |
+   |---|---|---|
+   | A | `nitoratrading.com` (`@`) | the server's IP (the `DEPLOY_HOST` secret) |
+   | A | `www` | the same IP |
+
+   DNS only, because Caddy proves it owns the name by answering Let's Encrypt on port 80
+   itself. Behind Cloudflare's proxy that challenge is intercepted, and with "Always Use
+   HTTPS" it is redirected to an origin that has no certificate yet, so issuance fails.
+   The proxy can be switched on later, once Caddy holds a certificate, with Cloudflare's
+   SSL mode set to **Full (strict)**.
 
 2. **A network both stacks can share.** Once, on the server:
 
@@ -111,10 +119,10 @@ proxy. That means one change in **nitorastone-service** and one here.
        external: true
    ```
 
-   And in `infra/Caddyfile`, with the real name in place of `trading.example.com`:
+   And in `infra/Caddyfile`, two site blocks:
 
    ```
-   trading.example.com {
+   nitoratrading.com {
    	encode zstd gzip
    	reverse_proxy nitora-trading-ui:8080
 
@@ -125,31 +133,33 @@ proxy. That means one change in **nitorastone-service** and one here.
    		-Server
    	}
    }
+
+   www.nitoratrading.com {
+   	redir https://nitoratrading.com{uri} permanent
+   }
    ```
 
-   `preload` is left off the HSTS header on purpose. Unlike the rest, it is very hard to
-   undo, and it can be added once the domain has settled.
+   Then recreate Caddy with the new network, in that stack's `infra` directory on the
+   server: `docker compose --profile prod up -d caddy` (Caddy is in the `prod` profile, so
+   without the flag Compose leaves it alone). `preload` is left off the HSTS header on purpose: unlike the rest it is very
+   hard to undo, and it can be added once the domain has settled.
 
-4. **Here**, `deploy/docker-compose.yml`: attach the site to the same network.
+4. **Here**, `deploy/docker-compose.yml` attaches the site to the same network (already
+   done in this repository). It must not be deployed before step 2: Compose refuses to
+   start a service whose external network does not exist, which is also why the network
+   is not declared in advance.
 
-   ```yaml
-   services:
-     web:
-       networks: [default, nitora-edge]
+   On the server, add `TRADING_BIND=127.0.0.1` to `~/nitora-trading-ui/.env`. Caddy
+   reaches the container over the shared network, so port 8090 then answers only on the
+   server itself, where the deploy job's check still uses it, and the public
+   IP-and-port address closes.
 
-   networks:
-     nitora-edge:
-       external: true
-   ```
-
-   Then set `TRADING_BIND=127.0.0.1` in `~/nitora-trading-ui/.env`. Caddy reaches the
-   container over the shared network, so the IP-and-port address can close.
-
-Order matters. Create the network before either stack refers to it: Compose refuses to
-start a service whose external network does not exist. That is also why the network is
-not declared in advance.
-
-5. **The sitemap.** In the repository's Actions variables, set `SITE_URL` to the new address
-   (e.g. `https://trading.example.com`, no trailing slash). The next build writes
+5. **The sitemap.** In the repository's Actions variables, set `SITE_URL` to
+   `https://nitoratrading.com` (no trailing slash). The next build writes
    `sitemap.xml` from the curriculum and names it in `robots.txt`. Until then the build
    writes `robots.txt` only, because a sitemap may not list relative URLs.
+
+6. **Check.** `https://nitoratrading.com` loads with a valid certificate and a
+   `Strict-Transport-Security` header; `http://` and `www.` both land on it; a deep link
+   such as `/learn/m02-candlestick-patterns/06-engulfing` loads the lesson; and
+   `http://<server-ip>:8090` no longer answers from outside.
