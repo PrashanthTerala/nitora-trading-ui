@@ -135,12 +135,15 @@ def finish(src: Path, dst: Path, lang: str) -> dict:
 
 
 # Cuts other than the full lesson: which scenes, their bases, where the renders are, where to
-# publish. The bases must match the composition's (src/MaCrossoversCinematic.tsx BASES).
+# publish. The bases must match the composition's (src/MaCrossoversCinematic.tsx BASES); a cut
+# over every scene takes its overrides per lesson.
+# Where the poster frame is, as a share of the English video.
+POSTER_AT = {"ma-crossovers": 0.36, "engulfing": 0.25}
 CUTS = {
     # The proof of concept (4 scenes); its composition has since grown into the full lesson.
     "cinematic-poc": {"bases": {"title": 7, "average": 30, "golden": 18, "lag": 26}, "input": "v3/{name}-cinematic-{lang}.mp4", "dir": "v3-cinematic-poc"},
-    # The full cinematic lesson: every scene, the script's bases except the intro's 7 s.
-    "cinematic": {"bases": {"title": 7}, "all": True, "input": "v3/{name}-cinematic-{lang}.mp4", "dir": "v3"},
+    # The full cinematic lesson: every scene, the script's bases (the crossover lesson's intro: 7 s).
+    "cinematic": {"bases": {"ma-crossovers": {"title": 7}}, "all": True, "input": "v3/{name}-cinematic-{lang}.mp4", "dir": "v3"},
 }
 
 
@@ -154,7 +157,8 @@ def main() -> None:
     cut = CUTS.get(cut_name or "", None)
     if cut:
         if cut.get("all"):
-            spec = {**spec, "scenes": {k: {**m, "base": cut["bases"].get(k, m["base"])} for k, m in spec["scenes"].items()}}
+            bases = cut["bases"].get(name, {})
+            spec = {**spec, "scenes": {k: {**m, "base": bases.get(k, m["base"])} for k, m in spec["scenes"].items()}}
         else:
             spec = {**spec, "scenes": {k: {**spec["scenes"][k], "base": b} for k, b in cut["bases"].items()}}
     out = ROOT / "out" / "publish" / module / lesson / (cut["dir"] if cut else f"v{spec['version']}")
@@ -222,8 +226,8 @@ def main() -> None:
 
     poster_src = ROOT / "out" / (cut["input"].format(name=name, lang="en") if cut else f"v2/{name}-en.mp4")
     if poster_src.exists() and not (out / "poster.jpg").exists():
-        # The golden-cross chart, about a third of the way in: a still that says what the lesson is.
-        ff(["-ss", f"{report['duration_s'] * 0.36:.2f}", "-i", str(poster_src), "-frames:v", "1", "-c:v", "mjpeg", "-q:v", "3", "-f", "image2", str(out / "poster.jpg")])
+        # A still that says what the lesson is: the golden-cross chart, or the engulfing pair.
+        ff(["-ss", f"{report['duration_s'] * POSTER_AT.get(name, 0.36):.2f}", "-i", str(poster_src), "-frames:v", "1", "-c:v", "mjpeg", "-q:v", "3", "-f", "image2", str(out / "poster.jpg")])
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"-> {out}")
 

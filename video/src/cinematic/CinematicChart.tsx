@@ -10,7 +10,7 @@
  *
  * Layout rule: nothing covers information. The plot holds only data (candles, averages, the
  * cross markers and arrows); every text label lives in the band under the plot, spaced by
- * placeLabels() so labels never overlap each other or the "synthetic data" tag; marker pills
+ * placeLabels() so labels never overlap each other; marker pills
  * sit above the local candle highs with a leader line. A scene that needs room below (the ship
  * card) shrinks the plot with `plotBottom` instead of drawing over it.
  */
@@ -144,6 +144,8 @@ export type Spotlight = { index: number; value: number; radius: number; strength
 /** `labelOpacity` (default 1) lets a label leave while its shading stays on the chart. */
 export type Region = { from: number; to: number; color: string; opacity: number; label?: string; labelOpacity?: number };
 export type Bracket = { index: number; from: number; to: number; label: string; color: string; opacity: number; labelOpacity?: number };
+/** A rounded box drawn around bars `from`..`to` (their whole high-low range, with room to spare), so a pattern is picked out without covering it. */
+export type Outline = { from: number; to: number; color: string; opacity: number };
 
 export function CinematicChart({
   cam,
@@ -154,7 +156,6 @@ export function CinematicChart({
   brackets = [],
   head = true,
   legend,
-  tag,
   plotBottom,
   dim = 1,
   spotlight,
@@ -164,6 +165,8 @@ export function CinematicChart({
   ticks: crossTicks = [],
   levels = [],
   notes = [],
+  outlines = [],
+  maxBody = 22,
 }: {
   cam: Camera;
   /** The candles (default: the pilot series) and the lines drawn over them (default: its SMA 200 and 50). */
@@ -174,6 +177,9 @@ export function CinematicChart({
   ticks?: Tick[];
   levels?: Level[];
   notes?: Note[];
+  outlines?: Outline[];
+  /** The widest a candle body may be drawn (px): wider for close-ups of a few candles. */
+  maxBody?: number;
   /** How much of the series is drawn, 0-1 (candles and both averages advance together). */
   draw?: number;
   smaOpacity?: number;
@@ -183,8 +189,6 @@ export function CinematicChart({
   /** A price tag at the latest candle while drawing. */
   head?: boolean;
   legend?: { price: string; sma50: string; sma200: string } | LegendItem[];
-  /** The "synthetic data" note, drawn at the left of the label band (its space is reserved). */
-  tag?: string;
   plotBottom?: number;
   dim?: number;
   spotlight?: Spotlight;
@@ -209,7 +213,7 @@ export function CinematicChart({
   const x = (i: number) => left + ((i - cam.x0) / (cam.x1 - cam.x0)) * (right - left);
   const y = (v: number) => top + ((cam.y1 - v) / (cam.y1 - cam.y0)) * (bottom - top);
   const slot = (right - left) / (cam.x1 - cam.x0);
-  const body = Math.max(1.6, Math.min(slot * 0.62, 22));
+  const body = Math.max(1.6, Math.min(slot * 0.62, maxBody));
   const last = Math.max(0, Math.min(N - 1, Math.floor(draw * (N - 1))));
   const from = Math.max(0, Math.floor(cam.x0) - 2);
   const to = Math.min(last, Math.ceil(cam.x1) + 2);
@@ -238,10 +242,10 @@ export function CinematicChart({
   }
   const tickValues = ticks(cam.y0, cam.y1);
 
-  // The label band: region labels and arrow labels, spaced so none overlap, the tag reserved.
+  // The label band: region labels and arrow labels, spaced so none overlap.
   const bandY = bottom + BAND_GAP;
-  const tagW = tag ? textWidth(tag, 28) : 0;
-  const reserved = tag ? [{ x0: left, x1: left + tagW }] : [];
+  // Disclaimer tags ("synthetic data") are not drawn here: the kit's CornerTag carries them.
+  const reserved: { x0: number; x1: number }[] = [];
   const bandItems = [
     ...regions.map((r) => ({ r, o: Math.min(r.opacity, r.labelOpacity ?? 1) })).filter(({ r, o }) => r.label && o > 0.01).map(({ r, o }) => ({ kind: 'region' as const, text: r.label!, color: r.color, opacity: o, x: (x(r.from) + x(r.to)) / 2 })),
     ...brackets.map((b) => ({ b, o: Math.min(b.opacity, b.labelOpacity ?? 1) })).filter(({ o }) => o > 0.01).map(({ b, o }) => ({ kind: 'bracket' as const, text: b.label, color: b.color, opacity: o, x: x(b.index) })),
@@ -292,6 +296,17 @@ export function CinematicChart({
           </g>
         ))}
         {candles}
+        {outlines.map((o, k) => {
+          let hi = -Infinity;
+          let lo = Infinity;
+          for (let i = Math.max(0, o.from); i <= Math.min(N - 1, o.to); i++) {
+            hi = Math.max(hi, bars[i].h);
+            lo = Math.min(lo, bars[i].l);
+          }
+          const x0 = x(o.from) - body / 2 - 12;
+          const x1 = x(o.to) + body / 2 + 12;
+          return <rect key={k} x={x0} y={y(hi) - 14} width={x1 - x0} height={y(lo) - y(hi) + 28} rx={12} fill="none" stroke={o.color} strokeWidth={4} opacity={o.opacity} />;
+        })}
         {levels.map((lv, k) => (
           <line key={k} x1={left} x2={right} y1={y(lv.price)} y2={y(lv.price)} stroke={lv.color} strokeWidth={3} strokeDasharray="14 10" opacity={lv.opacity} />
         ))}
@@ -345,14 +360,6 @@ export function CinematicChart({
       })}
 
       {/* The label band. */}
-      {tag && (
-        <g>
-          <rect x={left} y={bandY} width={tagW} height={BAND_H - 10} rx={27} fill="none" stroke="var(--color-line)" strokeWidth={2} />
-          <text x={left + tagW / 2} y={bandY + 37} textAnchor="middle" fontSize={28} fill="var(--color-ink-soft)" fontFamily="var(--font-mono)">
-            {tag}
-          </text>
-        </g>
-      )}
       {bandItems.map((it, k) => {
         const s = slots[k];
         if (!s) return null;

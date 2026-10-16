@@ -21,7 +21,7 @@
  * On-screen text is English in every language, by the owner's decision (2026-10-16); the
  * narration and captions are localized. Remotion owns the timeline.
  */
-import { LessonVideo, type Scene, type Timing } from './kit';
+import { LessonVideo, SYNTHETIC, type Scene, type Timing } from './kit';
 import { Average, Buckets } from './ma-crossovers/explainers';
 import { CinematicIntro, GoldenCinematic, LagCinematic } from './cinematic/scenes';
 import { EndCinematic, QuizCinematic, RaceCinematic, SignChangeCinematic, StructureCinematic, TakeawaysCinematic, TradeOffCinematic, UsesCinematic, WhipsawCinematic } from './cinematic/scenes2';
@@ -36,18 +36,20 @@ export const LANGS = Object.keys(narration) as (keyof typeof narration)[];
 const scenes = script.scenes as Record<string, { base: number }>;
 export const BASES: Record<SceneId, number> = Object.fromEntries(Object.keys(scenes).map((id) => [id, id === 'title' ? 7 : scenes[id].base])) as Record<SceneId, number>;
 
+/** Chart scenes carry the synthetic-data tag, which the kit draws in the corner. */
+const chart = { bleed: true, tag: SYNTHETIC };
 export const SCENES: Scene<SceneId>[] = [
   ['title', BASES.title, () => <CinematicIntro />, { bleed: true }],
   ['average', BASES.average, () => <Average />],
-  ['race', BASES.race, () => <RaceCinematic />, { bleed: true }],
+  ['race', BASES.race, () => <RaceCinematic />, chart],
   ['buckets', BASES.buckets, () => <Buckets />],
   ['signchange', BASES.signchange, () => <SignChangeCinematic />, { bleed: true }],
-  ['golden', BASES.golden, () => <GoldenCinematic />, { bleed: true, fadeOut: false }],
-  ['lag', BASES.lag, () => <LagCinematic />, { bleed: true, fadeIn: false }],
-  ['tradeoff', BASES.tradeoff, () => <TradeOffCinematic />, { bleed: true }],
-  ['uses', BASES.uses, () => <UsesCinematic />, { bleed: true }],
-  ['whipsaw', BASES.whipsaw, () => <WhipsawCinematic />, { bleed: true }],
-  ['structure', BASES.structure, () => <StructureCinematic />, { bleed: true }],
+  ['golden', BASES.golden, () => <GoldenCinematic />, { ...chart, fadeOut: false }],
+  ['lag', BASES.lag, () => <LagCinematic />, { ...chart, fadeIn: false }],
+  ['tradeoff', BASES.tradeoff, () => <TradeOffCinematic />, chart],
+  ['uses', BASES.uses, () => <UsesCinematic />, chart],
+  ['whipsaw', BASES.whipsaw, () => <WhipsawCinematic />, chart],
+  ['structure', BASES.structure, () => <StructureCinematic />, chart],
   ['takeaways', BASES.takeaways, () => <TakeawaysCinematic />, { bleed: true }],
   ['quiz', BASES.quiz, () => <QuizCinematic />, { bleed: true }],
   ['end', BASES.end, () => <EndCinematic />, { bleed: true }],

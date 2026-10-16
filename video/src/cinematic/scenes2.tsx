@@ -5,7 +5,7 @@
  * about. On-screen text is English in every language; timing follows each language's marks.
  */
 import { AbsoluteFill, Easing, interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
-import { body, kicker, s, useMark, usePace } from '../kit';
+import { Brand, body, kicker, s, useMark, usePace } from '../kit';
 import * as d from '../ma-crossovers/data';
 import { Rope } from '../ma-crossovers/explainers';
 import {
@@ -31,7 +31,6 @@ const UP = 'var(--color-up)';
 const DOWN = 'var(--color-down)';
 const FAST = 'var(--color-chart-2)';
 const SLOW = 'var(--color-chart-1)';
-const TAG = 'Synthetic data, for teaching';
 const AVERAGES: LegendItem[] = [
   { label: 'price', color: 'var(--color-ink-soft)', kind: 'candle' },
   { label: 'SMA 50', color: FAST, kind: 'line' },
@@ -86,7 +85,6 @@ export function RaceCinematic() {
           { label: 'fast: SMA 50', color: FAST, kind: 'line' },
           { label: 'slow: SMA 200', color: SLOW, kind: 'line' },
         ]}
-        tag={TAG}
         markers={[{ index: GOLDEN, label: 'fast crosses above', color: UP, opacity: fade(f, cross), pulse: pulse(f, cross) }]}
         spotlight={{ index: GOLDEN, value: SMA50[GOLDEN], radius: 420, strength: fade(f, cross) * 0.8 }}
       />
@@ -204,7 +202,6 @@ export function TradeOffCinematic() {
         cam={WIDE}
         plot={{ top: 660, bottom: 870 }}
         legend={AVERAGES.slice(1)}
-        tag={TAG}
         ticks={slow.map((c, k) => ({ index: c.index, value: SMA50[c.index], up: c.direction === 'up', opacity: step(k, slow.length, chart + s(3)) }))}
         notes={[{ label: `50 / 200 SMA: ${shownSlow} crosses`, color: SLOW, opacity: fade(f, chart + s(3)) }]}
       />
@@ -243,7 +240,6 @@ export function UsesCinematic() {
       <CinematicChart
         cam={cam}
         legend={AVERAGES}
-        tag={TAG}
         spotlight={spot}
         markers={[
           { index: GOLDEN, label: 'buy: bull cross', color: UP, opacity: fade(f, s(1.5)) * (p1 + p2), pulse: 0 },
@@ -304,7 +300,6 @@ export function WhipsawCinematic() {
           { label: 'EMA 9', color: FAST, kind: 'line' },
           { label: 'EMA 21', color: SLOW, kind: 'line' },
         ]}
-        tag={TAG}
         ticks={d.RANGE_CROSSES.map((c, k) => ({ index: c.index, value: d.RANGE_EMA9[c.index], up: c.direction === 'up', opacity: fade(f, s(1) + k * s(0.5), s(0.3)) }))}
         spotlight={t ? { index: (t.buyIndex + t.sellIndex) / 2, value: (t.buy + t.sell) / 2, radius: 480, strength: 0.8 } : undefined}
         brackets={trips.map((tr, k) => ({
@@ -354,7 +349,6 @@ export function StructureCinematic() {
           bars={sb}
           lines={[]}
           legend={[{ label: 'price', color: 'var(--color-ink-soft)', kind: 'candle' }]}
-          tag={TAG}
           levels={[{ price: d.STRUCT_RESISTANCE, label: `resistance ${d.STRUCT_RESISTANCE}`, color: 'var(--color-ink-soft)', opacity: fade(f, s(1.5)) }]}
           markers={[
             { index: d.STRUCT_BREAKOUT, value: sb[d.STRUCT_BREAKOUT].c, label: '1 · breakout', color: UP, opacity: fade(f, setup + s(0.6)), pulse: pulse(f, setup + s(0.6)) },
@@ -377,7 +371,6 @@ export function StructureCinematic() {
               { label: 'EMA 9', color: FAST, kind: 'line' },
               { label: 'EMA 21', color: SLOW, kind: 'line' },
             ]}
-            tag={TAG}
             levels={[
               { price: rangeHigh, label: 'range high', color: 'var(--color-ink-soft)', opacity: 1 },
               { price: rangeLow, label: 'range low', color: 'var(--color-ink-soft)', opacity: 1 },
@@ -492,9 +485,7 @@ export function EndCinematic() {
       </div>
       <AbsoluteFill style={{ background: 'radial-gradient(60% 60% at 50% 50%, color-mix(in oklch, var(--color-bg) 70%, transparent) 0%, var(--color-bg) 85%)' }} />
       <AbsoluteFill style={{ justifyContent: 'center', alignItems: 'center', gap: 34, textAlign: 'center', opacity: fade(f, 0, s(0.6)) }}>
-        <div style={{ fontSize: 34, fontWeight: 700 }}>
-          Nitora <span style={{ fontWeight: 400, color: 'var(--color-ink-soft)' }}>Trading Academy</span>
-        </div>
+        <Brand />
         <div style={{ fontFamily: 'var(--font-display)', fontSize: 72, fontWeight: 700 }}>Mark every crossover in the simulator.</div>
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: 46, color: 'var(--color-accent)' }}>nitoratrading.com/simulator</div>
         <div style={{ fontSize: 32, color: 'var(--color-ink-soft)', opacity: fade(f, s(1)) }}>An educational tool. Charts use synthetic data. Nothing here is financial advice.</div>

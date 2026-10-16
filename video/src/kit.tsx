@@ -17,9 +17,10 @@ export const s = (seconds: number) => Math.round(seconds * FPS);
 /**
  * One scene: its id (matching the narration), its designed length in seconds, what it draws,
  * and options: `fadeIn` / `fadeOut` false for a scene that continues straight from or into its
- * neighbour (one camera move across a cut), `bleed` true to draw edge to edge (no page padding).
+ * neighbour (one camera move across a cut), `bleed` true to draw edge to edge (no page padding),
+ * `tag` a disclaimer for the whole scene ("Synthetic data, for teaching", "Illustration"), drawn by CornerTag.
  */
-export type SceneOptions = { fadeIn?: boolean; fadeOut?: boolean; bleed?: boolean };
+export type SceneOptions = { fadeIn?: boolean; fadeOut?: boolean; bleed?: boolean; tag?: string };
 export type Scene<Id extends string> = [Id, number, () => ReactNode, SceneOptions?];
 
 /**
@@ -42,7 +43,7 @@ const DEFAULT_TIMING: Timing = { lead: 0.5, tail: 0.9 };
 export function timeline<Id extends string>(scenes: Scene<Id>[], narration: Narration<Id>, lang: string, timing: Timing = DEFAULT_TIMING) {
   return scenes.map(([id, base, render, options]) => {
     const seconds = Math.max(base, timing.lead + narration[lang][id].seconds + timing.tail);
-    return { id, frames: s(seconds), stretch: seconds / base, render, options: options ?? {}, marks: narration[lang][id].marks ?? {} };
+    return { id, frames: s(seconds), stretch: seconds / base, render, options: options ?? {}, marks: narration[lang][id].marks ?? {}, seconds: narration[lang][id].seconds };
   });
 }
 
@@ -62,11 +63,21 @@ export function usePace() {
  * the voice starts the sentence after it, in whichever language is rendering. Falls back to a
  * designed time (seconds, stretched) when a language has no such mark.
  */
-const MarksContext = createContext<{ marks: Record<string, number>; lead: number }>({ marks: {}, lead: 0 });
+const MarksContext = createContext<{ marks: Record<string, number>; lead: number; seconds: number }>({ marks: {}, lead: 0, seconds: 0 });
 export function useMark(name: string, fallback: number) {
   const { marks, lead } = useContext(MarksContext);
   const p = usePace();
   return name in marks ? s(lead + marks[name]) : p(fallback);
+}
+
+/**
+ * The frame `fraction` of the way through this scene's narration (0 = the voice starts, 1 = it
+ * ends), for a moment between marks, in whichever language is rendering. Approximate: sentences
+ * take about the same share of a scene in every language.
+ */
+export function useSpeechAt() {
+  const { lead, seconds } = useContext(MarksContext);
+  return (fraction: number) => s(lead + fraction * seconds);
 }
 
 export function LessonVideo<Id extends string>({ scenes, narration, lang, timing = DEFAULT_TIMING, textLang = 'en' }: { scenes: Scene<Id>[]; narration: Narration<Id>; lang: string; timing?: Timing; textLang?: string }) {
@@ -75,11 +86,11 @@ export function LessonVideo<Id extends string>({ scenes, narration, lang, timing
   return (
     <Theme>
       <Backdrop />
-      {timeline(scenes, narration, lang, timing).map(({ id, frames, stretch, render, options, marks }) => {
+      {timeline(scenes, narration, lang, timing).map(({ id, frames, stretch, render, options, marks, seconds }) => {
         const seq = (
           <Sequence key={id} name={id} from={from} durationInFrames={frames}>
             <PaceContext.Provider value={stretch}>
-              <MarksContext.Provider value={{ marks, lead: LEAD }}>
+              <MarksContext.Provider value={{ marks, lead: LEAD, seconds }}>
                 <LangContext.Provider value={textLang}>
                   <SceneFade length={frames} options={options}>{render()}</SceneFade>
                 </LangContext.Provider>
@@ -115,7 +126,29 @@ function SceneFade({ length, options, children }: { length: number; options: Sce
   const f = useCurrentFrame();
   const fadeIn = options.fadeIn === false ? 1 : interpolate(f, [0, 12], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
   const fadeOut = options.fadeOut === false ? 1 : interpolate(f, [length - 10, length], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-  return <AbsoluteFill style={{ opacity: Math.min(fadeIn, fadeOut), padding: options.bleed ? 0 : '96px 140px' }}>{children}</AbsoluteFill>;
+  return (
+    <AbsoluteFill style={{ opacity: Math.min(fadeIn, fadeOut) }}>
+      <AbsoluteFill style={{ padding: options.bleed ? 0 : '96px 140px' }}>{children}</AbsoluteFill>
+      {options.tag && <CornerTag label={options.tag} />}
+    </AbsoluteFill>
+  );
+}
+
+export const SYNTHETIC = 'Synthetic data, for teaching';
+export const ILLUSTRATION = 'Illustration';
+
+/**
+ * Every disclaimer-style tag ("Synthetic data, for teaching", "Illustration") goes here, and only
+ * here: the frame's top-right corner, above the headline, outside every scene's content; never in
+ * a chart's label band, a footer line or beside a headline. A scene whose tag changes part-way
+ * (synthetic chart, then an illustration) draws CornerTags itself, crossfading by `opacity`.
+ */
+export function CornerTag({ label, opacity = 1 }: { label: string; opacity?: number }) {
+  return (
+    <div style={{ position: 'absolute', top: 22, right: 40, opacity, fontSize: 22, letterSpacing: '0.04em', color: 'var(--color-ink-soft)', border: '2px solid var(--color-line)', borderRadius: 18, padding: '4px 16px', background: 'var(--color-bg)' }}>
+      {label}
+    </div>
+  );
 }
 
 /** A thin bar along the bottom showing how far through the video we are. */

@@ -117,7 +117,6 @@ export function GoldenCinematic() {
         cam={cam}
         draw={interpolate(f, [s(0.4), Math.max(g - s(0.4), s(1.5))], [0, 1], clamp)}
         legend={{ price: t('price'), sma50: 'SMA 50', sma200: 'SMA 200' }}
-        tag={t('synthetic')}
         spotlight={spot}
         markers={[
           { index: GOLDEN, label: t('golden'), color: 'var(--color-up)', opacity: fade(f, g + s(1.2)), pulse: pulse(f, g + s(1.2)) },
@@ -163,7 +162,6 @@ export function LagCinematic() {
         draw={1}
         plotBottom={plotBottom}
         legend={{ price: t('price'), sma50: 'SMA 50', sma200: 'SMA 200' }}
-        tag={t('synthetic')}
         spotlight={spot}
         regions={[
           { from: LOW, to: GOLDEN, color: 'var(--color-up)', opacity: fade(f, s(2)), labelOpacity: 1 - fade(f, toHigh), label: t('waited', { n: GOLDEN - LOW }) },

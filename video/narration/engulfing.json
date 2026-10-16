@@ -1,35 +1,229 @@
 {
   "lesson": "m02-candlestick-patterns/06-engulfing",
+  "version": 2,
+  "source": {
+    "file": "src/content/modules/m02-candlestick-patterns/06-engulfing.mdx",
+    "sha256": "415d998eb8a4e3fb7d7cf1b5720705fdb9b8a5b0ae75a1c597f7a5f1b4fb289b"
+  },
+  "timing": {
+    "lead": 0.5,
+    "tail": 0.9
+  },
+  "note": "v2 (cinematic): plain-words script approved 2026-10-16. Each scene names the lesson lines it says; 'computed' numbers are checked against src/engulfing/data.ts by scripts/check.mjs. Reliability figures are Bulkowski's (thepatternsite.com, read 2026-10-16), as the lesson now states. <mark name> sets a timing marker; <pause s> inserts silence.",
+  "scenes": {
+    "title": {
+      "base": 5,
+      "lines": "curriculum.ts: m02-candlestick-patterns / 06-engulfing"
+    },
+    "intro": {
+      "base": 30,
+      "lines": "1-3",
+      "marks": [
+        "define"
+      ]
+    },
+    "rules": {
+      "base": 28,
+      "lines": "9-12",
+      "marks": [
+        "open",
+        "close",
+        "wicks",
+        "size"
+      ]
+    },
+    "bullish": {
+      "base": 26,
+      "lines": "14-20",
+      "marks": [
+        "day1",
+        "day2",
+        "flip"
+      ]
+    },
+    "wave": {
+      "base": 14,
+      "lines": "22-26"
+    },
+    "bearish": {
+      "base": 20,
+      "lines": "28-32",
+      "marks": [
+        "turn"
+      ]
+    },
+    "valid": {
+      "base": 22,
+      "lines": "34-36",
+      "marks": [
+        "range"
+      ],
+      "computed": {
+        "RANGE_ENGULFING_COUNT": 7
+      }
+    },
+    "locations": {
+      "base": 26,
+      "lines": "38-44",
+      "marks": [
+        "level",
+        "slowing",
+        "volume",
+        "count"
+      ]
+    },
+    "confirm": {
+      "base": 24,
+      "lines": "46-52",
+      "marks": [
+        "volume",
+        "timeframe"
+      ]
+    },
+    "trade": {
+      "base": 30,
+      "lines": "54-60",
+      "marks": [
+        "entry",
+        "stop",
+        "why"
+      ],
+      "computed": {
+        "BULL_ENTRY": 105.22,
+        "BULL_STOP": 98.52,
+        "BULL_RISK": 6.7
+      }
+    },
+    "trap": {
+      "base": 22,
+      "lines": "62-66"
+    },
+    "reliability": {
+      "base": 30,
+      "lines": "68-72",
+      "marks": [
+        "warn"
+      ]
+    },
+    "takeaways": {
+      "base": 22,
+      "lines": "74-81"
+    },
+    "quiz": {
+      "base": 16,
+      "lines": "85",
+      "marks": [
+        "think",
+        "reveal"
+      ]
+    },
+    "end": {
+      "base": 8,
+      "lines": "92"
+    }
+  },
   "languages": {
     "en": {
       "voice": "en_US-ljspeech-high",
-      "lengthScale": 1.05,
+      "lengthScale": 1.12,
+      "sentenceGap": {
+        ".": 0.35,
+        "?": 0.45,
+        "!": 0.4
+      },
       "scenes": {
         "title": "Bullish and bearish engulfing. Module two, lesson six.",
-        "definition": "An engulfing pattern is two candles. The second candle's body completely covers the first candle's body, in the opposite colour. A bullish engulfing is a small red candle, followed by a big green one that swallows it. A bearish engulfing is the mirror: a small green candle, then a big red one.",
-        "bullish": "Here is a bullish engulfing, after a decline. The small red candle is completely swallowed by a big green body. The green candle opened below the red close, and finished above the red open. Buyers absorbed all the selling, and more.",
-        "psychology": "Think about what happened. On day one, sellers win again, but only by a little. On day two, price opens even lower, which looks like more of the same. Then buyers arrive in force, and push price above where yesterday started. By the close, every seller from yesterday is losing money. Control has flipped in two sessions.",
-        "bearish": "The bearish engulfing is the mirror image, at the top of a rise. A small green candle is swallowed by a large red body. The open above yesterday's close trapped the late buyers, and the close below yesterday's open means they are all losing.",
-        "valid": "But an engulfing pattern needs a trend to reverse. Inside a sideways range, candles engulf each other constantly, and it means nothing. It matters most at a clear support or resistance level after a trend, with high volume on the engulfing candle, and with a third candle that closes beyond it as confirmation.",
-        "trap": "One trap to avoid. Big engulfing candles are strong signals, and terrible entries. Your stop goes beyond the far end of the candle, so a huge candle means a huge risk, and much of the move may already be over. Wait for a pullback, or take a smaller position.",
-        "takeaways": "To recap. Two candles, opposite colours, with the second body fully covering the first. It needs a prior trend. Confirm it with a third candle, and high volume. And put your stop beyond the far extreme of the engulfing candle.",
-        "end": "Now practise spotting it in the pattern trainer, at nitora trading dot com."
+        "intro": "Imagine a playground argument. Yesterday, one kid said something small and mean. Today, the other kid answers so loudly, and so completely, that it covers everything said yesterday, and then some. <mark define> That is an engulfing pattern: two candles, where the second candle's body completely covers the first candle's body, in the opposite colour. A bullish engulfing is a small red candle, then a big green one that swallows it. A bearish engulfing is the mirror: a small green candle, then a big red one.",
+        "rules": "Here are the exact rules. Candle two is the opposite colour. <mark open> It opens beyond candle one's close, <mark close> and it closes beyond candle one's open, so its body covers candle one's body completely. <mark wicks> In the classic definition, only the bodies count, not the wicks. <mark size> And candle two should be big compared with recent candles. A tiny candle swallowing an even tinier one is technically an engulfing, and practically meaningless.",
+        "bullish": "Here is a bullish engulfing after a decline. Walk through the two days. <mark day1> On day one, sellers win again, but only by a little. The body is small. <mark day2> On day two, price opens even lower, which looks like more of the same. Then buyers arrive in force. They push price above where yesterday started, and keep going. <mark flip> By the close, every seller from yesterday is losing money. Control has flipped in two sessions.",
+        "wave": "Picture a sandcastle, knocked down one little kick at a time. Then a wave comes in, bigger than all the kicks put together, and washes it flat. Yesterday's little kick is gone. The engulfing candle is that wave.",
+        "bearish": "The bearish engulfing is the mirror image, at the top of a rise. Day one is a small green candle: buyers still winning, but barely. <mark turn> Day two opens higher, which pulls in the last optimists. Then sellers take over, and drive the close below yesterday's open. Everyone who bought in the last two sessions is now losing.",
+        "valid": "But an engulfing pattern is a reversal pattern, so it needs a trend to reverse. A bullish engulfing needs a decline before it. A bearish engulfing needs a rise. In a sideways range, candles engulf each other all the time, because price is just going back and forth. <mark range> On this sideways chart, there are seven engulfing patterns, and none of them means anything.",
+        "locations": "The best places, in order. <mark level> First, at a clear support or resistance level, after a trend. <mark slowing> Second, after a long trend that has started to slow down, with smaller bodies. <mark volume> Third, after a trend, with high volume on the engulfing candle. <mark count> Some traders also count how many earlier bodies the engulfing candle covers. Covering three or four red bodies traps more sellers than covering just one.",
+        "confirm": "The classic confirmation is a third candle that closes beyond the engulfing candle: higher for a bullish one, lower for a bearish one. <mark volume> Volume matters too. High volume on the engulfing candle means a real change of hands. On thin volume, a big candle can be just one large order. <mark timeframe> And bigger timeframes carry more weight. A daily engulfing is a whole day of trading. A one-minute engulfing can be a single order.",
+        "trade": "Here is a trade idea to practise, on this example. <mark entry> Enter when the confirmation candle closes above the engulfing candle's high: here, at one hundred and five point two two. <mark stop> Put the stop below the low of the pattern: ninety-eight point five two. That is six point seven of risk. Aim for the next resistance, or a fixed multiple of that risk. <mark why> Why there? The engulfing candle's low is where buyers proved control. If price falls back through it, control is lost, and the pattern has failed.",
+        "trap": "A common trap. The engulfing candle is enormous, say three times the average range, and you buy at its close. Your stop must go below its far end, so your risk is huge, and much of the move may already be over. Big engulfing candles are strong signals, and terrible entries. Wait for a pullback into the body, or take a smaller position.",
+        "reliability": "How reliable is it? In Thomas Bulkowski's published tests, the bearish engulfing reversed the uptrend about seventy-nine percent of the time, and the bullish engulfing about sixty-three percent. <mark warn> Two warnings. Those counts only include patterns with a proper trend before them. And reversal means price moved the expected way, not that it moved far. In his tests, the trend after a bearish engulfing was often short-lived. So an engulfing is a good reason to expect a turn, not a promise of how big it will be.",
+        "takeaways": "To recap. An engulfing pattern is two candles: the second is the opposite colour, and its body fully covers the first. It needs a trend before it: inside a range, it means nothing. Confirm it with a third candle, and look for high volume. Put the stop beyond the far end of the engulfing candle. And very big engulfing candles mean wide stops and poor entries.",
+        "quiz": "Quick check. Where does a bullish engulfing mean the most? In the middle of a sideways range, or at a support level after a decline? <mark think> Take a second to think. <pause 2.5> <mark reveal> At a support level, after a decline. A reversal pattern needs a trend to reverse, and a level makes it stronger.",
+        "end": "Now practise in the pattern trainer. Before you answer, check two things: is the whole first body covered, and was there a trend before it?"
       }
     },
     "te": {
-      "voice": "te_IN-venkatesh-medium",
-      "lengthScale": 1.0,
-      "note": "Telugu with English trading terms, written in Telugu script so the Telugu voice reads them. Needs a native speaker's review.",
+      "provider": "google",
+      "voice": "te-IN-Chirp3-HD-Achird",
+      "languageCode": "te-IN",
+      "flow": true,
+      "commaPause": "[pause short]",
+      "speakingRate": 0.92,
+      "note": "Friendly spoken Telugu; English trading terms in Telugu script, but 'low'/'high' as కనిష్ఠ/గరిష్ఠ ధర (లో would read as 'in'). Needs a native speaker's review.",
       "scenes": {
-        "title": "బుల్లిష్ మరియు బేరిష్ ఎంగల్ఫింగ్. మాడ్యూల్ రెండు, పాఠం ఆరు.",
-        "definition": "ఎంగల్ఫింగ్ ప్యాటర్న్ అంటే రెండు క్యాండిల్స్. రెండో క్యాండిల్ బాడీ, మొదటి క్యాండిల్ బాడీని పూర్తిగా కప్పేస్తుంది, అది కూడా వ్యతిరేక రంగులో. బుల్లిష్ ఎంగల్ఫింగ్‌లో, ఒక చిన్న ఎరుపు క్యాండిల్ తర్వాత, దాన్ని మింగేసే ఒక పెద్ద ఆకుపచ్చ క్యాండిల్ వస్తుంది. బేరిష్ ఎంగల్ఫింగ్ దానికి అద్దం లాంటిది: ఒక చిన్న ఆకుపచ్చ క్యాండిల్, తర్వాత ఒక పెద్ద ఎరుపు క్యాండిల్.",
-        "bullish": "ఇది ఒక పతనం తర్వాత వచ్చిన బుల్లిష్ ఎంగల్ఫింగ్. చిన్న ఎరుపు క్యాండిల్‌ను ఒక పెద్ద ఆకుపచ్చ బాడీ పూర్తిగా మింగేసింది. ఆకుపచ్చ క్యాండిల్, ఎరుపు క్యాండిల్ క్లోజ్ కంటే కింద ఓపెన్ అయ్యి, ఎరుపు క్యాండిల్ ఓపెన్ కంటే పైన క్లోజ్ అయింది. కొనేవాళ్ళు అమ్మకాలన్నింటినీ తట్టుకుని, ఇంకా ముందుకు వెళ్ళారు.",
-        "psychology": "ఏం జరిగిందో ఆలోచించండి. మొదటి రోజు, అమ్మేవాళ్ళు మళ్ళీ గెలుస్తారు, కానీ కొంచెమే. రెండో రోజు, ధర ఇంకా కింద ఓపెన్ అవుతుంది, అదే కథ కొనసాగుతున్నట్టు కనిపిస్తుంది. అప్పుడు కొనేవాళ్ళు బలంగా వస్తారు, నిన్న మొదలైన చోటు కంటే పైకి ధరను నెట్టేస్తారు. క్లోజ్ అయ్యేసరికి, నిన్న అమ్మిన ప్రతి ఒక్కరూ నష్టంలో ఉంటారు. రెండు సెషన్లలో నియంత్రణ పూర్తిగా మారిపోయింది.",
-        "bearish": "బేరిష్ ఎంగల్ఫింగ్ దీనికి అద్దం లాంటిది, ఒక పెరుగుదల పైభాగంలో వస్తుంది. ఒక చిన్న ఆకుపచ్చ క్యాండిల్‌ను ఒక పెద్ద ఎరుపు బాడీ మింగేస్తుంది. నిన్నటి క్లోజ్ కంటే పైన ఓపెన్ అవ్వడం, ఆలస్యంగా కొన్నవాళ్ళను ఇరికించింది. నిన్నటి ఓపెన్ కంటే కింద క్లోజ్ అవ్వడం అంటే, వాళ్ళందరూ నష్టంలో ఉన్నారని అర్థం.",
-        "valid": "కానీ ఎంగల్ఫింగ్ ప్యాటర్న్‌కు ముందు ఒక ట్రెండ్ ఉండాలి, దాన్ని తిప్పడానికి. పక్కకు కదిలే రేంజ్‌లో, క్యాండిల్స్ ఒకదాన్నొకటి తరచుగా ఎంగల్ఫ్ చేస్తుంటాయి, దానికి ఏ అర్థమూ ఉండదు. ఒక ట్రెండ్ తర్వాత స్పష్టమైన సపోర్ట్ లేదా రెసిస్టెన్స్ లెవెల్ దగ్గర, ఎంగల్ఫింగ్ క్యాండిల్‌పై ఎక్కువ వాల్యూమ్‌తో, తర్వాత కన్ఫర్మేషన్‌గా మూడో క్యాండిల్ దాని అవతల క్లోజ్ అయినప్పుడు, ఇది ఎక్కువ విలువైనది.",
-        "trap": "ఒక ఉచ్చు గురించి జాగ్రత్త. పెద్ద ఎంగల్ఫింగ్ క్యాండిల్స్ బలమైన సిగ్నల్స్, కానీ చాలా చెడ్డ ఎంట్రీలు. మీ స్టాప్ లాస్ క్యాండిల్ అవతలి చివర దాటి పెట్టాలి, కాబట్టి పెద్ద క్యాండిల్ అంటే పెద్ద రిస్క్. అంతేకాదు, కదలికలో చాలా భాగం ఇప్పటికే అయిపోయి ఉండొచ్చు. పుల్‌బ్యాక్ కోసం వేచి ఉండండి, లేదా చిన్న పొజిషన్ తీసుకోండి.",
-        "takeaways": "సంక్షిప్తంగా. రెండు క్యాండిల్స్, వ్యతిరేక రంగులు, రెండో బాడీ మొదటిదాన్ని పూర్తిగా కప్పేస్తుంది. దీనికి ముందు ఒక ట్రెండ్ ఉండాలి. మూడో క్యాండిల్‌తో, ఎక్కువ వాల్యూమ్‌తో కన్ఫర్మ్ చేసుకోండి. మీ స్టాప్ లాస్‌ను ఎంగల్ఫింగ్ క్యాండిల్ అవతలి చివర దాటి పెట్టండి.",
-        "end": "ఇప్పుడు ప్యాటర్న్ ట్రైనర్‌లో దీన్ని గుర్తించడం ప్రాక్టీస్ చేయండి, నిటోరా ట్రేడింగ్ డాట్ కామ్‌లో."
+        "title": "హాయ్! ఈరోజు మనం బుల్లిష్, బేరిష్ ఎంగల్ఫింగ్ గురించి మాట్లాడుకుందాం. మాడ్యూల్ రెండు. పాఠం ఆరు.",
+        "intro": "ఒక ప్లేగ్రౌండ్ గొడవను ఊహించుకోండి. నిన్న, ఒక పిల్లాడు ఏదో చిన్న మాట, కొంచెం ఎగతాళిగా అన్నాడు. ఈరోజు, ఇంకో పిల్లాడు అంత గట్టిగా, అంత పూర్తిగా జవాబిచ్చాడు, నిన్న అన్నదంతా కప్పేసేలా, ఇంకా ఎక్కువే. <mark define> ఎంగల్ఫింగ్ ప్యాటర్న్ అంటే ఇదే. రెండు క్యాండిల్స్, అందులో రెండో క్యాండిల్ బాడీ, మొదటి క్యాండిల్ బాడీని పూర్తిగా కప్పేస్తుంది, అది కూడా వ్యతిరేక రంగులో. బుల్లిష్ ఎంగల్ఫింగ్ అంటే, ఒక చిన్న ఎరుపు క్యాండిల్, తర్వాత దాన్ని మింగేసే ఒక పెద్ద ఆకుపచ్చ క్యాండిల్. బేరిష్ ఎంగల్ఫింగ్ దానికి అద్దం. ఒక చిన్న ఆకుపచ్చ క్యాండిల్, తర్వాత ఒక పెద్ద ఎరుపు క్యాండిల్.",
+        "rules": "ఇప్పుడు ఖచ్చితమైన రూల్స్ చూద్దాం. రెండో క్యాండిల్ వ్యతిరేక రంగులో ఉంటుంది. <mark open> అది మొదటి క్యాండిల్ క్లోజ్ దాటి ఓపెన్ అవుతుంది, <mark close> మొదటి క్యాండిల్ ఓపెన్ దాటి క్లోజ్ అవుతుంది. అందుకే దాని బాడీ, మొదటి క్యాండిల్ బాడీని పూర్తిగా కప్పేస్తుంది. <mark wicks> క్లాసిక్ నిర్వచనంలో, బాడీలు మాత్రమే లెక్క, విక్స్ కాదు. <mark size> ఇంకో విషయం, రెండో క్యాండిల్ ఈమధ్య క్యాండిల్స్ కంటే పెద్దగా ఉండాలి. ఒక చిన్న క్యాండిల్, ఇంకా చిన్న క్యాండిల్‌ని మింగితే, రూల్ ప్రకారం అది ఎంగల్ఫింగే, కానీ దానికి అర్థం ఏమీ ఉండదు.",
+        "bullish": "ఇది ఒక పతనం తర్వాత వచ్చిన బుల్లిష్ ఎంగల్ఫింగ్. ఈ రెండు రోజులూ ఒక్కొక్కటిగా చూద్దాం. <mark day1> మొదటి రోజు, అమ్మేవాళ్ళు మళ్ళీ గెలుస్తారు, కానీ కొంచెమే. బాడీ చిన్నది. <mark day2> రెండో రోజు, ధర ఇంకా కింద ఓపెన్ అవుతుంది. అదే కథ కొనసాగుతున్నట్టు కనిపిస్తుంది. అప్పుడు కొనేవాళ్ళు బలంగా వస్తారు. నిన్న మొదలైన చోటు కంటే పైకి ధరను నెట్టేసి, ఇంకా ముందుకు వెళ్తారు. <mark flip> క్లోజ్ అయ్యేసరికి, నిన్న అమ్మిన ప్రతి ఒక్కరూ నష్టంలో ఉంటారు. రెండు సెషన్లలో నియంత్రణ పూర్తిగా మారిపోయింది.",
+        "wave": "ఒక ఇసుక కోటను ఊహించుకోండి. దాన్ని చిన్న చిన్న తన్నులతో, కొద్ది కొద్దిగా పడగొడుతున్నారు. అప్పుడు ఒక అల వస్తుంది. ఆ తన్నులన్నీ కలిపినా దానంత పెద్దవి కావు. అది మొత్తం కోటను చదును చేసేస్తుంది. నిన్నటి చిన్న తన్ను ఇక లేదు. ఎంగల్ఫింగ్ క్యాండిల్ అంటే ఆ అలే.",
+        "bearish": "బేరిష్ ఎంగల్ఫింగ్ దీనికి అద్దం లాంటిది, ఒక పెరుగుదల పైభాగంలో వస్తుంది. మొదటి రోజు ఒక చిన్న ఆకుపచ్చ క్యాండిల్. కొనేవాళ్ళు ఇంకా గెలుస్తున్నారు, కానీ కొంచెమే. <mark turn> రెండో రోజు ధర పైన ఓపెన్ అవుతుంది, చివరి ఆశావాదులు కూడా కొంటారు. అప్పుడు అమ్మేవాళ్ళు పట్టు తీసుకుని, నిన్నటి ఓపెన్ కంటే కిందకి క్లోజ్ చేస్తారు. గత రెండు సెషన్లలో కొన్నవాళ్ళందరూ ఇప్పుడు నష్టంలో ఉన్నారు.",
+        "valid": "కానీ ఎంగల్ఫింగ్ ఒక రివర్సల్ ప్యాటర్న్, కాబట్టి దానికి తిప్పడానికి ముందు ఒక ట్రెండ్ ఉండాలి. బుల్లిష్ ఎంగల్ఫింగ్‌కి ముందు పతనం ఉండాలి. బేరిష్ ఎంగల్ఫింగ్‌కి ముందు పెరుగుదల ఉండాలి. పక్కకు కదిలే రేంజ్‌లో, ధర అటూ ఇటూ తిరుగుతుంటుంది కాబట్టి, క్యాండిల్స్ ఒకదాన్నొకటి తరచుగా ఎంగల్ఫ్ చేస్తుంటాయి. <mark range> ఈ రేంజ్ చార్ట్ మీద ఏడు ఎంగల్ఫింగ్ ప్యాటర్న్స్ ఉన్నాయి, వాటిలో ఒక్కదానికీ అర్థం లేదు.",
+        "locations": "మంచి చోట్లు, వరుసగా. <mark level> ఒకటి, ఒక ట్రెండ్ తర్వాత, స్పష్టమైన సపోర్ట్ లేదా రెసిస్టెన్స్ లెవెల్ దగ్గర. <mark slowing> రెండు, ఒక పెద్ద ట్రెండ్ నెమ్మదించడం మొదలైన తర్వాత, బాడీలు చిన్నవి అవుతున్నప్పుడు. <mark volume> మూడు, ఒక ట్రెండ్ తర్వాత, ఎంగల్ఫింగ్ క్యాండిల్ మీద ఎక్కువ వాల్యూమ్ ఉన్నప్పుడు. <mark count> కొంతమంది ట్రేడర్లు, ఎంగల్ఫింగ్ క్యాండిల్ ఎన్ని పాత బాడీలను కప్పిందో కూడా లెక్కపెడతారు. ఒక్కదాన్ని కాకుండా, మూడు నాలుగు ఎరుపు బాడీలను కప్పితే, ఇంకా ఎక్కువ మంది అమ్మేవాళ్ళు ఇరుక్కుంటారు.",
+        "confirm": "క్లాసిక్ కన్ఫర్మేషన్ అంటే, ఎంగల్ఫింగ్ క్యాండిల్ దాటి క్లోజ్ అయ్యే మూడో క్యాండిల్. బుల్లిష్ అయితే పైన, బేరిష్ అయితే కింద. <mark volume> వాల్యూమ్ కూడా ముఖ్యం. ఎంగల్ఫింగ్ క్యాండిల్ మీద ఎక్కువ వాల్యూమ్ ఉంటే, నిజంగా చేతులు మారాయని అర్థం. వాల్యూమ్ తక్కువగా ఉంటే, ఆ పెద్ద క్యాండిల్ ఒక్క పెద్ద ఆర్డర్ వల్ల కూడా రావచ్చు. <mark timeframe> పెద్ద టైమ్‌ఫ్రేమ్‌లకు ఎక్కువ బరువు ఉంటుంది. ఒక డైలీ ఎంగల్ఫింగ్ అంటే రోజంతా జరిగిన ట్రేడింగ్. ఒక నిమిషం ఎంగల్ఫింగ్ ఒక్క ఆర్డర్ కూడా కావచ్చు.",
+        "trade": "ఈ ఉదాహరణ మీద, ప్రాక్టీస్ కోసం ఒక ట్రేడ్ ఐడియా చూద్దాం. <mark entry> కన్ఫర్మేషన్ క్యాండిల్, ఎంగల్ఫింగ్ క్యాండిల్ గరిష్ఠ ధర కంటే పైన క్లోజ్ అయినప్పుడు ఎంటర్ అవ్వండి. ఇక్కడ, నూట ఐదు పాయింట్ రెండు రెండు దగ్గర. <mark stop> స్టాప్‌ని ప్యాటర్న్ కనిష్ఠ ధర కంటే కింద పెట్టండి. తొంభై ఎనిమిది పాయింట్ ఐదు రెండు. అంటే ఆరు పాయింట్ ఏడు రిస్క్. టార్గెట్‌గా తర్వాతి రెసిస్టెన్స్‌ని, లేదా ఆ రిస్క్‌కి కొన్ని రెట్లు పెట్టుకోండి. <mark why> స్టాప్ అక్కడే ఎందుకు? ఎంగల్ఫింగ్ క్యాండిల్ కనిష్ఠ ధర దగ్గరే, కొనేవాళ్ళు తమ పట్టు నిరూపించారు. ధర మళ్ళీ దాని కిందకి పడితే, ఆ పట్టు పోయినట్టు, ప్యాటర్న్ ఫెయిల్ అయినట్టు.",
+        "trap": "ఒక సాధారణ ఉచ్చు. ఎంగల్ఫింగ్ క్యాండిల్ చాలా పెద్దగా ఉంది, అంటే సగటు రేంజ్‌కి మూడు రెట్లు అనుకోండి, మీరు దాని క్లోజ్ దగ్గర కొన్నారు. మీ స్టాప్ దాని అవతలి చివర కంటే కింద పెట్టాలి, కాబట్టి రిస్క్ చాలా ఎక్కువ. పైగా, కదలికలో చాలా భాగం అప్పటికే అయిపోయి ఉండొచ్చు. పెద్ద ఎంగల్ఫింగ్ క్యాండిల్స్ బలమైన సిగ్నల్స్, కానీ చాలా చెడ్డ ఎంట్రీలు. బాడీలోకి పుల్‌బ్యాక్ కోసం వేచి ఉండండి, లేదా చిన్న పొజిషన్ తీసుకోండి.",
+        "reliability": "ఇది ఎంత నమ్మదగినది? థామస్ బుల్కోవ్‌స్కీ ప్రచురించిన టెస్టుల్లో, బేరిష్ ఎంగల్ఫింగ్ దాదాపు డెబ్బై తొమ్మిది శాతం సార్లు అప్‌ట్రెండ్‌ని తిప్పింది, బుల్లిష్ ఎంగల్ఫింగ్ దాదాపు అరవై మూడు శాతం సార్లు. <mark warn> రెండు హెచ్చరికలు. ఆ లెక్కల్లో, ముందు సరైన ట్రెండ్ ఉన్న ప్యాటర్న్స్ మాత్రమే ఉన్నాయి. ఇంకా, రివర్సల్ అంటే ధర అనుకున్న వైపు కదిలిందని మాత్రమే, ఎక్కువ దూరం కదిలిందని కాదు. ఆయన టెస్టుల్లో, బేరిష్ ఎంగల్ఫింగ్ తర్వాత వచ్చిన ట్రెండ్ చాలాసార్లు ఎక్కువ కాలం నిలవలేదు. అందుకే ఎంగల్ఫింగ్ అంటే, ఒక మలుపు ఆశించడానికి మంచి కారణం, కానీ అది ఎంత పెద్దదో హామీ కాదు.",
+        "takeaways": "సంక్షిప్తంగా. ఎంగల్ఫింగ్ ప్యాటర్న్ అంటే రెండు క్యాండిల్స్. రెండోది వ్యతిరేక రంగులో ఉంటుంది, దాని బాడీ మొదటిదాన్ని పూర్తిగా కప్పేస్తుంది. దానికి ముందు ఒక ట్రెండ్ ఉండాలి. రేంజ్‌లో దానికి అర్థం లేదు. మూడో క్యాండిల్‌తో కన్ఫర్మ్ చేసుకోండి, ఎక్కువ వాల్యూమ్ కోసం చూడండి. స్టాప్‌ని ఎంగల్ఫింగ్ క్యాండిల్ అవతలి చివర దాటి పెట్టండి. చాలా పెద్ద ఎంగల్ఫింగ్ క్యాండిల్స్ అంటే, దూరమైన స్టాప్స్, చెడ్డ ఎంట్రీలు.",
+        "quiz": "ఒక చిన్న టెస్ట్. బుల్లిష్ ఎంగల్ఫింగ్‌కి ఎక్కడ ఎక్కువ అర్థం ఉంటుంది? పక్కకు కదిలే రేంజ్ మధ్యలోనా? లేక ఒక పతనం తర్వాత, సపోర్ట్ లెవెల్ దగ్గరా? <mark think> ఒక్క సెకను ఆలోచించండి. <pause 2.5> <mark reveal> జవాబు: ఒక పతనం తర్వాత, సపోర్ట్ లెవెల్ దగ్గర. రివర్సల్ ప్యాటర్న్‌కి తిప్పడానికి ఒక ట్రెండ్ కావాలి, ఒక లెవెల్ ఉంటే అది ఇంకా బలంగా ఉంటుంది.",
+        "end": "ఇప్పుడు మీ వంతు. ప్యాటర్న్ ట్రైనర్‌లో ప్రాక్టీస్ చేయండి. జవాబు చెప్పే ముందు రెండు విషయాలు చూడండి. మొదటి బాడీ మొత్తం కప్పబడిందా? దానికి ముందు ట్రెండ్ ఉందా?"
+      }
+    },
+    "hi": {
+      "provider": "google",
+      "voice": "hi-IN-Chirp3-HD-Achird",
+      "languageCode": "hi-IN",
+      "pauses": {
+        ".": 0.3,
+        "।": 0.3,
+        "?": 0.45,
+        "!": 0.35
+      },
+      "note": "Natural spoken Hindi, आप register. Needs a native speaker's review.",
+      "scenes": {
+        "title": "बुलिश और बेयरिश एंगल्फ़िंग। मॉड्यूल दो, लेसन छह।",
+        "intro": "खेल के मैदान की एक बहस सोचिए। कल, एक बच्चे ने कुछ छोटी सी, चुभने वाली बात कही। आज, दूसरा बच्चा इतनी ज़ोर से, और इतनी पूरी तरह जवाब देता है, कि कल कही गई हर बात ढक जाती है, और उससे भी ज़्यादा। <mark define> यही है एंगल्फ़िंग पैटर्न। दो कैंडल, जिनमें दूसरी कैंडल की बॉडी, पहली कैंडल की बॉडी को पूरी तरह ढक लेती है, और वो भी उल्टे रंग में। बुलिश एंगल्फ़िंग मतलब, एक छोटी लाल कैंडल, फिर एक बड़ी हरी कैंडल जो उसे निगल जाती है। बेयरिश एंगल्फ़िंग उसका उल्टा है: एक छोटी हरी कैंडल, फिर एक बड़ी लाल कैंडल।",
+        "rules": "अब सटीक नियम देखिए। दूसरी कैंडल उल्टे रंग की होती है। <mark open> वो पहली कैंडल के क्लोज़ के पार खुलती है, <mark close> और पहली कैंडल के ओपन के पार बंद होती है, इसलिए उसकी बॉडी पहली कैंडल की बॉडी को पूरी तरह ढक लेती है। <mark wicks> क्लासिक परिभाषा में, सिर्फ़ बॉडी गिनी जाती हैं, विक नहीं। <mark size> और दूसरी कैंडल, हाल की कैंडलों के मुकाबले बड़ी होनी चाहिए। एक छोटी कैंडल का, उससे भी छोटी कैंडल को निगलना, तकनीकी तौर पर एंगल्फ़िंग है, लेकिन असल में बेमतलब।",
+        "bullish": "यह एक गिरावट के बाद आया बुलिश एंगल्फ़िंग है। दोनों दिनों को एक-एक करके देखिए। <mark day1> पहले दिन, बेचने वाले फिर जीतते हैं, लेकिन थोड़ा सा। बॉडी छोटी है। <mark day2> दूसरे दिन, प्राइस और नीचे खुलती है, जैसे वही कहानी चल रही हो। फिर ख़रीदने वाले पूरी ताक़त से आते हैं। वो प्राइस को वहाँ से ऊपर धकेल देते हैं जहाँ से कल शुरू हुआ था, और आगे बढ़ते जाते हैं। <mark flip> क्लोज़ होते-होते, कल बेचने वाला हर व्यक्ति नुकसान में है। दो सेशन में कंट्रोल पूरी तरह बदल गया।",
+        "wave": "रेत के एक क़िले की कल्पना कीजिए, जिसे छोटी-छोटी ठोकरों से धीरे-धीरे गिराया जा रहा है। फिर एक लहर आती है, जो सारी ठोकरों को मिलाकर भी बड़ी है, और पूरे क़िले को समतल कर देती है। कल की छोटी ठोकर अब कहीं नहीं है। एंगल्फ़िंग कैंडल वही लहर है।",
+        "bearish": "बेयरिश एंगल्फ़िंग इसका उल्टा है, एक बढ़त के ऊपर। पहले दिन एक छोटी हरी कैंडल: ख़रीदने वाले अब भी जीत रहे हैं, पर मुश्किल से। <mark turn> दूसरे दिन प्राइस ऊपर खुलती है, जिससे आख़िरी उम्मीद वाले भी ख़रीद लेते हैं। फिर बेचने वाले कमान संभालते हैं, और क्लोज़ को कल के ओपन से नीचे ले जाते हैं। पिछले दो सेशन में ख़रीदने वाला हर व्यक्ति अब नुकसान में है।",
+        "valid": "लेकिन एंगल्फ़िंग एक रिवर्सल पैटर्न है, इसलिए इसे पलटने के लिए पहले एक ट्रेंड चाहिए। बुलिश एंगल्फ़िंग से पहले गिरावट चाहिए। बेयरिश एंगल्फ़िंग से पहले बढ़त। साइडवेज़ रेंज में, प्राइस बस आगे-पीछे होती रहती है, इसलिए कैंडलें बार-बार एक-दूसरे को एंगल्फ़ करती हैं। <mark range> इस रेंज चार्ट पर सात एंगल्फ़िंग पैटर्न हैं, और उनमें से किसी का कोई मतलब नहीं।",
+        "locations": "सबसे अच्छी जगहें, क्रम से। <mark level> पहली, किसी ट्रेंड के बाद, एक साफ़ सपोर्ट या रेज़िस्टेंस लेवल पर। <mark slowing> दूसरी, एक लंबे ट्रेंड के बाद जो धीमा पड़ने लगा हो, छोटी बॉडी के साथ। <mark volume> तीसरी, किसी ट्रेंड के बाद, एंगल्फ़िंग कैंडल पर ज़्यादा वॉल्यूम के साथ। <mark count> कुछ ट्रेडर यह भी गिनते हैं कि एंगल्फ़िंग कैंडल ने पहले की कितनी बॉडी ढकी हैं। सिर्फ़ एक के बजाय तीन-चार लाल बॉडी ढकने से, और ज़्यादा बेचने वाले फँसते हैं।",
+        "confirm": "क्लासिक कन्फ़र्मेशन है एक तीसरी कैंडल, जो एंगल्फ़िंग कैंडल के पार बंद हो: बुलिश के लिए ऊपर, बेयरिश के लिए नीचे। <mark volume> वॉल्यूम भी मायने रखता है। एंगल्फ़िंग कैंडल पर ज़्यादा वॉल्यूम का मतलब है कि सच में हाथ बदले। कम वॉल्यूम पर, एक बड़ी कैंडल बस एक बड़ा ऑर्डर भी हो सकती है। <mark timeframe> और बड़े टाइमफ़्रेम का वज़न ज़्यादा होता है। एक डेली एंगल्फ़िंग पूरे दिन की ट्रेडिंग है। एक मिनट की एंगल्फ़िंग एक अकेला ऑर्डर भी हो सकती है।",
+        "trade": "इस उदाहरण पर, अभ्यास के लिए एक ट्रेड आइडिया। <mark entry> जब कन्फ़र्मेशन कैंडल, एंगल्फ़िंग कैंडल के हाई से ऊपर बंद हो, तब एंट्री लीजिए। यहाँ, एक सौ पाँच दशमलव दो दो पर। <mark stop> स्टॉप पैटर्न के लो के नीचे रखिए: अट्ठानवे दशमलव पाँच दो। यानी छह दशमलव सात का रिस्क। टारगेट रखिए अगला रेज़िस्टेंस, या उस रिस्क का एक तय गुणा। <mark why> वहीं क्यों? एंगल्फ़िंग कैंडल का लो वो जगह है जहाँ ख़रीदने वालों ने कंट्रोल साबित किया। अगर प्राइस वापस उसके नीचे गिरे, तो कंट्रोल चला गया, और पैटर्न फ़ेल हो गया।",
+        "trap": "एक आम जाल। एंगल्फ़िंग कैंडल बहुत बड़ी है, मान लीजिए औसत रेंज की तीन गुना, और आप उसके क्लोज़ पर ख़रीदते हैं। आपका स्टॉप उसके दूसरे सिरे के नीचे जाना चाहिए, इसलिए रिस्क बहुत बड़ा है, और हो सकता है कि मूव का ज़्यादातर हिस्सा पहले ही हो चुका हो। बड़ी एंगल्फ़िंग कैंडलें मज़बूत सिग्नल हैं, पर बहुत ख़राब एंट्री। बॉडी में पुलबैक का इंतज़ार कीजिए, या छोटी पोज़िशन लीजिए।",
+        "reliability": "यह कितना भरोसेमंद है? थॉमस बुलकोव्स्की के प्रकाशित परीक्षणों में, बेयरिश एंगल्फ़िंग ने लगभग उन्यासी प्रतिशत बार अपट्रेंड पलटा, और बुलिश एंगल्फ़िंग ने लगभग तिरसठ प्रतिशत बार। <mark warn> दो चेतावनियाँ। इन गिनतियों में सिर्फ़ वो पैटर्न हैं जिनसे पहले सही ट्रेंड था। और रिवर्सल का मतलब है प्राइस उम्मीद की दिशा में गई, न कि बहुत दूर गई। उनके परीक्षणों में, बेयरिश एंगल्फ़िंग के बाद का ट्रेंड अक्सर कम समय टिका। इसलिए एंगल्फ़िंग, मोड़ की उम्मीद करने का अच्छा कारण है, यह वादा नहीं कि मोड़ कितना बड़ा होगा।",
+        "takeaways": "संक्षेप में। एंगल्फ़िंग पैटर्न दो कैंडल हैं: दूसरी उल्टे रंग की है, और उसकी बॉडी पहली को पूरी तरह ढकती है। इसे पहले एक ट्रेंड चाहिए: रेंज के अंदर इसका कोई मतलब नहीं। तीसरी कैंडल से कन्फ़र्म कीजिए, और ज़्यादा वॉल्यूम देखिए। स्टॉप एंगल्फ़िंग कैंडल के दूर वाले सिरे के पार रखिए। और बहुत बड़ी एंगल्फ़िंग कैंडलों का मतलब है चौड़े स्टॉप और ख़राब एंट्री।",
+        "quiz": "एक छोटा सा सवाल। बुलिश एंगल्फ़िंग का सबसे ज़्यादा मतलब कहाँ होता है? साइडवेज़ रेंज के बीच में? या किसी गिरावट के बाद, सपोर्ट लेवल पर? <mark think> एक सेकंड सोचिए। <pause 2.5> <mark reveal> जवाब है, गिरावट के बाद, सपोर्ट लेवल पर। रिवर्सल पैटर्न को पलटने के लिए एक ट्रेंड चाहिए, और एक लेवल उसे और मज़बूत बनाता है।",
+        "end": "अब पैटर्न ट्रेनर में अभ्यास कीजिए। जवाब देने से पहले दो बातें जाँचिए: क्या पहली बॉडी पूरी ढकी है, और क्या उससे पहले ट्रेंड था?"
+      }
+    },
+    "es": {
+      "voice": "es_MX-ald-medium",
+      "lengthScale": 1.0,
+      "note": "Latin American Spanish, tú. Needs a native speaker's review.",
+      "scenes": {
+        "title": "Envolvente alcista y bajista. Módulo dos, lección seis.",
+        "intro": "Imagina una pelea en el patio de la escuela. Ayer, un niño dijo algo pequeño y feo. Hoy, el otro niño contesta tan fuerte, y tan completo, que tapa todo lo que se dijo ayer, y más. <mark define> Eso es un patrón envolvente: dos velas, donde el cuerpo de la segunda cubre por completo el cuerpo de la primera, en el color contrario. Un envolvente alcista es una vela roja pequeña, y luego una verde grande que se la traga. Un envolvente bajista es el reflejo: una vela verde pequeña, y luego una roja grande.",
+        "rules": "Estas son las reglas exactas. La segunda vela es del color contrario. <mark open> Abre más allá del cierre de la primera vela, <mark close> y cierra más allá de la apertura de la primera, así que su cuerpo cubre por completo el cuerpo de la primera. <mark wicks> En la definición clásica, solo cuentan los cuerpos, no las mechas. <mark size> Y la segunda vela debe ser grande comparada con las velas recientes. Una vela diminuta que se traga a otra todavía más pequeña es técnicamente un envolvente, y en la práctica no significa nada.",
+        "bullish": "Aquí hay un envolvente alcista después de una caída. Veamos los dos días. <mark day1> El primer día, los vendedores ganan otra vez, pero por poco. El cuerpo es pequeño. <mark day2> El segundo día, el precio abre todavía más abajo, y parece más de lo mismo. Entonces llegan los compradores con fuerza. Empujan el precio por encima de donde empezó ayer, y siguen subiendo. <mark flip> Al cierre, todos los que vendieron ayer están perdiendo dinero. El control cambió de manos en dos sesiones.",
+        "wave": "Imagina un castillo de arena, que van tirando con pequeñas patadas, una por una. Entonces llega una ola, más grande que todas las patadas juntas, y lo deja plano. La patadita de ayer ya no existe. La vela envolvente es esa ola.",
+        "bearish": "El envolvente bajista es el reflejo, en la cima de una subida. El primer día, una vela verde pequeña: los compradores todavía ganan, pero apenas. <mark turn> El segundo día abre más arriba, y atrae a los últimos optimistas. Luego los vendedores toman el control, y llevan el cierre por debajo de la apertura de ayer. Todos los que compraron en las dos últimas sesiones ahora están perdiendo.",
+        "valid": "Pero un envolvente es un patrón de reversión, así que necesita una tendencia que revertir. Un envolvente alcista necesita una caída antes. Un envolvente bajista necesita una subida. En un rango lateral, las velas se envuelven unas a otras todo el tiempo, porque el precio solo va y viene. <mark range> En este gráfico lateral hay siete patrones envolventes, y ninguno significa nada.",
+        "locations": "Los mejores lugares, en orden. <mark level> Primero, en un nivel claro de soporte o resistencia, después de una tendencia. <mark slowing> Segundo, después de una tendencia larga que empezó a frenar, con cuerpos más pequeños. <mark volume> Tercero, después de una tendencia, con volumen alto en la vela envolvente. <mark count> Algunos traders también cuentan cuántos cuerpos anteriores cubre la vela envolvente. Cubrir tres o cuatro cuerpos rojos atrapa a más vendedores que cubrir solo uno.",
+        "confirm": "La confirmación clásica es una tercera vela que cierra más allá de la vela envolvente: más arriba en un alcista, más abajo en un bajista. <mark volume> El volumen también importa. Volumen alto en la vela envolvente significa un cambio real de manos. Con poco volumen, una vela grande puede ser solo una orden grande. <mark timeframe> Y los marcos de tiempo mayores pesan más. Un envolvente diario es un día entero de operaciones. Un envolvente de un minuto puede ser una sola orden.",
+        "trade": "Aquí hay una idea de operación para practicar, sobre este ejemplo. <mark entry> Entra cuando la vela de confirmación cierre por encima del máximo de la vela envolvente: aquí, en ciento cinco punto dos dos. <mark stop> Pon el stop por debajo del mínimo del patrón: noventa y ocho punto cinco dos. Eso es seis punto siete de riesgo. Apunta a la siguiente resistencia, o a un múltiplo fijo de ese riesgo. <mark why> ¿Por qué ahí? El mínimo de la vela envolvente es donde los compradores demostraron el control. Si el precio vuelve a caer por debajo, se perdió el control, y el patrón falló.",
+        "trap": "Una trampa común. La vela envolvente es enorme, digamos tres veces el rango promedio, y compras a su cierre. Tu stop tiene que ir por debajo de su otro extremo, así que tu riesgo es enorme, y gran parte del movimiento puede que ya haya pasado. Las velas envolventes grandes son señales fuertes, y entradas terribles. Espera un retroceso hacia el cuerpo, o toma una posición más pequeña.",
+        "reliability": "¿Qué tan confiable es? En las pruebas publicadas de Thomas Bulkowski, el envolvente bajista revirtió la tendencia alcista cerca del setenta y nueve por ciento de las veces, y el envolvente alcista cerca del sesenta y tres por ciento. <mark warn> Dos advertencias. Esas cuentas solo incluyen patrones con una tendencia previa clara. Y reversión significa que el precio se movió en la dirección esperada, no que se movió lejos. En sus pruebas, la tendencia después de un envolvente bajista muchas veces duró poco. Así que un envolvente es una buena razón para esperar un giro, no una promesa de qué tan grande será.",
+        "takeaways": "En resumen. Un patrón envolvente son dos velas: la segunda es del color contrario, y su cuerpo cubre por completo al primero. Necesita una tendencia antes: dentro de un rango, no significa nada. Confírmalo con una tercera vela, y busca volumen alto. Pon el stop más allá del extremo lejano de la vela envolvente. Y las velas envolventes muy grandes significan stops amplios y malas entradas.",
+        "quiz": "Una pregunta rápida. ¿Dónde significa más un envolvente alcista? ¿En medio de un rango lateral? ¿O en un nivel de soporte después de una caída? <mark think> Tómate un segundo para pensarlo. <pause 2.5> <mark reveal> En un nivel de soporte, después de una caída. Un patrón de reversión necesita una tendencia que revertir, y un nivel lo hace más fuerte.",
+        "end": "Ahora practica en el entrenador de patrones. Antes de responder, revisa dos cosas: ¿está cubierto todo el primer cuerpo, y había una tendencia antes?"
       }
     }
   }

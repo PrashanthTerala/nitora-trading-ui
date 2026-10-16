@@ -183,8 +183,8 @@ for (const mod of CURRICULUM) {
       videoDurationEstimate: duration(read),
       proposedVisualTreatment: treatment(mod, read),
       production: {
-        status: base.lessonKey === 'm02-candlestick-patterns/06-engulfing' ? 'prototype-only' : base.lessonKey === 'm05-indicators/03-ma-crossovers' ? 'pilot-en-awaiting-review' : 'not-started',
-        note: base.lessonKey === 'm02-candlestick-patterns/06-engulfing' ? 'Technical prototype (video/src/Engulfing.tsx). Built before this directive; does not meet its pilot standard.' : null,
+        status: base.lessonKey === 'm02-candlestick-patterns/06-engulfing' ? 'cinematic-v3-awaiting-review' : base.lessonKey === 'm05-indicators/03-ma-crossovers' ? 'pilot-en-awaiting-review' : 'not-started',
+        note: base.lessonKey === 'm02-candlestick-patterns/06-engulfing' ? 'Cinematic v3 (video/src/EngulfingCinematic.tsx), four languages; the earlier technical prototype was replaced.' : null,
       },
     });
   }
