@@ -8,6 +8,7 @@
 import * as ind from '@/engine/market/indicators';
 import { fromPath } from '@/content/figures/helpers';
 import { regimeSeries } from '@/content/figures';
+import { CHART_PATTERNS } from '@/content/figures/chartPatterns';
 import type { OHLC } from '@/engine/market/types';
 
 export interface Cross {
@@ -78,9 +79,39 @@ export const AVERAGE_VALUES = [6, 8, 7, 9, 10];
 export const AVERAGE_SUM = AVERAGE_VALUES.reduce((a, b) => a + b, 0);
 export const AVERAGE_RESULT = ind.sma(AVERAGE_VALUES, AVERAGE_VALUES.length).at(-1) as number;
 
+/**
+ * The structure scene: the site's own "breakout and retest" figure (its preset marks the
+ * resistance at 104, the breakout at bar 31 and the retest that holds at bar 37). The engine
+ * finds no 9/21 EMA cross on these 46 bars, so the video states the cross as the last
+ * checkmark rather than drawing one that is not there.
+ */
+export const STRUCT_BARS = CHART_PATTERNS['breakout-retest'].bars;
+export const STRUCT_RESISTANCE = 104;
+export const STRUCT_BREAKOUT = 31;
+export const STRUCT_RETEST = 37;
+
+/** The pilot's trend health: where the averages are furthest apart, and how close they get before the death cross. */
+const gap = SMA50.map((v, i) => v - SMA200[i]);
+export const MAX_GAP_INDEX = gap.reduce((best, v, i) => (i >= VIEW_FROM && Math.abs(v) > Math.abs(gap[best]) ? i : best), VIEW_FROM);
+export const MAX_GAP = gap[MAX_GAP_INDEX];
+export const NARROW_INDEX = DEATH - 10;
+export const NARROW_GAP = gap[NARROW_INDEX];
+
 /** The whipsaw scene: the site's own sideways regime, with the lesson's 9/21 EMA pair. */
 export const RANGE_BARS = regimeSeries('range');
 const rangeCloses = ind.closes(RANGE_BARS);
 export const RANGE_EMA9 = ind.ema(rangeCloses, 9);
 export const RANGE_EMA21 = ind.ema(rangeCloses, 21);
 export const RANGE_CROSSES = crosses(RANGE_EMA9, RANGE_EMA21);
+
+/**
+ * Buying every bull cross and selling at the next bear cross on the range chart: each round
+ * trip's entry, exit and result, from the engine's closes. On this chart every one loses.
+ */
+export const ROUND_TRIPS = RANGE_CROSSES.flatMap((c, k) => {
+  const next = RANGE_CROSSES[k + 1];
+  if (c.direction !== 'up' || !next || next.direction !== 'down') return [];
+  const buy = RANGE_BARS[c.index].c;
+  const sell = RANGE_BARS[next.index].c;
+  return [{ buyIndex: c.index, buy, sellIndex: next.index, sell, result: sell - buy }];
+});

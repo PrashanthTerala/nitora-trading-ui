@@ -137,7 +137,10 @@ def finish(src: Path, dst: Path, lang: str) -> dict:
 # Cuts other than the full lesson: which scenes, their bases, where the renders are, where to
 # publish. The bases must match the composition's (src/MaCrossoversCinematic.tsx BASES).
 CUTS = {
-    "cinematic": {"bases": {"title": 7, "average": 30, "golden": 18, "lag": 26}, "input": "v3/{name}-cinematic-{lang}.mp4", "dir": "v3-cinematic-poc"},
+    # The proof of concept (4 scenes); its composition has since grown into the full lesson.
+    "cinematic-poc": {"bases": {"title": 7, "average": 30, "golden": 18, "lag": 26}, "input": "v3/{name}-cinematic-{lang}.mp4", "dir": "v3-cinematic-poc"},
+    # The full cinematic lesson: every scene, the script's bases except the intro's 7 s.
+    "cinematic": {"bases": {"title": 7}, "all": True, "input": "v3/{name}-cinematic-{lang}.mp4", "dir": "v3"},
 }
 
 
@@ -150,7 +153,10 @@ def main() -> None:
     module, lesson = spec["lesson"].split("/")
     cut = CUTS.get(cut_name or "", None)
     if cut:
-        spec = {**spec, "scenes": {k: {**spec["scenes"][k], "base": b} for k, b in cut["bases"].items()}}
+        if cut.get("all"):
+            spec = {**spec, "scenes": {k: {**m, "base": cut["bases"].get(k, m["base"])} for k, m in spec["scenes"].items()}}
+        else:
+            spec = {**spec, "scenes": {k: {**spec["scenes"][k], "base": b} for k, b in cut["bases"].items()}}
     out = ROOT / "out" / "publish" / module / lesson / (cut["dir"] if cut else f"v{spec['version']}")
     (out / "audio").mkdir(parents=True, exist_ok=True)
     (out / "qa").mkdir(exist_ok=True)

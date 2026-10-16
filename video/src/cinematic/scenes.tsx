@@ -10,26 +10,29 @@ import { Ship } from '../ma-crossovers/explainers';
 import { BAND_SPACE, CLOSES, CinematicChart, DEATH, GOLDEN, HIGH, LOW, PLOT, SMA50, WIDE, cameraAt, frameBars } from './CinematicChart';
 import { useT } from './strings';
 
-const clamp = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' } as const;
-const fade = (f: number, from: number, len = s(0.5)) => interpolate(f, [from, from + len], [0, 1], clamp);
+export const clamp = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' } as const;
+export const fade = (f: number, from: number, len = s(0.5)) => interpolate(f, [from, from + len], [0, 1], clamp);
 /** A ring that pulses every 1.6 s once shown: deterministic, from the frame alone. */
-const pulse = (f: number, from: number) => (f < from ? 0 : ((f - from) % s(1.6)) / s(1.6));
+export const pulse = (f: number, from: number) => (f < from ? 0 : ((f - from) % s(1.6)) / s(1.6));
 
 /**
  * The scene's headline. With `accent`, the key term (the text before the first colon) is drawn
  * in that colour with an underline that sweeps in: the thing to pay attention to.
  */
-function Headline({ kicker, children, at = 0, accent }: { kicker: string; children: string; at?: number; accent?: string }) {
+export function Headline({ kicker, children, at = 0, accent }: { kicker: string; children: string; at?: number; accent?: string }) {
   const f = useCurrentFrame();
   const o = fade(f, at, s(0.6));
   const sweep = interpolate(f, [at + s(0.4), at + s(1.1)], [0, 1], { ...clamp, easing: Easing.out(Easing.cubic) });
   const cut = accent ? children.indexOf(':') : -1;
   const key = cut > 0 ? children.slice(0, cut) : '';
   const rest = cut > 0 ? children.slice(cut) : children;
+  // One line, always: long headlines get smaller type (about 0.55 em per character) rather
+  // than a second line that would run into the chart's legend.
+  const size = Math.min(58, Math.floor(1680 / (children.length * 0.55)));
   return (
     <div style={{ position: 'absolute', left: 120, top: 70, right: 120, opacity: o, transform: `translateY(${(1 - o) * 16}px)` }}>
       <div style={{ fontSize: 30, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--color-accent)' }}>{kicker}</div>
-      <div style={{ fontFamily: 'var(--font-display)', fontSize: 58, fontWeight: 700, lineHeight: 1.15, marginTop: 10, color: 'var(--color-ink)' }}>
+      <div style={{ fontFamily: 'var(--font-display)', fontSize: size, fontWeight: 700, lineHeight: 1.15, marginTop: 10, color: 'var(--color-ink)', whiteSpace: 'nowrap' }}>
         {key && (
           <span style={{ position: 'relative', color: accent }}>
             {key}

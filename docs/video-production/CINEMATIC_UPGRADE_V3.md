@@ -92,3 +92,41 @@ Date: 2026-10-16. Branch: `video-production`, uncommitted.
 ## 6. Decision
 
 **AWAITING_HUMAN_APPROVAL.** The proof of concept works technically: it is deterministic, synced per language, accurate and passes QA apart from the intended title hold. Whether the look meets the "world-class" bar is your call. If approved, the next step is to give the remaining 10 scenes the same treatment, then re-render all four languages and compare them against v2.
+
+## 7. Full lesson (all 14 scenes), 2026-10-16
+
+After the proof of concept was approved, the other 10 scenes were rebuilt in the same style
+(`video/src/cinematic/scenes2.tsx`). The composition `ma-crossovers-cinematic-{lang}` is now the
+whole lesson. The scene-by-scene technology list is in `video/src/MaCrossoversCinematic.tsx`.
+
+**New in the rebuilt scenes.** Every number is computed by the engine, in `src/ma-crossovers/data.ts`:
+
+| Scene | Content |
+|---|---|
+| race | Runners overtake at the narration's "crosses above", as the real 50/200 SMAs cross on candles below |
+| sign change | The lesson's −0.5 → +0.3 on a number line crossing zero |
+| trade-off | 9/21 EMA against 50/200 SMA on the same candles: 12 crosses against 2, ticked and counted |
+| uses | Held from 91.18 to 108.75; longs-only and shorts-only shading; trend health 16.37 apart against 3.55 |
+| whipsaw | Every buy-at-the-bull-cross, sell-at-the-bear-cross round trip on the range: −6.39, −4.80, −4.94, −3.78 (−19.91 in total) |
+| structure | Breakout and retest on the site's own figure. The engine finds no 9/21 cross there, so none is drawn. Then the veto on the range |
+
+Twelve new timing markers were added across six scenes, in all four languages.
+
+**Checks:**
+- 76 review stills, 19 moments × 4 languages, before rendering.
+- They found and fixed two bugs: a whipsaw label that never appeared, and arrows drawn over candles (now half a bar to the side).
+- Headlines are now always one line.
+
+**Results** (`video/out/publish/m05-indicators/03-ma-crossovers/v3/`, 248 MB including audio masters):
+
+| Language | Length | Render time | Loudness | QA |
+|---|---|---|---|---|
+| English | 6:45 | 23 min | −16.0 LUFS | passes every check |
+| Telugu | 8:32 | 29 min | −16.1 LUFS | passes every check |
+| Hindi | 6:08 | 22 min | −16.1 LUFS | 1 flag: 3.3 s silent title hold |
+| Spanish | 6:50 | 25 min | −16.0 LUFS | 1 flag: 2.8 s silent title hold |
+
+**Still open:**
+- Native-speaker review of the te, hi and es narration.
+- The title hold in Hindi and Spanish: shortening the title base from 7 s to 6 s would remove it, at the cost of re-rendering those two.
+- Website integration needs a separate approval.

@@ -14,7 +14,9 @@
  * sit above the local candle highs with a leader line. A scene that needs room below (the ship
  * card) shrinks the plot with `plotBottom` instead of drawing over it.
  */
+import { useId } from 'react';
 import { Easing, interpolate } from 'remotion';
+import type { OHLC } from '@/engine/market/types';
 import * as d from '../ma-crossovers/data';
 
 export const W = 1920;
@@ -40,12 +42,12 @@ export const HIGH = at(d.HIGH);
 
 export type Camera = { x0: number; x1: number; y0: number; y1: number };
 
-/** The price range of the candles and both averages between two bars, with breathing room. */
-export function frameBars(x0: number, x1: number, pad = 0.12): Camera {
+/** The price range of the candles and lines between two bars, with breathing room above for pills. */
+export function frameOf(bars: OHLC[], lines: number[][], x0: number, x1: number, pad = 0.12): Camera {
   let lo = Infinity;
   let hi = -Infinity;
-  for (let i = Math.max(0, Math.floor(x0)); i <= Math.min(N - 1, Math.ceil(x1)); i++) {
-    for (const v of [BARS[i].l, BARS[i].h, SMA50[i], SMA200[i]]) {
+  for (let i = Math.max(0, Math.floor(x0)); i <= Math.min(bars.length - 1, Math.ceil(x1)); i++) {
+    for (const v of [bars[i].l, bars[i].h, ...lines.map((l) => l[i])]) {
       if (Number.isFinite(v)) {
         lo = Math.min(lo, v);
         hi = Math.max(hi, v);
@@ -55,6 +57,9 @@ export function frameBars(x0: number, x1: number, pad = 0.12): Camera {
   const span = hi - lo || 1;
   return { x0, x1, y0: lo - span * pad, y1: hi + span * (pad + 0.12) }; // extra headroom for marker pills
 }
+
+/** The pilot series' frame between two bars (candles and both SMAs). */
+export const frameBars = (x0: number, x1: number, pad = 0.12) => frameOf(BARS, [SMA50, SMA200], x0, x1, pad);
 
 export const WIDE = frameBars(-4, N + 3, 0.08);
 
@@ -124,7 +129,16 @@ export function placeLabels(items: { x: number; w: number }[], reserved: { x0: n
   return { placed, overflow };
 }
 
-export type Marker = { index: number; label: string; color: string; opacity: number; pulse: number };
+/** A labelled ring at a crossing; `value` is the price it sits on (default: the pilot's SMA 50). */
+export type Marker = { index: number; label: string; color: string; opacity: number; pulse: number; value?: number };
+/** A small triangle at a crossing, without a label (for showing many crosses at once). */
+export type Tick = { index: number; value: number; up: boolean; opacity?: number };
+/** A dashed horizontal level (support, resistance); its label goes in the band, never on the candles. */
+export type Level = { price: number; label: string; color: string; opacity: number };
+export type Line = { values: number[]; color: string; width?: number };
+export type LegendItem = { label: string; color: string; kind: 'candle' | 'line' };
+/** A label for the band that belongs to no shape (a count, a summary); `index` places it, else it sits right. */
+export type Note = { label: string; color: string; opacity: number; index?: number };
 /** Dims the plot away from one point, to direct the eye; the labels are never dimmed. */
 export type Spotlight = { index: number; value: number; radius: number; strength: number };
 /** `labelOpacity` (default 1) lets a label leave while its shading stays on the chart. */
@@ -141,11 +155,25 @@ export function CinematicChart({
   head = true,
   legend,
   tag,
-  plotBottom = PLOT.bottom,
+  plotBottom,
   dim = 1,
   spotlight,
+  bars = BARS,
+  lines,
+  plot,
+  ticks: crossTicks = [],
+  levels = [],
+  notes = [],
 }: {
   cam: Camera;
+  /** The candles (default: the pilot series) and the lines drawn over them (default: its SMA 200 and 50). */
+  bars?: OHLC[];
+  lines?: Line[];
+  /** The plot rectangle (default PLOT), so a scene can place a smaller chart. */
+  plot?: Partial<typeof PLOT>;
+  ticks?: Tick[];
+  levels?: Level[];
+  notes?: Note[];
   /** How much of the series is drawn, 0-1 (candles and both averages advance together). */
   draw?: number;
   smaOpacity?: number;
@@ -154,15 +182,30 @@ export function CinematicChart({
   brackets?: Bracket[];
   /** A price tag at the latest candle while drawing. */
   head?: boolean;
-  legend?: { price: string; sma50: string; sma200: string };
+  legend?: { price: string; sma50: string; sma200: string } | LegendItem[];
   /** The "synthetic data" note, drawn at the left of the label band (its space is reserved). */
   tag?: string;
   plotBottom?: number;
   dim?: number;
   spotlight?: Spotlight;
 }) {
-  const { left, right, top } = PLOT;
-  const bottom = plotBottom;
+  const { left, right, top } = { ...PLOT, ...plot };
+  const bottom = plotBottom ?? plot?.bottom ?? PLOT.bottom;
+  const N = bars.length;
+  const drawn: Line[] = lines ?? [
+    { values: SMA200, color: 'var(--color-chart-1)' },
+    { values: SMA50, color: 'var(--color-chart-2)' },
+  ];
+  // Unique ids: several charts can share a frame.
+  const uid = useId().replace(/[^a-zA-Z0-9]/g, '');
+  const legendItems: LegendItem[] | undefined = Array.isArray(legend)
+    ? legend
+    : legend && [
+        { label: legend.price, color: 'var(--color-ink-soft)', kind: 'candle' },
+        { label: legend.sma50, color: 'var(--color-chart-2)', kind: 'line' },
+        { label: legend.sma200, color: 'var(--color-chart-1)', kind: 'line' },
+      ];
+  const markerY = (m: Marker) => m.value ?? SMA50[m.index];
   const x = (i: number) => left + ((i - cam.x0) / (cam.x1 - cam.x0)) * (right - left);
   const y = (v: number) => top + ((cam.y1 - v) / (cam.y1 - cam.y0)) * (bottom - top);
   const slot = (right - left) / (cam.x1 - cam.x0);
@@ -181,7 +224,7 @@ export function CinematicChart({
   };
   const candles = [];
   for (let i = from; i <= to; i++) {
-    const b = BARS[i];
+    const b = bars[i];
     const up = b.c >= b.o;
     const color = up ? 'var(--color-up)' : 'var(--color-down)';
     const yo = y(b.o);
@@ -202,6 +245,8 @@ export function CinematicChart({
   const bandItems = [
     ...regions.map((r) => ({ r, o: Math.min(r.opacity, r.labelOpacity ?? 1) })).filter(({ r, o }) => r.label && o > 0.01).map(({ r, o }) => ({ kind: 'region' as const, text: r.label!, color: r.color, opacity: o, x: (x(r.from) + x(r.to)) / 2 })),
     ...brackets.map((b) => ({ b, o: Math.min(b.opacity, b.labelOpacity ?? 1) })).filter(({ o }) => o > 0.01).map(({ b, o }) => ({ kind: 'bracket' as const, text: b.label, color: b.color, opacity: o, x: x(b.index) })),
+    ...levels.filter((lv) => lv.opacity > 0.01).map((lv) => ({ kind: 'region' as const, text: lv.label, color: lv.color, opacity: lv.opacity, x: right - 200 })),
+    ...notes.filter((n) => n.opacity > 0.01).map((n) => ({ kind: 'region' as const, text: n.label, color: n.color, opacity: n.opacity, x: n.index === undefined ? right - 260 : x(n.index) })),
   ];
   const { placed: slots, overflow } = placeLabels(bandItems.map((it) => ({ x: it.x, w: textWidth(it.text) })), reserved, left, right + 150, BAND_ROWS);
   // A label that fits nowhere is a layout bug, not something to draw over other text.
@@ -210,17 +255,17 @@ export function CinematicChart({
   return (
     <svg viewBox={`0 0 ${W} ${H}`} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: dim }}>
       <defs>
-        <clipPath id="plot">
+        <clipPath id={`plot${uid}`}>
           <rect x={left} y={top - 10} width={right - left} height={bottom - top + 10} />
         </clipPath>
         {spotlight && (
-          <radialGradient id="spot" gradientUnits="userSpaceOnUse" cx={x(spotlight.index)} cy={y(spotlight.value)} r={spotlight.radius}>
+          <radialGradient id={`spot${uid}`} gradientUnits="userSpaceOnUse" cx={x(spotlight.index)} cy={y(spotlight.value)} r={spotlight.radius}>
             <stop offset="0" stopColor="var(--color-bg)" stopOpacity={0} />
             <stop offset="0.55" stopColor="var(--color-bg)" stopOpacity={0} />
             <stop offset="1" stopColor="var(--color-bg)" stopOpacity={0.78 * spotlight.strength} />
           </radialGradient>
         )}
-        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+        <filter id={`glow${uid}`} x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur stdDeviation="5" result="b" />
           <feMerge>
             <feMergeNode in="b" />
@@ -238,7 +283,7 @@ export function CinematicChart({
         </g>
       ))}
 
-      <g clipPath="url(#plot)">
+      <g clipPath={`url(#plot${uid})`}>
         {regions.map((r, k) => (
           <g key={k} opacity={r.opacity}>
             <rect x={x(r.from)} y={top} width={Math.max(0, x(r.to) - x(r.from))} height={bottom - top} fill={r.color} opacity={0.12} />
@@ -247,22 +292,34 @@ export function CinematicChart({
           </g>
         ))}
         {candles}
-        <g opacity={smaOpacity} filter="url(#glow)">
-          <path d={line(SMA200)} fill="none" stroke="var(--color-chart-1)" strokeWidth={6} strokeLinejoin="round" strokeLinecap="round" />
-          <path d={line(SMA50)} fill="none" stroke="var(--color-chart-2)" strokeWidth={6} strokeLinejoin="round" strokeLinecap="round" />
-        </g>
-        {spotlight && spotlight.strength > 0 && <rect x={left} y={top - 10} width={right - left} height={bottom - top + 10} fill="url(#spot)" />}
-        {brackets.map((b, k) => (
-          <g key={k} opacity={b.opacity}>
-            <line x1={x(b.index)} x2={x(b.index)} y1={y(b.from)} y2={y(b.to)} stroke={b.color} strokeWidth={5} />
-            <line x1={x(b.index) - 16} x2={x(b.index) + 16} y1={y(b.from)} y2={y(b.from)} stroke={b.color} strokeWidth={5} />
-            <polygon points={arrow(x(b.index), y(b.to), b.to > b.from)} fill={b.color} />
-          </g>
+        {levels.map((lv, k) => (
+          <line key={k} x1={left} x2={right} y1={y(lv.price)} y2={y(lv.price)} stroke={lv.color} strokeWidth={3} strokeDasharray="14 10" opacity={lv.opacity} />
         ))}
+        <g opacity={smaOpacity} filter={`url(#glow${uid})`}>
+          {drawn.map((l, k) => (
+            <path key={k} d={line(l.values)} fill="none" stroke={l.color} strokeWidth={l.width ?? 6} strokeLinejoin="round" strokeLinecap="round" />
+          ))}
+        </g>
+
+        {spotlight && spotlight.strength > 0 && <rect x={left} y={top - 10} width={right - left} height={bottom - top + 10} fill={`url(#spot${uid})`} />}
+        {crossTicks.map((tk, k) => (
+          <polygon key={k} points={arrow(x(tk.index), tk.up ? y(tk.value) + 34 : y(tk.value) - 34, tk.up)} fill={tk.up ? 'var(--color-up)' : 'var(--color-down)'} opacity={tk.opacity ?? 1} />
+        ))}
+        {/* Arrows stand half a bar to the right of their candle, so they never cover it. */}
+        {brackets.map((b, k) => {
+          const bx = x(b.index + 0.5);
+          return (
+            <g key={k} opacity={b.opacity}>
+              <line x1={bx} x2={bx} y1={y(b.from)} y2={y(b.to)} stroke={b.color} strokeWidth={5} />
+              <line x1={bx - 16} x2={bx + 16} y1={y(b.from)} y2={y(b.from)} stroke={b.color} strokeWidth={5} />
+              <polygon points={arrow(bx, y(b.to), b.to > b.from)} fill={b.color} />
+            </g>
+          );
+        })}
         {markers.map((m, k) => (
           <g key={k} opacity={m.opacity}>
-            <circle cx={x(m.index)} cy={y(SMA50[m.index])} r={18 + 30 * m.pulse} fill="none" stroke={m.color} strokeWidth={4} opacity={1 - m.pulse} />
-            <circle cx={x(m.index)} cy={y(SMA50[m.index])} r={15} fill="none" stroke={m.color} strokeWidth={6} />
+            <circle cx={x(m.index)} cy={y(markerY(m))} r={18 + 30 * m.pulse} fill="none" stroke={m.color} strokeWidth={4} opacity={1 - m.pulse} />
+            <circle cx={x(m.index)} cy={y(markerY(m))} r={15} fill="none" stroke={m.color} strokeWidth={6} />
           </g>
         ))}
       </g>
@@ -272,13 +329,13 @@ export function CinematicChart({
         const mx = x(m.index);
         if (mx < left - 40 || mx > right + 40 || m.opacity < 0.01) return null;
         let hi = -Infinity;
-        for (let i = Math.max(0, m.index - 8); i <= Math.min(N - 1, m.index + 8); i++) hi = Math.max(hi, BARS[i].h, SMA50[i], Number.isFinite(SMA200[i]) ? SMA200[i] : -Infinity);
+        for (let i = Math.max(0, m.index - 8); i <= Math.min(N - 1, m.index + 8); i++) hi = Math.max(hi, bars[i].h, ...drawn.map((l) => (Number.isFinite(l.values[i]) ? l.values[i] : -Infinity)));
         const w = textWidth(m.label, 32);
         const py = Math.max(top + 34, y(hi) - 56);
         const px = Math.min(Math.max(mx, left + w / 2), right - w / 2);
         return (
           <g key={k} opacity={m.opacity}>
-            <line x1={mx} x2={mx} y1={py + 30} y2={y(SMA50[m.index]) - 18} stroke={m.color} strokeWidth={2.5} strokeDasharray="6 6" />
+            <line x1={mx} x2={mx} y1={py + 30} y2={y(markerY(m)) - 18} stroke={m.color} strokeWidth={2.5} strokeDasharray="6 6" />
             <rect x={px - w / 2} y={py - 30} width={w} height={60} rx={30} fill="var(--color-bg)" stroke={m.color} strokeWidth={3} />
             <text x={px} y={py + 11} textAnchor="middle" fontSize={32} fontWeight={700} fill={m.color} fontFamily="var(--font-sans)">
               {m.label}
@@ -316,20 +373,16 @@ export function CinematicChart({
 
       {head && draw < 1 && (
         <g>
-          <rect x={Math.min(x(last) + 18, right - 150)} y={y(BARS[last].c) - 26} width={140} height={50} rx={10} fill="var(--color-surface-1)" stroke="var(--color-line)" strokeWidth={2} />
-          <text x={Math.min(x(last) + 88, right - 80)} y={y(BARS[last].c) + 10} textAnchor="middle" fontSize={30} fill="var(--color-ink)" fontFamily="var(--font-mono)">
-            {BARS[last].c.toFixed(2)}
+          <rect x={Math.min(x(last) + 18, right - 150)} y={y(bars[last].c) - 26} width={140} height={50} rx={10} fill="var(--color-surface-1)" stroke="var(--color-line)" strokeWidth={2} />
+          <text x={Math.min(x(last) + 88, right - 80)} y={y(bars[last].c) + 10} textAnchor="middle" fontSize={30} fill="var(--color-ink)" fontFamily="var(--font-mono)">
+            {bars[last].c.toFixed(2)}
           </text>
         </g>
       )}
-      {legend && (
+      {legendItems && (
         <g fontFamily="var(--font-sans)" fontSize={32} fontWeight={600}>
-          {[
-            [legend.price, 'var(--color-ink-soft)', 'candle'],
-            [legend.sma50, 'var(--color-chart-2)', 'line'],
-            [legend.sma200, 'var(--color-chart-1)', 'line'],
-          ].map(([label, color, kind], k) => (
-            <g key={k} transform={`translate(${right - 760 + k * 270}, ${top - 40})`}>
+          {legendItems.map(({ label, color, kind }, k) => (
+            <g key={k} transform={`translate(${right - legendItems.length * 260 + k * 260}, ${top - 40})`}>
               {kind === 'candle' ? (
                 <g>
                   <rect x={4} y={-24} width={12} height={22} fill="var(--color-up)" />
