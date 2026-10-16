@@ -1,0 +1,195 @@
+{
+  "lesson": "m02-candlestick-patterns/07-harami-and-harami-cross",
+  "version": 2,
+  "source": {
+    "file": "src/content/modules/m02-candlestick-patterns/07-harami-and-harami-cross.mdx",
+    "sha256": "152c3ba00148dcdaf6e119c18de1e9dd43f6879ce376f688728459d2a80a2dea"
+  },
+  "timing": {
+    "lead": 0.5,
+    "tail": 0.9
+  },
+  "note": "v2 (cinematic): script approved 2026-10-16 (docs/video-production/scripts/harami-en-v2.md). English and Telugu only, by the owner's decision. Each scene names the lesson lines it says; 'computed' numbers are checked against src/harami/data.ts by scripts/check.mjs. Reliability figures are Bulkowski's (thepatternsite.com, read 2026-10-16), as the corrected lesson states. <mark name> sets a timing marker; <pause s> inserts silence.",
+  "scenes": {
+    "title": {
+      "base": 5,
+      "lines": "curriculum.ts: m02-candlestick-patterns / 07-harami-and-harami-cross"
+    },
+    "intro": {
+      "base": 30,
+      "lines": "1-5",
+      "marks": [
+        "define",
+        "stall"
+      ]
+    },
+    "rules": {
+      "base": 26,
+      "lines": "9-12",
+      "marks": [
+        "inside",
+        "colour",
+        "wicks"
+      ]
+    },
+    "bullish": {
+      "base": 28,
+      "lines": "16-20",
+      "marks": [
+        "day1",
+        "day2",
+        "stall"
+      ]
+    },
+    "trolley": {
+      "base": 14,
+      "lines": "22-26"
+    },
+    "bearish": {
+      "base": 14,
+      "lines": "28-32",
+      "marks": [
+        "turn"
+      ]
+    },
+    "cross": {
+      "base": 18,
+      "lines": "34-40",
+      "marks": [
+        "doji"
+      ]
+    },
+    "valid": {
+      "base": 18,
+      "lines": "42-44",
+      "marks": [
+        "range"
+      ],
+      "computed": {
+        "RANGE_HARAMI_COUNT": 3
+      }
+    },
+    "locations": {
+      "base": 18,
+      "lines": "46-50",
+      "marks": [
+        "sprint",
+        "level",
+        "cross"
+      ]
+    },
+    "confirm": {
+      "base": 24,
+      "lines": "52-56",
+      "marks": [
+        "high",
+        "mid",
+        "promote"
+      ]
+    },
+    "trade": {
+      "base": 26,
+      "lines": "58-64",
+      "marks": [
+        "entry",
+        "stop",
+        "size"
+      ],
+      "computed": {
+        "BULL_ENTRY": 101.85,
+        "BULL_STOP": 95.95,
+        "BULL_RISK": 5.9
+      }
+    },
+    "trap": {
+      "base": 20,
+      "lines": "66-70"
+    },
+    "reliability": {
+      "base": 32,
+      "lines": "72-76",
+      "marks": [
+        "cross",
+        "lesson"
+      ],
+      "computed": {
+        "BULKOWSKI_BULLISH": 53,
+        "BULKOWSKI_BEARISH": 47,
+        "BULKOWSKI_CROSS_BULLISH": 45,
+        "BULKOWSKI_CROSS_BEARISH": 43
+      }
+    },
+    "takeaways": {
+      "base": 24,
+      "lines": "78-85"
+    },
+    "quiz": {
+      "base": 16,
+      "lines": "91",
+      "marks": [
+        "think",
+        "reveal"
+      ]
+    },
+    "end": {
+      "base": 8,
+      "lines": "95"
+    }
+  },
+  "languages": {
+    "en": {
+      "voice": "en_US-ljspeech-high",
+      "lengthScale": 1.12,
+      "sentenceGap": {
+        ".": 0.35,
+        "?": 0.45,
+        "!": 0.4
+      },
+      "scenes": {
+        "title": "Harami and harami cross. Module two, lesson seven.",
+        "intro": "Picture a runner sprinting down a track, stride after stride, each one as long as the last. Then one stride is tiny. She has not turned around. She has not stopped. But the effort went out of it. <mark define> That tiny stride is a harami. The word is Japanese for pregnant, because the picture is a big candle with a small candle tucked inside its body. It is the engulfing pattern in reverse: instead of a big candle swallowing a small one, a small one hides inside a big one. <mark stall> And that tells you what it means: a harami shows momentum stalling, not reversing.",
+        "rules": "Here are the rules. Candle one is big, and it goes with the trend: a big red candle in a downtrend, or a big green candle in an uptrend. <mark inside> Candle two has a small body that sits completely inside candle one's body: its open and its close are both between candle one's open and close. <mark colour> Candle two is usually the opposite colour, but it does not have to be. What matters is that it is small, and inside. <mark wicks> Its wicks may poke outside. Stricter traders want the whole second candle inside the first, and call that an inside bar.",
+        "bullish": "Here is a bullish harami after a decline. <mark day1> On day one, sellers post their biggest win in a while: a long red candle. On its own, it says the decline is healthy. <mark day2> On day two, price opens inside yesterday's body, above yesterday's close, and then goes almost nowhere. Sellers could not make a new low. Buyers could not do much either. <mark stall> Momentum that was racing has gone flat in one session. That is the difference from an engulfing: there, the other side takes control. Here, the winning side only loses its grip. Nobody has taken over yet.",
+        "trolley": "Think of a shopping trolley rolling fast down a slope. An engulfing pattern is someone grabbing it and shoving it back up the hill. A harami is the trolley hitting a patch of thick grass and slowing to a crawl. It has not gone back up. But it is no longer racing down, and a small push could turn it.",
+        "bearish": "The bearish harami is the mirror, at the top of a rise. A big green candle, then a small candle inside its body. <mark turn> Buyers who were charging ahead yesterday could not push price to a new high today. The rally has stalled.",
+        "cross": "When the second candle is a doji, the pattern is called a harami cross. <mark doji> The second session ended in a perfect draw: open and close in the same place. Traditionally, that is read as a stronger stall than a plain harami. But it is still a stall, not a reversal, until the next candle proves it.",
+        "valid": "Like every reversal pattern, the harami needs a trend: a decline before a bullish harami, a rise before a bearish one. In a sideways range, small candles inside big ones happen all the time. <mark range> On this sideways chart, there are three of them, and none of them means anything.",
+        "locations": "The strongest haramis form in three places. <mark sprint> First, after a long trend where the first candle is unusually big: the bigger the sprint, the more the tiny step means. <mark level> Second, at a support level for a bullish harami, or resistance for a bearish one. <mark cross> And third, when the second candle is a doji.",
+        "confirm": "Because a harami only shows a stall, confirmation matters more here than for almost any other two-candle pattern. <mark high> For a bullish harami, you want a third candle that closes above the small candle's high. <mark mid> Even better, above the middle of the big red candle. <mark promote> And when the third candle closes above the big candle's open, as it does here, the pattern has a new name: three inside up. That is lesson twelve.",
+        "trade": "A trade idea to practise, on this example. <mark entry> Enter when the confirmation candle closes above the harami's high: here, at one hundred and one point eight five. <mark stop> Put the stop below the low of the big red candle, where sellers had their last real win: ninety-five point nine five. That is five point nine of risk. Aim for the next resistance, or a multiple of that risk. <mark size> Because the stop sits beyond the big first candle, the risk can be large. Size your position for it.",
+        "trap": "The most common harami mistake: buying at the close of the small candle, as if it were the turn. At that moment, nothing has turned. The trolley has only slowed down. About half the time, the trend simply carries on, and you are stopped out. The harami is a reason to watch closely. The confirmation candle is the reason to act.",
+        "reliability": "How reliable is it? In Thomas Bulkowski's published tests, the bullish harami reversed the downtrend about fifty-three percent of the time. The bearish harami did worse: it reversed the uptrend only about forty-seven percent of the time. <mark cross> And the harami cross did not do better. In those tests it reversed less often than a plain harami: about forty-five percent for the bullish cross, and forty-three for the bearish. <mark lesson> All of them are close to a coin flip. A stall can go either way. So the harami tells you what to watch, not what to do. Add a level, wait for the third candle, and the odds become workable.",
+        "takeaways": "To recap. A harami is a big candle, then a small candle whose body sits inside the big one's body. It shows momentum stalling, not reversing. The harami cross, with a doji inside, is traditionally read as a deeper stall. It needs a trend before it. Wait for a third candle to close beyond the small candle. And in testing, haramis are close to a coin flip, so the level and the confirmation do the work.",
+        "quiz": "Quick check. A bullish harami forms after a decline. What is the most sensible thing to do? Buy at the close of the small candle? Or wait for a third candle to close above the harami's high? <mark think> Take a second to think. <pause 2.5> <mark reveal> Wait for the third candle. The small candle only shows a stall. The third candle tells you which way it went.",
+        "end": "Now practise in the pattern trainer. Whenever a big candle is followed by a small one, check whether the small body is fully inside, and then look at the trend before it."
+      }
+    },
+    "te": {
+      "provider": "google",
+      "voice": "te-IN-Chirp3-HD-Achird",
+      "languageCode": "te-IN",
+      "flow": true,
+      "commaPause": "[pause short]",
+      "speakingRate": 0.92,
+      "note": "Friendly spoken Telugu; trading terms in Telugu script, 'low'/'high' as కనిష్ఠ/గరిష్ఠ ధర, 'coin flip' as బొమ్మా బొరుసు. Needs a native speaker's review.",
+      "scenes": {
+        "title": "హాయ్! ఈరోజు మనం హరామి, హరామి క్రాస్ గురించి మాట్లాడుకుందాం. మాడ్యూల్ రెండు. పాఠం ఏడు.",
+        "intro": "ఒక రన్నర్‌ని ఊహించుకోండి. ట్రాక్ మీద వేగంగా పరుగెడుతోంది, ప్రతి అడుగూ అంతే పొడవుగా. అప్పుడు ఒక అడుగు చాలా చిన్నదిగా పడింది. ఆమె వెనక్కి తిరగలేదు. ఆగిపోలేదు కూడా. కానీ ఆ అడుగులో శక్తి లేదు. <mark define> ఆ చిన్న అడుగే హరామి. ఈ పదం జపనీస్‌లో గర్భవతి అని అర్థం, ఎందుకంటే ఇక్కడ ఒక పెద్ద క్యాండిల్ బాడీ లోపల, ఒక చిన్న క్యాండిల్ దాగి ఉంటుంది. ఇది ఎంగల్ఫింగ్‌కి పూర్తిగా వ్యతిరేకం. అక్కడ పెద్ద క్యాండిల్ చిన్నదాన్ని మింగేస్తుంది. ఇక్కడ చిన్నది పెద్దదాని లోపల దాక్కుంటుంది. <mark stall> దీని అర్థం కూడా అదే. హరామి అంటే వేగం ఆగిపోవడం, దిశ మారడం కాదు.",
+        "rules": "ఇప్పుడు రూల్స్ చూద్దాం. మొదటి క్యాండిల్ పెద్దది, అది ట్రెండ్ దిశలోనే ఉంటుంది. డౌన్‌ట్రెండ్‌లో పెద్ద ఎరుపు క్యాండిల్, లేదా అప్‌ట్రెండ్‌లో పెద్ద ఆకుపచ్చ క్యాండిల్. <mark inside> రెండో క్యాండిల్ బాడీ చిన్నది, అది మొదటి క్యాండిల్ బాడీ లోపలే పూర్తిగా ఉంటుంది. అంటే దాని ఓపెన్, క్లోజ్ రెండూ, మొదటి క్యాండిల్ ఓపెన్‌కీ క్లోజ్‌కీ మధ్యలోనే ఉంటాయి. <mark colour> రెండో క్యాండిల్ సాధారణంగా వ్యతిరేక రంగులో ఉంటుంది, కానీ అది తప్పనిసరి కాదు. ముఖ్యమైనది, అది చిన్నగా ఉండాలి, లోపల ఉండాలి. <mark wicks> దాని విక్స్ బయటకు రావచ్చు. కొంతమంది కఠినమైన ట్రేడర్లు, రెండో క్యాండిల్ మొత్తం, విక్స్‌తో సహా, మొదటిదాని లోపలే ఉండాలంటారు. దాన్ని ఇన్‌సైడ్ బార్ అంటారు.",
+        "bullish": "ఇది ఒక పతనం తర్వాత వచ్చిన బుల్లిష్ హరామి. <mark day1> మొదటి రోజు, అమ్మేవాళ్ళు చాలా రోజుల తర్వాత అతి పెద్ద విజయం సాధిస్తారు. ఒక పొడవైన ఎరుపు క్యాండిల్. దాన్ని ఒక్కదాన్నే చూస్తే, పతనం బలంగా ఉందనిపిస్తుంది. <mark day2> రెండో రోజు, ధర నిన్నటి బాడీ లోపలే, నిన్నటి క్లోజ్ కంటే పైన ఓపెన్ అవుతుంది. ఆ తర్వాత దాదాపు ఎటూ కదలదు. అమ్మేవాళ్ళు కొత్త కనిష్ఠ ధరను చేయలేకపోయారు. కొనేవాళ్ళు కూడా పెద్దగా ఏమీ చేయలేకపోయారు. <mark stall> పరుగెడుతున్న వేగం ఒక్క సెషన్‌లోనే ఆగిపోయింది. ఎంగల్ఫింగ్‌కీ దీనికీ తేడా ఇదే. అక్కడ అవతలి వైపు వాళ్ళు నియంత్రణ తీసుకుంటారు. ఇక్కడ గెలుస్తున్న వైపు వాళ్ళ పట్టు మాత్రమే జారుతుంది. ఇంకా ఎవరూ నియంత్రణ తీసుకోలేదు.",
+        "trolley": "ఒక వాలు మీద వేగంగా దొర్లుతున్న షాపింగ్ ట్రాలీని ఊహించుకోండి. ఎంగల్ఫింగ్ అంటే, ఎవరో దాన్ని పట్టుకుని కొండ పైకి వెనక్కి తోసేయడం. హరామి అంటే, ఆ ట్రాలీ దట్టమైన గడ్డిలోకి వెళ్ళి, నెమ్మదిగా పాకడం. అది వెనక్కి పైకి వెళ్ళలేదు. కానీ ఇక కిందకి దూసుకుపోవడం లేదు. చిన్న తోపు చాలు, అది తిరగడానికి.",
+        "bearish": "బేరిష్ హరామి దీనికి అద్దం లాంటిది, ఒక పెరుగుదల పైభాగంలో వస్తుంది. ఒక పెద్ద ఆకుపచ్చ క్యాండిల్, ఆ తర్వాత దాని బాడీ లోపల ఒక చిన్న క్యాండిల్. <mark turn> నిన్న దూసుకుపోయిన కొనేవాళ్ళు, ఈరోజు ధరను కొత్త గరిష్ఠానికి తీసుకెళ్ళలేకపోయారు. పెరుగుదల ఆగిపోయింది.",
+        "cross": "రెండో క్యాండిల్ డోజీ అయితే, ఆ ప్యాటర్న్‌ని హరామి క్రాస్ అంటారు. <mark doji> రెండో సెషన్ పూర్తిగా సమానంగా ముగిసింది. ఓపెన్, క్లోజ్ ఒకే చోట. సంప్రదాయంగా, దీన్ని సాధారణ హరామి కంటే బలమైన ఆగిపోవడంగా చూస్తారు. కానీ తర్వాతి క్యాండిల్ నిరూపించే వరకు, ఇది కూడా ఆగిపోవడమే, దిశ మారడం కాదు.",
+        "valid": "ప్రతి రివర్సల్ ప్యాటర్న్ లాగే, హరామికి కూడా ఒక ట్రెండ్ కావాలి. బుల్లిష్ హరామికి ముందు పతనం, బేరిష్ హరామికి ముందు పెరుగుదల. పక్కకు కదిలే రేంజ్‌లో, పెద్ద క్యాండిల్స్ లోపల చిన్న క్యాండిల్స్ తరచుగా వస్తుంటాయి. <mark range> ఈ రేంజ్ చార్ట్ మీద అలాంటివి మూడు ఉన్నాయి, వాటిలో ఒక్కదానికీ అర్థం లేదు.",
+        "locations": "బలమైన హరామిలు మూడు చోట్ల వస్తాయి. <mark sprint> ఒకటి, ఒక పెద్ద ట్రెండ్ తర్వాత, మొదటి క్యాండిల్ మామూలు కంటే చాలా పెద్దగా ఉన్నప్పుడు. పరుగు ఎంత వేగంగా ఉంటే, ఆ చిన్న అడుగుకి అంత అర్థం. <mark level> రెండు, బుల్లిష్ హరామి అయితే సపోర్ట్ లెవెల్ దగ్గర, బేరిష్ హరామి అయితే రెసిస్టెన్స్ దగ్గర. <mark cross> మూడు, రెండో క్యాండిల్ డోజీ అయినప్పుడు.",
+        "confirm": "హరామి కేవలం ఆగిపోవడాన్ని మాత్రమే చూపిస్తుంది కాబట్టి, దాదాపు మిగతా అన్ని రెండు క్యాండిల్ ప్యాటర్న్స్ కంటే, ఇక్కడ కన్ఫర్మేషన్ చాలా ముఖ్యం. <mark high> బుల్లిష్ హరామికి, చిన్న క్యాండిల్ గరిష్ఠ ధర కంటే పైన క్లోజ్ అయ్యే మూడో క్యాండిల్ కావాలి. <mark mid> ఇంకా మంచిది, పెద్ద ఎరుపు క్యాండిల్ మధ్య భాగం కంటే పైన క్లోజ్ అయితే. <mark promote> ఇక్కడ లాగా, మూడో క్యాండిల్ పెద్ద క్యాండిల్ ఓపెన్ కంటే పైన క్లోజ్ అయితే, ఆ ప్యాటర్న్‌కి కొత్త పేరు వస్తుంది. త్రీ ఇన్‌సైడ్ అప్. అది పాఠం పన్నెండు.",
+        "trade": "ఈ ఉదాహరణ మీద, ప్రాక్టీస్ కోసం ఒక ట్రేడ్ ఐడియా చూద్దాం. <mark entry> కన్ఫర్మేషన్ క్యాండిల్, హరామి గరిష్ఠ ధర కంటే పైన క్లోజ్ అయినప్పుడు ఎంటర్ అవ్వండి. ఇక్కడ, నూట ఒకటి పాయింట్ ఎనిమిది ఐదు దగ్గర. <mark stop> స్టాప్‌ని పెద్ద ఎరుపు క్యాండిల్ కనిష్ఠ ధర కంటే కింద పెట్టండి. అమ్మేవాళ్ళు చివరిసారి నిజంగా గెలిచింది అక్కడే. తొంభై ఐదు పాయింట్ తొమ్మిది ఐదు. అంటే ఐదు పాయింట్ తొమ్మిది రిస్క్. టార్గెట్‌గా తర్వాతి రెసిస్టెన్స్‌ని, లేదా ఆ రిస్క్‌కి కొన్ని రెట్లు పెట్టుకోండి. <mark size> స్టాప్ పెద్ద మొదటి క్యాండిల్ అవతల ఉంటుంది కాబట్టి, రిస్క్ పెద్దగా ఉండొచ్చు. దానికి తగ్గట్టు మీ పొజిషన్ సైజ్ పెట్టుకోండి.",
+        "trap": "హరామిలో అందరూ చేసే పెద్ద తప్పు ఇది. చిన్న క్యాండిల్ క్లోజ్ దగ్గరే, అదే మలుపు అనుకుని కొనేయడం. ఆ క్షణంలో, ఏదీ మలుపు తిరగలేదు. ట్రాలీ కేవలం నెమ్మదించింది అంతే. దాదాపు సగం సార్లు, ట్రెండ్ అలాగే కొనసాగుతుంది, మీ స్టాప్ తగులుతుంది. హరామి అంటే జాగ్రత్తగా గమనించడానికి ఒక కారణం. కన్ఫర్మేషన్ క్యాండిల్ అంటే ముందుకు వెళ్ళడానికి కారణం.",
+        "reliability": "ఇది ఎంత నమ్మదగినది? థామస్ బుల్కోవ్‌స్కీ ప్రచురించిన టెస్టుల్లో, బుల్లిష్ హరామి దాదాపు యాభై మూడు శాతం సార్లు డౌన్‌ట్రెండ్‌ని తిప్పింది. బేరిష్ హరామి ఇంకా తక్కువ. అది అప్‌ట్రెండ్‌ని కేవలం నలభై ఏడు శాతం సార్లే తిప్పింది. <mark cross> హరామి క్రాస్ కూడా మెరుగ్గా లేదు. ఆ టెస్టుల్లో అది సాధారణ హరామి కంటే తక్కువ సార్లే తిప్పింది. బుల్లిష్ క్రాస్ దాదాపు నలభై ఐదు శాతం, బేరిష్ క్రాస్ నలభై మూడు శాతం. <mark lesson> ఇవన్నీ దాదాపు బొమ్మా బొరుసు లాంటివే. ఆగిపోయిన వేగం ఎటైనా వెళ్ళొచ్చు. అందుకే హరామి, ఏం గమనించాలో చెబుతుంది, ఏం చేయాలో కాదు. ఒక లెవెల్ కలపండి, మూడో క్యాండిల్ కోసం వేచి ఉండండి, అప్పుడు అవకాశాలు బాగుంటాయి.",
+        "takeaways": "సంక్షిప్తంగా. హరామి అంటే ఒక పెద్ద క్యాండిల్, ఆ తర్వాత దాని బాడీ లోపల బాడీ ఉన్న ఒక చిన్న క్యాండిల్. ఇది వేగం ఆగిపోవడాన్ని చూపిస్తుంది, దిశ మారడాన్ని కాదు. లోపల డోజీ ఉన్న హరామి క్రాస్‌ని, సంప్రదాయంగా లోతైన ఆగిపోవడంగా చూస్తారు. దానికి ముందు ఒక ట్రెండ్ ఉండాలి. చిన్న క్యాండిల్ దాటి క్లోజ్ అయ్యే మూడో క్యాండిల్ కోసం వేచి ఉండండి. టెస్టుల్లో హరామిలు దాదాపు బొమ్మా బొరుసు లాంటివే, కాబట్టి లెవెల్, కన్ఫర్మేషన్ అసలు పని చేస్తాయి.",
+        "quiz": "ఒక చిన్న టెస్ట్. ఒక పతనం తర్వాత బుల్లిష్ హరామి వచ్చింది. ఇప్పుడు చేయాల్సిన తెలివైన పని ఏమిటి? చిన్న క్యాండిల్ క్లోజ్ దగ్గరే కొనడమా? లేక, హరామి గరిష్ఠ ధర కంటే పైన మూడో క్యాండిల్ క్లోజ్ అయ్యే వరకు వేచి ఉండడమా? <mark think> ఒక్క సెకను ఆలోచించండి. <pause 2.5> <mark reveal> జవాబు: మూడో క్యాండిల్ కోసం వేచి ఉండండి. చిన్న క్యాండిల్ కేవలం ఆగిపోవడాన్ని మాత్రమే చూపిస్తుంది. ఏ వైపు తిరిగిందో మూడో క్యాండిల్ చెబుతుంది.",
+        "end": "ఇప్పుడు మీ వంతు. ప్యాటర్న్ ట్రైనర్‌లో ప్రాక్టీస్ చేయండి. పెద్ద క్యాండిల్ తర్వాత చిన్నది వచ్చినప్పుడల్లా, చిన్న బాడీ పూర్తిగా లోపల ఉందో లేదో చూడండి. ఆ తర్వాత, దానికి ముందు ట్రెండ్ ఏమిటో చూడండి."
+      }
+    }
+  }
+}

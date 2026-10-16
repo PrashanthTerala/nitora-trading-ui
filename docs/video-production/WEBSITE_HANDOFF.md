@@ -24,10 +24,11 @@ Both are the cinematic (V3) cut. All files passed `qa.py` and are at −16 LUFS.
 |---|---|---|---|---|---|---|
 | m05 · 03 Moving average crossovers | `video/out/publish/m05-indicators/03-ma-crossovers/v3/` | 6:45 | 8:32 | 6:08 | 6:50 | 248 MB |
 | m02 · 06 Bullish and bearish engulfing | `video/out/publish/m02-candlestick-patterns/06-engulfing/v3/` | 6:35 | 8:04 | 6:01 | 6:49 | 189 MB |
+| m02 · 07 Harami and harami cross | `video/out/publish/m02-candlestick-patterns/07-harami-and-harami-cross/v3/` | 7:22 | 8:49 | — | — | 107 MB |
 
 New lessons are made in English and Telugu only, until the owner revisits the other languages after these videos are on the site.
 
-The engulfing set follows two later rules:
+The engulfing and harami sets follow two later rules:
 - disclaimer tags ("Synthetic data, for teaching", "Illustration") sit in the frame's top-right corner;
 - the end card shows the Nitora icon.
 

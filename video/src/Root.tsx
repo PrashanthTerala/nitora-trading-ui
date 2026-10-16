@@ -1,5 +1,6 @@
 import { Composition } from 'remotion';
 import * as engulfing from './EngulfingCinematic';
+import * as harami from './HaramiCinematic';
 import * as crossovers from './MaCrossovers';
 import { duration, FPS } from './kit';
 import { HYBRID_FRAMES, HybridIntro } from './HybridIntro';
@@ -14,6 +15,9 @@ export function RemotionRoot() {
     <>
       {engulfing.LANGS.map((lang) => (
         <Composition key={`engulfing-cinematic-${lang}`} id={`engulfing-cinematic-${lang}`} component={engulfing.EngulfingCinematic} defaultProps={{ lang }} durationInFrames={duration(engulfing.SCENES, engulfing.narration, lang, engulfing.TIMING)} fps={FPS} width={1920} height={1080} />
+      ))}
+      {harami.LANGS.map((lang) => (
+        <Composition key={`harami-cinematic-${lang}`} id={`harami-cinematic-${lang}`} component={harami.HaramiCinematic} defaultProps={{ lang }} durationInFrames={duration(harami.SCENES, harami.narration, lang, harami.TIMING)} fps={FPS} width={1920} height={1080} />
       ))}
       {crossovers.LANGS.map((lang) => (
         <Composition key={`ma-crossovers-${lang}`} id={`ma-crossovers-${lang}`} component={crossovers.MaCrossovers} defaultProps={{ lang }} durationInFrames={duration(crossovers.SCENES, crossovers.narration, lang, crossovers.TIMING)} fps={FPS} width={1920} height={1080} />
