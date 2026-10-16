@@ -233,7 +233,7 @@ export const CURRICULUM: ModuleMeta[] = [
     lessons: [
       { id: '01-what-indicators-are', title: 'What Indicators Are (and Are Not)', summary: 'Every indicator is maths applied to price. None of them know the future.', minutes: 7 },
       { id: '02-moving-averages', title: 'Moving Averages: SMA, EMA and WMA', summary: 'Smoothing price to see the trend, and how the formulas differ.', minutes: 10 },
-      { id: '03-ma-crossovers', title: 'Moving Average Crossovers', summary: 'Golden cross, death cross and the lag you pay for clarity.', minutes: 7 },
+      { id: '03-ma-crossovers', title: 'Moving Average Crossovers', summary: 'Golden cross, death cross and the lag you pay for clarity.', minutes: 7, prerequisites: ['m05-indicators/02-moving-averages'] },
       { id: '04-rsi', title: 'RSI: Relative Strength Index', summary: 'Measuring momentum on a 0 to 100 scale, overbought, oversold and divergence.', minutes: 10 },
       { id: '05-macd', title: 'MACD', summary: 'Two EMAs, a signal line and a histogram: momentum and trend in one panel.', minutes: 9 },
       { id: '06-stochastic', title: 'Stochastic Oscillator', summary: 'Where the close sits within the recent range.', minutes: 7 },
