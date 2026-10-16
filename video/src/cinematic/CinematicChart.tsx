@@ -8,11 +8,12 @@
  * plotted from the engine's values, axis ticks are recomputed for every frame's window, markers
  * sit on the engine's crossing bars, and every number in a label comes from the data.
  *
- * Layout rule: nothing covers information. The plot holds only data (candles, averages, the
- * cross markers and arrows); every text label lives in the band under the plot, spaced by
- * placeLabels() so labels never overlap each other; marker pills
- * sit above the local candle highs with a leader line. A scene that needs room below (the ship
- * card) shrinks the plot with `plotBottom` instead of drawing over it.
+ * Layout rule: nothing covers information, and labels sit on what they name, without pointer
+ * lines: a level's label on its own line, a note by its candle, an arrow's label beside the
+ * arrow, each moved to the nearest spot clear of candles, arrows, lines and other labels. Region
+ * labels, and any label with no clear spot, go in the band under the plot (placeLabels), under
+ * what they name. A scene that needs room below (the ship card) shrinks the plot with
+ * `plotBottom` instead of drawing over it.
  */
 import { useId } from 'react';
 import { Easing, interpolate } from 'remotion';
@@ -96,8 +97,9 @@ const textWidth = (text: string, px = 30) => [...text].length * px * 0.6 + 56;
  * pulled back left from the frame edge. Returns each label's row and span, and `overflow` (labels
  * that fit nowhere): the chart refuses to draw those over other text. Deterministic.
  */
-export function placeLabels(items: { x: number; w: number }[], reserved: { x0: number; x1: number }[], minX: number, maxX: number, rows = 2, gap = 18) {
-  const order = items.map((it, i) => ({ ...it, i })).sort((a, b) => a.x - b.x);
+export function placeLabels(items: { x: number; w: number; pri?: number }[], reserved: { x0: number; x1: number }[], minX: number, maxX: number, rows = 2, gap = 18) {
+  // Labels with a leader to draw (pri 0) claim the first row before labels without one (pri 1).
+  const order = items.map((it, i) => ({ ...it, i })).sort((a, b) => (a.pri ?? 0) - (b.pri ?? 0) || a.x - b.x);
   const reservedW = (row: number) => (row === 0 ? reserved.reduce((n, r) => n + (r.x1 - r.x0) + gap, 0) : 0);
   const used = Array.from({ length: rows }, (_, r) => reservedW(r));
   const members: (typeof order)[] = Array.from({ length: rows }, () => []);
@@ -111,6 +113,7 @@ export function placeLabels(items: { x: number; w: number }[], reserved: { x0: n
     }
   }
   const placed: Record<number, { row: number; x0: number; x1: number }> = {};
+  for (const list of members) list.sort((a, b) => a.x - b.x);
   members.forEach((list, row) => {
     const spans = list.map((it) => ({ it, x0: it.x - it.w / 2 }));
     let cursor = minX;
@@ -242,17 +245,92 @@ export function CinematicChart({
   }
   const tickValues = ticks(cam.y0, cam.y1);
 
-  // The label band: region labels and arrow labels, spaced so none overlap.
+  // Labels sit on what they name, with no pointer lines: a level's label on its own line at the
+  // right, a note just under (or over) its candle, an arrow's label beside its arrow. Each spot is
+  // checked against the candles, arrows, outlines, other level lines and labels already placed,
+  // and the label slides to the nearest clear spot; only if there is none does it go to the band
+  // under the plot. Region labels always go to the band, under their shaded columns.
+  type Box = { x0: number; y0: number; x1: number; y1: number };
+  const PILL_H = 46;
+  const PAD = 8;
+  const obstacles: Box[] = [];
+  for (let i = from; i <= to; i++) {
+    const b = bars[i];
+    obstacles.push({ x0: x(i) - body / 2 - PAD, x1: x(i) + body / 2 + PAD, y0: y(b.h) - PAD, y1: y(b.l) + PAD });
+  }
+  for (const b of brackets.filter((b) => b.opacity > 0.01)) {
+    const bx = x(b.index + 0.5);
+    obstacles.push({ x0: bx - 24, x1: bx + 24, y0: Math.min(y(b.from), y(b.to)) - 14, y1: Math.max(y(b.from), y(b.to)) + 14 });
+  }
+  for (const o of outlines.filter((o) => o.opacity > 0.01)) {
+    let hi = -Infinity;
+    let lo = Infinity;
+    for (let i = Math.max(0, o.from); i <= Math.min(N - 1, o.to); i++) {
+      hi = Math.max(hi, bars[i].h);
+      lo = Math.min(lo, bars[i].l);
+    }
+    obstacles.push({ x0: x(o.from) - body / 2 - 18, x1: x(o.to) + body / 2 + 18, y0: y(hi) - 20, y1: y(lo) + 20 });
+  }
+  const levelLine = (lv: Level): Box => ({ x0: left, x1: right, y0: y(lv.price) - 3, y1: y(lv.price) + 3 });
+  const clash = (r: Box, others: Box[]) => r.x0 < left + 4 || r.x1 > right - 4 || r.y0 < top - 6 || r.y1 > bottom - 2 || others.some((o) => r.x0 < o.x1 && r.x1 > o.x0 && r.y0 < o.y1 && r.y1 > o.y0);
+  const boxAt = (cx: number, cy: number, w: number): Box => ({ x0: cx - w / 2, x1: cx + w / 2, y0: cy - PILL_H / 2, y1: cy + PILL_H / 2 });
+  type Pill = { text: string; color: string; opacity: number; mono: boolean; box: Box };
+  const pills: Pill[] = [];
+  const bandItems: { kind: 'region' | 'bracket'; text: string; color: string; opacity: number; x: number }[] = [];
+  const place = (text: string, color: string, opacity: number, mono: boolean, candidates: Box[], others: Box[], bandX: number) => {
+    const hit = candidates.find((c) => !clash(c, others));
+    if (hit) {
+      pills.push({ text, color, opacity, mono, box: hit });
+      obstacles.push({ x0: hit.x0 - 10, x1: hit.x1 + 10, y0: hit.y0 - 6, y1: hit.y1 + 6 });
+    } else bandItems.push({ kind: mono ? 'bracket' : 'region', text, color, opacity, x: bandX });
+  };
+  const steps = (n: number, d: number) => Array.from({ length: n }, (_, k) => k * d);
+  const liveLevels = levels.filter((lv) => lv.opacity > 0.01);
+  for (const lv of liveLevels) {
+    if (!lv.label) continue; // an unlabelled line, explained once by the scene itself
+    const w = textWidth(lv.label);
+    const cy = y(lv.price);
+    // On its own line, as far right as it fits, sliding left past anything in the way; where
+    // another line runs close, resting just above or just below its own line instead.
+    const xs = steps(Math.ceil((right - left) / 12), 12).map((d) => right - 12 - w / 2 - d);
+    const cands = [cy, cy - PILL_H / 2 - 4, cy + PILL_H / 2 + 4].flatMap((yy) => xs.map((xx) => boxAt(xx, yy, w)));
+    place(lv.label, lv.color, lv.opacity, false, cands, [...obstacles, ...liveLevels.filter((o) => o !== lv).map(levelLine)], right - 60);
+  }
+  const lineBoxes = liveLevels.map(levelLine);
+  for (const b of brackets.filter((b) => Math.min(b.opacity, b.labelOpacity ?? 1) > 0.01)) {
+    const o = Math.min(b.opacity, b.labelOpacity ?? 1);
+    const w = textWidth(b.label);
+    const bx = x(b.index + 0.5);
+    const mid = (y(b.from) + y(b.to)) / 2;
+    const half = Math.abs(y(b.from) - y(b.to)) / 2;
+    const ys = steps(Math.max(1, Math.ceil(half / 10)), 10).flatMap((d) => (d ? [mid - d, mid + d] : [mid]));
+    // Beside the arrow: right of it first, then left of it, anywhere along its length.
+    const cands = [...ys.map((cy) => boxAt(bx + 30 + w / 2, cy, w)), ...ys.map((cy) => boxAt(bx - 30 - w / 2, cy, w))];
+    place(b.label, b.color, o, true, cands, [...obstacles, ...lineBoxes], x(b.index));
+  }
+  const lowAt = (index: number) => Math.min(...[Math.floor(index), Math.ceil(index)].filter((i) => i >= 0 && i < N).map((i) => bars[i].l));
+  const highAt = (index: number) => Math.max(...[Math.floor(index), Math.ceil(index)].filter((i) => i >= 0 && i < N).map((i) => bars[i].h));
+  for (const n of notes.filter((n) => n.opacity > 0.01)) {
+    if (n.index === undefined) {
+      bandItems.push({ kind: 'region', text: n.label, color: n.color, opacity: n.opacity, x: right - 260 });
+      continue;
+    }
+    const w = textWidth(n.label);
+    const cx = x(n.index);
+    const shifts = steps(40, 14).flatMap((d) => (d ? [-d, d] : [0]));
+    // Just under the candle(s) it is about, then just over them, sliding sideways if needed.
+    const below = y(lowAt(n.index)) + PAD + 28 + PILL_H / 2;
+    const above = y(highAt(n.index)) - PAD - 28 - PILL_H / 2;
+    const cands = [...shifts.map((d) => boxAt(cx + d, below, w)), ...shifts.map((d) => boxAt(cx + d, above, w))];
+    place(n.label, n.color, n.opacity, false, cands, [...obstacles, ...lineBoxes], x(n.index));
+  }
+  for (const r of regions) {
+    const o = Math.min(r.opacity, r.labelOpacity ?? 1);
+    if (r.label && o > 0.01) bandItems.push({ kind: 'region', text: r.label, color: r.color, opacity: o, x: (x(r.from) + x(r.to)) / 2 });
+  }
   const bandY = bottom + BAND_GAP;
   // Disclaimer tags ("synthetic data") are not drawn here: the kit's CornerTag carries them.
-  const reserved: { x0: number; x1: number }[] = [];
-  const bandItems = [
-    ...regions.map((r) => ({ r, o: Math.min(r.opacity, r.labelOpacity ?? 1) })).filter(({ r, o }) => r.label && o > 0.01).map(({ r, o }) => ({ kind: 'region' as const, text: r.label!, color: r.color, opacity: o, x: (x(r.from) + x(r.to)) / 2 })),
-    ...brackets.map((b) => ({ b, o: Math.min(b.opacity, b.labelOpacity ?? 1) })).filter(({ o }) => o > 0.01).map(({ b, o }) => ({ kind: 'bracket' as const, text: b.label, color: b.color, opacity: o, x: x(b.index) })),
-    ...levels.filter((lv) => lv.opacity > 0.01).map((lv) => ({ kind: 'region' as const, text: lv.label, color: lv.color, opacity: lv.opacity, x: right - 200 })),
-    ...notes.filter((n) => n.opacity > 0.01).map((n) => ({ kind: 'region' as const, text: n.label, color: n.color, opacity: n.opacity, x: n.index === undefined ? right - 260 : x(n.index) })),
-  ];
-  const { placed: slots, overflow } = placeLabels(bandItems.map((it) => ({ x: it.x, w: textWidth(it.text) })), reserved, left, right + 150, BAND_ROWS);
+  const { placed: slots, overflow } = placeLabels(bandItems.map((it) => ({ x: it.x, w: textWidth(it.text) })), [], left, right + 150, BAND_ROWS);
   // A label that fits nowhere is a layout bug, not something to draw over other text.
   if (overflow.length) throw new Error(`CinematicChart: ${overflow.length} label(s) do not fit in the band: ${overflow.map((i) => bandItems[i].text).join(' | ')}`);
 
@@ -359,6 +437,21 @@ export function CinematicChart({
         );
       })}
 
+      {/* Labels on what they name (see the layout above). */}
+      {pills.map((pl, k) => {
+        const cx = (pl.box.x0 + pl.box.x1) / 2;
+        const cy = (pl.box.y0 + pl.box.y1) / 2;
+        const pop = 0.88 + 0.12 * pl.opacity;
+        return (
+          <g key={`pill${k}`} opacity={pl.opacity} transform={`translate(${cx} ${cy}) scale(${pop}) translate(${-cx} ${-cy})`}>
+            <rect x={pl.box.x0} y={pl.box.y0} width={pl.box.x1 - pl.box.x0} height={PILL_H} rx={14} fill="var(--color-bg)" stroke={pl.color} strokeWidth={3} />
+            <text x={cx} y={cy + 10} textAnchor="middle" fontSize={30} fontWeight={700} fill={pl.color} fontFamily={pl.mono ? 'var(--font-mono)' : 'var(--font-sans)'}>
+              {pl.text}
+            </text>
+          </g>
+        );
+      })}
+
       {/* The label band. */}
       {bandItems.map((it, k) => {
         const s = slots[k];
@@ -369,7 +462,6 @@ export function CinematicChart({
         const pop = 0.88 + 0.12 * it.opacity;
         return (
           <g key={k} opacity={it.opacity} transform={`translate(${cx} ${ry + 27}) scale(${pop}) translate(${-cx} ${-(ry + 27)})`}>
-            {Math.abs(cx - it.x) > 4 && s.row === 0 && <line x1={it.x} x2={cx} y1={bottom + 4} y2={ry} stroke={it.color} strokeWidth={2} opacity={0.6} />}
             <rect x={s.x0} y={ry} width={s.x1 - s.x0} height={BAND_H - 10} rx={14} fill="var(--color-bg)" stroke={it.color} strokeWidth={3} />
             <text x={cx} y={ry + 37} textAnchor="middle" fontSize={30} fontWeight={700} fill={it.color} fontFamily={it.kind === 'bracket' ? 'var(--font-mono)' : 'var(--font-sans)'}>
               {it.text}

@@ -1,0 +1,191 @@
+{
+  "lesson": "m02-candlestick-patterns/08-piercing-dark-cloud",
+  "version": 2,
+  "source": {
+    "file": "src/content/modules/m02-candlestick-patterns/08-piercing-dark-cloud.mdx",
+    "sha256": "20aff68a8aafca07fd1b0dd15d3455f93bb22c84644ba02e9de3c3500e3c37bb"
+  },
+  "timing": {
+    "lead": 0.5,
+    "tail": 0.9
+  },
+  "note": "v2 (cinematic): script approved 2026-10-16 (docs/video-production/scripts/piercing-en-v2.md). English and Telugu only, by the owner's decision. Each scene names the lesson lines it says; 'computed' numbers are checked against src/piercing/data.ts by scripts/check.mjs. Reliability figures are Bulkowski's (thepatternsite.com, read 2026-10-16), as the corrected lesson states. <mark name> sets a timing marker; <pause s> inserts silence.",
+  "scenes": {
+    "title": {
+      "base": 5,
+      "lines": "curriculum.ts: m02-candlestick-patterns / 08-piercing-dark-cloud"
+    },
+    "intro": {
+      "base": 28,
+      "lines": "1-5",
+      "marks": [
+        "define",
+        "half"
+      ]
+    },
+    "rules": {
+      "base": 22,
+      "lines": "7-12",
+      "marks": [
+        "trend",
+        "gap",
+        "mid",
+        "open"
+      ]
+    },
+    "psychology": {
+      "base": 26,
+      "lines": "16-20",
+      "marks": [
+        "day1",
+        "day2",
+        "hurt"
+      ]
+    },
+    "snowball": {
+      "base": 14,
+      "lines": "22-26"
+    },
+    "darkcloud": {
+      "base": 20,
+      "lines": "28-37",
+      "marks": [
+        "gap",
+        "mid"
+      ]
+    },
+    "scale": {
+      "base": 32,
+      "lines": "39-53",
+      "marks": [
+        "scale",
+        "test"
+      ]
+    },
+    "valid": {
+      "base": 26,
+      "lines": "55-59",
+      "marks": [
+        "markets"
+      ]
+    },
+    "confirm": {
+      "base": 18,
+      "lines": "61-63",
+      "marks": [
+        "third",
+        "volume"
+      ],
+      "computed": {
+        "FIRST_OPEN": 103.24
+      }
+    },
+    "trade": {
+      "base": 22,
+      "lines": "65-69",
+      "marks": [
+        "entry",
+        "stop"
+      ],
+      "computed": {
+        "PIERCE_ENTRY": 103.84,
+        "PIERCE_STOP": 96.84,
+        "PIERCE_RISK": 7
+      }
+    },
+    "measure": {
+      "base": 26,
+      "lines": "71-75",
+      "computed": {
+        "FIRST_OPEN": 103.24,
+        "FIRST_CLOSE": 98.24,
+        "PIERCE_MID": 100.74,
+        "SECOND_CLOSE": 101.54,
+        "PIERCE_REACH": 66
+      }
+    },
+    "reliability": {
+      "base": 26,
+      "lines": "77-81",
+      "marks": [
+        "dark",
+        "use"
+      ],
+      "computed": {
+        "BULKOWSKI_PIERCING": 64,
+        "BULKOWSKI_DARK_CLOUD": 60,
+        "BULKOWSKI_BEAR_ENGULF": 79
+      }
+    },
+    "takeaways": {
+      "base": 24,
+      "lines": "83-90"
+    },
+    "quiz": {
+      "base": 16,
+      "lines": "93",
+      "marks": [
+        "think",
+        "reveal"
+      ]
+    },
+    "end": {
+      "base": 8,
+      "lines": "100"
+    }
+  },
+  "languages": {
+    "en": {
+      "voice": "en_US-ljspeech-high",
+      "lengthScale": 1.12,
+      "sentenceGap": {
+        ".": 0.35,
+        "?": 0.45,
+        "!": 0.4
+      },
+      "scenes": {
+        "title": "Piercing line and dark cloud cover. Module two, lesson eight.",
+        "intro": "Think of a tug of war. The rope has a mark in the middle. If your team has been dragged five steps back and pulls three steps forward, the crowd cheers, but the mark is still on the other side. Pull six steps, past the middle, and the mood of the whole field changes. <mark define> Candlesticks have a halfway rule too. The piercing line and the dark cloud cover are two-candle reversal patterns where the second candle wins back more than half of the first candle's body, but does not swallow all of it. <mark half> Halfway is the line that matters.",
+        "rules": "Here are the piercing line's rules. <mark trend> It comes after a decline. Candle one is a big red candle. <mark gap> Candle two opens below candle one's low: a gap down. <mark mid> Then it closes above the middle of candle one's body, <mark open> but below candle one's open. If it closed above the open, it would be a bullish engulfing instead.",
+        "psychology": "<mark day1> Day one is a solid win for the sellers. <mark day2> Day two opens even lower: the sellers' dream. Then buyers step in and push, all session long. By the close, more than half of yesterday's drop is won back. <mark hurt> Think about who is hurt now. Everyone who sold at today's open is losing. So is everyone who sold in the bottom half of yesterday's candle. The sellers had a gift, a gap down, and they wasted it.",
+        "snowball": "Imagine a snowball fight. One team has been winning all afternoon. Then the other team lands one big throw that knocks them back more than halfway to the starting line. It is not a total rout. But the confident team is suddenly not so confident.",
+        "darkcloud": "Dark cloud cover is the mirror, at the top of a rise. A big green candle. <mark gap> Then a red candle that opens above the green candle's high, pulling in the last excited buyers, <mark mid> and then closes below the middle of the green body. A dark cloud rolling over a sunny rally. The late buyers are trapped above the close.",
+        "scale": "Why the middle? The same two-candle shape sits on a scale. <mark scale> If the second candle only reaches the first candle's low, or just inside the body, or into the body but short of the middle, the classic names are on-neck, in-neck and thrusting, read as weak bounces, with the trend continuing. Past the middle, it is a piercing line. Past the open, an engulfing. <mark test> But be honest about it: in Bulkowski's tests, the thrusting line actually reversed more often than not. The middle is where the classic definitions draw the line, not a law of nature. What does hold: the deeper the second candle reaches, the stronger the counterattack.",
+        "valid": "Both are reversal patterns, so they need a clear trend to reverse. The piercing line is most reliable after a long decline into support. Dark cloud cover, after a long rise into resistance. <mark markets> One practical note. The gap at the open happens in stock markets, which close overnight. In twenty-four-hour markets like crypto, the next candle opens where the last one closed. There, use the relaxed rule: candle two opens at or below the prior close, and still has to win back the middle.",
+        "confirm": "<mark third> Confirmation is a third candle closing above the first candle's open: here, above one hundred and three point two four. That is also where the pattern would have become an engulfing. <mark volume> Higher volume on the second candle adds weight: a lot of shares changed hands at the low.",
+        "trade": "A trade idea to practise, on this example. <mark entry> Enter when the confirmation candle closes above the first candle's open: here, at one hundred and three point eight four. <mark stop> Put the stop below the second candle's low, the level buyers defended: ninety-six point eight four. That is seven points of risk. Aim for the next resistance.",
+        "measure": "Measure, do not guess. The difference between a piercing line and a thrusting line can be a few cents around the middle. So look at the numbers. Here, the first body runs from one hundred and three point two four down to ninety-eight point two four, so the middle is one hundred point seven four. The second candle closes at one hundred and one point five four: about sixty-six percent of the way back. That is a piercing line.",
+        "reliability": "How reliable are they? In Thomas Bulkowski's published tests, the piercing line reversed the downtrend about sixty-four percent of the time, about the same as the bullish engulfing. <mark dark> Dark cloud cover reversed the uptrend about sixty percent of the time, well below the bearish engulfing's seventy-nine. <mark use> So treat a confirmed piercing line at support as a decent signal, dark cloud cover at resistance as a moderate one, and either one in open space, unconfirmed, as noise.",
+        "takeaways": "To recap. A piercing line: after a decline, a big red candle, then a green candle that opens below its low and closes past its middle, but below its open. Dark cloud cover is the mirror, after a rise. The middle is where the classic definitions draw the line, and the deeper the close, the stronger the counterattack. Confirm with a third candle beyond the first candle's open. And measure: open, close, middle.",
+        "quiz": "Quick check. For a piercing line, where must the second candle close? Above the first candle's open? Or above the middle of its body, but below its open? <mark think> Take a second to think. <pause 2.5> <mark reveal> Above the middle, but below the open. Above the open, it would be an engulfing.",
+        "end": "Now practise in the pattern trainer. Whenever a red candle is followed by a green one, find the middle of the red body, and decide: piercing line, thrusting line, or engulfing."
+      }
+    },
+    "te": {
+      "provider": "google",
+      "voice": "te-IN-Chirp3-HD-Achird",
+      "languageCode": "te-IN",
+      "flow": true,
+      "commaPause": "[pause short]",
+      "speakingRate": 0.92,
+      "note": "Friendly spoken Telugu; trading terms in Telugu script, 'low'/'high' as కనిష్ఠ/గరిష్ఠ ధర, 'midpoint' as మధ్య భాగం. Needs a native speaker's review.",
+      "scenes": {
+        "title": "హాయ్! ఈరోజు మనం పియర్సింగ్ లైన్, డార్క్ క్లౌడ్ కవర్ గురించి మాట్లాడుకుందాం. మాడ్యూల్ రెండు. పాఠం ఎనిమిది.",
+        "intro": "తాడు లాగే ఆటను ఊహించుకోండి. తాడు మధ్యలో ఒక గుర్తు ఉంటుంది. మీ టీమ్‌ని ఐదు అడుగులు వెనక్కి లాగేశారు, మీరు మూడు అడుగులు ముందుకు లాగారు అనుకోండి. జనం చప్పట్లు కొడతారు, కానీ గుర్తు ఇంకా అవతలి వైపే ఉంటుంది. ఆరు అడుగులు లాగండి, మధ్య గుర్తు దాటి, అప్పుడు మైదానం మొత్తం మూడ్ మారిపోతుంది. <mark define> క్యాండిల్స్‌కి కూడా ఇలాంటి సగం రూల్ ఉంది. పియర్సింగ్ లైన్, డార్క్ క్లౌడ్ కవర్ అనేవి రెండు క్యాండిల్ రివర్సల్ ప్యాటర్న్స్. ఇందులో రెండో క్యాండిల్, మొదటి క్యాండిల్ బాడీలో సగం కంటే ఎక్కువ తిరిగి గెలుచుకుంటుంది, కానీ మొత్తం మింగేయదు. <mark half> సగం దగ్గరే అసలు గీత ఉంది.",
+        "rules": "పియర్సింగ్ లైన్ రూల్స్ చూద్దాం. <mark trend> ఇది ఒక పతనం తర్వాత వస్తుంది. మొదటి క్యాండిల్ ఒక పెద్ద ఎరుపు క్యాండిల్. <mark gap> రెండో క్యాండిల్, మొదటి క్యాండిల్ కనిష్ఠ ధర కంటే కింద ఓపెన్ అవుతుంది. అంటే గ్యాప్ డౌన్. <mark mid> తర్వాత అది మొదటి క్యాండిల్ బాడీ మధ్య భాగం కంటే పైన క్లోజ్ అవుతుంది, <mark open> కానీ మొదటి క్యాండిల్ ఓపెన్ కంటే కిందే. ఓపెన్ కంటే పైన క్లోజ్ అయితే, అది బుల్లిష్ ఎంగల్ఫింగ్ అవుతుంది.",
+        "psychology": "<mark day1> మొదటి రోజు, అమ్మేవాళ్ళకి స్పష్టమైన విజయం. <mark day2> రెండో రోజు ధర ఇంకా కింద ఓపెన్ అవుతుంది. అమ్మేవాళ్ళ కల నిజమైనట్టే. అప్పుడు కొనేవాళ్ళు వచ్చి, సెషన్ మొత్తం ధరను పైకి నెడతారు. క్లోజ్ అయ్యేసరికి, నిన్నటి పతనంలో సగం కంటే ఎక్కువ తిరిగి వచ్చేసింది. <mark hurt> ఇప్పుడు ఎవరు నష్టపోయారో ఆలోచించండి. ఈరోజు ఓపెన్ దగ్గర అమ్మిన ప్రతి ఒక్కరూ నష్టంలో ఉన్నారు. నిన్నటి క్యాండిల్ కింది సగంలో అమ్మినవాళ్ళు కూడా. అమ్మేవాళ్ళకి గ్యాప్ డౌన్ అనే బహుమతి దొరికింది, దాన్ని వృథా చేసుకున్నారు.",
+        "snowball": "ఒక స్నోబాల్ ఆటను ఊహించుకోండి. ఒక టీమ్ మధ్యాహ్నం అంతా గెలుస్తూనే ఉంది. అప్పుడు అవతలి టీమ్ ఒక్క పెద్ద బంతి విసురుతుంది. దానితో వాళ్ళు మొదలైన గీత వైపు సగం కంటే ఎక్కువ దూరం వెనక్కి వెళ్ళిపోతారు. ఇది పూర్తి ఓటమి కాదు. కానీ ఆత్మవిశ్వాసంతో ఉన్న టీమ్‌కి, ఒక్కసారిగా ఆ నమ్మకం తగ్గిపోతుంది.",
+        "darkcloud": "డార్క్ క్లౌడ్ కవర్ దీనికి అద్దం, ఒక పెరుగుదల పైభాగంలో. ఒక పెద్ద ఆకుపచ్చ క్యాండిల్. <mark gap> తర్వాత ఒక ఎరుపు క్యాండిల్, ఆకుపచ్చ క్యాండిల్ గరిష్ఠ ధర కంటే పైన ఓపెన్ అవుతుంది, చివరిగా ఉత్సాహంగా కొనేవాళ్ళని లోపలికి లాగుతుంది. <mark mid> ఆ తర్వాత, ఆకుపచ్చ బాడీ మధ్య భాగం కంటే కింద క్లోజ్ అవుతుంది. ఎండగా ఉన్న ర్యాలీ మీద కమ్ముకున్న నల్లటి మేఘం లాంటిది. చివర్లో కొన్నవాళ్ళు క్లోజ్ కంటే పైన ఇరుక్కుపోయారు.",
+        "scale": "మధ్య భాగమే ఎందుకు? ఇదే రెండు క్యాండిల్ ఆకారం ఒక స్కేల్ మీద ఉంటుంది. <mark scale> రెండో క్యాండిల్ కేవలం మొదటి క్యాండిల్ కనిష్ఠ ధర వరకు, లేదా బాడీ లోపలికి కొంచెమే, లేదా బాడీలోకి వెళ్ళినా మధ్య భాగం చేరకపోతే, వాటి సంప్రదాయ పేర్లు ఆన్ నెక్, ఇన్ నెక్, త్రస్టింగ్. వీటిని బలహీనమైన బౌన్స్‌లుగా, ట్రెండ్ కొనసాగుతుందని చదువుతారు. మధ్య భాగం దాటితే, అది పియర్సింగ్ లైన్. ఓపెన్ దాటితే, ఎంగల్ఫింగ్. <mark test> కానీ నిజాయితీగా చెప్పాలి. బుల్కోవ్‌స్కీ టెస్టుల్లో, త్రస్టింగ్ లైన్ నిజానికి సగం కంటే ఎక్కువ సార్లు ట్రెండ్‌ని తిప్పింది. మధ్య భాగం అనేది సంప్రదాయ నిర్వచనాలు గీసిన గీత మాత్రమే, ప్రకృతి నియమం కాదు. నిజంగా నిలబడేది ఇది: రెండో క్యాండిల్ ఎంత లోతుకు వెళ్తే, ఎదురుదాడి అంత బలంగా ఉంటుంది.",
+        "valid": "రెండూ రివర్సల్ ప్యాటర్న్స్, కాబట్టి తిప్పడానికి ముందు స్పష్టమైన ట్రెండ్ కావాలి. పియర్సింగ్ లైన్, ఒక పెద్ద పతనం తర్వాత సపోర్ట్ దగ్గర వస్తే బాగా పనిచేస్తుంది. డార్క్ క్లౌడ్ కవర్, ఒక పెద్ద పెరుగుదల తర్వాత రెసిస్టెన్స్ దగ్గర. <mark markets> ఒక ప్రాక్టికల్ విషయం. ఓపెన్ దగ్గర గ్యాప్, రాత్రి మూసేసే స్టాక్ మార్కెట్లలో వస్తుంది. క్రిప్టో లాంటి ఇరవై నాలుగు గంటల మార్కెట్లలో, తర్వాతి క్యాండిల్ చివరి క్యాండిల్ క్లోజ్ అయిన చోటే ఓపెన్ అవుతుంది. అక్కడ సడలించిన రూల్ వాడండి. రెండో క్యాండిల్ ముందటి క్లోజ్ దగ్గర లేదా కింద ఓపెన్ అవ్వాలి, ఇంకా మధ్య భాగాన్ని తిరిగి గెలుచుకోవాలి.",
+        "confirm": "<mark third> కన్ఫర్మేషన్ అంటే, మొదటి క్యాండిల్ ఓపెన్ కంటే పైన క్లోజ్ అయ్యే మూడో క్యాండిల్. ఇక్కడ, నూట మూడు పాయింట్ రెండు నాలుగు కంటే పైన. ప్యాటర్న్ ఎంగల్ఫింగ్‌గా మారే చోటు కూడా అదే. <mark volume> రెండో క్యాండిల్ మీద ఎక్కువ వాల్యూమ్ ఉంటే ఇంకా బలం. కనిష్ఠ ధర దగ్గర చాలా షేర్లు చేతులు మారాయని అర్థం.",
+        "trade": "ఈ ఉదాహరణ మీద, ప్రాక్టీస్ కోసం ఒక ట్రేడ్ ఐడియా. <mark entry> కన్ఫర్మేషన్ క్యాండిల్, మొదటి క్యాండిల్ ఓపెన్ కంటే పైన క్లోజ్ అయినప్పుడు ఎంటర్ అవ్వండి. ఇక్కడ, నూట మూడు పాయింట్ ఎనిమిది నాలుగు దగ్గర. <mark stop> స్టాప్‌ని రెండో క్యాండిల్ కనిష్ఠ ధర కంటే కింద పెట్టండి, కొనేవాళ్ళు కాపాడిన లెవెల్ అదే. తొంభై ఆరు పాయింట్ ఎనిమిది నాలుగు. అంటే ఏడు పాయింట్ల రిస్క్. టార్గెట్‌గా తర్వాతి రెసిస్టెన్స్ పెట్టుకోండి.",
+        "measure": "అంచనా వేయకండి, కొలవండి. పియర్సింగ్ లైన్‌కీ, త్రస్టింగ్ లైన్‌కీ తేడా, మధ్య భాగం చుట్టూ కొన్ని పైసలే కావచ్చు. అందుకే నంబర్లు చూడండి. ఇక్కడ మొదటి బాడీ, నూట మూడు పాయింట్ రెండు నాలుగు నుండి, తొంభై ఎనిమిది పాయింట్ రెండు నాలుగు వరకు ఉంది. కాబట్టి మధ్య భాగం, వంద పాయింట్ ఏడు నాలుగు. రెండో క్యాండిల్, నూట ఒకటి పాయింట్ ఐదు నాలుగు దగ్గర క్లోజ్ అయింది. అంటే దాదాపు అరవై ఆరు శాతం తిరిగి వచ్చింది. ఇది పియర్సింగ్ లైన్.",
+        "reliability": "ఇవి ఎంత నమ్మదగినవి? థామస్ బుల్కోవ్‌స్కీ ప్రచురించిన టెస్టుల్లో, పియర్సింగ్ లైన్ దాదాపు అరవై నాలుగు శాతం సార్లు డౌన్‌ట్రెండ్‌ని తిప్పింది. ఇది బుల్లిష్ ఎంగల్ఫింగ్‌తో దాదాపు సమానం. <mark dark> డార్క్ క్లౌడ్ కవర్ దాదాపు అరవై శాతం సార్లు అప్‌ట్రెండ్‌ని తిప్పింది. బేరిష్ ఎంగల్ఫింగ్ డెబ్బై తొమ్మిది కంటే చాలా తక్కువ. <mark use> అందుకే, సపోర్ట్ దగ్గర కన్ఫర్మ్ అయిన పియర్సింగ్ లైన్‌ని మంచి సిగ్నల్‌గా, రెసిస్టెన్స్ దగ్గర డార్క్ క్లౌడ్ కవర్‌ని మధ్యస్థ సిగ్నల్‌గా చూడండి. లెవెల్ లేని చోట, కన్ఫర్మేషన్ లేకుండా వచ్చే వాటిని శబ్దంగానే చూడండి.",
+        "takeaways": "సంక్షిప్తంగా. పియర్సింగ్ లైన్ అంటే, ఒక పతనం తర్వాత పెద్ద ఎరుపు క్యాండిల్, ఆ తర్వాత దాని కనిష్ఠ ధర కంటే కింద ఓపెన్ అయి, దాని మధ్య భాగం దాటి, కానీ దాని ఓపెన్ కంటే కింద క్లోజ్ అయ్యే ఆకుపచ్చ క్యాండిల్. డార్క్ క్లౌడ్ కవర్ దీనికి అద్దం, ఒక పెరుగుదల తర్వాత. మధ్య భాగం అనేది సంప్రదాయ నిర్వచనాలు గీసిన గీత, క్లోజ్ ఎంత లోతుగా ఉంటే, ఎదురుదాడి అంత బలం. మొదటి క్యాండిల్ ఓపెన్ దాటి క్లోజ్ అయ్యే మూడో క్యాండిల్‌తో కన్ఫర్మ్ చేసుకోండి. ఇంకా కొలవండి: ఓపెన్, క్లోజ్, మధ్య భాగం.",
+        "quiz": "ఒక చిన్న టెస్ట్. పియర్సింగ్ లైన్‌లో, రెండో క్యాండిల్ ఎక్కడ క్లోజ్ అవ్వాలి? మొదటి క్యాండిల్ ఓపెన్ కంటే పైనా? లేక దాని బాడీ మధ్య భాగం కంటే పైన, కానీ ఓపెన్ కంటే కిందా? <mark think> ఒక్క సెకను ఆలోచించండి. <pause 2.5> <mark reveal> జవాబు: మధ్య భాగం కంటే పైన, కానీ ఓపెన్ కంటే కింద. ఓపెన్ కంటే పైన అయితే, అది ఎంగల్ఫింగ్ అవుతుంది.",
+        "end": "ఇప్పుడు మీ వంతు. ప్యాటర్న్ ట్రైనర్‌లో ప్రాక్టీస్ చేయండి. ఎరుపు క్యాండిల్ తర్వాత ఆకుపచ్చది వచ్చినప్పుడల్లా, ఎరుపు బాడీ మధ్య భాగం కనుక్కోండి. ఆ తర్వాత నిర్ణయించండి: పియర్సింగ్ లైనా, త్రస్టింగ్ లైనా, లేక ఎంగల్ఫింగా."
+      }
+    }
+  }
+}

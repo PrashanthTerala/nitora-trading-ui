@@ -89,7 +89,8 @@ const missing = [];
 
 // --- collect valid figure names ---
 const figSrc = src('src/content/figures/candlePatterns.ts') + src('src/content/figures/chartPatterns.ts');
-const figureNames = new Set([...figSrc.matchAll(/^\s{2}'([a-z0-9-]+)': \{$/gm)].map((m) => m[1]));
+// A preset is either an object literal or withBars(...) (a preset placed from its own candles).
+const figureNames = new Set([...figSrc.matchAll(/^\s{2}'([a-z0-9-]+)': (?:\{$|withBars\()/gm)].map((m) => m[1]));
 const INDICATORS = new Set(['sma', 'ema', 'sma-vs-ema', 'crossover', 'rsi', 'macd', 'stochastic', 'bollinger', 'atr', 'vwap', 'obv', 'adx', 'fibonacci', 'pivots', 'divergence', 'overload', 'clean']);
 const REGIMES = new Set(['trend-up', 'trend-down', 'range', 'reversal', 'volatile', 'crash', 'intraday']);
 // Every component a lesson may use, from the registry's own name list (src/components/mdx/names.ts).

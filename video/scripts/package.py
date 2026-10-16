@@ -138,7 +138,7 @@ def finish(src: Path, dst: Path, lang: str) -> dict:
 # publish. The bases must match the composition's (src/MaCrossoversCinematic.tsx BASES); a cut
 # over every scene takes its overrides per lesson.
 # Where the poster frame is, as a share of the English video.
-POSTER_AT = {"ma-crossovers": 0.36, "engulfing": 0.25, "harami": 0.25}
+POSTER_AT = {"ma-crossovers": 0.36, "engulfing": 0.25, "harami": 0.25, "piercing": 0.21}
 CUTS = {
     # The proof of concept (4 scenes); its composition has since grown into the full lesson.
     "cinematic-poc": {"bases": {"title": 7, "average": 30, "golden": 18, "lag": 26}, "input": "v3/{name}-cinematic-{lang}.mp4", "dir": "v3-cinematic-poc"},
@@ -201,7 +201,8 @@ def main() -> None:
             for a, b in zip(cues, cues[1:]):
                 if b["start"] - a["end"] >= 2.0:
                     intended.append((start + lead + a["end"], start + lead + b["start"]))
-        report["silences_intended"] = [s for s in report.get("silences_over_s", []) if any(a - 0.4 <= s[0] and s[1] <= b + 0.4 for a, b in intended)]
+        # The sentence after a pause can start softly, so the silence may run a little past it.
+        report["silences_intended"] = [s for s in report.get("silences_over_s", []) if any(a - 0.4 <= s[0] and s[1] <= b + 0.9 for a, b in intended)]
         report["silences_over_s"] = [s for s in report.get("silences_over_s", []) if s not in report["silences_intended"]]
         report["checks"]["no_long_silence"] = not report["silences_over_s"]
         report["failed"] = [k for k, ok in report["checks"].items() if not ok]

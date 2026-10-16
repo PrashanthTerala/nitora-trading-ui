@@ -382,7 +382,7 @@ export function LocationsCinematic() {
     { x0: 690, x1: 1230, y0: 240, y1: 900 },
     { x0: 1260, x1: 1800, y0: 240, y1: 900 },
   ];
-  const plot = (i: number) => ({ left: P[i].x0 + 30, right: P[i].x1 - 100, top: P[i].y0 + 100, bottom: 760 });
+  const plot = (i: number) => ({ left: P[i].x0 + 30, right: P[i].x1 - 150, top: P[i].y0 + 100, bottom: 760 });
   const series = [d.LOC_SPRINT, d.LOC_LEVEL, d.CROSS.slice(0, 8)];
   return (
     <AbsoluteFill>
@@ -438,9 +438,9 @@ export function ConfirmCinematic() {
         spotlight={{ index: 8, value: b[8].c, radius: 460, strength: fade(f, high) * 0.7 }}
         outlines={[{ from: 6, to: 7, color: ACCENT, opacity: 1 }]}
         levels={[
-          { price: d.BULL_SMALL_HIGH, label: `small candle high ${fmt(d.BULL_SMALL_HIGH)}`, color: ACCENT, opacity: fade(f, high) },
-          { price: d.BULL_MID, label: `big candle middle ${fmt(d.BULL_MID)}`, color: SOFT, opacity: fade(f, mid) },
-          { price: d.BULL_BIG_OPEN, label: `big candle open ${fmt(d.BULL_BIG_OPEN)}`, color: UP, opacity: fade(f, promote) },
+          { price: d.BULL_SMALL_HIGH, label: `small high ${fmt(d.BULL_SMALL_HIGH)}`, color: ACCENT, opacity: fade(f, high) },
+          { price: d.BULL_MID, label: `big middle ${fmt(d.BULL_MID)}`, color: SOFT, opacity: fade(f, mid) },
+          { price: d.BULL_BIG_OPEN, label: `big open ${fmt(d.BULL_BIG_OPEN)}`, color: UP, opacity: fade(f, promote) },
         ]}
         notes={[{ label: `third close ${fmt(d.BULL_THIRD_CLOSE)}: three inside up (lesson 12)`, color: UP, opacity: fade(f, promote + s(1)), index: 8 }]}
       />

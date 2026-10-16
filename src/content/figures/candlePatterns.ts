@@ -26,6 +26,17 @@ function brk(from: number, to: number, text: string, position: 'above' | 'below'
   return { type: 'bracket', from, to, text, position };
 }
 
+/**
+ * A preset whose annotations are placed from its own candles. The candles are rebased onto the end
+ * of the context trend (see build), so a level written as a fixed price would miss them; a line
+ * computed from the bars sits exactly where its label says (a body's midpoint, a shared low).
+ */
+function withBars(bars: OHLC[], rest: (b: OHLC[]) => Omit<FigurePreset, 'bars'>): FigurePreset {
+  return { bars, ...rest(bars) };
+}
+/** The midpoint of a candle's body, to the cent. */
+const bodyMid = (b: OHLC) => Math.round(((b.o + b.c) / 2) * 100) / 100;
+
 /** Pattern starts at index p after `ctx` context bars. */
 function build(ctx: OHLC[], pattern: OHLC[], after: OHLC[] = []): OHLC[] {
   return chain(chain(ctx, pattern), after);
@@ -157,36 +168,31 @@ export const CANDLE_PATTERNS: Record<string, FigurePreset> = {
     annotations: [brk(6, 7, 'harami cross', 'above'), lab(7, 'doji')],
     caption: 'A harami where the inside candle is a doji. Stronger than a plain harami because the pause is total.',
   },
-  'piercing-line': {
+  'piercing-line': withBars(build(down('pierce', 112, 103), [bar(103, 103.2, 97.8, 98), bar(96.9, 101.6, 96.6, 101.3)], [bar(101.4, 104, 101, 103.7)]), (b) => ({
     title: 'Piercing line',
-    bars: build(down('pierce', 112, 103), [bar(103, 103.2, 97.8, 98), bar(96.9, 101.6, 96.6, 101.3)], [bar(101.4, 104, 101, 103.7)]),
-    annotations: [brk(6, 7, 'piercing', 'above'), { type: 'hline', price: 100.5, text: '50% of red body', from: 5, to: 8, color: 'var(--color-ink-soft)' }],
+    annotations: [brk(6, 7, 'piercing', 'above'), { type: 'hline', price: bodyMid(b[6]), text: '50% of red body', from: 5, to: 8, color: 'var(--color-ink-soft)' }],
     caption: 'Opens below the prior low and closes above the midpoint of the red body. A partial but strong recovery.',
-  },
-  'dark-cloud-cover': {
+  })),
+  'dark-cloud-cover': withBars(build(up('dcc', 88, 97), [bar(97, 102.3, 96.8, 102), bar(103.1, 103.4, 98.6, 98.9)], [bar(98.8, 99.2, 96, 96.3)]), (b) => ({
     title: 'Dark cloud cover',
-    bars: build(up('dcc', 88, 97), [bar(97, 102.3, 96.8, 102), bar(103.1, 103.4, 98.6, 98.9)], [bar(98.8, 99.2, 96, 96.3)]),
-    annotations: [brk(6, 7, 'dark cloud', 'above'), { type: 'hline', price: 99.5, text: '50% of green body', from: 5, to: 8, color: 'var(--color-ink-soft)' }],
+    annotations: [brk(6, 7, 'dark cloud', 'above'), { type: 'hline', price: bodyMid(b[6]), text: '50% of green body', from: 5, to: 8, color: 'var(--color-ink-soft)' }],
     caption: 'Opens above the prior high, closes below the midpoint of the green body. The mirror of the piercing line.',
-  },
-  'tweezer-bottom': {
+  })),
+  'tweezer-bottom': withBars(build(down('tweb', 112, 102), [bar(102, 102.4, 96.5, 97.2), bar(97.1, 101.8, 96.5, 101.5)], [bar(101.6, 104, 101.2, 103.6)]), (b) => ({
     title: 'Tweezer bottom',
-    bars: build(down('tweb', 112, 102), [bar(102, 102.4, 96.5, 97.2), bar(97.1, 101.8, 96.5, 101.5)], [bar(101.6, 104, 101.2, 103.6)]),
-    annotations: [{ type: 'hline', price: 96.5, text: 'same low', from: 5, to: 8 }, brk(6, 7, 'tweezer', 'above')],
+    annotations: [{ type: 'hline', price: b[6].l, text: 'same low', from: 5, to: 8 }, brk(6, 7, 'tweezer', 'above')],
     caption: 'Two candles with matching lows. The level was tested twice and held.',
-  },
-  'tweezer-top': {
+  })),
+  'tweezer-top': withBars(build(up('twet', 88, 98), [bar(98, 103.5, 97.7, 102.9), bar(102.8, 103.5, 98.4, 98.7)], [bar(98.6, 99, 95.8, 96.1)]), (b) => ({
     title: 'Tweezer top',
-    bars: build(up('twet', 88, 98), [bar(98, 103.5, 97.7, 102.9), bar(102.8, 103.5, 98.4, 98.7)], [bar(98.6, 99, 95.8, 96.1)]),
-    annotations: [{ type: 'hline', price: 103.5, text: 'same high', from: 5, to: 8 }, brk(6, 7, 'tweezer', 'below')],
+    annotations: [{ type: 'hline', price: b[6].h, text: 'same high', from: 5, to: 8 }, brk(6, 7, 'tweezer', 'below')],
     caption: 'Two candles with matching highs. Buyers failed at the same ceiling twice.',
-  },
-  'bullish-counterattack': {
+  })),
+  'bullish-counterattack': withBars(build(down('bca', 112, 103), [bar(103, 103.2, 97.5, 97.8), bar(94.5, 98.2, 94.2, 97.9)], [bar(98, 101.2, 97.8, 101)]), (b) => ({
     title: 'Bullish counterattack line',
-    bars: build(down('bca', 112, 103), [bar(103, 103.2, 97.5, 97.8), bar(94.5, 98.2, 94.2, 97.9)], [bar(98, 101.2, 97.8, 101)]),
-    annotations: [brk(6, 7, 'counterattack', 'above'), { type: 'hline', price: 97.85, text: 'closes match', from: 5, to: 8, color: 'var(--color-ink-soft)' }],
+    annotations: [brk(6, 7, 'counterattack', 'above'), { type: 'hline', price: b[6].c, text: 'closes match', from: 5, to: 8, color: 'var(--color-ink-soft)' }],
     caption: 'Gaps down, then rallies to close right where the previous candle closed. Sellers gained nothing.',
-  },
+  })),
   'bearish-counterattack': {
     title: 'Bearish counterattack line',
     bars: build(up('sca', 88, 97), [bar(97, 102.5, 96.8, 102.2), bar(105.4, 105.8, 101.8, 102.1)], [bar(102, 102.3, 98.9, 99.2)]),
@@ -323,12 +329,11 @@ export const CANDLE_PATTERNS: Record<string, FigurePreset> = {
     annotations: [brk(6, 7, 'in-neck', 'above'), lab(7, 'closes just into body', 'below')],
     caption: 'The green candle closes slightly inside the red body. Still a weak bounce; the trend usually continues.',
   },
-  'thrusting-line': {
+  'thrusting-line': withBars(build(down('thr', 112, 103), [bar(103, 103.3, 97.6, 97.9), bar(96.2, 99.8, 95.9, 99.6)], [bar(99.4, 99.7, 95.6, 95.9)]), (b) => ({
     title: 'Thrusting line',
-    bars: build(down('thr', 112, 103), [bar(103, 103.3, 97.6, 97.9), bar(96.2, 99.8, 95.9, 99.6)], [bar(99.4, 99.7, 95.6, 95.9)]),
-    annotations: [brk(6, 7, 'thrusting', 'above'), { type: 'hline', price: 100.45, text: '50% of red body', from: 5, to: 8, color: 'var(--color-ink-soft)' }],
+    annotations: [brk(6, 7, 'thrusting', 'above'), { type: 'hline', price: bodyMid(b[6]), text: '50% of red body', from: 5, to: 8, color: 'var(--color-ink-soft)' }],
     caption: 'Closes into the red body but below its midpoint. Not enough to be a piercing line, so it is a continuation more often than not.',
-  },
+  })),
 
   // ---------- context lessons ----------
   'hammer-no-context': {

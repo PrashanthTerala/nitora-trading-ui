@@ -92,6 +92,24 @@ for (const [name, fig] of Object.entries(FIGURES)) {
           note(name, `hline to ${a.to} is outside 0..${n - 1}`);
           ok = false;
         }
+        // A line that names a measurement must sit on it, within a cent, on some bar it spans.
+        // Figures are rebased onto their trend, so a hard-coded price drifts off its candles.
+        {
+          const span = bars.slice(a.from ?? 0, (a.to ?? n - 1) + 1);
+          const near = (vals) => vals.some((v) => Math.abs(v - a.price) <= 0.011);
+          const checks = [
+            [/^50% of/, (b) => (b.o + b.c) / 2, 'the midpoint of a body'],
+            [/^same low/, (b) => b.l, 'a low'],
+            [/^same high/, (b) => b.h, 'a high'],
+            [/^closes match/, (b) => b.c, 'a close'],
+          ];
+          for (const [re, at, what] of checks) {
+            if (re.test(a.text ?? '') && !near(span.map(at))) {
+              note(name, `hline "${a.text}" at ${a.price} is not on ${what} of the bars it spans`);
+              ok = false;
+            }
+          }
+        }
         break;
       case 'line':
         for (const [i, p] of [a.from, a.to]) {
