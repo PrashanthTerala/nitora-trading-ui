@@ -1,0 +1,36 @@
+{
+  "lesson": "m02-candlestick-patterns/06-engulfing",
+  "languages": {
+    "en": {
+      "voice": "en_US-ljspeech-high",
+      "lengthScale": 1.05,
+      "scenes": {
+        "title": "Bullish and bearish engulfing. Module two, lesson six.",
+        "definition": "An engulfing pattern is two candles. The second candle's body completely covers the first candle's body, in the opposite colour. A bullish engulfing is a small red candle, followed by a big green one that swallows it. A bearish engulfing is the mirror: a small green candle, then a big red one.",
+        "bullish": "Here is a bullish engulfing, after a decline. The small red candle is completely swallowed by a big green body. The green candle opened below the red close, and finished above the red open. Buyers absorbed all the selling, and more.",
+        "psychology": "Think about what happened. On day one, sellers win again, but only by a little. On day two, price opens even lower, which looks like more of the same. Then buyers arrive in force, and push price above where yesterday started. By the close, every seller from yesterday is losing money. Control has flipped in two sessions.",
+        "bearish": "The bearish engulfing is the mirror image, at the top of a rise. A small green candle is swallowed by a large red body. The open above yesterday's close trapped the late buyers, and the close below yesterday's open means they are all losing.",
+        "valid": "But an engulfing pattern needs a trend to reverse. Inside a sideways range, candles engulf each other constantly, and it means nothing. It matters most at a clear support or resistance level after a trend, with high volume on the engulfing candle, and with a third candle that closes beyond it as confirmation.",
+        "trap": "One trap to avoid. Big engulfing candles are strong signals, and terrible entries. Your stop goes beyond the far end of the candle, so a huge candle means a huge risk, and much of the move may already be over. Wait for a pullback, or take a smaller position.",
+        "takeaways": "To recap. Two candles, opposite colours, with the second body fully covering the first. It needs a prior trend. Confirm it with a third candle, and high volume. And put your stop beyond the far extreme of the engulfing candle.",
+        "end": "Now practise spotting it in the pattern trainer, at nitora trading dot com."
+      }
+    },
+    "te": {
+      "voice": "te_IN-venkatesh-medium",
+      "lengthScale": 1.0,
+      "note": "Telugu with English trading terms, written in Telugu script so the Telugu voice reads them. Needs a native speaker's review.",
+      "scenes": {
+        "title": "బుల్లిష్ మరియు బేరిష్ ఎంగల్ఫింగ్. మాడ్యూల్ రెండు, పాఠం ఆరు.",
+        "definition": "ఎంగల్ఫింగ్ ప్యాటర్న్ అంటే రెండు క్యాండిల్స్. రెండో క్యాండిల్ బాడీ, మొదటి క్యాండిల్ బాడీని పూర్తిగా కప్పేస్తుంది, అది కూడా వ్యతిరేక రంగులో. బుల్లిష్ ఎంగల్ఫింగ్‌లో, ఒక చిన్న ఎరుపు క్యాండిల్ తర్వాత, దాన్ని మింగేసే ఒక పెద్ద ఆకుపచ్చ క్యాండిల్ వస్తుంది. బేరిష్ ఎంగల్ఫింగ్ దానికి అద్దం లాంటిది: ఒక చిన్న ఆకుపచ్చ క్యాండిల్, తర్వాత ఒక పెద్ద ఎరుపు క్యాండిల్.",
+        "bullish": "ఇది ఒక పతనం తర్వాత వచ్చిన బుల్లిష్ ఎంగల్ఫింగ్. చిన్న ఎరుపు క్యాండిల్‌ను ఒక పెద్ద ఆకుపచ్చ బాడీ పూర్తిగా మింగేసింది. ఆకుపచ్చ క్యాండిల్, ఎరుపు క్యాండిల్ క్లోజ్ కంటే కింద ఓపెన్ అయ్యి, ఎరుపు క్యాండిల్ ఓపెన్ కంటే పైన క్లోజ్ అయింది. కొనేవాళ్ళు అమ్మకాలన్నింటినీ తట్టుకుని, ఇంకా ముందుకు వెళ్ళారు.",
+        "psychology": "ఏం జరిగిందో ఆలోచించండి. మొదటి రోజు, అమ్మేవాళ్ళు మళ్ళీ గెలుస్తారు, కానీ కొంచెమే. రెండో రోజు, ధర ఇంకా కింద ఓపెన్ అవుతుంది, అదే కథ కొనసాగుతున్నట్టు కనిపిస్తుంది. అప్పుడు కొనేవాళ్ళు బలంగా వస్తారు, నిన్న మొదలైన చోటు కంటే పైకి ధరను నెట్టేస్తారు. క్లోజ్ అయ్యేసరికి, నిన్న అమ్మిన ప్రతి ఒక్కరూ నష్టంలో ఉంటారు. రెండు సెషన్లలో నియంత్రణ పూర్తిగా మారిపోయింది.",
+        "bearish": "బేరిష్ ఎంగల్ఫింగ్ దీనికి అద్దం లాంటిది, ఒక పెరుగుదల పైభాగంలో వస్తుంది. ఒక చిన్న ఆకుపచ్చ క్యాండిల్‌ను ఒక పెద్ద ఎరుపు బాడీ మింగేస్తుంది. నిన్నటి క్లోజ్ కంటే పైన ఓపెన్ అవ్వడం, ఆలస్యంగా కొన్నవాళ్ళను ఇరికించింది. నిన్నటి ఓపెన్ కంటే కింద క్లోజ్ అవ్వడం అంటే, వాళ్ళందరూ నష్టంలో ఉన్నారని అర్థం.",
+        "valid": "కానీ ఎంగల్ఫింగ్ ప్యాటర్న్‌కు ముందు ఒక ట్రెండ్ ఉండాలి, దాన్ని తిప్పడానికి. పక్కకు కదిలే రేంజ్‌లో, క్యాండిల్స్ ఒకదాన్నొకటి తరచుగా ఎంగల్ఫ్ చేస్తుంటాయి, దానికి ఏ అర్థమూ ఉండదు. ఒక ట్రెండ్ తర్వాత స్పష్టమైన సపోర్ట్ లేదా రెసిస్టెన్స్ లెవెల్ దగ్గర, ఎంగల్ఫింగ్ క్యాండిల్‌పై ఎక్కువ వాల్యూమ్‌తో, తర్వాత కన్ఫర్మేషన్‌గా మూడో క్యాండిల్ దాని అవతల క్లోజ్ అయినప్పుడు, ఇది ఎక్కువ విలువైనది.",
+        "trap": "ఒక ఉచ్చు గురించి జాగ్రత్త. పెద్ద ఎంగల్ఫింగ్ క్యాండిల్స్ బలమైన సిగ్నల్స్, కానీ చాలా చెడ్డ ఎంట్రీలు. మీ స్టాప్ లాస్ క్యాండిల్ అవతలి చివర దాటి పెట్టాలి, కాబట్టి పెద్ద క్యాండిల్ అంటే పెద్ద రిస్క్. అంతేకాదు, కదలికలో చాలా భాగం ఇప్పటికే అయిపోయి ఉండొచ్చు. పుల్‌బ్యాక్ కోసం వేచి ఉండండి, లేదా చిన్న పొజిషన్ తీసుకోండి.",
+        "takeaways": "సంక్షిప్తంగా. రెండు క్యాండిల్స్, వ్యతిరేక రంగులు, రెండో బాడీ మొదటిదాన్ని పూర్తిగా కప్పేస్తుంది. దీనికి ముందు ఒక ట్రెండ్ ఉండాలి. మూడో క్యాండిల్‌తో, ఎక్కువ వాల్యూమ్‌తో కన్ఫర్మ్ చేసుకోండి. మీ స్టాప్ లాస్‌ను ఎంగల్ఫింగ్ క్యాండిల్ అవతలి చివర దాటి పెట్టండి.",
+        "end": "ఇప్పుడు ప్యాటర్న్ ట్రైనర్‌లో దీన్ని గుర్తించడం ప్రాక్టీస్ చేయండి, నిటోరా ట్రేడింగ్ డాట్ కామ్‌లో."
+      }
+    }
+  }
+}

@@ -1,0 +1,205 @@
+{
+  "lesson": "m05-indicators/03-ma-crossovers",
+  "version": 2,
+  "source": {
+    "file": "src/content/modules/m05-indicators/03-ma-crossovers.mdx",
+    "sha256": "ee3bb9996aab5dc408bb57dc445b05ff7c718f13fdd68eed0cbb3949d27396d5"
+  },
+  "timing": {
+    "lead": 0.5,
+    "tail": 0.9
+  },
+  "note": "v2: more explanation in plain words (two new scenes, three expanded, a quiz). Each scene names the lesson lines it says ('source' when another lesson). 'computed' numbers are checked against the engine by scripts/check.mjs. <mark name> sets a timing marker the visuals sync to; <pause s> inserts silence. Every language must carry the same marks.",
+  "scenes": {
+    "title": {
+      "base": 4,
+      "lines": "curriculum.ts: m05-indicators / 03-ma-crossovers"
+    },
+    "average": {
+      "base": 30,
+      "source": "src/content/modules/m05-indicators/02-moving-averages.mdx",
+      "lines": "1-3, 9",
+      "computed": {
+        "AVERAGE_SUM": 40,
+        "AVERAGE_RESULT": 8
+      },
+      "marks": [
+        "cards",
+        "divide",
+        "slide"
+      ]
+    },
+    "race": {
+      "base": 24,
+      "lines": "1-3"
+    },
+    "buckets": {
+      "base": 26,
+      "lines": "45-49",
+      "marks": [
+        "pour",
+        "cross"
+      ]
+    },
+    "signchange": {
+      "base": 28,
+      "lines": "9-19"
+    },
+    "golden": {
+      "base": 18,
+      "lines": "27-29",
+      "marks": [
+        "golden",
+        "death"
+      ]
+    },
+    "lag": {
+      "base": 26,
+      "lines": "43, 67",
+      "marks": [
+        "missed",
+        "ship"
+      ]
+    },
+    "tradeoff": {
+      "base": 18,
+      "lines": "31-37",
+      "computed": {
+        "SLOW_CROSSES": 2
+      }
+    },
+    "uses": {
+      "base": 26,
+      "lines": "53-57"
+    },
+    "whipsaw": {
+      "base": 30,
+      "lines": "61-65",
+      "marks": [
+        "rope"
+      ]
+    },
+    "structure": {
+      "base": 20,
+      "lines": "69, 73-75"
+    },
+    "takeaways": {
+      "base": 22,
+      "lines": "78-83"
+    },
+    "quiz": {
+      "base": 16,
+      "lines": "88",
+      "marks": [
+        "think",
+        "reveal"
+      ]
+    },
+    "end": {
+      "base": 6,
+      "lines": "94"
+    }
+  },
+  "languages": {
+    "en": {
+      "voice": "en_US-ljspeech-high",
+      "lengthScale": 1.12,
+      "sentenceGap": {
+        ".": 0.35,
+        "?": 0.45,
+        "!": 0.4
+      },
+      "note": "Piper LJSpeech (public domain). Slowed (lengthScale 1.12) with a breath between sentences (sentenceGap) after the owner found it a little fast (2026-10-16).",
+      "scenes": {
+        "title": "Moving average crossovers. Module five, lesson three.",
+        "average": "Before the crossover, a quick refresher. Stand on a beach and watch the waves. Each one reaches a different spot on the sand, so a single wave can't tell you whether the tide is coming in. But if you take the average of where the last ten waves reached, the tide becomes clear. A moving average does the same thing to price. <mark cards> Take the last few closing prices, add them up, and divide by how many there are. Say the last five closes were six, eight, seven, nine and ten. Together they make forty. <mark divide> Forty divided by five is eight. That's the average. <mark slide> Tomorrow, you drop the oldest close, add the newest one, and work it out again. The window slides forward one day at a time, so the average moves along with price. That's why it's called a moving average.",
+        "race": "Picture two runners on a track. One is a sprinter, who reacts to every change in pace. The other keeps a steady rhythm. A moving average crossover is exactly this race. You draw a fast average and a slow average on the same chart. When the fast one crosses above the slow one, recent prices are running ahead of older prices. That is what an uptrend looks like from the inside. When it crosses below, the opposite.",
+        "buckets": "Here's another way to picture it. Think of two buckets of prices. The small bucket holds the last fifty days. The big bucket holds the last two hundred. <mark pour> When new, higher prices start pouring in, the small bucket's average rises quickly, because each new price is a big part of a small bucket. The big bucket is still full of old, lower prices, so its average rises slowly. <mark cross> The moment the small bucket's average climbs above the big one's, that's the crossover. And because it takes a while for new prices to fill a bucket, the signal always comes a little late.",
+        "signchange": "There is no new formula here. Take the fast average, minus the slow average. Yesterday, the difference was minus zero point five: fast below slow. Today, it is plus zero point three: fast above slow. The difference flipped from negative to positive, so today is a bullish crossover. A flip from positive to negative is a bearish crossover. That sign flip is the entire signal. In plain words: is the fast runner in front, or behind? The moment that answer changes, that's the cross.",
+        "golden": "Some pairs have names, because so many people watch them. <mark golden> The golden cross is the fifty-day simple moving average crossing above the two-hundred-day. <mark death> The death cross is the fifty-day crossing below it. Both are slow, big-picture signals. This chart is synthetic, made for teaching, and it has one of each.",
+        "lag": "Now look at the timing. The crossover waits until enough closes have piled up to drag the whole fast average across the slow one. That wait is the lag. <mark missed> You miss the first chunk of every move, and you give back a chunk at the end, before the exit cross fires. <mark ship> Think of a big ship. It can't turn the moment the captain spins the wheel. It swings round slowly. A slow average turns the same way: late, but steady.",
+        "tradeoff": "Faster pairs, such as the nine and twenty-one exponential averages, give more signals, earlier, with more false ones. Slower pairs give fewer signals, later, with fewer false ones. On this same chart, the fast pair crossed again and again. The fifty and two-hundred crossed only twice.",
+        "uses": "Traders use crossovers in three ways. As an entry and exit: buy the bull cross, sell the bear cross. On a market that trends, this can make money, because the few big trends pay for the many small losses. On a market that ranges, it bleeds. As a bias filter: with fast above slow, only look for long setups. And as a trend-health check: when the averages flatten and braid together, the trend is tired.",
+        "whipsaw": "Which brings us to the crossover's natural enemy: whipsaw. In a sideways market, the fast average crosses the slow one again and again, each cross a few candles after a swing that has already finished. Buy every bull cross and sell every bear cross in a range, and you buy the top and sell the bottom of every wobble. <mark rope> It's like a game of tug of war where the rope keeps sliding back and forth. If you switch sides every time it moves, you always join the side that's about to lose. Ten small losses in a row is normal for this method in chop.",
+        "structure": "A crossover is a direction signal only. It cannot tell you where to put a stop. So use the cross as the last checkmark, not the first. Take the trade because of the structure, such as a breakout that retests its level and holds, and let the cross add a little confidence. A bull cross in the middle of a range, with no breakout, is one you ignore.",
+        "takeaways": "To recap. A crossover fires when the difference between a fast and a slow average changes sign. The golden and death crosses are slow, widely watched signals. Faster pairs signal earlier, with more false alarms. Use crossovers as a filter or a confirmation, not as a stand-alone trigger. And when the averages braid together, stop taking their signals.",
+        "quiz": "Quick check. What is a golden cross? Is it the nine-day average crossing above the twenty-one-day? Or the fifty-day average crossing above the two-hundred-day? <mark think> Take a second to think. <pause 2.5> <mark reveal> It's the fifty-day crossing above the two-hundred-day. The reverse, crossing below, is the death cross.",
+        "end": "Now open the simulator, mark every crossover you can find, and notice where the failed ones cluster."
+      }
+    },
+    "te": {
+      "provider": "google",
+      "voice": "te-IN-Chirp3-HD-Achird",
+      "languageCode": "te-IN",
+      "flow": true,
+      "commaPause": "[pause short]",
+      "speakingRate": 0.92,
+      "note": "Friendly spoken Telugu with English trading terms in Telugu script. Google Chirp 3 HD Achird, each passage spoken in one flow, a short pause tag after every comma and a slightly slower pace (owner's review, 2026-10-16). Needs a native speaker's review.",
+      "scenes": {
+        "title": "హాయ్! ఈరోజు మనం మూవింగ్ యావరేజ్ క్రాస్‌ఓవర్స్ గురించి మాట్లాడుకుందాం. మాడ్యూల్ ఐదు. పాఠం మూడు.",
+        "average": "క్రాస్‌ఓవర్‌కి ముందు, ఒక చిన్న రివిజన్. బీచ్‌లో నిలబడి అలలను చూడండి. ఒక్కో అల ఇసుక మీద ఒక్కో చోటి వరకు వస్తుంది. ఒక్క అలను చూసి, సముద్రం ముందుకు వస్తోందో, వెనక్కి వెళ్తోందో చెప్పలేం. కానీ చివరి పది అలలు ఎక్కడి వరకు వచ్చాయో యావరేజ్ తీస్తే, సముద్రం ఎటు వెళ్తోందో స్పష్టంగా తెలుస్తుంది. మూవింగ్ యావరేజ్ ధరకు సరిగ్గా అదే చేస్తుంది. <mark cards> చివరి కొన్ని క్లోజింగ్ ధరలను కలిపి, ఎన్ని ఉన్నాయో దానితో భాగించండి. ఉదాహరణకు, చివరి ఐదు రోజుల క్లోజింగ్ ధరలు ఆరు, ఎనిమిది, ఏడు, తొమ్మిది, పది అనుకోండి. అన్నీ కలిపితే నలభై. <mark divide> నలభైని ఐదుతో భాగిస్తే ఎనిమిది. అదే యావరేజ్. <mark slide> రేపు, అన్నిటికంటే పాత ధరను తీసేసి, కొత్త ధరను కలిపి, మళ్ళీ లెక్కిస్తారు. ఈ విండో రోజుకొక్క అడుగు ముందుకు జరుగుతుంది, కాబట్టి యావరేజ్ కూడా ధరతో పాటు కదులుతుంది. అందుకే దీన్ని మూవింగ్ యావరేజ్ అంటారు.",
+        "race": "ముందు ఒక చిన్న సీన్ ఊహించుకోండి. ట్రాక్ మీద ఇద్దరు పరిగెడుతున్నారు. ఒకతను స్ప్రింటర్, స్పీడ్ కొంచెం మారినా వెంటనే రియాక్ట్ అవుతాడు. ఇంకొకతను మాత్రం, ఒకే రిథమ్‌లో నిదానంగా పరిగెడతాడు. మూవింగ్ యావరేజ్ క్రాస్‌ఓవర్ అంటే సరిగ్గా ఈ రేసే. ఒకే చార్ట్ మీద ఒక ఫాస్ట్ యావరేజ్, ఒక స్లో యావరేజ్ గీస్తాం. ఫాస్ట్ యావరేజ్, స్లో యావరేజ్‌ని దాటి పైకి వెళ్ళిందనుకోండి. అంటే ఏంటి? ఈమధ్య వచ్చిన ధరలు, పాత ధరల కంటే ముందు పరిగెడుతున్నాయి అని. అప్‌ట్రెండ్‌ని లోపలి నుంచి చూస్తే, అచ్చం ఇలాగే ఉంటుంది. మరి కిందకి క్రాస్ అయితే? సింపుల్, దానికి రివర్స్.",
+        "buckets": "దీన్ని ఇంకో రకంగా కూడా ఊహించుకోవచ్చు. ధరలతో నిండిన రెండు బకెట్లు అనుకోండి. చిన్న బకెట్‌లో చివరి యాభై రోజుల ధరలు ఉంటాయి. పెద్ద బకెట్‌లో చివరి రెండు వందల రోజుల ధరలు ఉంటాయి. <mark pour> కొత్తగా, ఎక్కువ ధరలు రావడం మొదలైతే, చిన్న బకెట్ యావరేజ్ వేగంగా పెరుగుతుంది, ఎందుకంటే చిన్న బకెట్‌లో ప్రతి కొత్త ధరకూ పెద్ద వాటా ఉంటుంది. పెద్ద బకెట్‌లో ఇంకా పాత, తక్కువ ధరలే ఎక్కువ, కాబట్టి దాని యావరేజ్ నెమ్మదిగా పెరుగుతుంది. <mark cross> చిన్న బకెట్ యావరేజ్, పెద్ద బకెట్ యావరేజ్‌ని దాటిన క్షణమే క్రాస్‌ఓవర్. కొత్త ధరలతో బకెట్ నిండడానికి కొంచెం టైమ్ పడుతుంది కాబట్టి, సిగ్నల్ ఎప్పుడూ కొంచెం ఆలస్యంగానే వస్తుంది.",
+        "signchange": "ఇక్కడ కొత్త ఫార్ములా ఏమీ లేదు, భయపడకండి. ఫాస్ట్ యావరేజ్‌లో నుంచి స్లో యావరేజ్ తీసేయండి, అంతే. నిన్న ఆ తేడా మైనస్ సున్నా పాయింట్ ఐదు. అంటే ఫాస్ట్ కింద ఉంది. ఈరోజు ప్లస్ సున్నా పాయింట్ మూడు. ఫాస్ట్ పైకి వచ్చేసింది. నెగటివ్ నుంచి పాజిటివ్‌కి మారింది కదా? అదే బుల్లిష్ క్రాస్‌ఓవర్. పాజిటివ్ నుంచి నెగటివ్‌కి మారితే, బేరిష్ క్రాస్‌ఓవర్. ఆ గుర్తు మారడమే మొత్తం సిగ్నల్. అంతకు మించి ఏమీ లేదు. సింపుల్‌గా చెప్పాలంటే: ఫాస్ట్ రన్నర్ ముందు ఉన్నాడా, వెనక ఉన్నాడా? ఆ జవాబు మారిన క్షణమే క్రాస్.",
+        "golden": "కొన్ని జంటలకు ప్రత్యేకంగా పేర్లు కూడా ఉన్నాయి, ఎందుకంటే చాలా మంది వాటినే చూస్తుంటారు. <mark golden> యాభై రోజుల సింపుల్ మూవింగ్ యావరేజ్, రెండు వందల రోజుల యావరేజ్‌ని దాటి పైకి వెళ్తే, దాన్ని గోల్డెన్ క్రాస్ అంటారు. <mark death> కిందకి దాటితే, డెత్ క్రాస్. ఈ రెండూ నిదానంగా వచ్చే, పెద్ద పిక్చర్ చూపించే సిగ్నల్స్. ఈ చార్ట్ మనం నేర్చుకోవడం కోసం తయారు చేసిన సింథటిక్ చార్ట్. ఇందులో రెండూ ఒక్కోసారి కనిపిస్తాయి, చూడండి.",
+        "lag": "ఇప్పుడు టైమింగ్ గమనించండి, ఇది చాలా ముఖ్యం. కొత్త క్లోజింగ్ ధరలు సరిపడా వచ్చే దాకా, ఫాస్ట్ యావరేజ్ స్లో యావరేజ్‌ని దాటదు. ఆ వెయిటింగే లాగ్. <mark missed> దాని వల్ల ఏమవుతుందంటే, ప్రతి మూవ్‌లో మొదటి భాగం మిస్ అవుతాం. చివర్లో కూడా, ఎగ్జిట్ క్రాస్ వచ్చేలోపు, ఆ మూవ్‌లో కొంత భాగం తిరిగి ఇచ్చేస్తాం. <mark ship> ఒక పెద్ద ఓడను ఊహించుకోండి. కెప్టెన్ చక్రం తిప్పగానే అది వెంటనే తిరగదు. నెమ్మదిగా, మెల్లగా తిరుగుతుంది. స్లో యావరేజ్ కూడా అంతే: ఆలస్యంగా, కానీ స్థిరంగా తిరుగుతుంది.",
+        "tradeoff": "మరి ఫాస్ట్ జంటలకీ, స్లో జంటలకీ తేడా ఏంటి? తొమ్మిది, ఇరవై ఒకటి ఎక్స్‌పోనెన్షియల్ యావరేజెస్ లాంటి ఫాస్ట్ జంటలు, ఎక్కువ సిగ్నల్స్ ఇస్తాయి, ముందే ఇస్తాయి. కానీ వాటిలో తప్పుడువి కూడా ఎక్కువే. స్లో జంటలు తక్కువ సిగ్నల్స్, ఆలస్యంగా ఇస్తాయి, తప్పుడువి కూడా తక్కువ. ఇదే చార్ట్ చూడండి. ఫాస్ట్ జంట మళ్ళీ మళ్ళీ క్రాస్ అయింది. మరి యాభై, రెండు వందల జంట? రెండుసార్లు మాత్రమే.",
+        "uses": "సరే, ట్రేడర్లు దీన్ని అసలు ఎలా వాడతారు? మూడు రకాలుగా. ఒకటి, ఎంట్రీ, ఎగ్జిట్‌గా. బుల్ క్రాస్ వస్తే కొనడం, బేర్ క్రాస్ వస్తే అమ్మడం. ట్రెండ్ ఉన్న మార్కెట్‌లో ఇది డబ్బు సంపాదించగలదు, ఎందుకంటే కొన్ని పెద్ద ట్రెండ్లు, చాలా చిన్న నష్టాలను కవర్ చేస్తాయి. కానీ రేంజ్‌లో తిరిగే మార్కెట్‌లో, నష్టాలే నష్టాలు. రెండు, బయాస్ ఫిల్టర్‌గా. ఫాస్ట్, స్లో పైన ఉంటే, లాంగ్ సెటప్స్ మాత్రమే వెతకండి. మూడు, ట్రెండ్ హెల్త్ చెక్‌గా. యావరేజెస్ చదునుగా మారి, ఒకదానితో ఒకటి అల్లుకుపోతుంటే, ట్రెండ్ అలసిపోయిందని అర్థం.",
+        "whipsaw": "ఇప్పుడు క్రాస్‌ఓవర్‌కి అసలైన శత్రువు గురించి చెప్తాను. దాని పేరు విప్‌సా. మార్కెట్ పక్కకు కదులుతుంటే, ఫాస్ట్ యావరేజ్ స్లో యావరేజ్‌ని మళ్ళీ మళ్ళీ క్రాస్ చేస్తుంది. ప్రతి క్రాస్ కూడా, స్వింగ్ అయిపోయిన కొన్ని క్యాండిల్స్ తర్వాతే వస్తుంది. అలాంటప్పుడు ప్రతి బుల్ క్రాస్‌లో కొని, ప్రతి బేర్ క్రాస్‌లో అమ్మితే ఏమవుతుంది? ప్రతి ఊగిసలాటలో పైన కొని, కింద అమ్ముతాం. <mark rope> ఇది తాడు లాగే ఆట లాంటిది. తాడు అటూ ఇటూ జారుతూ ఉంటుంది. అది కదిలిన ప్రతిసారీ మీరు పక్క మార్చుకుంటే, ఎప్పుడూ ఓడిపోబోయే పక్కనే చేరతారు. ఇలాంటి చాప్ మార్కెట్‌లో, వరుసగా పది చిన్న నష్టాలు రావడం ఈ పద్ధతిలో చాలా మామూలు. జాగ్రత్త!",
+        "structure": "ఒక విషయం గుర్తుపెట్టుకోండి. క్రాస్‌ఓవర్ దిశను మాత్రమే చెప్తుంది. స్టాప్ ఎక్కడ పెట్టాలో అది చెప్పదు. అందుకే క్రాస్‌ని చివరి చెక్‌మార్క్‌గా వాడండి, మొదటిదిగా కాదు. ట్రేడ్ తీసుకునేది స్ట్రక్చర్ వల్ల. ఉదాహరణకు, ఒక బ్రేకౌట్ తన లెవెల్‌ని రీటెస్ట్ చేసి నిలబడితే. క్రాస్ దానికి కొంచెం ఎక్స్‌ట్రా నమ్మకం ఇస్తుంది, అంతే. బ్రేకౌట్ ఏమీ లేకుండా, రేంజ్ మధ్యలో బుల్ క్రాస్ వస్తే? దాన్ని పట్టించుకోకండి.",
+        "takeaways": "సరే, ఒక్కసారి గుర్తుచేసుకుందాం. ఫాస్ట్, స్లో యావరేజ్‌ల తేడా గుర్తు మారితే, అదే క్రాస్‌ఓవర్. గోల్డెన్ క్రాస్, డెత్ క్రాస్, నిదానమైనవి, అందరూ చూసే సిగ్నల్స్. ఫాస్ట్ జంటలు ముందే చెప్తాయి, కానీ తప్పుడు అలారాలు ఎక్కువ. క్రాస్‌ఓవర్‌ని ఫిల్టర్‌గానో, కన్ఫర్మేషన్‌గానో వాడండి. దాన్ని ఒక్కదాన్నే నమ్మి ట్రేడ్ చేయకండి. యావరేజెస్ అల్లుకుపోతే, వాటి సిగ్నల్స్ తీసుకోవడం ఆపేయండి.",
+        "quiz": "ఒక చిన్న టెస్ట్. గోల్డెన్ క్రాస్ అంటే ఏంటి? తొమ్మిది రోజుల యావరేజ్, ఇరవై ఒక్క రోజుల యావరేజ్ పైకి క్రాస్ అవ్వడమా? లేక యాభై రోజుల యావరేజ్, రెండు వందల రోజుల యావరేజ్ పైకి క్రాస్ అవ్వడమా? <mark think> ఒక్క సెకను ఆలోచించండి. <pause 2.5> <mark reveal> జవాబు: యాభై రోజుల యావరేజ్, రెండు వందల రోజుల యావరేజ్ పైకి క్రాస్ అవ్వడం. కిందకి క్రాస్ అయితే, అది డెత్ క్రాస్.",
+        "end": "ఇప్పుడు మీ వంతు. సిమ్యులేటర్ ఓపెన్ చేసి, కనిపించిన ప్రతి క్రాస్‌ఓవర్‌ని మార్క్ చేయండి. ఫెయిల్ అయినవి ఎక్కడ గుంపుగా ఉన్నాయో గమనించండి. ఆల్ ది బెస్ట్!"
+      }
+    },
+    "hi": {
+      "provider": "google",
+      "voice": "hi-IN-Chirp3-HD-Achird",
+      "languageCode": "hi-IN",
+      "pauses": {
+        ".": 0.3,
+        "।": 0.3,
+        "?": 0.45,
+        "!": 0.35
+      },
+      "note": "Natural spoken Hindi, आप register, English trading terms in Devanagari. Same voice family as Telugu (Chirp 3 HD Achird). Needs a native speaker's review.",
+      "scenes": {
+        "title": "मूविंग एवरेज क्रॉसओवर। मॉड्यूल पाँच, लेसन तीन।",
+        "average": "क्रॉसओवर से पहले, एक छोटा सा रिवीज़न। समुद्र किनारे खड़े होकर लहरों को देखिए। हर लहर रेत पर अलग जगह तक पहुँचती है, इसलिए सिर्फ़ एक लहर देखकर आप नहीं बता सकते कि पानी आगे आ रहा है या पीछे जा रहा है। लेकिन अगर आप आख़िरी दस लहरों का एवरेज निकालें, तो साफ़ दिख जाता है कि समुद्र किस तरफ़ जा रहा है। मूविंग एवरेज प्राइस के साथ यही करता है। <mark cards> आख़िरी कुछ क्लोज़िंग प्राइस जोड़िए, और जितनी हैं उतने से भाग दीजिए। मान लीजिए आख़िरी पाँच क्लोज़ छह, आठ, सात, नौ और दस थे। सबको जोड़ें तो चालीस। <mark divide> चालीस को पाँच से भाग दें तो आठ। यही एवरेज है। <mark slide> कल, सबसे पुराना क्लोज़ हटाइए, नया जोड़िए, और फिर से हिसाब लगाइए। यह विंडो हर दिन एक कदम आगे खिसकती है, इसलिए एवरेज भी प्राइस के साथ चलता है। इसीलिए इसे मूविंग एवरेज कहते हैं।",
+        "race": "ट्रैक पर दो धावकों की कल्पना कीजिए। एक स्प्रिंटर है, जो रफ़्तार में हर बदलाव पर तुरंत रिएक्ट करता है। दूसरा एक ही लय में आराम से दौड़ता है। मूविंग एवरेज क्रॉसओवर बिल्कुल यही रेस है। एक ही चार्ट पर आप एक फ़ास्ट एवरेज और एक स्लो एवरेज बनाते हैं। जब फ़ास्ट एवरेज स्लो एवरेज के ऊपर निकल जाता है, तो हाल की प्राइस पुरानी प्राइस से आगे दौड़ रही होती हैं। अंदर से देखें तो अपट्रेंड ऐसा ही दिखता है। और जब नीचे क्रॉस करता है, तो उल्टा।",
+        "buckets": "इसे एक और तरीके से समझिए। प्राइस से भरी दो बाल्टियाँ सोचिए। छोटी बाल्टी में आख़िरी पचास दिन की प्राइस हैं। बड़ी बाल्टी में आख़िरी दो सौ दिन की। <mark pour> जब नई, ऊँची प्राइस आने लगती हैं, तो छोटी बाल्टी का एवरेज जल्दी बढ़ता है, क्योंकि छोटी बाल्टी में हर नई प्राइस का बड़ा हिस्सा होता है। बड़ी बाल्टी में अभी भी पुरानी, कम प्राइस भरी हैं, इसलिए उसका एवरेज धीरे बढ़ता है। <mark cross> जिस पल छोटी बाल्टी का एवरेज बड़ी बाल्टी के एवरेज से ऊपर निकलता है, वही क्रॉसओवर है। और क्योंकि बाल्टी को नई प्राइस से भरने में थोड़ा वक़्त लगता है, सिग्नल हमेशा थोड़ा देर से आता है।",
+        "signchange": "यहाँ कोई नया फ़ॉर्मूला नहीं है। फ़ास्ट एवरेज में से स्लो एवरेज घटाइए। कल यह अंतर माइनस ज़ीरो पॉइंट पाँच था: फ़ास्ट, स्लो के नीचे। आज यह प्लस ज़ीरो पॉइंट तीन है: फ़ास्ट, स्लो के ऊपर। अंतर नेगेटिव से पॉज़िटिव हो गया, इसलिए आज बुलिश क्रॉसओवर है। पॉज़िटिव से नेगेटिव हो, तो बेयरिश क्रॉसओवर। यह साइन बदलना ही पूरा सिग्नल है। आसान शब्दों में: फ़ास्ट धावक आगे है या पीछे? जिस पल यह जवाब बदलता है, वही क्रॉस है।",
+        "golden": "कुछ जोड़ियों के नाम हैं, क्योंकि बहुत सारे लोग इन्हें देखते हैं। <mark golden> गोल्डन क्रॉस का मतलब है पचास दिन का सिंपल मूविंग एवरेज, दो सौ दिन वाले के ऊपर क्रॉस करना। <mark death> डेथ क्रॉस का मतलब है पचास दिन वाला उसके नीचे क्रॉस करना। दोनों धीमे, बड़ी तस्वीर दिखाने वाले सिग्नल हैं। यह चार्ट सिंथेटिक है, सिखाने के लिए बनाया गया है, और इसमें दोनों एक-एक बार हैं।",
+        "lag": "अब टाइमिंग देखिए। क्रॉसओवर तब तक इंतज़ार करता है, जब तक इतने क्लोज़ जमा न हो जाएँ कि पूरा फ़ास्ट एवरेज, स्लो एवरेज के पार खिंच जाए। यही इंतज़ार लैग है। <mark missed> हर मूव का पहला हिस्सा आप चूक जाते हैं, और आख़िर में, एग्ज़िट क्रॉस आने से पहले, एक हिस्सा वापस दे देते हैं। <mark ship> एक बड़े जहाज़ के बारे में सोचिए। कप्तान के पहिया घुमाते ही वह नहीं मुड़ता। वह धीरे-धीरे घूमता है। स्लो एवरेज भी ऐसे ही मुड़ता है: देर से, लेकिन मज़बूती से।",
+        "tradeoff": "फ़ास्ट जोड़ियाँ, जैसे नौ और इक्कीस के एक्सपोनेंशियल एवरेज, ज़्यादा सिग्नल देती हैं, जल्दी देती हैं, और उनमें ग़लत सिग्नल भी ज़्यादा होते हैं। स्लो जोड़ियाँ कम सिग्नल देती हैं, देर से देती हैं, और ग़लत भी कम होते हैं। इसी चार्ट पर, फ़ास्ट जोड़ी बार-बार क्रॉस हुई। पचास और दो सौ वाली जोड़ी सिर्फ़ दो बार क्रॉस हुई।",
+        "uses": "ट्रेडर्स क्रॉसओवर को तीन तरह से इस्तेमाल करते हैं। एंट्री और एग्ज़िट के लिए: बुल क्रॉस पर ख़रीदिए, बेयर क्रॉस पर बेचिए। ट्रेंड वाले मार्केट में इससे पैसा बन सकता है, क्योंकि कुछ बड़े ट्रेंड, बहुत सारे छोटे नुकसानों की भरपाई कर देते हैं। रेंज वाले मार्केट में, यह नुकसान ही करता रहता है। बायस फ़िल्टर के तौर पर: फ़ास्ट अगर स्लो के ऊपर है, तो सिर्फ़ लॉन्ग सेटअप देखिए। और ट्रेंड की सेहत जाँचने के लिए: जब एवरेज सपाट हो जाएँ और आपस में उलझने लगें, तो ट्रेंड थक चुका है।",
+        "whipsaw": "और यहीं आता है क्रॉसओवर का असली दुश्मन: व्हिपसॉ। साइडवेज़ मार्केट में, फ़ास्ट एवरेज बार-बार स्लो एवरेज को क्रॉस करता है, और हर क्रॉस किसी ऐसे स्विंग के कुछ कैंडल बाद आता है जो पहले ही ख़त्म हो चुका है। रेंज में हर बुल क्रॉस पर ख़रीदिए और हर बेयर क्रॉस पर बेचिए, तो आप हर उतार-चढ़ाव में ऊपर ख़रीदेंगे और नीचे बेचेंगे। <mark rope> यह रस्साकशी जैसा है, जहाँ रस्सी बार-बार इधर-उधर खिसकती है। अगर रस्सी हिलते ही आप हर बार पाला बदलें, तो आप हमेशा उसी तरफ़ जुड़ेंगे जो हारने वाली है। ऐसे बिना दिशा वाले मार्केट में, लगातार दस छोटे नुकसान इस तरीके में आम बात है।",
+        "structure": "क्रॉसओवर सिर्फ़ दिशा बताने वाला सिग्नल है। यह नहीं बता सकता कि स्टॉप कहाँ लगाएँ। इसलिए क्रॉस को आख़िरी चेकमार्क की तरह इस्तेमाल कीजिए, पहले की तरह नहीं। ट्रेड स्ट्रक्चर की वजह से लीजिए, जैसे कोई ब्रेकआउट जो अपने लेवल को रीटेस्ट करके टिका रहे, और क्रॉस को थोड़ा अतिरिक्त भरोसा देने दीजिए। रेंज के बीच में, बिना किसी ब्रेकआउट के आया बुल क्रॉस, उसे नज़रअंदाज़ कीजिए।",
+        "takeaways": "संक्षेप में। जब फ़ास्ट और स्लो एवरेज के बीच के अंतर का साइन बदलता है, तब क्रॉसओवर होता है। गोल्डन क्रॉस और डेथ क्रॉस धीमे, बहुत लोगों द्वारा देखे जाने वाले सिग्नल हैं। फ़ास्ट जोड़ियाँ जल्दी सिग्नल देती हैं, पर ग़लत अलार्म ज़्यादा होते हैं। क्रॉसओवर को फ़िल्टर या कन्फ़र्मेशन की तरह इस्तेमाल कीजिए, अकेले ट्रिगर की तरह नहीं। और जब एवरेज आपस में उलझ जाएँ, तो उनके सिग्नल लेना बंद कर दीजिए।",
+        "quiz": "एक छोटा सा सवाल। गोल्डन क्रॉस क्या है? क्या यह नौ दिन के एवरेज का, इक्कीस दिन वाले के ऊपर क्रॉस करना है? या पचास दिन के एवरेज का, दो सौ दिन वाले के ऊपर क्रॉस करना? <mark think> एक सेकंड सोचिए। <pause 2.5> <mark reveal> जवाब है, पचास दिन वाले का, दो सौ दिन वाले के ऊपर क्रॉस करना। उल्टा, नीचे क्रॉस करना, डेथ क्रॉस है।",
+        "end": "अब सिम्युलेटर खोलिए, जितने क्रॉसओवर मिलें सब पर निशान लगाइए, और देखिए कि नाकाम वाले कहाँ इकट्ठा होते हैं।"
+      }
+    },
+    "es": {
+      "voice": "es_MX-ald-medium",
+      "lengthScale": 1.0,
+      "note": "Latin American Spanish (es-419), informal 'tú', standard Spanish trading terms (cruce dorado, media móvil simple); 'whipsaw' and 'stop' kept in English as traders say them. Decimals read with 'punto', as in Mexico. On-screen text stays in English. Translated from the English script above, scene by scene. Needs a native speaker's review before release.",
+      "scenes": {
+        "title": "Cruces de medias móviles. Módulo cinco, lección tres.",
+        "average": "Antes del cruce, un repaso rápido. Párate en la playa y mira las olas. Cada una llega a un punto distinto de la arena, así que una sola ola no te dice si la marea está subiendo. Pero si sacas el promedio de hasta dónde llegaron las últimas diez olas, la marea se ve clarísima. Una media móvil hace lo mismo con el precio. <mark cards> Toma los últimos precios de cierre, súmalos y divide entre cuántos son. Digamos que los últimos cinco cierres fueron seis, ocho, siete, nueve y diez. Juntos suman cuarenta. <mark divide> Cuarenta entre cinco es ocho. Ese es el promedio. <mark slide> Mañana quitas el cierre más antiguo, agregas el más nuevo, y lo calculas otra vez. La ventana avanza un día a la vez, así que el promedio se mueve junto con el precio. Por eso se llama media móvil.",
+        "race": "Imagina a dos corredores en una pista. Uno es un velocista, que reacciona a cada cambio de ritmo. El otro mantiene un ritmo constante. Un cruce de medias móviles es exactamente esta carrera. Dibujas una media rápida y una media lenta en el mismo gráfico. Cuando la rápida cruza por encima de la lenta, los precios recientes van por delante de los precios anteriores. Así se ve una tendencia alcista desde adentro. Cuando cruza por debajo, lo contrario.",
+        "buckets": "Hay otra forma de imaginarlo. Piensa en dos cubetas llenas de precios. La cubeta chica guarda los últimos cincuenta días. La cubeta grande guarda los últimos doscientos. <mark pour> Cuando empiezan a entrar precios nuevos y más altos, el promedio de la cubeta chica sube rápido, porque cada precio nuevo es una parte grande de una cubeta chica. La cubeta grande sigue llena de precios viejos y más bajos, así que su promedio sube despacio. <mark cross> En el momento en que el promedio de la cubeta chica supera al de la grande, ese es el cruce. Y como las cubetas tardan en llenarse de precios nuevos, la señal siempre llega un poco tarde.",
+        "signchange": "Aquí no hay ninguna fórmula nueva. Toma la media rápida y réstale la media lenta. Ayer, la diferencia era menos cero punto cinco: la rápida, debajo de la lenta. Hoy es más cero punto tres: la rápida, encima de la lenta. La diferencia pasó de negativa a positiva, así que hoy hay un cruce alcista. Un cambio de positiva a negativa es un cruce bajista. Ese cambio de signo es toda la señal. Dicho de forma sencilla: ¿el corredor rápido va adelante o atrás? En el momento en que esa respuesta cambia, ese es el cruce.",
+        "golden": "Algunos pares tienen nombre, porque mucha gente los vigila. <mark golden> El cruce dorado es la media móvil simple de cincuenta días cruzando por encima de la de doscientos días. <mark death> El cruce de la muerte es la de cincuenta días cruzando por debajo. Las dos son señales lentas, de panorama general. Este gráfico es sintético, hecho para enseñar, y tiene uno de cada uno.",
+        "lag": "Ahora fíjate en el momento. El cruce espera hasta que se acumulan suficientes cierres para arrastrar toda la media rápida al otro lado de la lenta. Esa espera es el retraso. <mark missed> Te pierdes el primer tramo de cada movimiento, y devuelves un tramo al final, antes de que llegue el cruce de salida. <mark ship> Piensa en un barco grande. No gira en cuanto el capitán mueve el timón. Da la vuelta despacio. Una media lenta gira igual: tarde, pero firme.",
+        "tradeoff": "Los pares rápidos, como las medias exponenciales de nueve y veintiún períodos, dan más señales, antes, y con más señales falsas. Los pares lentos dan menos señales, más tarde, y con menos falsas. En este mismo gráfico, el par rápido se cruzó una y otra vez. El de cincuenta y doscientos se cruzó solo dos veces.",
+        "uses": "Los traders usan los cruces de tres maneras. Como entrada y salida: compra en el cruce alcista, vende en el cruce bajista. En un mercado con tendencia, esto puede ganar dinero, porque las pocas tendencias grandes pagan las muchas pérdidas pequeñas. En un mercado en rango, pierde y pierde. Como filtro de sesgo: con la rápida encima de la lenta, busca solo operaciones en largo. Y para revisar la salud de la tendencia: cuando las medias se aplanan y se entrelazan, la tendencia está cansada.",
+        "whipsaw": "Y eso nos lleva al enemigo natural del cruce: el whipsaw, las señales falsas de ida y vuelta. En un mercado lateral, la media rápida cruza a la lenta una y otra vez, y cada cruce llega unas velas después de que el movimiento ya terminó. Si compras en cada cruce alcista y vendes en cada cruce bajista dentro de un rango, compras arriba y vendes abajo en cada vaivén. <mark rope> Es como jugar a jalar la cuerda, cuando la cuerda se resbala de un lado a otro. Si te cambias de equipo cada vez que se mueve, siempre te unes al equipo que está a punto de perder. Diez pérdidas pequeñas seguidas es normal para este método en un mercado sin dirección.",
+        "structure": "Un cruce es solo una señal de dirección. No puede decirte dónde poner el stop. Así que usa el cruce como la última casilla de la lista, no la primera. Toma la operación por la estructura, como una ruptura que vuelve a probar su nivel y se sostiene, y deja que el cruce te dé un poco más de confianza. Un cruce alcista en medio de un rango, sin ruptura, es uno que ignoras.",
+        "takeaways": "En resumen. Un cruce ocurre cuando la diferencia entre una media rápida y una lenta cambia de signo. El cruce dorado y el cruce de la muerte son señales lentas y muy vigiladas. Los pares rápidos avisan antes, con más falsas alarmas. Usa los cruces como filtro o como confirmación, no como un disparador por sí solos. Y cuando las medias se entrelazan, deja de tomar sus señales.",
+        "quiz": "Una pregunta rápida. ¿Qué es un cruce dorado? ¿Es la media de nueve días cruzando por encima de la de veintiún días? ¿O la media de cincuenta días cruzando por encima de la de doscientos días? <mark think> Tómate un segundo para pensarlo. <pause 2.5> <mark reveal> Es la de cincuenta días cruzando por encima de la de doscientos. Al revés, cruzando por debajo, es el cruce de la muerte.",
+        "end": "Ahora abre el simulador, marca cada cruce que encuentres, y fíjate dónde se agrupan los que fallaron."
+      }
+    }
+  }
+}

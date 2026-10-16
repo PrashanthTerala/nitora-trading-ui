@@ -4,3 +4,10 @@ dist
 *.log
 .vite
 
+video/out
+video/.piper
+video/narration/*/
+video/.blender
+video/narration/.google-usage.json
+video/public
+video/build

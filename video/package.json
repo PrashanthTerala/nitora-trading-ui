@@ -1,0 +1,27 @@
+{
+  "name": "nitora-trading-video",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Lesson videos rendered from the site's own components with Remotion. Not part of the site build.",
+  "type": "module",
+  "scripts": {
+    "studio": "node scripts/sync-public.mjs && remotion studio src/index.ts",
+    "render": "node scripts/sync-public.mjs && remotion render src/index.ts",
+    "scene-data": "node scripts/scene-data.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fontsource/noto-sans-devanagari": "5.3.0",
+    "@fontsource/noto-sans-telugu": "5.3.0",
+    "@remotion/cli": "4.0.535",
+    "@remotion/gsap": "4.0.535",
+    "gsap": "3.15.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "remotion": "4.0.535"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "typescript": "^5.9.0"
+  }
+}
