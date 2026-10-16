@@ -1,0 +1,195 @@
+{
+  "lesson": "m02-candlestick-patterns/09-tweezers-and-counterattack",
+  "version": 2,
+  "source": {
+    "file": "src/content/modules/m02-candlestick-patterns/09-tweezers-and-counterattack.mdx",
+    "sha256": "59dc020aef0d695a2817ed864c862bc1f4099de540a76d4acd8590239d85ad3d"
+  },
+  "timing": {
+    "lead": 0.5,
+    "tail": 0.9
+  },
+  "note": "v2 (cinematic): script approved 2026-10-16 (docs/video-production/scripts/tweezers-en-v2.md). English and Telugu only, by the owner's decision. Each scene names the lesson lines it says; 'computed' numbers are checked against src/tweezers/data.ts by scripts/check.mjs. Reliability figures are Bulkowski's (thepatternsite.com, read 2026-10-16), as the corrected lesson states. <mark name> sets a timing marker; <pause s> inserts silence.",
+  "scenes": {
+    "title": {
+      "base": 5,
+      "lines": "curriculum.ts: m02-candlestick-patterns / 09-tweezers-and-counterattack"
+    },
+    "intro": {
+      "base": 30,
+      "lines": "1-5",
+      "marks": [
+        "define",
+        "counter"
+      ]
+    },
+    "rules": {
+      "base": 20,
+      "lines": "7-12",
+      "marks": [
+        "trend",
+        "lows",
+        "colour"
+      ]
+    },
+    "psychology": {
+      "base": 24,
+      "lines": "16-20",
+      "marks": [
+        "day1",
+        "day2",
+        "floor"
+      ]
+    },
+    "castle": {
+      "base": 14,
+      "lines": "22-26"
+    },
+    "top": {
+      "base": 14,
+      "lines": "28-36",
+      "marks": [
+        "high"
+      ]
+    },
+    "counterattack": {
+      "base": 20,
+      "lines": "38-46",
+      "marks": [
+        "gap",
+        "close"
+      ]
+    },
+    "compare": {
+      "base": 24,
+      "lines": "48-54",
+      "marks": [
+        "weaker",
+        "gap"
+      ]
+    },
+    "valid": {
+      "base": 24,
+      "lines": "56-62",
+      "marks": [
+        "range"
+      ],
+      "computed": {
+        "RANGE_TWEEZER_COUNT": 6
+      }
+    },
+    "confirm": {
+      "base": 18,
+      "lines": "64-68",
+      "marks": [
+        "third"
+      ],
+      "computed": {
+        "PATTERN_HIGH": 101.76
+      }
+    },
+    "trade": {
+      "base": 24,
+      "lines": "70-76",
+      "marks": [
+        "entry",
+        "stop"
+      ],
+      "computed": {
+        "ENTRY": 102.86,
+        "STOP": 95.76,
+        "RISK": 7.1
+      }
+    },
+    "warning": {
+      "base": 18,
+      "lines": "78-82"
+    },
+    "reliability": {
+      "base": 28,
+      "lines": "84-88",
+      "marks": [
+        "counter",
+        "use"
+      ],
+      "computed": {
+        "BULKOWSKI_TW_BOTTOM_CONT": 52,
+        "BULKOWSKI_TW_TOP_CONT": 56,
+        "BULKOWSKI_MEETING_BULL": 56,
+        "BULKOWSKI_MEETING_BEAR": 49
+      }
+    },
+    "takeaways": {
+      "base": 24,
+      "lines": "90-97"
+    },
+    "quiz": {
+      "base": 16,
+      "lines": "102",
+      "marks": [
+        "think",
+        "reveal"
+      ]
+    },
+    "end": {
+      "base": 8,
+      "lines": "107"
+    }
+  },
+  "languages": {
+    "en": {
+      "voice": "en_US-ljspeech-high",
+      "lengthScale": 1.12,
+      "sentenceGap": {
+        ".": 0.35,
+        "?": 0.45,
+        "!": 0.4
+      },
+      "scenes": {
+        "title": "Tweezers and counterattack lines. Module two, lesson nine.",
+        "intro": "Imagine pushing a door open. It stops at a certain point. You back off, take a run at it, and it stops at exactly the same point. Now you know something: there is something solid behind that door. <mark define> That is a tweezer: two candles side by side with matching lows, a tweezer bottom, or matching highs, a tweezer top. The market tested a price twice and was stopped at the same place both times. <mark counter> This lesson also covers the counterattack line: a sharp gap against the first candle, then a fight all the way back to close at the same price. Same lesson, different picture: a level was defended, and the attackers gained nothing.",
+        "rules": "The tweezer bottom's rules. <mark trend> It comes after a decline. <mark lows> Two candles in a row have the same low, or lows within a tiny fraction of each other. <mark colour> The first is usually red; the second is often green. But the colour matters less than the matching low. And the second candle is often a reversal shape of its own, which makes the signal stronger.",
+        "psychology": "<mark day1> On day one, sellers push price down to a level, and are stopped. <mark day2> On day two, they try again, reach the same price to the cent, and are stopped again. <mark floor> That is not a coincidence. It is a floor: somebody with size is buying at that price, again and again. Sellers who hoped for a breakdown start to cover, and buyers who saw the level hold step in. That level has just become support.",
+        "castle": "Picture a bouncy castle. You jump twice, and both times your feet stop at exactly the same height, because the floor underneath is solid. Two identical bounces tell you where the floor is. A tweezer bottom is the market finding its floor.",
+        "top": "The tweezer top is the mirror, after a rise. <mark high> Two candles reach the same high. Buyers pushed to a level twice, and were sold into both times. The ceiling has been found, and it will be called resistance.",
+        "counterattack": "The counterattack line draws a different picture. After a decline, a big red candle. <mark gap> Then the next candle gaps down sharply at the open, well below the close. <mark close> And then it rallies all the way back, to close at, or very near, the first candle's close. The sellers' big head start at the open gained them nothing.",
+        "compare": "Compare it with the piercing line from the last lesson. The piercing line wins back past the middle of the first body. <mark weaker> The counterattack only gets back to the first candle's close, not into the body at all. So on paper, it is weaker. <mark gap> What gives it its punch is the size of the gap: the sellers had a huge head start, and the buyers erased every bit of it. The bearish counterattack is the mirror, at the top of a rise.",
+        "valid": "All four are reversal patterns, so they need a trend before them. Tweezers are especially easy to find by mistake, because matching highs and lows happen all the time in a sideways market. <mark range> On this sideways chart there are six pairs of matching lows or highs, and none of them is a signal. The best tweezers come after a long trend, at a level that mattered before, with a second candle that is a reversal shape itself.",
+        "confirm": "<mark third> Confirmation, for a tweezer bottom: the next candle closes above the high of the pattern: here, above one hundred and one point seven six. It should not go back down and break the shared low. If it tests it again and holds, the level is even stronger. If it breaks, the pattern has failed.",
+        "trade": "A trade idea to practise. <mark entry> Enter when the confirmation candle closes above the pattern's high: here, at one hundred and two point eight six. <mark stop> Put the stop a small buffer below the shared low: here, ten cents below, at ninety-five point seven six. That is seven point one of risk. It is one of the cleanest stops there is: the shared low is a defended level, and if it breaks, there is no reason left to hold.",
+        "warning": "Tweezers are the easiest pattern to over-find. Before you count one, ask three questions. Was there a trend to reverse? Does the level line up with something that mattered before? And is the second candle a reversal shape on its own? If the answer to all three is no, you are looking at two candles, not a tweezer.",
+        "reliability": "How reliable are they? Bulkowski's data is unkind. After a tweezer bottom, the decline simply carried on about fifty-two percent of the time. After a tweezer top, the rise carried on about fifty-six percent. <mark counter> Counterattack lines, which he tests under their other name, meeting lines, are rare: the bullish one reversed about fifty-six percent of the time, and the bearish one about forty-nine. <mark use> So a tweezer's real value is in marking a level the market defended. Add a trend, a prior level and a reversal candle, and it becomes a trade. Alone, it is just a mark on the chart.",
+        "takeaways": "To recap. A tweezer is two candles in a row with matching lows after a decline, or matching highs after a rise. It shows a level tested twice and defended. A counterattack line gaps hard against the trend and closes back at the previous close. All of them need a trend before them. Confirm with a close beyond the second candle, and put the stop just beyond the shared extreme. On their own, they are close to a coin flip: use them to find levels.",
+        "quiz": "Quick check. You see two candles with the same low, in the middle of a sideways range. What is it? A strong tweezer bottom? Or noise? <mark think> Take a second to think. <pause 2.5> <mark reveal> Noise. There is no trend to reverse, and ranges produce matching lows all the time.",
+        "end": "Now practise in the trainer. Look for neighbouring candles with matching wicks, check the trend before them, and ask whether the second candle is a reversal shape on its own."
+      }
+    },
+    "te": {
+      "provider": "google",
+      "voice": "te-IN-Chirp3-HD-Achird",
+      "languageCode": "te-IN",
+      "flow": true,
+      "commaPause": "[pause short]",
+      "speakingRate": 0.92,
+      "note": "Friendly spoken Telugu; 'shared low' as ఉమ్మడి కనిష్ఠ ధర, 'coin flip' as బొమ్మా బొరుసు. Needs a native speaker's review.",
+      "scenes": {
+        "title": "హాయ్! ఈరోజు మనం ట్వీజర్స్, కౌంటర్‌అటాక్ లైన్స్ గురించి మాట్లాడుకుందాం. మాడ్యూల్ రెండు. పాఠం తొమ్మిది.",
+        "intro": "ఒక తలుపును తోసి తెరుస్తున్నారని ఊహించుకోండి. అది ఒక చోట ఆగిపోతుంది. కొంచెం వెనక్కి వెళ్ళి, పరుగెత్తుకొచ్చి మళ్ళీ తోస్తారు. అది సరిగ్గా అదే చోట మళ్ళీ ఆగిపోతుంది. ఇప్పుడు మీకు ఒక విషయం తెలిసింది: ఆ తలుపు వెనక ఏదో గట్టిగా ఉంది. <mark define> ట్వీజర్ అంటే అదే. పక్కపక్కనే రెండు క్యాండిల్స్. ఒకే కనిష్ఠ ధర ఉంటే ట్వీజర్ బాటమ్, ఒకే గరిష్ఠ ధర ఉంటే ట్వీజర్ టాప్. మార్కెట్ ఒక ధరను రెండుసార్లు పరీక్షించింది, రెండుసార్లూ అదే చోట ఆగిపోయింది. <mark counter> ఈ పాఠంలో కౌంటర్‌అటాక్ లైన్ కూడా చూద్దాం. మొదటి క్యాండిల్‌కి వ్యతిరేకంగా ఒక పెద్ద గ్యాప్, ఆ తర్వాత అదే ధర దగ్గర క్లోజ్ అయ్యే వరకు పోరాటం. పాఠం ఒకటే, బొమ్మ వేరు. ఒక లెవెల్‌ని కాపాడారు, దాడి చేసినవాళ్ళకి ఏమీ దక్కలేదు.",
+        "rules": "ట్వీజర్ బాటమ్ రూల్స్. <mark trend> ఇది ఒక పతనం తర్వాత వస్తుంది. <mark lows> వరుసగా రెండు క్యాండిల్స్‌కి ఒకే కనిష్ఠ ధర ఉంటుంది, లేదా వాటి మధ్య చాలా చిన్న తేడా మాత్రమే. <mark colour> మొదటిది సాధారణంగా ఎరుపు, రెండోది తరచుగా ఆకుపచ్చ. కానీ రంగు కంటే, కనిష్ఠ ధరలు సరిపోవడమే ముఖ్యం. ఇంకా, రెండో క్యాండిల్ దానికదే ఒక రివర్సల్ ఆకారం అయితే, సిగ్నల్ ఇంకా బలంగా ఉంటుంది.",
+        "psychology": "<mark day1> మొదటి రోజు, అమ్మేవాళ్ళు ధరను ఒక లెవెల్ వరకు కిందకి నెడతారు, అక్కడ ఆగిపోతారు. <mark day2> రెండో రోజు మళ్ళీ ప్రయత్నిస్తారు, సరిగ్గా అదే ధర వరకు, పైసాతో సహా, వెళ్ళి మళ్ళీ ఆగిపోతారు. <mark floor> ఇది యాదృచ్ఛికం కాదు. ఇది ఒక నేల. ఆ ధర దగ్గర ఎవరో పెద్ద మొత్తంలో, మళ్ళీ మళ్ళీ కొంటున్నారు. పతనం కోసం ఆశించిన అమ్మేవాళ్ళు వెనక్కి తగ్గుతారు, లెవెల్ నిలబడటం చూసిన కొనేవాళ్ళు ముందుకొస్తారు. ఆ లెవెల్ ఇప్పుడు సపోర్ట్ అయింది.",
+        "castle": "ఒక బౌన్సీ కాసిల్‌ని ఊహించుకోండి. మీరు రెండుసార్లు దూకుతారు, రెండుసార్లూ మీ కాళ్ళు సరిగ్గా ఒకే ఎత్తులో ఆగుతాయి, ఎందుకంటే కింద నేల గట్టిగా ఉంది. రెండు ఒకేలాంటి బౌన్స్‌లు, నేల ఎక్కడుందో చెబుతాయి. ట్వీజర్ బాటమ్ అంటే, మార్కెట్ తన నేలను కనుక్కోవడం.",
+        "top": "ట్వీజర్ టాప్ దీనికి అద్దం, ఒక పెరుగుదల తర్వాత. <mark high> రెండు క్యాండిల్స్ ఒకే గరిష్ఠ ధరకు చేరుకుంటాయి. కొనేవాళ్ళు ఒక లెవెల్ వరకు రెండుసార్లు నెట్టారు, రెండుసార్లూ అక్కడ అమ్మకాలు ఎదురయ్యాయి. పైకప్పు దొరికింది, దాన్ని రెసిస్టెన్స్ అంటారు.",
+        "counterattack": "కౌంటర్‌అటాక్ లైన్ వేరే బొమ్మ గీస్తుంది. ఒక పతనం తర్వాత, ఒక పెద్ద ఎరుపు క్యాండిల్. <mark gap> తర్వాతి క్యాండిల్ ఓపెన్ దగ్గరే బాగా కిందకి గ్యాప్ అవుతుంది, క్లోజ్ కంటే చాలా కింద. <mark close> ఆ తర్వాత అది పూర్తిగా పైకి ర్యాలీ చేసి, మొదటి క్యాండిల్ క్లోజ్ దగ్గరే, లేదా దాదాపు అక్కడే, క్లోజ్ అవుతుంది. ఓపెన్ దగ్గర అమ్మేవాళ్ళకి దొరికిన పెద్ద ముందడుగు, వాళ్ళకి ఏమీ ఇవ్వలేదు.",
+        "compare": "దీన్ని గత పాఠంలోని పియర్సింగ్ లైన్‌తో పోల్చండి. పియర్సింగ్ లైన్, మొదటి బాడీ మధ్య భాగం దాటి తిరిగి గెలుచుకుంటుంది. <mark weaker> కౌంటర్‌అటాక్ కేవలం మొదటి క్యాండిల్ క్లోజ్ వరకే వస్తుంది, బాడీ లోపలికి అస్సలు రాదు. అంటే కాగితం మీద ఇది బలహీనమైనది. <mark gap> దీనికి బలం ఇచ్చేది గ్యాప్ సైజు. అమ్మేవాళ్ళకి పెద్ద ముందడుగు దొరికింది, కొనేవాళ్ళు దాన్ని పూర్తిగా చెరిపేశారు. బేరిష్ కౌంటర్‌అటాక్ దీనికి అద్దం, ఒక పెరుగుదల పైభాగంలో.",
+        "valid": "ఈ నాలుగూ రివర్సల్ ప్యాటర్న్స్, కాబట్టి వాటికి ముందు ఒక ట్రెండ్ ఉండాలి. ట్వీజర్స్‌ని పొరపాటున కనుక్కోవడం చాలా సులభం, ఎందుకంటే పక్కకు కదిలే మార్కెట్‌లో ఒకే కనిష్ఠ, గరిష్ఠ ధరలు తరచుగా వస్తుంటాయి. <mark range> ఈ రేంజ్ చార్ట్ మీద ఆరు జతలు ఒకే కనిష్ఠ లేదా గరిష్ఠ ధరలతో ఉన్నాయి, వాటిలో ఒక్కటీ సిగ్నల్ కాదు. మంచి ట్వీజర్స్, ఒక పెద్ద ట్రెండ్ తర్వాత, ఇంతకు ముందు ముఖ్యమైన లెవెల్ దగ్గర, రెండో క్యాండిల్ దానికదే రివర్సల్ ఆకారం అయినప్పుడు వస్తాయి.",
+        "confirm": "<mark third> ట్వీజర్ బాటమ్‌కి కన్ఫర్మేషన్ అంటే, తర్వాతి క్యాండిల్ ప్యాటర్న్ గరిష్ఠ ధర కంటే పైన క్లోజ్ అవ్వాలి. ఇక్కడ, నూట ఒకటి పాయింట్ ఏడు ఆరు కంటే పైన. అది మళ్ళీ కిందకి వెళ్ళి ఉమ్మడి కనిష్ఠ ధరను బ్రేక్ చేయకూడదు. మళ్ళీ పరీక్షించి నిలబడితే, లెవెల్ ఇంకా బలంగా ఉంటుంది. బ్రేక్ అయితే, ప్యాటర్న్ ఫెయిల్ అయినట్టే.",
+        "trade": "ప్రాక్టీస్ కోసం ఒక ట్రేడ్ ఐడియా. <mark entry> కన్ఫర్మేషన్ క్యాండిల్, ప్యాటర్న్ గరిష్ఠ ధర కంటే పైన క్లోజ్ అయినప్పుడు ఎంటర్ అవ్వండి. ఇక్కడ, నూట రెండు పాయింట్ ఎనిమిది ఆరు దగ్గర. <mark stop> స్టాప్‌ని ఉమ్మడి కనిష్ఠ ధర కంటే కొంచెం కింద పెట్టండి. ఇక్కడ పది పైసలు కింద, తొంభై ఐదు పాయింట్ ఏడు ఆరు దగ్గర. అంటే ఏడు పాయింట్ ఒకటి రిస్క్. ఇది అత్యంత స్పష్టమైన స్టాప్‌లలో ఒకటి. ఉమ్మడి కనిష్ఠ ధర ఒక కాపాడిన లెవెల్, అది బ్రేక్ అయితే, పట్టుకుని ఉండడానికి కారణమే లేదు.",
+        "warning": "ట్వీజర్స్‌ని అవసరానికి మించి కనుక్కోవడం చాలా సులభం. ఒకదాన్ని లెక్కపెట్టే ముందు, మూడు ప్రశ్నలు అడగండి. తిప్పడానికి ఒక ట్రెండ్ ఉందా? ఆ లెవెల్, ఇంతకు ముందు ముఖ్యమైన దేనితోనైనా సరిపోతుందా? రెండో క్యాండిల్ దానికదే ఒక రివర్సల్ ఆకారమా? మూడింటికీ జవాబు కాదు అయితే, మీరు చూస్తున్నవి కేవలం రెండు క్యాండిల్స్, ట్వీజర్ కాదు.",
+        "reliability": "ఇవి ఎంత నమ్మదగినవి? బుల్కోవ్‌స్కీ డేటా కఠినంగానే ఉంది. ట్వీజర్ బాటమ్ తర్వాత, పతనం దాదాపు యాభై రెండు శాతం సార్లు అలాగే కొనసాగింది. ట్వీజర్ టాప్ తర్వాత, పెరుగుదల దాదాపు యాభై ఆరు శాతం సార్లు కొనసాగింది. <mark counter> కౌంటర్‌అటాక్ లైన్స్‌ని ఆయన మీటింగ్ లైన్స్ అనే మరో పేరుతో టెస్ట్ చేశారు. అవి చాలా అరుదు. బుల్లిష్ వెర్షన్ దాదాపు యాభై ఆరు శాతం సార్లు తిప్పింది, బేరిష్ వెర్షన్ దాదాపు నలభై తొమ్మిది శాతం. <mark use> అందుకే ట్వీజర్ అసలు విలువ, మార్కెట్ కాపాడిన లెవెల్‌ని గుర్తించడంలోనే ఉంది. దానికి ఒక ట్రెండ్, ఒక పాత లెవెల్, ఒక రివర్సల్ క్యాండిల్ కలపండి, అప్పుడు అది ఒక ట్రేడ్ అవుతుంది. ఒక్కటిగా, అది చార్ట్ మీద ఒక గుర్తు మాత్రమే.",
+        "takeaways": "సంక్షిప్తంగా. ట్వీజర్ అంటే వరుసగా రెండు క్యాండిల్స్, పతనం తర్వాత ఒకే కనిష్ఠ ధరలతో, లేదా పెరుగుదల తర్వాత ఒకే గరిష్ఠ ధరలతో. ఇది రెండుసార్లు పరీక్షించి కాపాడిన లెవెల్‌ని చూపిస్తుంది. కౌంటర్‌అటాక్ లైన్, ట్రెండ్‌కి వ్యతిరేకంగా బాగా గ్యాప్ అయి, ముందటి క్లోజ్ దగ్గరే క్లోజ్ అవుతుంది. వీటన్నిటికీ ముందు ఒక ట్రెండ్ ఉండాలి. రెండో క్యాండిల్ దాటి క్లోజ్‌తో కన్ఫర్మ్ చేసుకోండి, స్టాప్‌ని ఉమ్మడి అంచు కొంచెం అవతల పెట్టండి. ఒంటరిగా ఇవి దాదాపు బొమ్మా బొరుసు లాంటివే. లెవెల్స్ కనుక్కోవడానికి వాడండి.",
+        "quiz": "ఒక చిన్న టెస్ట్. పక్కకు కదిలే రేంజ్ మధ్యలో, ఒకే కనిష్ఠ ధర ఉన్న రెండు క్యాండిల్స్ కనిపించాయి. ఇది ఏమిటి? బలమైన ట్వీజర్ బాటమా? లేక శబ్దమా? <mark think> ఒక్క సెకను ఆలోచించండి. <pause 2.5> <mark reveal> జవాబు: శబ్దం. తిప్పడానికి ట్రెండ్ లేదు, రేంజ్‌లలో ఒకే కనిష్ఠ ధరలు తరచుగా వస్తుంటాయి.",
+        "end": "ఇప్పుడు మీ వంతు. ట్రైనర్‌లో ప్రాక్టీస్ చేయండి. పక్కపక్కనే ఒకే విక్స్ ఉన్న క్యాండిల్స్ కోసం చూడండి, వాటికి ముందు ట్రెండ్ చూడండి, రెండో క్యాండిల్ దానికదే రివర్సల్ ఆకారమా అని అడగండి."
+      }
+    }
+  }
+}

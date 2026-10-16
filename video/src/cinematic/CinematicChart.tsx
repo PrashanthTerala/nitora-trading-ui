@@ -298,6 +298,7 @@ export function CinematicChart({
   }
   const lineBoxes = liveLevels.map(levelLine);
   for (const b of brackets.filter((b) => Math.min(b.opacity, b.labelOpacity ?? 1) > 0.01)) {
+    if (!b.label) continue; // an arrow the scene explains elsewhere
     const o = Math.min(b.opacity, b.labelOpacity ?? 1);
     const w = textWidth(b.label);
     const bx = x(b.index + 0.5);
@@ -317,7 +318,8 @@ export function CinematicChart({
     }
     const w = textWidth(n.label);
     const cx = x(n.index);
-    const shifts = steps(40, 14).flatMap((d) => (d ? [-d, d] : [0]));
+    // Slide sideways only while the label still sits over its candle, so it never drifts off what it names.
+    const shifts = steps(Math.max(1, Math.floor((w / 2 - 12) / 14) + 1), 14).flatMap((d) => (d ? [-d, d] : [0]));
     // Just under the candle(s) it is about, then just over them, sliding sideways if needed.
     const below = y(lowAt(n.index)) + PAD + 28 + PILL_H / 2;
     const above = y(highAt(n.index)) - PAD - 28 - PILL_H / 2;
