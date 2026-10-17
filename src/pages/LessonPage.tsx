@@ -10,7 +10,7 @@ import { RouteFallback } from '@/components/layout/RouteProgress';
 import { LessonOutline } from '@/components/lesson/LessonOutline';
 import { OnThisPage, ReadingProgressBar, useLessonScroll } from '@/components/lesson/OnThisPage';
 import { LessonFooter } from '@/components/lesson/LessonFooter';
-import { LessonVideo } from '@/components/lesson/LessonVideo';
+import { LessonVideo, readLang } from '@/components/lesson/LessonVideo';
 import videos from 'virtual:lesson-videos';
 import { formatTime } from '@/lib/video';
 import { useLessonKeys } from '@/components/lesson/useLessonKeys';
@@ -253,7 +253,7 @@ export default function LessonPage() {
               </span>
               {video && (
                 <a href="#lesson-video" className="mr-2 flex items-center gap-1.5 hover:text-ink">
-                  <PlayCircle size={14} strokeWidth={1.5} aria-hidden /> {t('video.chip', { duration: formatTime(video.tracks[0].duration) })}
+                  <PlayCircle size={14} strokeWidth={1.5} aria-hidden /> {t('video.chip', { duration: formatTime((video.tracks.find((x) => x.lang === readLang(video.tracks)) ?? video.tracks[0]).duration) })}
                 </a>
               )}
               {quiz && (

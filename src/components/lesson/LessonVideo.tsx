@@ -25,7 +25,8 @@ function writePosition(id: string, seconds: number | null) {
     // Without storage the video still plays; it just cannot remember where it was.
   }
 }
-function readLang(tracks: VideoTrack[]): string {
+/** The language the reader last chose, if this video has it; else English; else the first. */
+export function readLang(tracks: VideoTrack[]): string {
   try {
     const saved = localStorage.getItem(PREF_KEYS.videoLang);
     if (saved && tracks.some((x) => x.lang === saved)) return saved;
