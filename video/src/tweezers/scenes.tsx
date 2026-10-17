@@ -8,36 +8,11 @@ import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from 'remotion';
 import type { OHLC } from '@/engine/market/types';
 import { CornerTag, ILLUSTRATION, SYNTHETIC, body, kicker, s, useMark, useSpeechAt } from '../kit';
 import { CinematicChart } from '../cinematic/CinematicChart';
-import { ACCENT, DOWN, PRICE, PatternIntro, PractiseEnd, Recap, SOFT, UP, fmt, grow, upto, view } from '../cinematic/pieces';
+import { ACCENT, Checklist, DOWN, PRICE, PatternIntro, PractiseEnd, Recap, SOFT, UP, fmt, grow, upto, view } from '../cinematic/pieces';
 import { Headline, clamp, fade } from '../cinematic/scenes';
 import * as d from './data';
 
 const LEVEL = 'var(--color-chart-2)';
-
-/** A checklist that lights each item as it is said (the current one bright, earlier ones dimmed). */
-function Checklist({ items, left = 1120, top = 320 }: { items: { title: string; detail: string; from: number; mono?: boolean }[]; left?: number; top?: number }) {
-  const f = useCurrentFrame();
-  const current = items.filter((it) => f >= it.from).length - 1;
-  return (
-    <div style={{ position: 'absolute', left, right: 120, top, display: 'flex', flexDirection: 'column', gap: 30 }}>
-      {items.map((it, i) => {
-        const o = fade(f, it.from);
-        const now = i === current;
-        return (
-          <div key={i} style={{ display: 'flex', gap: 24, alignItems: 'center', opacity: o * (now ? 1 : 0.55) }}>
-            <span style={{ flexShrink: 0, width: 64, height: 64, borderRadius: 32, display: 'grid', placeItems: 'center', fontFamily: 'var(--font-mono)', fontSize: 30, fontWeight: 700, color: now ? 'var(--color-bg)' : ACCENT, background: now ? ACCENT : 'transparent', border: `3px solid ${ACCENT}` }}>
-              {i + 1}
-            </span>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: now ? 36 : 33, fontWeight: now ? 700 : 500, color: 'var(--color-ink)' }}>{it.title}</div>
-              <div style={{ fontSize: 28, fontFamily: it.mono ? 'var(--font-mono)' : 'var(--font-sans)', color: SOFT }}>{it.detail}</div>
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
 
 // ---------------------------------------------------------------- title
 

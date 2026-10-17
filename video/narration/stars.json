@@ -1,0 +1,186 @@
+{
+  "lesson": "m02-candlestick-patterns/10-morning-evening-star",
+  "version": 2,
+  "source": {
+    "file": "src/content/modules/m02-candlestick-patterns/10-morning-evening-star.mdx",
+    "sha256": "9c411fa2e8ef31e03759842b132454d4b2e977b9f1edaca5ed4eaaa0289dfeb8"
+  },
+  "timing": {
+    "lead": 0.5,
+    "tail": 0.9
+  },
+  "note": "v2 (cinematic): script approved 2026-10-16 (docs/video-production/scripts/stars-en-v2.md). English and Telugu only, by the owner's decision. Each scene names the lesson lines it says; 'computed' numbers are checked against src/stars/data.ts by scripts/check.mjs. Reliability figures and ranks are Bulkowski's (thepatternsite.com, read 2026-10-16), as the corrected lesson states. <mark name> sets a timing marker; <pause s> inserts silence.",
+  "scenes": {
+    "title": {
+      "base": 5,
+      "lines": "curriculum.ts: m02-candlestick-patterns / 10-morning-evening-star"
+    },
+    "intro": {
+      "base": 30,
+      "lines": "1-5",
+      "marks": [
+        "define",
+        "evening"
+      ]
+    },
+    "rules": {
+      "base": 20,
+      "lines": "7-13",
+      "marks": [
+        "trend",
+        "star",
+        "third"
+      ]
+    },
+    "psychology": {
+      "base": 22,
+      "lines": "17-21",
+      "marks": [
+        "day1",
+        "day2",
+        "day3"
+      ]
+    },
+    "seesaw": {
+      "base": 18,
+      "lines": "23-27"
+    },
+    "evening": {
+      "base": 16,
+      "lines": "29-38",
+      "marks": [
+        "star",
+        "third"
+      ]
+    },
+    "star": {
+      "base": 18,
+      "lines": "40-46",
+      "marks": [
+        "small",
+        "gap",
+        "colour"
+      ]
+    },
+    "third": {
+      "base": 18,
+      "lines": "48-52",
+      "marks": [
+        "deep",
+        "volume"
+      ],
+      "computed": {
+        "REACH": 98
+      }
+    },
+    "valid": {
+      "base": 20,
+      "lines": "54-58",
+      "marks": [
+        "timeframe"
+      ]
+    },
+    "trade": {
+      "base": 24,
+      "lines": "60-66",
+      "marks": [
+        "entry",
+        "stop"
+      ],
+      "computed": {
+        "ENTRY": 102.2,
+        "STOP": 95.4,
+        "RISK": 6.8
+      }
+    },
+    "lazy": {
+      "base": 16,
+      "lines": "68-72"
+    },
+    "reliability": {
+      "base": 28,
+      "lines": "74-78",
+      "marks": [
+        "ranks",
+        "warn"
+      ],
+      "computed": {
+        "BULKOWSKI_MORNING": 78,
+        "BULKOWSKI_EVENING": 72,
+        "RANK_EVENING": 4,
+        "RANK_MORNING": 12,
+        "PATTERNS": 103
+      }
+    },
+    "takeaways": {
+      "base": 22,
+      "lines": "80-87"
+    },
+    "quiz": {
+      "base": 16,
+      "lines": "92",
+      "marks": [
+        "think",
+        "reveal"
+      ]
+    },
+    "end": {
+      "base": 8,
+      "lines": "98"
+    }
+  },
+  "languages": {
+    "en": {
+      "voice": "en_US-ljspeech-high",
+      "lengthScale": 1.12,
+      "sentenceGap": {
+        ".": 0.35,
+        "?": 0.45,
+        "!": 0.4
+      },
+      "scenes": {
+        "title": "Morning star and evening star. Module two, lesson ten.",
+        "intro": "The darkest part of the night comes just before dawn. Then the sky turns grey, neither dark nor light, and then the sun comes up: night, the in-between, day. <mark define> The morning star is three candles that tell that story: a big red candle, the night; a small candle sitting below it, the star; and a big green candle that closes well into the first candle's body, the day. <mark evening> The evening star is the mirror, at the top of a rise: dusk instead of dawn. Three candles are harder to fake than one, and the third one is a built-in confirmation.",
+        "rules": "Here are the morning star's rules. <mark trend> It comes after a decline, and candle one is a big red candle. <mark star> Candle two has a small body, sitting below candle one's body. Classically it gaps down, so the bodies do not touch. <mark third> Candle three is a big green candle that closes well into candle one's body, at least past the middle. The star's colour does not matter.",
+        "psychology": "<mark day1> Day one is a big win for the sellers. <mark day2> Day two opens lower, which should mean more selling, and then goes nowhere. The body is tiny: the sellers had every advantage and could not press it. That stall is the hinge of the whole pattern. <mark day3> Day three, buyers arrive and drive price back up through most of day one's losses. Confident selling, then hesitation, then confident buying, across three sessions.",
+        "seesaw": "Think of a seesaw. A heavy kid sits on one end, and it slams down: the red candle. A lighter kid climbs onto the other end, and the seesaw wobbles, nearly balanced: the star. Then a second kid jumps on with the light one, and it swings hard the other way: the green candle. The star is the wobble. Without it, the seesaw would not have swung.",
+        "evening": "The evening star is the mirror. After a rise, a big green candle. <mark star> Then a small star, above it, after a gap up that pulls in the last eager buyers, and the session goes nowhere. <mark third> Then a big red candle that closes deep into the green body. Everyone who bought the star is now losing. Dusk.",
+        "star": "The middle candle decides the quality of the pattern. <mark small> The smaller the star, the better: a doji star is the strongest. A star with a medium body may not be a star at all. <mark gap> A real gap between the star's body and its neighbours makes it stronger: the market lurched one way, then reversed, leaving the star alone. <mark colour> And its colour does not matter.",
+        "third": "The third candle is the confirmation, and it is built into the pattern: you cannot call it a morning star until it has closed. <mark deep> The deeper it closes into the first candle's body, the stronger the pattern. Here it wins back ninety-eight percent of the first body, almost to the first candle's open. <mark volume> And heavy volume on the third candle shows real buying, not a thin bounce.",
+        "valid": "Both need a clear trend. The best morning stars come after a long decline, at support; the best evening stars after a long rise, at resistance. <mark timeframe> And stars work best on daily and weekly charts, because the gaps that isolate the star come from the overnight break. On a five-minute chart, the star is usually just a small candle with no gaps: a weaker version.",
+        "trade": "A trade idea to practise. <mark entry> Enter at the close of the third candle: here, one hundred and two point two. Some traders wait for a fourth candle to close higher, a slightly worse price for more certainty. <mark stop> Put the stop below the low of the star, the lowest point of the pattern: ninety-five point four. That is six point eight of risk. The stop is often a long way off, because the pattern spans three sessions: size your position to that distance.",
+        "lazy": "Watch out for the lazy star. If the middle candle has a medium body, or overlaps the first candle's body heavily, you do not have a star. You have three ordinary candles. The whole meaning depends on the middle session being a genuine stall. If it was not, the third candle is just a bounce.",
+        "reliability": "How reliable are they? Among the best. In Thomas Bulkowski's published tests, the morning star reversed the downtrend about seventy-eight percent of the time, and the evening star the uptrend about seventy-two percent. <mark ranks> His overall ranking also weighs how far price moved afterwards, and there the evening star places fourth and the morning star twelfth, out of a hundred and three. <mark warn> Two things to remember. Those numbers need a proper trend, a small star and a deep third candle: a sloppy star in a range does not earn them. And no pattern promises a big move.",
+        "takeaways": "To recap. A morning star: after a decline, a big red candle, a small star below it, and a big green candle closing past the middle of the red body. The evening star is the mirror, after a rise. The star is the stall; the third candle is the resolution, and a built-in confirmation. Smaller stars, real gaps and deep third candles make it stronger. Put the stop beyond the star.",
+        "quiz": "Quick check. The middle candle of a possible evening star has a medium-sized body that overlaps the first candle heavily. What do you have? A very strong evening star? Or three ordinary candles? <mark think> Take a second to think. <pause 2.5> <mark reveal> Three ordinary candles. Without a genuine stall in the middle, the pattern loses its meaning.",
+        "end": "Now practise in the pattern trainer. When you see three candles with a small one in the middle, check three things: the trend before, the size of the star, and how deep the third candle closes."
+      }
+    },
+    "te": {
+      "provider": "google",
+      "voice": "te-IN-Chirp3-HD-Achird",
+      "languageCode": "te-IN",
+      "flow": true,
+      "commaPause": "[pause short]",
+      "speakingRate": 0.92,
+      "note": "Friendly spoken Telugu; 'star' kept as స్టార్, 'seesaw' as సీసా. Needs a native speaker's review.",
+      "scenes": {
+        "title": "హాయ్! ఈరోజు మనం మార్నింగ్ స్టార్, ఈవెనింగ్ స్టార్ గురించి మాట్లాడుకుందాం. మాడ్యూల్ రెండు. పాఠం పది.",
+        "intro": "తెల్లవారే ముందే రాత్రి చాలా చీకటిగా ఉంటుంది. ఆ తర్వాత ఆకాశం బూడిద రంగుకు మారుతుంది, చీకటీ కాదు, వెలుగూ కాదు. ఆ తర్వాత సూర్యుడు ఉదయిస్తాడు. రాత్రి, మధ్యలో ఆ సమయం, పగలు. <mark define> మార్నింగ్ స్టార్ అనేది ఈ కథ చెప్పే మూడు క్యాండిల్స్. ఒక పెద్ద ఎరుపు క్యాండిల్, అది రాత్రి. దాని కింద కూర్చున్న ఒక చిన్న క్యాండిల్, అది స్టార్. మొదటి క్యాండిల్ బాడీలోకి బాగా లోతుగా క్లోజ్ అయ్యే ఒక పెద్ద ఆకుపచ్చ క్యాండిల్, అది పగలు. <mark evening> ఈవెనింగ్ స్టార్ దీనికి అద్దం, ఒక పెరుగుదల పైభాగంలో. తెల్లవారడం కాదు, సాయంత్రం. మూడు క్యాండిల్స్‌ని నకిలీ చేయడం ఒక్కదాని కంటే కష్టం, ఇంకా మూడో క్యాండిలే అంతర్నిర్మిత కన్ఫర్మేషన్.",
+        "rules": "మార్నింగ్ స్టార్ రూల్స్ చూద్దాం. <mark trend> ఇది ఒక పతనం తర్వాత వస్తుంది, మొదటి క్యాండిల్ ఒక పెద్ద ఎరుపు క్యాండిల్. <mark star> రెండో క్యాండిల్‌కి చిన్న బాడీ ఉంటుంది, అది మొదటి క్యాండిల్ బాడీ కంటే కింద ఉంటుంది. సంప్రదాయంగా అది గ్యాప్ డౌన్ అవుతుంది, అంటే బాడీలు తాకవు. <mark third> మూడో క్యాండిల్ ఒక పెద్ద ఆకుపచ్చ క్యాండిల్, అది మొదటి క్యాండిల్ బాడీలోకి బాగా లోతుగా, కనీసం మధ్య భాగం దాటి క్లోజ్ అవుతుంది. స్టార్ రంగు ముఖ్యం కాదు.",
+        "psychology": "<mark day1> మొదటి రోజు, అమ్మేవాళ్ళకి పెద్ద విజయం. <mark day2> రెండో రోజు ఇంకా కింద ఓపెన్ అవుతుంది, అంటే ఇంకా అమ్మకాలు రావాలి, కానీ ఎటూ కదలదు. బాడీ చాలా చిన్నది. అమ్మేవాళ్ళకి అన్ని అనుకూలతలు ఉన్నా, ముందుకు నెట్టలేకపోయారు. ఆ ఆగిపోవడమే ఈ ప్యాటర్న్‌కి కీలకం. <mark day3> మూడో రోజు, కొనేవాళ్ళు వచ్చి, మొదటి రోజు నష్టంలో చాలా భాగం తిరిగి పైకి నెడతారు. నమ్మకంగా అమ్మడం, తర్వాత సందేహం, తర్వాత నమ్మకంగా కొనడం, మూడు సెషన్లలో.",
+        "seesaw": "ఒక సీసాని ఊహించుకోండి. బరువైన పిల్లాడు ఒక చివర కూర్చుంటాడు, అది ధడాలున కిందకి పడుతుంది. అది ఎరుపు క్యాండిల్. తేలికైన పిల్లాడు అవతలి చివర ఎక్కుతాడు, సీసా ఊగుతుంది, దాదాపు సమానంగా. అది స్టార్. తర్వాత ఇంకో పిల్లాడు ఆ తేలికైన పిల్లాడితో కలిసి దూకుతాడు, సీసా బలంగా అవతలి వైపుకి ఊగుతుంది. అది ఆకుపచ్చ క్యాండిల్. స్టార్ అంటే ఆ ఊగడం. అది లేకపోతే, సీసా తిరిగేది కాదు.",
+        "evening": "ఈవెనింగ్ స్టార్ దీనికి అద్దం. ఒక పెరుగుదల తర్వాత, ఒక పెద్ద ఆకుపచ్చ క్యాండిల్. <mark star> తర్వాత దాని పైన ఒక చిన్న స్టార్, గ్యాప్ అప్ తర్వాత, అది చివరిగా ఉత్సాహంగా కొనేవాళ్ళని లోపలికి లాగుతుంది, సెషన్ ఎటూ కదలదు. <mark third> తర్వాత ఒక పెద్ద ఎరుపు క్యాండిల్, ఆకుపచ్చ బాడీలోకి బాగా లోతుగా క్లోజ్ అవుతుంది. స్టార్ దగ్గర కొన్నవాళ్ళంతా ఇప్పుడు నష్టంలో ఉన్నారు. సాయంత్రం.",
+        "star": "ప్యాటర్న్ నాణ్యతను మధ్య క్యాండిలే నిర్ణయిస్తుంది. <mark small> స్టార్ ఎంత చిన్నదైతే అంత మంచిది. డోజీ స్టార్ అన్నిటికంటే బలమైనది. మధ్యస్థ బాడీ ఉన్న స్టార్, అసలు స్టారే కాకపోవచ్చు. <mark gap> స్టార్ బాడీకీ దాని పక్క క్యాండిల్స్‌కీ మధ్య నిజమైన గ్యాప్ ఉంటే, అది ఇంకా బలంగా ఉంటుంది. మార్కెట్ ఒక వైపు దూకి, తర్వాత తిరిగింది, స్టార్ ఒంటరిగా మిగిలిపోయింది. <mark colour> దాని రంగు ముఖ్యం కాదు.",
+        "third": "మూడో క్యాండిలే కన్ఫర్మేషన్, అది ప్యాటర్న్‌లోనే ఉంది. అది క్లోజ్ అయ్యే వరకు దాన్ని మార్నింగ్ స్టార్ అని పిలవలేం. <mark deep> అది మొదటి క్యాండిల్ బాడీలోకి ఎంత లోతుగా క్లోజ్ అయితే, ప్యాటర్న్ అంత బలంగా ఉంటుంది. ఇక్కడ అది మొదటి బాడీలో తొంభై ఎనిమిది శాతం తిరిగి గెలుచుకుంది, దాదాపు మొదటి క్యాండిల్ ఓపెన్ వరకు. <mark volume> మూడో క్యాండిల్ మీద ఎక్కువ వాల్యూమ్ ఉంటే, అది నిజమైన కొనుగోలు, బలహీనమైన బౌన్స్ కాదు.",
+        "valid": "రెండిటికీ స్పష్టమైన ట్రెండ్ కావాలి. మంచి మార్నింగ్ స్టార్స్, పెద్ద పతనం తర్వాత సపోర్ట్ దగ్గర వస్తాయి. మంచి ఈవెనింగ్ స్టార్స్, పెద్ద పెరుగుదల తర్వాత రెసిస్టెన్స్ దగ్గర. <mark timeframe> ఇంకా, స్టార్స్ డైలీ, వీక్లీ చార్ట్‌ల మీద బాగా పనిచేస్తాయి, ఎందుకంటే స్టార్‌ని ఒంటరిగా చేసే గ్యాప్స్, రాత్రి విరామం వల్లే వస్తాయి. ఐదు నిమిషాల చార్ట్ మీద, స్టార్ సాధారణంగా గ్యాప్స్ లేని ఒక చిన్న క్యాండిల్ మాత్రమే. అది బలహీనమైన రూపం.",
+        "trade": "ప్రాక్టీస్ కోసం ఒక ట్రేడ్ ఐడియా. <mark entry> మూడో క్యాండిల్ క్లోజ్ దగ్గర ఎంటర్ అవ్వండి. ఇక్కడ, నూట రెండు పాయింట్ రెండు. కొంతమంది ట్రేడర్లు, నాలుగో క్యాండిల్ ఇంకా పైన క్లోజ్ అయ్యే వరకు వేచి ఉంటారు. కొంచెం చెడ్డ ధర, కానీ ఎక్కువ నమ్మకం. <mark stop> స్టాప్‌ని స్టార్ కనిష్ఠ ధర కంటే కింద పెట్టండి, ప్యాటర్న్‌లో అదే అతి తక్కువ పాయింట్. తొంభై ఐదు పాయింట్ నాలుగు. అంటే ఆరు పాయింట్ ఎనిమిది రిస్క్. ప్యాటర్న్ మూడు సెషన్లు ఉంటుంది కాబట్టి, స్టాప్ తరచుగా దూరంగా ఉంటుంది. ఆ దూరానికి తగ్గట్టు మీ పొజిషన్ సైజ్ పెట్టుకోండి.",
+        "lazy": "బద్ధకపు స్టార్ పట్ల జాగ్రత్త. మధ్య క్యాండిల్‌కి మధ్యస్థ బాడీ ఉంటే, లేదా అది మొదటి క్యాండిల్ బాడీతో బాగా కలిసిపోతే, అది స్టార్ కాదు. మీ దగ్గర ఉన్నవి మూడు సాధారణ క్యాండిల్స్. మొత్తం అర్థం, మధ్య సెషన్ నిజంగా ఆగిపోవడం మీదే ఆధారపడి ఉంది. అలా లేకపోతే, మూడో క్యాండిల్ కేవలం ఒక బౌన్స్.",
+        "reliability": "ఇవి ఎంత నమ్మదగినవి? అత్యుత్తమమైన వాటిలో ఒకటి. థామస్ బుల్కోవ్‌స్కీ ప్రచురించిన టెస్టుల్లో, మార్నింగ్ స్టార్ దాదాపు డెబ్బై ఎనిమిది శాతం సార్లు డౌన్‌ట్రెండ్‌ని తిప్పింది, ఈవెనింగ్ స్టార్ దాదాపు డెబ్బై రెండు శాతం సార్లు అప్‌ట్రెండ్‌ని. <mark ranks> ఆయన మొత్తం ర్యాంకింగ్, ఆ తర్వాత ధర ఎంత దూరం కదిలిందో కూడా లెక్కపెడుతుంది. అక్కడ నూట మూడింటిలో, ఈవెనింగ్ స్టార్ నాలుగో స్థానంలో, మార్నింగ్ స్టార్ పన్నెండో స్థానంలో ఉన్నాయి. <mark warn> రెండు విషయాలు గుర్తుంచుకోండి. ఆ నంబర్లకు సరైన ట్రెండ్, చిన్న స్టార్, లోతైన మూడో క్యాండిల్ కావాలి. రేంజ్‌లో వచ్చే అస్తవ్యస్త స్టార్‌కి అవి దక్కవు. ఇంకా, ఏ ప్యాటర్న్ కూడా పెద్ద కదలికకు హామీ ఇవ్వదు.",
+        "takeaways": "సంక్షిప్తంగా. మార్నింగ్ స్టార్ అంటే, ఒక పతనం తర్వాత పెద్ద ఎరుపు క్యాండిల్, దాని కింద ఒక చిన్న స్టార్, ఎరుపు బాడీ మధ్య భాగం దాటి క్లోజ్ అయ్యే పెద్ద ఆకుపచ్చ క్యాండిల్. ఈవెనింగ్ స్టార్ దీనికి అద్దం, ఒక పెరుగుదల తర్వాత. స్టార్ అంటే ఆగిపోవడం. మూడో క్యాండిల్ అంటే తీర్మానం, అంతర్నిర్మిత కన్ఫర్మేషన్. చిన్న స్టార్స్, నిజమైన గ్యాప్స్, లోతైన మూడో క్యాండిల్స్ దాన్ని బలంగా చేస్తాయి. స్టాప్‌ని స్టార్ అవతల పెట్టండి.",
+        "quiz": "ఒక చిన్న టెస్ట్. ఈవెనింగ్ స్టార్ లాగా కనిపించే దానిలో, మధ్య క్యాండిల్‌కి మధ్యస్థ బాడీ ఉంది, అది మొదటి క్యాండిల్‌తో బాగా కలిసిపోయింది. మీ దగ్గర ఉన్నది ఏమిటి? చాలా బలమైన ఈవెనింగ్ స్టారా? లేక మూడు సాధారణ క్యాండిల్సా? <mark think> ఒక్క సెకను ఆలోచించండి. <pause 2.5> <mark reveal> జవాబు: మూడు సాధారణ క్యాండిల్స్. మధ్యలో నిజమైన ఆగిపోవడం లేకపోతే, ప్యాటర్న్‌కి అర్థం ఉండదు.",
+        "end": "ఇప్పుడు మీ వంతు. ప్యాటర్న్ ట్రైనర్‌లో ప్రాక్టీస్ చేయండి. మధ్యలో ఒక చిన్న క్యాండిల్ ఉన్న మూడు క్యాండిల్స్ కనిపిస్తే, మూడు విషయాలు చూడండి: ముందు ట్రెండ్, స్టార్ సైజు, మూడో క్యాండిల్ ఎంత లోతుగా క్లోజ్ అయిందో."
+      }
+    }
+  }
+}

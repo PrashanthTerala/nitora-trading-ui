@@ -3,6 +3,7 @@ import * as engulfing from './EngulfingCinematic';
 import * as harami from './HaramiCinematic';
 import * as piercing from './PiercingCinematic';
 import * as tweezers from './TweezersCinematic';
+import * as stars from './StarsCinematic';
 import * as crossovers from './MaCrossovers';
 import { duration, FPS } from './kit';
 import { HYBRID_FRAMES, HybridIntro } from './HybridIntro';
@@ -26,6 +27,9 @@ export function RemotionRoot() {
       ))}
       {tweezers.LANGS.map((lang) => (
         <Composition key={`tweezers-cinematic-${lang}`} id={`tweezers-cinematic-${lang}`} component={tweezers.TweezersCinematic} defaultProps={{ lang }} durationInFrames={duration(tweezers.SCENES, tweezers.narration, lang, tweezers.TIMING)} fps={FPS} width={1920} height={1080} />
+      ))}
+      {stars.LANGS.map((lang) => (
+        <Composition key={`stars-cinematic-${lang}`} id={`stars-cinematic-${lang}`} component={stars.StarsCinematic} defaultProps={{ lang }} durationInFrames={duration(stars.SCENES, stars.narration, lang, stars.TIMING)} fps={FPS} width={1920} height={1080} />
       ))}
       {crossovers.LANGS.map((lang) => (
         <Composition key={`ma-crossovers-${lang}`} id={`ma-crossovers-${lang}`} component={crossovers.MaCrossovers} defaultProps={{ lang }} durationInFrames={duration(crossovers.SCENES, crossovers.narration, lang, crossovers.TIMING)} fps={FPS} width={1920} height={1080} />
