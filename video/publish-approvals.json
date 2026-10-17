@@ -1,0 +1,128 @@
+{
+  "m02-candlestick-patterns/06-engulfing": {
+    "en": {
+      "approved": "2026-10-17",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "06-engulfing.en.vtt",
+        "sha256": "481f7353d482e1efc25b9929e02a7a63d92519f5fcc6c0c3aaf0f845600c8c2c"
+      },
+      "video": {
+        "file": "06-engulfing.en.mp4",
+        "sha256": "733cab73411952a609a8ca4274b70c39721c1247a1ceb0bd77a5fa3ea2a980d2"
+      }
+    }
+  },
+  "m02-candlestick-patterns/07-harami-and-harami-cross": {
+    "en": {
+      "approved": "2026-10-17",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "07-harami-and-harami-cross.en.vtt",
+        "sha256": "fd633cb94e1d6ffbfa1a49af0f23199dd0712b1ed380c332d95cdbfb5c517cb0"
+      },
+      "video": {
+        "file": "07-harami-and-harami-cross.en.mp4",
+        "sha256": "7c13e770e0d0c83c3f34302a79453225008bf342a58d0b1073016fb7f260424e"
+      }
+    }
+  },
+  "m02-candlestick-patterns/08-piercing-dark-cloud": {
+    "en": {
+      "approved": "2026-10-17",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "08-piercing-dark-cloud.en.vtt",
+        "sha256": "1dc811e73f7f1163fba180fa8b274f37cb10e9782130baa12056e40590051ece"
+      },
+      "video": {
+        "file": "08-piercing-dark-cloud.en.mp4",
+        "sha256": "bbbfd61337cb6b5c13a434b869c674615f3a1e854a934de79626a586b285e2bd"
+      }
+    }
+  },
+  "m02-candlestick-patterns/09-tweezers-and-counterattack": {
+    "en": {
+      "approved": "2026-10-17",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "09-tweezers-and-counterattack.en.vtt",
+        "sha256": "d1b723c7cf57725a61a2c12f8a630e38190cf44cac6154846f5517ac2adcb2f1"
+      },
+      "video": {
+        "file": "09-tweezers-and-counterattack.en.mp4",
+        "sha256": "bda545b5c79cfbfff78b42d15e23d7a17d8a97749b0b470a26ae1d1a3707d2a9"
+      }
+    }
+  },
+  "m02-candlestick-patterns/10-morning-evening-star": {
+    "en": {
+      "approved": "2026-10-17",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "10-morning-evening-star.en.vtt",
+        "sha256": "fcc68f0689fa5ee8a1097ee7c910ae28e6ad720d9b020e9228e6650a0f207d8a"
+      },
+      "video": {
+        "file": "10-morning-evening-star.en.mp4",
+        "sha256": "57481dfc28a52e15c8ed9e0c65a40dfdf55debaea95a20f4464d81b031484dec"
+      }
+    }
+  },
+  "m02-candlestick-patterns/11-three-soldiers-three-crows": {
+    "en": {
+      "approved": "2026-10-17",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "11-three-soldiers-three-crows.en.vtt",
+        "sha256": "5ed08cc8bb00775b8c77e0b3eb874ece681ae2d05c9874d6156120fb3dd86089"
+      },
+      "video": {
+        "file": "11-three-soldiers-three-crows.en.mp4",
+        "sha256": "a686cbe72c4e7c619939132830ba6d16080d1ca776259d33e7ab5b52395989b6"
+      }
+    }
+  },
+  "m02-candlestick-patterns/12-three-inside-outside": {
+    "en": {
+      "approved": "2026-10-17",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "12-three-inside-outside.en.vtt",
+        "sha256": "f035c7705e72578c6095bf9fc40b6f92d16d6e47c7e4d9e7b2fa03b16cf52ed5"
+      },
+      "video": {
+        "file": "12-three-inside-outside.en.mp4",
+        "sha256": "7bf7287b613d954a715ea39b976bbf963c767a8e042e643fd38570d819fb2316"
+      }
+    }
+  },
+  "m02-candlestick-patterns/13-abandoned-baby-and-stars": {
+    "en": {
+      "approved": "2026-10-17",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "13-abandoned-baby-and-stars.en.vtt",
+        "sha256": "c12284832f95ffdeb3fe87efde98109d8ba3b1222d85e6172cd80d5d9fba1db7"
+      },
+      "video": {
+        "file": "13-abandoned-baby-and-stars.en.mp4",
+        "sha256": "7b13dfc5d9453e6c68ef2e774ff597e36981ab0fb4a0c75ff8608f0c635571e0"
+      }
+    }
+  },
+  "m05-indicators/03-ma-crossovers": {
+    "en": {
+      "approved": "2026-10-17",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "03-ma-crossovers.en.vtt",
+        "sha256": "7ca8a02a1294defaf471c3fd2502ea513890fa7052c1af2fd8761b75cd71f8a4"
+      },
+      "video": {
+        "file": "03-ma-crossovers.en.mp4",
+        "sha256": "a3bd960595b778035dbaf274b0d7a4031980ea0b3f573a6fe8963382d7522eff"
+      }
+    }
+  }
+}
