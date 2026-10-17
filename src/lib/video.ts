@@ -21,6 +21,8 @@ export interface LessonVideoEntry {
   base: string;
   poster: string;
   tracks: VideoTrack[];
+  /** When the set was first published (YYYY-MM-DD). Public entries only; search engines need it. */
+  published?: string;
 }
 
 /** How each language is offered: its own name, in its own script. */
@@ -79,6 +81,34 @@ export function parseVtt(text: string): Cue[] {
 export function formatTime(seconds: number): string {
   const s = Math.max(0, Math.floor(seconds));
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+}
+
+/** Seconds as an ISO 8601 duration, as schema.org wants it: 456.6 -> "PT7M37S". */
+export function isoDuration(seconds: number): string {
+  const s = Math.round(seconds);
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  return `PT${h ? `${h}H` : ''}${m ? `${m}M` : ''}${s % 60 || (!h && !m) ? `${s % 60}S` : ''}`;
+}
+
+/**
+ * schema.org VideoObjects for a lesson's published video, one per language, for the lesson
+ * page's structured data. None for a set with no publication date (a local preview).
+ */
+export function videoObjects(entry: LessonVideoEntry, lesson: { name: string; description: string }) {
+  if (!entry.published) return [];
+  return entry.tracks.map((t) => ({
+    '@type': 'VideoObject',
+    name: t.lang === 'en' ? lesson.name : `${lesson.name} (${LANGUAGE_NAMES[t.lang]?.english ?? t.lang})`,
+    description: lesson.description,
+    thumbnailUrl: [fileUrl(entry, entry.poster)],
+    uploadDate: entry.published,
+    duration: isoDuration(t.duration),
+    contentUrl: fileUrl(entry, t.video),
+    encodingFormat: 'video/mp4',
+    inLanguage: t.lang,
+    isFamilyFriendly: true,
+  }));
 }
 
 /** Where to pick up: a saved position worth resuming (past the opening, short of the end), or 0. */

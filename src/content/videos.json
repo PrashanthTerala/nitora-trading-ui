@@ -27,7 +27,8 @@
         ],
         "credit": "Voice: Piper en_US-ljspeech-high, trained on the LJ Speech dataset (public domain)."
       }
-    ]
+    ],
+    "published": "2026-10-17"
   },
   "m02-candlestick-patterns/07-harami-and-harami-cross": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/07-harami-and-harami-cross",
@@ -58,7 +59,8 @@
         ],
         "credit": "Voice: Piper en_US-ljspeech-high, trained on the LJ Speech dataset (public domain)."
       }
-    ]
+    ],
+    "published": "2026-10-17"
   },
   "m02-candlestick-patterns/08-piercing-dark-cloud": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/08-piercing-dark-cloud",
@@ -88,7 +90,8 @@
         ],
         "credit": "Voice: Piper en_US-ljspeech-high, trained on the LJ Speech dataset (public domain)."
       }
-    ]
+    ],
+    "published": "2026-10-17"
   },
   "m02-candlestick-patterns/09-tweezers-and-counterattack": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/09-tweezers-and-counterattack",
@@ -119,7 +122,8 @@
         ],
         "credit": "Voice: Piper en_US-ljspeech-high, trained on the LJ Speech dataset (public domain)."
       }
-    ]
+    ],
+    "published": "2026-10-17"
   },
   "m02-candlestick-patterns/10-morning-evening-star": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/10-morning-evening-star",
@@ -149,7 +153,8 @@
         ],
         "credit": "Voice: Piper en_US-ljspeech-high, trained on the LJ Speech dataset (public domain)."
       }
-    ]
+    ],
+    "published": "2026-10-17"
   },
   "m02-candlestick-patterns/11-three-soldiers-three-crows": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/11-three-soldiers-three-crows",
@@ -179,7 +184,8 @@
         ],
         "credit": "Voice: Piper en_US-ljspeech-high, trained on the LJ Speech dataset (public domain)."
       }
-    ]
+    ],
+    "published": "2026-10-17"
   },
   "m02-candlestick-patterns/12-three-inside-outside": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/12-three-inside-outside",
@@ -209,7 +215,8 @@
         ],
         "credit": "Voice: Piper en_US-ljspeech-high, trained on the LJ Speech dataset (public domain)."
       }
-    ]
+    ],
+    "published": "2026-10-17"
   },
   "m02-candlestick-patterns/13-abandoned-baby-and-stars": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/13-abandoned-baby-and-stars",
@@ -237,7 +244,8 @@
         ],
         "credit": "Voice: Piper en_US-ljspeech-high, trained on the LJ Speech dataset (public domain)."
       }
-    ]
+    ],
+    "published": "2026-10-17"
   },
   "m05-indicators/03-ma-crossovers": {
     "base": "https://media.nitoratrading.com/m05-indicators/03-ma-crossovers",
@@ -266,6 +274,7 @@
         ],
         "credit": "Voice: Piper en_US-ljspeech-high, trained on the LJ Speech dataset (public domain)."
       }
-    ]
+    ],
+    "published": "2026-10-17"
   }
 }

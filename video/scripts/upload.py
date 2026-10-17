@@ -163,7 +163,8 @@ def write_index(jobs: list[dict]) -> None:
         name = lambda kind, lang=None: next(j["object"].split("/")[-1] for j in js if j["kind"] == kind and j["lang"] == lang)  # noqa: E731
         langs = sorted({j["lang"] for j in js if j["lang"]}, key=lambda l: video_index.ORDER.index(l) if l in video_index.ORDER else 99)
         tracks = [{**t, "video": name("video", t["lang"]), "captions": name("captions", t["lang"])} for t in local["tracks"] if t["lang"] in langs]
-        index[key] = {"base": f"{MEDIA}/{key}", "poster": name("poster"), "tracks": tracks}
+        published = index.get(key, {}).get("published") or dt.date.today().isoformat()
+        index[key] = {"base": f"{MEDIA}/{key}", "poster": name("poster"), "tracks": tracks, "published": published}
     INDEX.write_text(json.dumps(dict(sorted(index.items())), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 

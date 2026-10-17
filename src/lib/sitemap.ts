@@ -18,10 +18,24 @@ export function sitePaths(curriculum: ModuleMeta[], tracks: Track[]): string[] {
 
 const escapeXml = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-export function buildSitemap(origin: string, paths: string[]): string {
+/** A page's video, for the sitemap's video extension (https://developers.google.com/search/docs/crawling-indexing/sitemaps/video-sitemaps). */
+export interface SitemapVideo {
+  thumbnail: string;
+  title: string;
+  description: string;
+  content: string;
+  /** Seconds. */
+  duration: number;
+  /** YYYY-MM-DD. */
+  published: string;
+}
+
+export function buildSitemap(origin: string, paths: string[], videos: Record<string, SitemapVideo[]> = {}): string {
   const base = origin.replace(/\/+$/, '');
-  const urls = paths.map((p) => `  <url><loc>${escapeXml(base + p)}</loc></url>`).join('\n');
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
+  const video = (v: SitemapVideo) =>
+    `\n    <video:video><video:thumbnail_loc>${escapeXml(v.thumbnail)}</video:thumbnail_loc><video:title>${escapeXml(v.title)}</video:title><video:description>${escapeXml(v.description)}</video:description><video:content_loc>${escapeXml(v.content)}</video:content_loc><video:duration>${Math.round(v.duration)}</video:duration><video:publication_date>${escapeXml(v.published)}</video:publication_date><video:family_friendly>yes</video:family_friendly></video:video>`;
+  const urls = paths.map((p) => `  <url><loc>${escapeXml(base + p)}</loc>${(videos[p] ?? []).map(video).join('')}${videos[p]?.length ? '\n  ' : ''}</url>`).join('\n');
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">\n${urls}\n</urlset>\n`;
 }
 
 /** Everything may be crawled except the development pages; the sitemap is named when known. */

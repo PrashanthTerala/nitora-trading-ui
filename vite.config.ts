@@ -7,7 +7,7 @@ import tailwindcss from '@tailwindcss/vite';
 import mdx from '@mdx-js/rollup';
 import remarkGfm from 'remark-gfm';
 import { CURRICULUM, TRACKS } from './src/content/curriculum.ts';
-import { buildRobots, buildSitemap, sitePaths } from './src/lib/sitemap.ts';
+import { buildRobots, buildSitemap, sitePaths, type SitemapVideo } from './src/lib/sitemap.ts';
 import { rehypeHeadingIds } from './src/lib/rehypeHeadingIds.ts';
 import remarkSlides from './tools/remark-slides.mjs';
 
@@ -86,6 +86,27 @@ function contentIndex(): Plugin {
   };
 }
 
+/** The published lesson videos (src/content/videos.json, never the local index), keyed by lesson path, for the sitemap. */
+function sitemapVideos(): Record<string, SitemapVideo[]> {
+  const index = JSON.parse(readFileSync(fileURLToPath(new URL('./src/content/videos.json', import.meta.url)), 'utf8')) as Record<string, import('./src/lib/video.ts').LessonVideoEntry>;
+  const names: Record<string, string> = { te: 'Telugu', hi: 'Hindi', es: 'Spanish' };
+  const out: Record<string, SitemapVideo[]> = {};
+  for (const [key, entry] of Object.entries(index)) {
+    const [moduleId, lessonId] = key.split('/');
+    const lesson = CURRICULUM.find((m) => m.id === moduleId)?.lessons.find((l) => l.id === lessonId);
+    if (!lesson || !entry.published) continue;
+    out[`/learn/${moduleId}/${lessonId}`] = entry.tracks.map((t) => ({
+      thumbnail: `${entry.base}/${entry.poster}`,
+      title: t.lang === 'en' ? lesson.title : `${lesson.title} (${names[t.lang] ?? t.lang})`,
+      description: lesson.summary,
+      content: `${entry.base}/${t.video}`,
+      duration: t.duration,
+      published: entry.published as string,
+    }));
+  }
+  return out;
+}
+
 /**
  * robots.txt always; sitemap.xml and an absolute link-preview image when the build knows the
  * site's public address (SITE_URL), because both need absolute URLs. Both come from the curriculum, so a new lesson
@@ -103,7 +124,7 @@ function seoFiles(): Plugin {
     generateBundle() {
       const origin = process.env.SITE_URL?.trim() || undefined;
       this.emitFile({ type: 'asset', fileName: 'robots.txt', source: buildRobots(origin) });
-      if (origin) this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: buildSitemap(origin, sitePaths(CURRICULUM, TRACKS)) });
+      if (origin) this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: buildSitemap(origin, sitePaths(CURRICULUM, TRACKS), sitemapVideos()) });
       else this.info('SITE_URL is not set, so no sitemap.xml was written (it needs absolute URLs).');
     },
   };

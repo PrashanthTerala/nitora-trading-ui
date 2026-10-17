@@ -12,7 +12,7 @@ import { OnThisPage, ReadingProgressBar, useLessonScroll } from '@/components/le
 import { LessonFooter } from '@/components/lesson/LessonFooter';
 import { LessonVideo, readLang } from '@/components/lesson/LessonVideo';
 import videos from 'virtual:lesson-videos';
-import { formatTime } from '@/lib/video';
+import { formatTime, videoObjects } from '@/lib/video';
 import { useLessonKeys } from '@/components/lesson/useLessonKeys';
 import { LevelBadge } from '@/components/curriculum/ModuleCover';
 import { Chip } from '@/components/ui/Chip';
@@ -172,6 +172,7 @@ export default function LessonPage() {
             url: `${location.origin}${found.lesson.path}`,
             isPartOf: { '@type': 'Course', name: mod.title, url: `${location.origin}/learn/${mod.id}` },
             publisher: publisher(),
+            ...(video?.published && { video: videoObjects(video, { name: found.lesson.title, description: found.lesson.summary }) }),
           },
         }
       : {},

@@ -54,6 +54,22 @@ const tests = {
     assert.equal(V.resumePoint(200, 400), 200);
     assert.equal(V.resumePoint(390, 400), 0);
   },
+  'isoDuration: hours, minutes and seconds': () => {
+    assert.equal(V.isoDuration(456.6), 'PT7M37S');
+    assert.equal(V.isoDuration(3725), 'PT1H2M5S');
+    assert.equal(V.isoDuration(120), 'PT2M');
+    assert.equal(V.isoDuration(0), 'PT0S');
+  },
+  'videoObjects: one per language, only once published': () => {
+    const entry = { base: 'https://media.nitoratrading.com/m/l', poster: 'poster.1.jpg', tracks: [en, te] };
+    assert.deepEqual(V.videoObjects(entry, { name: 'L', description: 'D' }), []);
+    const objs = V.videoObjects({ ...entry, published: '2026-10-17' }, { name: 'L', description: 'D' });
+    assert.equal(objs.length, 2);
+    assert.equal(objs[0].contentUrl, 'https://media.nitoratrading.com/m/l/a.en.mp4');
+    assert.equal(objs[1].name, 'L (Telugu)');
+    assert.equal(objs[0].uploadDate, '2026-10-17');
+    assert.equal(objs[0].duration, 'PT1M40S');
+  },
   'every language has a name in its own script': () => {
     for (const lang of ['en', 'te', 'hi', 'es']) assert.ok(V.LANGUAGE_NAMES[lang]?.native);
   },
@@ -64,6 +80,7 @@ const tests = {
       assert.ok(lessons.has(key), `${key}: not a lesson`);
       assert.ok(entry.base.startsWith(MEDIA), `${key}: base ${entry.base} is not under ${MEDIA}`);
       assert.ok(entry.poster && entry.tracks.length > 0, `${key}: no poster or no languages`);
+      assert.match(entry.published ?? '', /^\d{4}-\d{2}-\d{2}$/, `${key}: no publication date`);
       for (const t of entry.tracks) {
         for (const k of ['lang', 'video', 'captions', 'credit']) assert.ok(t[k], `${key}/${t.lang}: no ${k}`);
         assert.ok(t.duration > 0, `${key}/${t.lang}: no duration`);

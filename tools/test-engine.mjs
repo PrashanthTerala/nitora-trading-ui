@@ -738,6 +738,8 @@ const near = (a, b, eps = 1e-6) => Math.abs(a - b) < eps;
   check('sitemap: no development pages', !paths.some((x) => x.startsWith('/__')));
   const xml = buildSitemap('https://example.org/', ['/', '/learn/a&b']);
   check('sitemap: absolute URLs, one slash, XML-escaped', xml.includes('<loc>https://example.org/</loc>') && xml.includes('<loc>https://example.org/learn/a&amp;b</loc>'));
+  const vx = buildSitemap('https://example.org', ['/learn/a', '/learn/b'], { '/learn/a': [{ thumbnail: 'https://m.example/p.jpg', title: 'A & B', description: 'd', content: 'https://m.example/a.mp4', duration: 456.6, published: '2026-10-17' }] });
+  check('sitemap: video entries on their page, escaped, with the video namespace', vx.includes('xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"') && /<loc>https:\/\/example\.org\/learn\/a<\/loc>\s*<video:video>/.test(vx) && vx.includes('<video:title>A &amp; B</video:title>') && vx.includes('<video:duration>457</video:duration>') && !/learn\/b<\/loc>\s*<video:video>/.test(vx));
   check('robots: names the sitemap only when the site address is known', buildRobots('https://example.org').includes('Sitemap: https://example.org/sitemap.xml') && !buildRobots().includes('Sitemap'));
   check('robots: development pages are disallowed', buildRobots().includes('Disallow: /__'));
 }
