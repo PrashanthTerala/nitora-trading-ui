@@ -1,6 +1,6 @@
 # Step 2: hosting the lesson videos on Cloudflare R2 (for approval)
 
-Decisions so far (2026-10-17): Cloudflare R2, served on a custom domain. The `nitoratrading.com` DNS zone is on Cloudflare. The player goes inline, under the lesson header (option A).
+Decisions so far (2026-10-17): Cloudflare R2, in a bucket of its own, `nitora-trading-media`. (`nitora-media` already serves the stone site.) It is served on a custom domain. The `nitoratrading.com` DNS zone is on Cloudflare. The player goes inline, under the lesson header (option A).
 
 **Nothing in this plan has been done.**
 - The owner does the account steps marked **[owner]**. They need your Cloudflare login, which I never use.
@@ -19,14 +19,15 @@ Decisions so far (2026-10-17): Cloudflare R2, served on a custom domain. The `ni
 
 ## The bucket
 
-1. **[owner] Create the bucket.**
-   - Cloudflare dashboard → R2 → *Create bucket*, named `nitora-media`.
-   - Location: *Automatic*, or the *Asia-Pacific* hint if most viewers are in India.
-   - Storage class: *Standard*.
-2. **[owner] Connect the custom domain.**
-   - Bucket → *Settings* → *Custom Domains* → `media.nitoratrading.com`. Cloudflare creates the DNS record itself.
+1. **Done, 2026-10-17.** The bucket was created with Wrangler on the owner's go-ahead: `wrangler r2 bucket create nitora-trading-media`.
+   - Storage class: Standard.
+   - Location: automatic. Cloudflare placed it in ENAM (Eastern North America). Viewers elsewhere are served from Cloudflare's cache near them once the custom domain is on.
+2. **Connect the custom domain.** Either in the dashboard (bucket → *Settings* → *Custom Domains* → `media.nitoratrading.com`), or with Wrangler on the owner's approval:
+   - `wrangler r2 bucket domain add nitora-trading-media --domain media.nitoratrading.com --zone-id <zone id>`.
+   - The zone ID is on the `nitoratrading.com` overview page. It is not a secret.
+   - Either way, Cloudflare creates the DNS record itself.
    - Leave the `r2.dev` public URL **disabled**. It's rate-limited and meant for testing.
-3. **[owner] Set CORS.** Paste this under bucket → *Settings* → *CORS policy*:
+3. **Set CORS.** Either in the dashboard (bucket → *Settings* → *CORS policy*), or with Wrangler on the owner's approval: `wrangler r2 bucket cors set nitora-trading-media --file cors.json`. The policy:
 
    ```json
    [
@@ -41,11 +42,7 @@ Decisions so far (2026-10-17): Cloudflare R2, served on a custom domain. The `ni
    ```
 
    `<track>` captions are fetched with CORS, so without this they fail silently. The localhost origins are only for local preview builds.
-4. **[owner] Create an API token.**
-   - R2 → *Manage API tokens* → *Create token*.
-   - Permission: *Object Read & Write*, **for this bucket only**.
-   - Set it in your environment as three variables: `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID` and `R2_SECRET_ACCESS_KEY` (Windows: System → Environment Variables).
-   - Don't paste them into chat, and don't put them in a file in the repo. The upload tool reads them from the environment and never prints them.
+4. **No API token needed.** The upload tool uses Wrangler under the owner's existing sign-in: `wrangler r2 object put --remote`, with `--content-type` and `--cache-control`. Wrangler takes files up to 300 MB; ours are 100 MB or less. So no access key is created, stored or handled.
 
 ## Headers on every object (set by the upload tool)
 
@@ -68,12 +65,11 @@ Cloudflare's edge caches these files on the custom domain. All of ours are well 
 - **Dry run by default.** It prints every file it would upload, with its size, SHA-256, target path and headers. `--apply` uploads.
 - **Verifies after upload.** It checks each object's size and checksum, then fetches one MP4 with a `Range` header from `media.nitoratrading.com` and expects `206`.
 - **Writes the index.** It writes `src/content/videos.json`: lesson → version, languages, durations and file names. The site builds from that, so a lesson shows a player only when its video is really online.
-- **Credentials.** It uses the S3-compatible API (`boto3`, a local dev dependency only) with the three environment variables. They never appear in output or logs.
+- **Credentials.** It runs Wrangler, signed in as the owner, and touches no keys itself. It checks each upload against the file's MD5, which is the ETag R2 returns for a single-part upload, with a `HEAD` on the custom domain.
 
 ## What I need from you
 
-1. Approve this plan. You can change the bucket name or the domain.
-2. Do steps 1–4 above whenever convenient, and tell me when they're done. Don't send the credentials.
-3. Tell me which sets are approved for publication, per language. Every one still needs your review, and the Telugu, Hindi and Spanish also need a native speaker's.
+1. **The custom domain and CORS (steps 2 and 3).** Approve me running the two Wrangler commands and give me the `nitoratrading.com` zone ID, or do both in the dashboard.
+2. **Which sets are approved for publication, per language.** Every one still needs your review, and the Telugu, Hindi and Spanish also need a native speaker's.
 
-Meanwhile I can build the player (step 4 of the prompt) against the local files, with no account needed.
+The player is already built and tested against the local files (commits `8b3e19f` and `01a21fa`).
