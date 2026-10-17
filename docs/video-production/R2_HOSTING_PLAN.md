@@ -22,12 +22,11 @@ Decisions so far (2026-10-17): Cloudflare R2, in a bucket of its own, `nitora-tr
 1. **Done, 2026-10-17.** The bucket was created with Wrangler on the owner's go-ahead: `wrangler r2 bucket create nitora-trading-media`.
    - Storage class: Standard.
    - Location: automatic. Cloudflare placed it in ENAM (Eastern North America). Viewers elsewhere are served from Cloudflare's cache near them once the custom domain is on.
-2. **Connect the custom domain.** Either in the dashboard (bucket → *Settings* → *Custom Domains* → `media.nitoratrading.com`), or with Wrangler on the owner's approval:
-   - `wrangler r2 bucket domain add nitora-trading-media --domain media.nitoratrading.com --zone-id <zone id>`.
-   - The zone ID is on the `nitoratrading.com` overview page. It is not a secret.
-   - Either way, Cloudflare creates the DNS record itself.
-   - Leave the `r2.dev` public URL **disabled**. It's rate-limited and meant for testing.
-3. **Set CORS.** Either in the dashboard (bucket → *Settings* → *CORS policy*), or with Wrangler on the owner's approval: `wrangler r2 bucket cors set nitora-trading-media --file cors.json`. The policy:
+2. **Done, 2026-10-17.** The custom domain was connected with Wrangler on the owner's approval: `wrangler r2 bucket domain add nitora-trading-media --domain media.nitoratrading.com --zone-id <nitoratrading.com zone> --min-tls 1.2`.
+   - Cloudflare created the DNS record and certificate.
+   - `media.nitorastone.com` → `nitora-media` is unchanged.
+   - The `r2.dev` URL stays disabled.
+3. **Done, 2026-10-17.** CORS was set with `wrangler r2 bucket cors set nitora-trading-media --file video/r2-cors.json` (the same rule, in Wrangler's format):
 
    ```json
    [
@@ -69,7 +68,4 @@ Cloudflare's edge caches these files on the custom domain. All of ours are well 
 
 ## What I need from you
 
-1. **The custom domain and CORS (steps 2 and 3).** Approve me running the two Wrangler commands and give me the `nitoratrading.com` zone ID, or do both in the dashboard.
-2. **Which sets are approved for publication, per language.** Every one still needs your review, and the Telugu, Hindi and Spanish also need a native speaker's.
-
-The player is already built and tested against the local files (commits `8b3e19f` and `01a21fa`).
+**Which sets are approved for publication, per language.** Every one still needs your review, and the Telugu, Hindi and Spanish also need a native speaker's. The bucket, domain and CORS are ready, and the player is built (commits `8b3e19f` and `01a21fa`).
