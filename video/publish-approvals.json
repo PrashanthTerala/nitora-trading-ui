@@ -12,6 +12,32 @@
         "sha256": "733cab73411952a609a8ca4274b70c39721c1247a1ceb0bd77a5fa3ea2a980d2"
       }
     },
+    "es": {
+      "approved": "2026-10-17",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "06-engulfing.es.vtt",
+        "sha256": "fb14a035d21fd88a49da52a7430428982831c35cd281d119902cca404a4b7795"
+      },
+      "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
+      "video": {
+        "file": "06-engulfing.es.mp4",
+        "sha256": "fae7ac629a0451b5ab7d416bd7e1d0e140dac860baf82e841dd8d5885002ab16"
+      }
+    },
+    "hi": {
+      "approved": "2026-10-17",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "06-engulfing.hi.vtt",
+        "sha256": "c12e6f8752f24765482de37e5f7c5bf0d361298c9e4e786f2701a19fa3941e56"
+      },
+      "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
+      "video": {
+        "file": "06-engulfing.hi.mp4",
+        "sha256": "50dcee23f965da10262da0cbbdaed6899ae6e4bbd2dea05b11ebdf386e8adc3c"
+      }
+    },
     "te": {
       "approved": "2026-10-17",
       "by": "owner, in chat",
@@ -226,6 +252,32 @@
       "video": {
         "file": "03-ma-crossovers.en.mp4",
         "sha256": "a3bd960595b778035dbaf274b0d7a4031980ea0b3f573a6fe8963382d7522eff"
+      }
+    },
+    "es": {
+      "approved": "2026-10-17",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "03-ma-crossovers.es.vtt",
+        "sha256": "cbb27ad4870a5bdc72240581b16287c283e1db26771398d5bb592d7953eb9a94"
+      },
+      "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
+      "video": {
+        "file": "03-ma-crossovers.es.mp4",
+        "sha256": "c541f15b6df6680fbfda5b32d9c42d83881112f6e4aad6dcbc72e19aba79a3e0"
+      }
+    },
+    "hi": {
+      "approved": "2026-10-17",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "03-ma-crossovers.hi.vtt",
+        "sha256": "ca6594a804829d76635cfa74a6ee10944c95d964802131ce6a3addf178a503e1"
+      },
+      "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
+      "video": {
+        "file": "03-ma-crossovers.hi.mp4",
+        "sha256": "ad8c5d58f9f070cc2f4a2b7fc52e7c0a36945f08ad738460f60edbaad5aac553"
       }
     },
     "te": {

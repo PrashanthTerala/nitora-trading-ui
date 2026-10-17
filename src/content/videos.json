@@ -50,6 +50,54 @@
           470.87
         ],
         "credit": "Voice: Google Cloud Text-to-Speech (te-IN-Chirp3-HD-Achird)."
+      },
+      {
+        "lang": "hi",
+        "video": "06-engulfing.hi.50dcee23.mp4",
+        "captions": "06-engulfing.hi.c12e6f87.vtt",
+        "duration": 360.7,
+        "scenes": [
+          0.0,
+          5.57,
+          38.43,
+          66.87,
+          97.53,
+          114.97,
+          137.53,
+          160.47,
+          186.47,
+          213.87,
+          246.9,
+          271.1,
+          302.9,
+          327.73,
+          350.7
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech (hi-IN-Chirp3-HD-Achird)."
+      },
+      {
+        "lang": "es",
+        "video": "06-engulfing.es.fae7ac62.mp4",
+        "captions": "06-engulfing.es.fb14a035.vtt",
+        "duration": 408.7,
+        "scenes": [
+          0.0,
+          6.4,
+          41.37,
+          73.77,
+          105.53,
+          124.5,
+          149.27,
+          175.43,
+          205.33,
+          237.27,
+          275.4,
+          303.5,
+          343.33,
+          371.47,
+          397.37
+        ],
+        "credit": "Voice: Piper es_MX-ald-medium, trained on the Ald Mexican Spanish dataset (Unlicense), fine-tuned from es_ES-davefx (CC0)."
       }
     ],
     "published": "2026-10-17"
@@ -488,6 +536,52 @@
           499.97
         ],
         "credit": "Voice: Google Cloud Text-to-Speech (te-IN-Chirp3-HD-Achird)."
+      },
+      {
+        "lang": "hi",
+        "video": "03-ma-crossovers.hi.ad8c5d58.mp4",
+        "captions": "03-ma-crossovers.hi.ca6594a8.vtt",
+        "duration": 367.6,
+        "scenes": [
+          0.0,
+          7.0,
+          56.67,
+          86.2,
+          120.63,
+          150.7,
+          173.1,
+          201.8,
+          220.9,
+          250.93,
+          286.27,
+          309.5,
+          336.33,
+          359.7
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech (hi-IN-Chirp3-HD-Achird)."
+      },
+      {
+        "lang": "es",
+        "video": "03-ma-crossovers.es.c541f15b.mp4",
+        "captions": "03-ma-crossovers.es.cbb27ad4.vtt",
+        "duration": 410.28,
+        "scenes": [
+          0.0,
+          7.0,
+          57.77,
+          90.77,
+          132.3,
+          168.77,
+          193.6,
+          225.07,
+          249.57,
+          281.73,
+          323.23,
+          348.67,
+          376.0,
+          402.4
+        ],
+        "credit": "Voice: Piper es_MX-ald-medium, trained on the Ald Mexican Spanish dataset (Unlicense), fine-tuned from es_ES-davefx (CC0)."
       }
     ],
     "published": "2026-10-17"
