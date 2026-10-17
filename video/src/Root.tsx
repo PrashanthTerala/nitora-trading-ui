@@ -6,6 +6,7 @@ import * as tweezers from './TweezersCinematic';
 import * as stars from './StarsCinematic';
 import * as soldiers from './SoldiersCinematic';
 import * as insideout from './InsideOutCinematic';
+import * as gapped from './GappedCinematic';
 import * as crossovers from './MaCrossovers';
 import { duration, FPS } from './kit';
 import { HYBRID_FRAMES, HybridIntro } from './HybridIntro';
@@ -29,6 +30,9 @@ export function RemotionRoot() {
       ))}
       {tweezers.LANGS.map((lang) => (
         <Composition key={`tweezers-cinematic-${lang}`} id={`tweezers-cinematic-${lang}`} component={tweezers.TweezersCinematic} defaultProps={{ lang }} durationInFrames={duration(tweezers.SCENES, tweezers.narration, lang, tweezers.TIMING)} fps={FPS} width={1920} height={1080} />
+      ))}
+      {gapped.LANGS.map((lang) => (
+        <Composition key={`gapped-cinematic-${lang}`} id={`gapped-cinematic-${lang}`} component={gapped.GappedCinematic} defaultProps={{ lang }} durationInFrames={duration(gapped.SCENES, gapped.narration, lang, gapped.TIMING)} fps={FPS} width={1920} height={1080} />
       ))}
       {insideout.LANGS.map((lang) => (
         <Composition key={`insideout-cinematic-${lang}`} id={`insideout-cinematic-${lang}`} component={insideout.InsideOutCinematic} defaultProps={{ lang }} durationInFrames={duration(insideout.SCENES, insideout.narration, lang, insideout.TIMING)} fps={FPS} width={1920} height={1080} />

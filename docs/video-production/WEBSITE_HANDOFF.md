@@ -30,6 +30,7 @@ Both are the cinematic (V3) cut. All files passed `qa.py` and are at −16 LUFS.
 | m02 · 10 Morning star and evening star | `video/out/publish/m02-candlestick-patterns/10-morning-evening-star/v3/` | 6:36 | 8:20 | — | — | 95 MB |
 | m02 · 11 Three white soldiers and three black crows | `video/out/publish/m02-candlestick-patterns/11-three-soldiers-three-crows/v3/` | 7:37 | 9:18 | — | — | 232 MB |
 | m02 · 12 Three inside and three outside | `video/out/publish/m02-candlestick-patterns/12-three-inside-outside/v3/` | 7:44 | 9:25 | — | — | 239 MB |
+| m02 · 13 The abandoned baby and doji stars | `video/out/publish/m02-candlestick-patterns/13-abandoned-baby-and-stars/v3/` | 6:43 | 8:00 | — | — | 207 MB |
 
 New lessons are made in English and Telugu only, until the owner revisits the other languages after these videos are on the site.
 

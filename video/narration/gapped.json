@@ -1,0 +1,182 @@
+{
+  "lesson": "m02-candlestick-patterns/13-abandoned-baby-and-stars",
+  "version": 2,
+  "source": {
+    "file": "src/content/modules/m02-candlestick-patterns/13-abandoned-baby-and-stars.mdx",
+    "sha256": "8886e2fd07d718900fbfd65ff8578b870610dfc1ab63b43d08062f8f718f9b2f"
+  },
+  "timing": {
+    "lead": 0.5,
+    "tail": 0.9
+  },
+  "note": "v2 (studio look): script approved 2026-10-17 (docs/video-production/scripts/gapped-stars-en-v2.md). English and Telugu only, by the owner's decision. Each scene names the lesson lines it says; 'computed' numbers are checked against src/gapped/data.ts by scripts/check.mjs; 'pre' is the quiet brand opening or chapter card before a scene. Reliability figures and counts are Bulkowski's (thepatternsite.com, read 2026-10-17), as the corrected lesson states. <mark name> sets a timing marker; <pause s> inserts silence.",
+  "scenes": {
+    "title": {
+      "base": 6,
+      "lines": "curriculum.ts: m02-candlestick-patterns / 13-abandoned-baby-and-stars",
+      "pre": 1.8
+    },
+    "intro": {
+      "base": 28,
+      "lines": "1-5",
+      "marks": [
+        "stars",
+        "names",
+        "rare"
+      ],
+      "computed": {
+        "CANDLES_MILLIONS": 4.7,
+        "BABY_SAMPLES": 293
+      }
+    },
+    "dojistar": {
+      "base": 32,
+      "lines": "7-18",
+      "marks": [
+        "rules",
+        "stall",
+        "tested",
+        "mirror"
+      ],
+      "pre": 0.9
+    },
+    "ice": {
+      "base": 14,
+      "lines": "20-24"
+    },
+    "baby": {
+      "base": 26,
+      "lines": "26-37",
+      "marks": [
+        "gaps",
+        "third",
+        "bearish"
+      ],
+      "computed": {
+        "BABY_HIGH": 98.26,
+        "FIRST_LOW": 98.96
+      },
+      "pre": 0.9
+    },
+    "psychology": {
+      "base": 22,
+      "lines": "39-43",
+      "marks": [
+        "panic",
+        "nothing",
+        "jump",
+        "trapped"
+      ]
+    },
+    "valid": {
+      "base": 24,
+      "lines": "45-51",
+      "marks": [
+        "gaps",
+        "daily",
+        "level"
+      ],
+      "pre": 0.9
+    },
+    "trade": {
+      "base": 26,
+      "lines": "53-59",
+      "marks": [
+        "entry",
+        "stop",
+        "bear"
+      ],
+      "computed": {
+        "ENTRY": 103.46,
+        "STOP": 96.86,
+        "RISK": 6.6
+      },
+      "pre": 0.9
+    },
+    "gapfill": {
+      "base": 16,
+      "lines": "61-65"
+    },
+    "reliability": {
+      "base": 26,
+      "lines": "67-71",
+      "marks": [
+        "baby",
+        "caveats"
+      ],
+      "computed": {
+        "MORNING_DOJI": 76,
+        "EVENING_DOJI": 71,
+        "BABY_BULL": 70,
+        "BABY_BEAR": 69
+      },
+      "pre": 0.9
+    },
+    "takeaways": {
+      "base": 22,
+      "lines": "73-80"
+    },
+    "quiz": {
+      "base": 16,
+      "lines": "86",
+      "marks": [
+        "think",
+        "reveal"
+      ]
+    },
+    "end": {
+      "base": 12,
+      "lines": "90"
+    }
+  },
+  "languages": {
+    "en": {
+      "voice": "en_US-ljspeech-high",
+      "lengthScale": 1.12,
+      "sentenceGap": {
+        ".": 0.35,
+        "?": 0.45,
+        "!": 0.4
+      },
+      "scenes": {
+        "title": "The abandoned baby and the doji stars. Module two, lesson thirteen.",
+        "intro": "Sometimes the market does not just pause; it jumps. Price closes at one level, and the next session opens somewhere else, leaving an empty space on the chart: a gap. <mark stars> When gaps surround the middle candle of a star, the pattern becomes something rarer. <mark names> The morning and evening doji stars, where the middle candle is a doji. And the abandoned baby, where the doji is cut off by a gap on both sides. <mark rare> They are rare: in four point seven million daily candles, Bulkowski found just two hundred and ninety-three bullish abandoned babies. So their statistics are encouraging, not proven.",
+        "dojistar": "The morning doji star. <mark rules> After a downtrend, a large red candle. Then a doji, a session that opens and closes at the same price, sitting below candle one's body, classically after a gap down. Then a large green candle closing past the middle of candle one's body. <mark stall> A spinning top in the middle says the sellers could not press their advantage. A doji says they could not move price at all. In theory, a deeper stall makes a stronger pattern. <mark tested> In Bulkowski's tests, though, the doji versions did about as well as the plain stars, not better. <mark mirror> The evening doji star is the mirror: a big green candle, a doji perched above it, then a big red candle closing deep into the green body.",
+        "ice": "Think of a car sliding on ice toward a wall. A morning star is the car slowing right down, then driving away. A morning doji star is the car coming to a dead stop, not even rolling, then driving away. The dead stop is more convincing.",
+        "baby": "The abandoned baby adds one demanding condition: the doji must be gapped away from both neighbours, wicks included. <mark gaps> Here the doji's high, ninety-eight point two six, sits below the first candle's low, ninety-eight point nine six, and below the third candle's low. Nothing touches the baby. <mark third> Then candle three, a large candle in the reversal direction, closes well into candle one's body. <mark bearish> The bearish version is the mirror: an isolated doji at the top of a rise, with a gap on each side, then a big red candle.",
+        "psychology": "<mark panic> The gap down into the doji is panic: sellers were so eager that the open jumped below yesterday's entire range. <mark nothing> Then, on the doji, nothing. All that eagerness produced no further movement. <mark jump> Then the market gaps back up, above the doji's entire range. <mark trapped> Anyone who sold at the doji's price is now stranded below a gap, losing money, with no way out at the same price. A trapped crowd, and trapped crowds fuel reversals.",
+        "valid": "These are reversal patterns, and they need a prior trend. <mark gaps> They need gaps, too, and gaps come from markets that close overnight: stocks, and index futures in cash hours. On a twenty-four-hour chart, like forex or crypto, a true abandoned baby is nearly impossible. <mark daily> They mean more on daily and weekly charts. <mark level> And a gapped star at support or resistance is a rare and striking sight. When you see one, it deserves your full attention.",
+        "trade": "The third candle is the built-in confirmation. <mark entry> Enter at its close: here, one hundred and three point four six. Waiting for a fourth candle on a pattern this strong often means missing the move. <mark stop> Put the stop just under the doji's low, ninety-six point eight six: about six point six of risk. That is the level the market abandoned. If price comes back to it, the abandonment was false. <mark bear> The bearish version: short at the third close, stop above the doji's high.",
+        "gapfill": "Gaps that fill are not gaps that held. If, on the third candle or the next, price trades back into the doji's range, the gap has filled, and the pattern has failed, even if the candles still look right. Do not hold a loser because the shape was textbook. The stop under the doji's low is there for exactly this.",
+        "reliability": "In Bulkowski's tests, the morning doji star reversed about seventy-six percent of the time, and the evening doji star about seventy-one: close to the plain stars. <mark baby> The bullish abandoned baby, about seventy; the bearish, about sixty-nine. Good numbers for candlesticks. <mark caveats> Two heavy caveats. They are rare, so the samples are small, and small samples wobble. And because they need gaps, they are stock-market patterns: do not carry the numbers over to forex or crypto.",
+        "takeaways": "To recap. A doji star is a star whose middle candle is a doji: a total stall, stronger in theory, about as reliable in the tests. An abandoned baby is a doji gapped away from both neighbours. The gaps show panic, then nothing, then a jump back, stranding anyone who traded the doji. They need overnight gaps, so they belong to stocks and indexes. Enter at the third close, stop just beyond the doji, and a filled gap means the pattern has failed.",
+        "quiz": "Quick check. You go long on a bullish abandoned baby. On the next candle, price trades back into the doji's range. What does that mean? The pattern is stronger? Or the gap has filled, and the pattern has failed? <mark think> Take a second to think. <pause 2.5> <mark reveal> The gap has filled, and the pattern has failed. The stop should be doing its job.",
+        "end": "Now practise in the pattern trainer. Whenever you see a doji in the middle of three candles, check for gaps on either side. If both are there, you have found the rarest pattern in the module."
+      }
+    },
+    "te": {
+      "provider": "google",
+      "voice": "te-IN-Chirp3-HD-Achird",
+      "languageCode": "te-IN",
+      "flow": true,
+      "commaPause": "[pause short]",
+      "speakingRate": 0.92,
+      "note": "Friendly spoken Telugu; 'doji' kept as డోజీ, 'abandoned baby' as అబాండన్డ్ బేబీ; 4.7 million said as నలభై ఏడు లక్షల. Needs a native speaker's review.",
+      "scenes": {
+        "title": "హాయ్! ఈరోజు మనం అబాండన్డ్ బేబీ, డోజీ స్టార్స్ గురించి మాట్లాడుకుందాం. మాడ్యూల్ రెండు. పాఠం పదమూడు.",
+        "intro": "కొన్నిసార్లు మార్కెట్ కేవలం ఆగదు, అది దూకుతుంది. ధర ఒక స్థాయి దగ్గర క్లోజ్ అవుతుంది, తర్వాతి సెషన్ ఇంకెక్కడో ఓపెన్ అవుతుంది. చార్ట్ మీద ఒక ఖాళీ స్థలం మిగులుతుంది: అదే గ్యాప్. <mark stars> ఒక స్టార్ మధ్య క్యాండిల్ చుట్టూ గ్యాప్స్ ఉంటే, ప్యాటర్న్ ఇంకా అరుదైనదిగా మారుతుంది. <mark names> మార్నింగ్, ఈవెనింగ్ డోజీ స్టార్స్, వీటిలో మధ్య క్యాండిల్ ఒక డోజీ. ఇంకా అబాండన్డ్ బేబీ, ఇందులో డోజీ రెండు వైపులా గ్యాప్‌తో విడిపోయి ఉంటుంది. <mark rare> ఇవి అరుదు: నలభై ఏడు లక్షల రోజువారీ క్యాండిల్స్‌లో, బుల్కోవ్‌స్కీకి కేవలం రెండు వందల తొంభై మూడు బుల్లిష్ అబాండన్డ్ బేబీలు మాత్రమే దొరికాయి. కాబట్టి వీటి గణాంకాలు ప్రోత్సాహకరం, కానీ నిరూపితం కాదు.",
+        "dojistar": "మార్నింగ్ డోజీ స్టార్. <mark rules> ఒక డౌన్‌ట్రెండ్ తర్వాత, ఒక పెద్ద ఎరుపు క్యాండిల్. తర్వాత ఒక డోజీ, అంటే ఒకే ధర దగ్గర ఓపెన్ అయి క్లోజ్ అయ్యే సెషన్, మొదటి క్యాండిల్ బాడీ కంటే కింద, సాధారణంగా ఒక గ్యాప్ డౌన్ తర్వాత. తర్వాత, మొదటి క్యాండిల్ బాడీ మధ్య భాగం దాటి క్లోజ్ అయ్యే ఒక పెద్ద ఆకుపచ్చ క్యాండిల్. <mark stall> మధ్యలో స్పిన్నింగ్ టాప్ ఉంటే, అమ్మకందారులు తమ ఆధిక్యాన్ని ఉపయోగించుకోలేకపోయారని అర్థం. డోజీ ఉంటే, వాళ్ళు ధరని అసలు కదపలేకపోయారని అర్థం. సిద్ధాంతంలో, లోతైన ఆగిపోవడం బలమైన ప్యాటర్న్‌ని చేస్తుంది. <mark tested> కానీ బుల్కోవ్‌స్కీ టెస్టుల్లో, డోజీ రూపాలు మామూలు స్టార్స్ అంతే బాగా చేశాయి, ఎక్కువ కాదు. <mark mirror> ఈవెనింగ్ డోజీ స్టార్ దీనికి అద్దం: ఒక పెద్ద ఆకుపచ్చ క్యాండిల్, దాని పైన కూర్చున్న ఒక డోజీ, తర్వాత ఆకుపచ్చ బాడీలోకి లోతుగా క్లోజ్ అయ్యే ఒక పెద్ద ఎరుపు క్యాండిల్.",
+        "ice": "మంచు మీద జారుతూ గోడ వైపు వెళ్తున్న ఒక కారుని ఊహించండి. మార్నింగ్ స్టార్ అంటే, కారు బాగా నెమ్మదించి, తర్వాత వెనక్కి వెళ్ళిపోవడం. మార్నింగ్ డోజీ స్టార్ అంటే, కారు పూర్తిగా ఆగిపోవడం, అసలు కదలకుండా, తర్వాత వెళ్ళిపోవడం. పూర్తిగా ఆగడం ఇంకా నమ్మకం కలిగిస్తుంది.",
+        "baby": "అబాండన్డ్ బేబీ ఒక కఠినమైన షరతుని జోడిస్తుంది: డోజీ, విక్స్‌తో సహా, రెండు పక్క క్యాండిల్స్ నుంచీ గ్యాప్‌తో దూరంగా ఉండాలి. <mark gaps> ఇక్కడ డోజీ హై, తొంభై ఎనిమిది పాయింట్ రెండు ఆరు, మొదటి క్యాండిల్ లో అయిన తొంభై ఎనిమిది పాయింట్ తొమ్మిది ఆరు కంటే కింద ఉంది, మూడో క్యాండిల్ లో కంటే కూడా కింద. బేబీని ఏదీ తాకదు. <mark third> తర్వాత మూడో క్యాండిల్, రివర్సల్ దిశలో ఒక పెద్ద క్యాండిల్, మొదటి క్యాండిల్ బాడీలోకి బాగా క్లోజ్ అవుతుంది. <mark bearish> బేరిష్ రూపం దీనికి అద్దం: ఒక పెరుగుదల పైభాగంలో, రెండు వైపులా గ్యాప్‌తో ఒంటరిగా ఉన్న డోజీ, తర్వాత ఒక పెద్ద ఎరుపు క్యాండిల్.",
+        "psychology": "<mark panic> డోజీలోకి వచ్చే గ్యాప్ డౌన్ అంటే భయం: అమ్మకందారులు ఎంత ఆత్రంగా ఉన్నారంటే, ఓపెన్ నిన్నటి మొత్తం రేంజ్ కంటే కిందకి దూకింది. <mark nothing> తర్వాత, డోజీ మీద, ఏమీ లేదు. ఆ ఆత్రం అంతా, ఇంకే కదలికనీ తీసుకురాలేదు. <mark jump> తర్వాత మార్కెట్, డోజీ మొత్తం రేంజ్ కంటే పైకి, గ్యాప్ అప్‌తో తిరిగి వస్తుంది. <mark trapped> డోజీ ధర దగ్గర అమ్మిన ప్రతి ఒక్కరూ, ఇప్పుడు ఒక గ్యాప్ కింద ఇరుక్కుపోయారు, నష్టంలో ఉన్నారు, అదే ధరకి బయటపడే దారి లేదు. ఇరుక్కుపోయిన గుంపు, ఇరుక్కుపోయిన గుంపులే రివర్సల్స్‌కి ఇంధనం.",
+        "valid": "ఇవి రివర్సల్ ప్యాటర్న్స్, వీటికి ముందు ఒక ట్రెండ్ కావాలి. <mark gaps> వీటికి గ్యాప్స్ కూడా కావాలి. గ్యాప్స్ రాత్రి మూసివేసే మార్కెట్ల నుంచి వస్తాయి: స్టాక్స్, ఇంకా క్యాష్ గంటల్లో ఇండెక్స్ ఫ్యూచర్స్. ఫారెక్స్, క్రిప్టో లాంటి ఇరవై నాలుగు గంటల చార్ట్ మీద, నిజమైన అబాండన్డ్ బేబీ దాదాపు అసాధ్యం. <mark daily> డైలీ, వీక్లీ చార్ట్‌ల మీద వీటికి ఎక్కువ అర్థం ఉంటుంది. <mark level> ఇంకా, సపోర్ట్ లేదా రెసిస్టెన్స్ దగ్గర గ్యాప్ ఉన్న స్టార్, అరుదైన, ఆకట్టుకునే దృశ్యం. అది కనిపిస్తే, దానికి మీ పూర్తి శ్రద్ధ ఇవ్వండి.",
+        "trade": "మూడో క్యాండిలే అంతర్నిర్మిత కన్ఫర్మేషన్. <mark entry> దాని క్లోజ్ దగ్గర ఎంటర్ అవ్వండి: ఇక్కడ, నూట మూడు పాయింట్ నాలుగు ఆరు. ఇంత బలమైన ప్యాటర్న్ మీద నాలుగో క్యాండిల్ కోసం వేచి ఉంటే, తరచుగా కదలిక మిస్ అవుతుంది. <mark stop> స్టాప్‌ని డోజీ లో కంటే కొంచెం కింద పెట్టండి, తొంభై ఆరు పాయింట్ ఎనిమిది ఆరు: దాదాపు ఆరు పాయింట్ ఆరు రిస్క్. మార్కెట్ వదిలేసిన స్థాయి అదే. ధర దాని దగ్గరికి తిరిగి వస్తే, వదిలేయడం నిజం కాదు. <mark bear> బేరిష్ రూపం: మూడో క్లోజ్ దగ్గర షార్ట్, స్టాప్ డోజీ హై కంటే పైన.",
+        "gapfill": "నిండిపోయిన గ్యాప్స్, నిలిచిన గ్యాప్స్ కావు. మూడో క్యాండిల్ మీద గానీ, తర్వాతి దాని మీద గానీ, ధర డోజీ రేంజ్‌లోకి తిరిగి వస్తే, గ్యాప్ నిండిపోయింది, క్యాండిల్స్ ఇంకా సరిగ్గా కనిపించినా, ప్యాటర్న్ విఫలమైంది. ఆకారం పాఠ్యపుస్తకంలా ఉందని, నష్టపోతున్న పొజిషన్‌ని పట్టుకుని ఉండకండి. డోజీ లో కింద ఉన్న స్టాప్, సరిగ్గా దీని కోసమే.",
+        "reliability": "బుల్కోవ్‌స్కీ టెస్టుల్లో, మార్నింగ్ డోజీ స్టార్ దాదాపు డెబ్భై ఆరు శాతం సార్లు తిరిగింది, ఈవెనింగ్ డోజీ స్టార్ దాదాపు డెబ్భై ఒకటి: మామూలు స్టార్స్‌కి దగ్గరగా. <mark baby> బుల్లిష్ అబాండన్డ్ బేబీ, దాదాపు డెబ్భై. బేరిష్, దాదాపు అరవై తొమ్మిది. క్యాండిల్‌స్టిక్స్‌కి ఇవి మంచి నంబర్లు. <mark caveats> రెండు పెద్ద హెచ్చరికలు. ఇవి అరుదు, కాబట్టి శాంపిల్స్ చిన్నవి, చిన్న శాంపిల్స్ ఊగిసలాడతాయి. ఇంకా, వీటికి గ్యాప్స్ కావాలి కాబట్టి, ఇవి స్టాక్ మార్కెట్ ప్యాటర్న్స్: ఈ నంబర్లని ఫారెక్స్ లేదా క్రిప్టోకి తీసుకెళ్ళకండి.",
+        "takeaways": "సంక్షిప్తంగా. డోజీ స్టార్ అంటే మధ్య క్యాండిల్ డోజీ అయిన స్టార్: పూర్తిగా ఆగిపోవడం, సిద్ధాంతంలో బలమైనది, టెస్టుల్లో దాదాపు అంతే నమ్మదగినది. అబాండన్డ్ బేబీ అంటే, రెండు పక్క క్యాండిల్స్ నుంచీ గ్యాప్‌తో దూరంగా ఉన్న డోజీ. గ్యాప్స్ చూపించేది: భయం, తర్వాత ఏమీ లేదు, తర్వాత వెనక్కి దూకడం, డోజీ దగ్గర ట్రేడ్ చేసినవాళ్ళని ఇరికించడం. వీటికి రాత్రి గ్యాప్స్ కావాలి, కాబట్టి ఇవి స్టాక్స్, ఇండెక్స్‌లకు చెందినవి. మూడో క్లోజ్ దగ్గర ఎంటర్ అవ్వండి, స్టాప్ డోజీ అవతల, ఇంకా నిండిన గ్యాప్ అంటే ప్యాటర్న్ విఫలమైంది.",
+        "quiz": "ఒక చిన్న టెస్ట్. మీరు ఒక బుల్లిష్ అబాండన్డ్ బేబీ మీద లాంగ్ ఎంటర్ అయ్యారు. తర్వాతి క్యాండిల్ మీద, ధర డోజీ రేంజ్‌లోకి తిరిగి వస్తుంది. దాని అర్థం ఏమిటి? ప్యాటర్న్ ఇంకా బలంగా ఉందా? లేక గ్యాప్ నిండిపోయింది, ప్యాటర్న్ విఫలమైందా? <mark think> ఒక్క సెకను ఆలోచించండి. <pause 2.5> <mark reveal> జవాబు: గ్యాప్ నిండిపోయింది, ప్యాటర్న్ విఫలమైంది. స్టాప్ తన పని చేయాలి.",
+        "end": "ఇప్పుడు మీ వంతు. ప్యాటర్న్ ట్రైనర్‌లో ప్రాక్టీస్ చేయండి. మూడు క్యాండిల్స్ మధ్యలో ఒక డోజీ కనిపించినప్పుడల్లా, రెండు వైపులా గ్యాప్స్ ఉన్నాయా చూడండి. రెండూ ఉంటే, ఈ మాడ్యూల్‌లోని అత్యంత అరుదైన ప్యాటర్న్ మీకు దొరికినట్టే."
+      }
+    }
+  }
+}

@@ -143,6 +143,8 @@ export type Tick = { index: number; value: number; up: boolean; opacity?: number
 export type Level = { price: number; label: string; color: string; opacity: number; draw?: number };
 /** Depth of field: candles outside `from`..`to` go soft and dim by `strength` (0-1), so the eye stays on the pattern. */
 export type Focus = { from: number; to: number; strength: number };
+/** A shaded price band between two bars (a gap, a doji's range): background only, never labelled. */
+export type Zone = { from: number; to: number; lo: number; hi: number; color: string; opacity: number };
 /** A live price tag on the axis at a candle's close (the candle being drawn), in its colour. */
 export type PriceTag = { index: number; opacity: number };
 export type Line = { values: number[]; color: string; width?: number };
@@ -179,6 +181,7 @@ export function CinematicChart({
   maxBody = 22,
   focus,
   priceTag,
+  zones = [],
 }: {
   cam: Camera;
   /** The candles (default: the pilot series) and the lines drawn over them (default: its SMA 200 and 50). */
@@ -206,6 +209,7 @@ export function CinematicChart({
   spotlight?: Spotlight;
   focus?: Focus;
   priceTag?: PriceTag;
+  zones?: Zone[];
 }) {
   const { left, right, top } = { ...PLOT, ...plot };
   const bottom = plotBottom ?? plot?.bottom ?? PLOT.bottom;
@@ -390,6 +394,9 @@ export function CinematicChart({
             <line x1={x(r.from)} x2={x(r.from)} y1={top} y2={bottom} stroke={r.color} strokeWidth={2} strokeDasharray="8 8" />
             <line x1={x(r.to)} x2={x(r.to)} y1={top} y2={bottom} stroke={r.color} strokeWidth={2} strokeDasharray="8 8" />
           </g>
+        ))}
+        {zones.map((z, k) => (
+          <rect key={`zone${k}`} x={x(z.from)} y={y(z.hi)} width={Math.max(0, x(z.to) - x(z.from))} height={Math.max(0, y(z.lo) - y(z.hi))} fill={z.color} opacity={0.42 * z.opacity} />
         ))}
         {soft.length > 0 && focus && (
           <g filter={`url(#soft${uid})`} opacity={1 - 0.6 * focus.strength}>

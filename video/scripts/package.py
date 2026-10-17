@@ -142,7 +142,7 @@ def finish(src: Path, dst: Path, lang: str) -> dict:
 # publish. The bases must match the composition's (src/MaCrossoversCinematic.tsx BASES); a cut
 # over every scene takes its overrides per lesson.
 # Where the poster frame is, as a share of the English video.
-POSTER_AT = {"ma-crossovers": 0.36, "engulfing": 0.25, "harami": 0.25, "piercing": 0.21, "tweezers": 0.22, "stars": 0.24, "soldiers": 0.25, "insideout": 0.18}
+POSTER_AT = {"ma-crossovers": 0.36, "engulfing": 0.25, "harami": 0.25, "piercing": 0.21, "tweezers": 0.22, "stars": 0.24, "soldiers": 0.25, "insideout": 0.18, "gapped": 0.371}
 CUTS = {
     # The proof of concept (4 scenes); its composition has since grown into the full lesson.
     "cinematic-poc": {"bases": {"title": 7, "average": 30, "golden": 18, "lag": 26}, "input": "v3/{name}-cinematic-{lang}.mp4", "dir": "v3-cinematic-poc"},
