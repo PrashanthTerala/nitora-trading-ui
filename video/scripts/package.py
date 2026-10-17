@@ -123,12 +123,14 @@ def write_captions(cues, vtt: Path, srt: Path) -> None:
 
 
 def finish(src: Path, dst: Path, lang: str) -> dict:
-    """Two-pass loudness normalisation to -16 LUFS (linear gain), language tag, faststart."""
-    log = ff(["-i", str(src), "-vn", "-af", "loudnorm=I=-16:TP=-1.5:LRA=11:print_format=json", "-f", "null", "-"])
+    """Two-pass loudness normalisation to -16 LUFS, language tag, faststart. Linear gain where the peaks
+    allow it; loudnorm's own true-peak limiter where they would pass -2 dBTP (AAC adds a little
+    overshoot, and QA allows -1)."""
+    log = ff(["-i", str(src), "-vn", "-af", "loudnorm=I=-16:TP=-2:LRA=11:print_format=json", "-f", "null", "-"])
     measured = json.loads(log[log.rfind("{") : log.rfind("}") + 1])
     m = {"integrated_lufs": float(measured["input_i"])}
     af = (
-        f"loudnorm=I=-16:TP=-1.5:LRA=11:measured_I={measured['input_i']}:measured_TP={measured['input_tp']}"
+        f"loudnorm=I=-16:TP=-2:LRA=11:measured_I={measured['input_i']}:measured_TP={measured['input_tp']}"
         f":measured_LRA={measured['input_lra']}:measured_thresh={measured['input_thresh']}:offset={measured['target_offset']}:linear=true"
     )
     ff(["-i", str(src), "-map", "0:v:0", "-map", "0:a:0", "-c:v", "copy", "-af", af, "-ar", "48000", "-c:a", "aac", "-b:a", "160k",
@@ -140,7 +142,7 @@ def finish(src: Path, dst: Path, lang: str) -> dict:
 # publish. The bases must match the composition's (src/MaCrossoversCinematic.tsx BASES); a cut
 # over every scene takes its overrides per lesson.
 # Where the poster frame is, as a share of the English video.
-POSTER_AT = {"ma-crossovers": 0.36, "engulfing": 0.25, "harami": 0.25, "piercing": 0.21, "tweezers": 0.22, "stars": 0.24, "soldiers": 0.25}
+POSTER_AT = {"ma-crossovers": 0.36, "engulfing": 0.25, "harami": 0.25, "piercing": 0.21, "tweezers": 0.22, "stars": 0.24, "soldiers": 0.25, "insideout": 0.18}
 CUTS = {
     # The proof of concept (4 scenes); its composition has since grown into the full lesson.
     "cinematic-poc": {"bases": {"title": 7, "average": 30, "golden": 18, "lag": 26}, "input": "v3/{name}-cinematic-{lang}.mp4", "dir": "v3-cinematic-poc"},
@@ -233,9 +235,11 @@ def main() -> None:
         print(f"  {report['duration_s']}s, {loud['before_lufs']} -> {loud['after']['integrated_lufs']} LUFS, failed: {report['failed'] or 'none'}")
 
     poster_src = ROOT / "out" / (cut["input"].format(name=name, lang="en") if cut else f"v2/{name}-en.mp4")
-    if poster_src.exists() and not (out / "poster.jpg").exists():
-        # A still that says what the lesson is: the golden-cross chart, or the engulfing pair.
-        ff(["-ss", f"{report['duration_s'] * POSTER_AT.get(name, 0.36):.2f}", "-i", str(poster_src), "-frames:v", "1", "-c:v", "mjpeg", "-q:v", "3", "-f", "image2", str(out / "poster.jpg")])
+    if poster_src.exists():
+        # A still that says what the lesson is (the golden-cross chart, the engulfing pair), at its
+        # share of the English video's own length, redone on every run so it follows POSTER_AT.
+        at = qa.probe(poster_src)["duration_s"] * POSTER_AT.get(name, 0.36)
+        ff(["-y", "-ss", f"{at:.2f}", "-i", str(poster_src), "-frames:v", "1", "-c:v", "mjpeg", "-q:v", "3", "-f", "image2", str(out / "poster.jpg")])
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"-> {out}")
 

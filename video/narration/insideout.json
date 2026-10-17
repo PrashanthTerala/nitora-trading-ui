@@ -1,0 +1,224 @@
+{
+  "lesson": "m02-candlestick-patterns/12-three-inside-outside",
+  "version": 2,
+  "source": {
+    "file": "src/content/modules/m02-candlestick-patterns/12-three-inside-outside.mdx",
+    "sha256": "ae8afd36f878a2dc83276165c54bef544b28a93ba6a0f5cf860c8020af9fc530"
+  },
+  "timing": {
+    "lead": 0.5,
+    "tail": 0.9
+  },
+  "note": "v2 (studio look): script approved 2026-10-17 (docs/video-production/scripts/inside-outside-en-v2.md). English and Telugu only, by the owner's decision. Each scene names the lesson lines it says; 'computed' numbers are checked against src/insideout/data.ts by scripts/check.mjs; 'pre' is the quiet brand opening or chapter card before a scene. Reliability figures are Bulkowski's (thepatternsite.com, read 2026-10-17), as the corrected lesson states. <mark name> sets a timing marker; <pause s> inserts silence.",
+  "scenes": {
+    "title": {
+      "base": 6,
+      "lines": "curriculum.ts: m02-candlestick-patterns / 12-three-inside-outside",
+      "pre": 1.8
+    },
+    "intro": {
+      "base": 30,
+      "lines": "1-5",
+      "marks": [
+        "named",
+        "inside",
+        "outside",
+        "new"
+      ]
+    },
+    "insideup": {
+      "base": 30,
+      "lines": "7-15",
+      "marks": [
+        "trend",
+        "harami",
+        "third",
+        "story",
+        "looser"
+      ],
+      "computed": {
+        "TIU_THIRD_CLOSE": 103.6,
+        "TIU_FIRST_OPEN": 102.3
+      },
+      "pre": 0.9
+    },
+    "trolley": {
+      "base": 14,
+      "lines": "17-21"
+    },
+    "insidedown": {
+      "base": 16,
+      "lines": "23-29",
+      "marks": [
+        "third"
+      ],
+      "computed": {
+        "TID_THIRD_CLOSE": 98.13,
+        "TID_FIRST_OPEN": 98.93
+      }
+    },
+    "outsideup": {
+      "base": 26,
+      "lines": "31-39",
+      "marks": [
+        "trend",
+        "engulf",
+        "third",
+        "why"
+      ],
+      "computed": {
+        "TOU_THIRD_CLOSE": 105.27,
+        "TOU_SECOND_CLOSE": 102.67
+      },
+      "pre": 0.9
+    },
+    "outsidedown": {
+      "base": 14,
+      "lines": "41-47",
+      "marks": [
+        "third"
+      ],
+      "computed": {
+        "TOD_THIRD_CLOSE": 94.47,
+        "TOD_SECOND_CLOSE": 97.27
+      }
+    },
+    "third": {
+      "base": 24,
+      "lines": "49-60",
+      "marks": [
+        "inside",
+        "outside",
+        "why"
+      ],
+      "pre": 0.9
+    },
+    "valid": {
+      "base": 18,
+      "lines": "62-66",
+      "marks": [
+        "watch"
+      ]
+    },
+    "trade": {
+      "base": 30,
+      "lines": "68-76",
+      "marks": [
+        "inside",
+        "outside",
+        "size"
+      ],
+      "computed": {
+        "IN_ENTRY": 103.6,
+        "IN_STOP": 96.8,
+        "IN_RISK": 6.8,
+        "OUT_ENTRY": 105.27,
+        "OUT_STOP": 97.97,
+        "OUT_RISK": 7.3
+      },
+      "pre": 0.9
+    },
+    "cost": {
+      "base": 18,
+      "lines": "78-82",
+      "marks": [
+        "tradeoff"
+      ],
+      "computed": {
+        "EARLY": 100.4,
+        "IN_ENTRY": 103.6,
+        "COST": 3.2
+      }
+    },
+    "reliability": {
+      "base": 30,
+      "lines": "84-90",
+      "marks": [
+        "harami",
+        "engulfing",
+        "lesson"
+      ],
+      "computed": {
+        "HARAMI_BULL": 53,
+        "TIU_PCT": 65,
+        "HARAMI_BEAR": 47,
+        "TID_PCT": 60,
+        "TOU_PCT": 75,
+        "ENGULF_BULL": 63,
+        "TOD_PCT": 69,
+        "ENGULF_BEAR": 79
+      },
+      "pre": 0.9
+    },
+    "takeaways": {
+      "base": 22,
+      "lines": "92-99"
+    },
+    "quiz": {
+      "base": 16,
+      "lines": "104",
+      "marks": [
+        "think",
+        "reveal"
+      ]
+    },
+    "end": {
+      "base": 12,
+      "lines": "109"
+    }
+  },
+  "languages": {
+    "en": {
+      "voice": "en_US-ljspeech-high",
+      "lengthScale": 1.12,
+      "sentenceGap": {
+        ".": 0.35,
+        "?": 0.45,
+        "!": 0.4
+      },
+      "scenes": {
+        "title": "Three inside and three outside. Module two, lesson twelve.",
+        "intro": "In the last few lessons you kept hearing the same instruction: wait for the next candle to close in the predicted direction. <mark named> Traders added that candle so often that the confirmed versions got their own names. <mark inside> Three inside up is a bullish harami plus a confirming third candle; three inside down, the bearish mirror. Inside, because the harami's small candle sits inside the big one. <mark outside> Three outside up is a bullish engulfing plus confirmation; three outside down, its mirror. Outside, because the engulfing candle wraps around the one before. <mark new> If you know the harami and the engulfing, you already know these four. What is new is what the third candle must do, and what the numbers say about adding it.",
+        "insideup": "Three inside up. <mark trend> A downtrend. <mark harami> A big red candle, then a small candle whose body sits inside it: a bullish harami. <mark third> Then a green candle that closes above candle one's open. Here: one hundred and three point six, above the first open at one hundred and two point three. <mark story> Day one, sellers win big. Day two, they stall. Day three, buyers push price above where the big red candle began, so every seller from day one is now losing. The stall has become a turn. <mark looser> One note: Bulkowski's tests used a looser rule, a close above candle two's close, so his numbers are for that version.",
+        "trolley": "Remember the shopping trolley that hit thick grass and slowed down? Three inside up is the trolley slowing on day two, then rolling back up the slope, past where it started, on day three. Now you know which way the grass sent it.",
+        "insidedown": "Three inside down is the mirror. After a rise, a big green candle, then a small one inside it: a bearish harami. <mark third> Then a red candle closing below candle one's open: ninety-eight point one three, below ninety-eight point nine three. Buyers stalled on day two, and were overrun on day three.",
+        "outsideup": "Three outside up. <mark trend> A downtrend. <mark engulf> A small red candle, then a green candle whose body covers it completely: a bullish engulfing. <mark third> Then another green candle that closes higher than candle two's close. Here: one hundred and five point two seven, above one hundred and two point six seven. <mark why> The engulfing showed buyers taking control. The third candle shows they kept it. One big green candle can be one large order; two closes in a row are harder to explain away.",
+        "outsidedown": "Three outside down: after a rise, a bearish engulfing, <mark third> then a red candle closing lower than candle two's close. Ninety-four point four seven, below ninety-seven point two seven. Sellers took control on day two, and kept it on day three.",
+        "third": "What exactly must the third candle do? <mark inside> For the inside versions: close beyond the first candle's open. <mark outside> For the outside versions: close beyond the second candle's close. <mark why> The inside versions have the harder test. The harami's small candle started inside a big one, so the third candle must travel further to prove the turn. The engulfing already did most of the work, so the outside versions only need one more close in the same direction.",
+        "valid": "Everything from the harami and engulfing lessons applies. These are reversal patterns: they need a prior trend, they are strongest at support and resistance, and on daily charts. <mark watch> And because they contain their own confirmation, they are often the version you actually trade. Seeing a harami tells you to watch. Seeing three inside up tells you the watch is over.",
+        "trade": "Since the third candle is the confirmation, most traders enter at its close or the next open. <mark inside> Three inside up: enter at the third close, one hundred and three point six, with the stop below the big red candle's low, ninety-six point eight. That is six point eight of risk. <mark outside> Three outside up: enter at the third close, one hundred and five point two seven, with the stop below the engulfing candle's low, ninety-seven point nine seven: seven point three of risk. <mark size> The down versions mirror these, with stops above the pattern's high. Three sessions of movement can put the stop a long way off, so size the position to the stop.",
+        "cost": "Confirmation costs you price. A trader who bought at the harami's small candle got in at one hundred point four. Waiting for the third candle meant one hundred and three point six: three point two later, with a wider stop. <mark tradeoff> That is the trade-off: fewer false signals, but a smaller share of each move. Confirmation buys accuracy with price, and you will decide in your own testing which you prefer.",
+        "reliability": "Here is the interesting part. <mark harami> In Bulkowski's tests, adding the confirmation helped the harami a lot. The bullish harami reversed about fifty-three percent of the time; three inside up, about sixty-five. The bearish harami, about forty-seven; three inside down, about sixty. <mark engulfing> The outside versions are mixed. Three outside up, about seventy-five, above the bullish engulfing's sixty-three. But three outside down, about sixty-nine: below the bearish engulfing's seventy-nine. <mark lesson> So confirmation earned its keep on the harami, which is only a stall. On the engulfing, already a decisive shift, its effect was mixed. Spend your patience where it pays.",
+        "takeaways": "To recap. Three inside up or down is a harami plus a third candle closing beyond the first candle's open. Three outside up or down is an engulfing plus a third candle closing beyond the second candle's close. They need a prior trend, and work best at support or resistance. Enter at the third close, stop beyond the pattern's extreme, and size to the wider stop. And confirmation helps the harami far more than the engulfing.",
+        "quiz": "Quick check. Why does confirmation help the harami more than the engulfing? Does it not help either? Or is the harami only a stall, while the engulfing already showed a change of control? <mark think> Take a second to think. <pause 2.5> <mark reveal> The harami is only a stall, and many resume the trend. Confirmation filters those out. The engulfing had already done most of the work.",
+        "end": "Now practise in the pattern trainer. Whenever you spot a harami or an engulfing, look at the next candle and ask: does it complete a three inside or a three outside?"
+      }
+    },
+    "te": {
+      "provider": "google",
+      "voice": "te-IN-Chirp3-HD-Achird",
+      "languageCode": "te-IN",
+      "flow": true,
+      "commaPause": "[pause short]",
+      "speakingRate": 0.92,
+      "note": "Friendly spoken Telugu; 'inside' and 'outside' kept as ఇన్‌సైడ్ and ఔట్‌సైడ్, 'harami' as హరామి, 'engulfing' as ఎంగల్ఫింగ్. Needs a native speaker's review.",
+      "scenes": {
+        "title": "హాయ్! ఈరోజు మనం త్రీ ఇన్‌సైడ్, త్రీ ఔట్‌సైడ్ గురించి మాట్లాడుకుందాం. మాడ్యూల్ రెండు. పాఠం పన్నెండు.",
+        "intro": "గత కొన్ని పాఠాల్లో మీరు ఒకే సూచన మళ్ళీ మళ్ళీ విన్నారు: తర్వాతి క్యాండిల్, ఊహించిన దిశలో క్లోజ్ అయ్యే వరకు వేచి ఉండండి. <mark named> ట్రేడర్లు ఆ క్యాండిల్‌ని ఎంత తరచుగా జోడించారంటే, కన్ఫర్మ్ అయిన రూపాలకు సొంత పేర్లు వచ్చాయి. <mark inside> త్రీ ఇన్‌సైడ్ అప్ అంటే, ఒక బుల్లిష్ హరామి, దానికి కన్ఫర్మ్ చేసే మూడో క్యాండిల్. త్రీ ఇన్‌సైడ్ డౌన్, దాని బేరిష్ అద్దం. ఇన్‌సైడ్ ఎందుకంటే, హరామి చిన్న క్యాండిల్ పెద్దదాని లోపల కూర్చుంటుంది. <mark outside> త్రీ ఔట్‌సైడ్ అప్ అంటే, ఒక బుల్లిష్ ఎంగల్ఫింగ్, దానికి కన్ఫర్మేషన్. త్రీ ఔట్‌సైడ్ డౌన్, దాని అద్దం. ఔట్‌సైడ్ ఎందుకంటే, ఎంగల్ఫింగ్ క్యాండిల్ ముందుదాన్ని చుట్టేస్తుంది. <mark new> మీకు హరామి, ఎంగల్ఫింగ్ తెలిస్తే, ఈ నాలుగూ మీకు అప్పటికే తెలుసు. కొత్తది ఏమిటంటే, మూడో క్యాండిల్ ఏం చేయాలి, దాన్ని జోడించడం గురించి నంబర్లు ఏం చెబుతాయి.",
+        "insideup": "త్రీ ఇన్‌సైడ్ అప్. <mark trend> ఒక డౌన్‌ట్రెండ్. <mark harami> ఒక పెద్ద ఎరుపు క్యాండిల్, తర్వాత దాని లోపల బాడీ ఉన్న ఒక చిన్న క్యాండిల్. అదే బుల్లిష్ హరామి. <mark third> తర్వాత, మొదటి క్యాండిల్ ఓపెన్ కంటే పైన క్లోజ్ అయ్యే ఒక ఆకుపచ్చ క్యాండిల్. ఇక్కడ: నూట మూడు పాయింట్ ఆరు, మొదటి ఓపెన్ నూట రెండు పాయింట్ మూడు కంటే పైన. <mark story> మొదటి రోజు, అమ్మకందారులు పెద్దగా గెలుస్తారు. రెండో రోజు, వాళ్ళు ఆగిపోతారు. మూడో రోజు, కొనుగోలుదారులు ధరని పెద్ద ఎరుపు క్యాండిల్ మొదలైన చోటు కంటే పైకి నెడతారు. అంటే మొదటి రోజు అమ్మిన ప్రతి ఒక్కరూ ఇప్పుడు నష్టంలో ఉన్నారు. ఆగిపోవడం, ఒక మలుపుగా మారింది. <mark looser> ఒక గమనిక: బుల్కోవ్‌స్కీ టెస్టులు ఇంకా సడలించిన నియమాన్ని వాడాయి, రెండో క్యాండిల్ క్లోజ్ కంటే పైన క్లోజ్. కాబట్టి ఆయన నంబర్లు ఆ రూపానికి సంబంధించినవి.",
+        "trolley": "దట్టమైన గడ్డిని తాకి నెమ్మదించిన షాపింగ్ ట్రాలీ గుర్తుందా? త్రీ ఇన్‌సైడ్ అప్ అంటే, రెండో రోజు ట్రాలీ నెమ్మదిస్తుంది, మూడో రోజు అది వాలు పైకి, మొదలైన చోటు దాటి వెనక్కి దొర్లుతుంది. ఇప్పుడు గడ్డి దాన్ని ఏ వైపు పంపిందో మీకు తెలుసు.",
+        "insidedown": "త్రీ ఇన్‌సైడ్ డౌన్ దీనికి అద్దం. ఒక పెరుగుదల తర్వాత, ఒక పెద్ద ఆకుపచ్చ క్యాండిల్, తర్వాత దాని లోపల ఒక చిన్నది. అదే బేరిష్ హరామి. <mark third> తర్వాత, మొదటి క్యాండిల్ ఓపెన్ కంటే కింద క్లోజ్ అయ్యే ఒక ఎరుపు క్యాండిల్: తొంభై ఎనిమిది పాయింట్ ఒకటి మూడు, తొంభై ఎనిమిది పాయింట్ తొమ్మిది మూడు కంటే కింద. రెండో రోజు కొనుగోలుదారులు ఆగిపోయారు, మూడో రోజు వాళ్ళని తొక్కేశారు.",
+        "outsideup": "త్రీ ఔట్‌సైడ్ అప్. <mark trend> ఒక డౌన్‌ట్రెండ్. <mark engulf> ఒక చిన్న ఎరుపు క్యాండిల్, తర్వాత దాన్ని పూర్తిగా కప్పేసే బాడీ ఉన్న ఒక ఆకుపచ్చ క్యాండిల్. అదే బుల్లిష్ ఎంగల్ఫింగ్. <mark third> తర్వాత, రెండో క్యాండిల్ క్లోజ్ కంటే పైన క్లోజ్ అయ్యే ఇంకో ఆకుపచ్చ క్యాండిల్. ఇక్కడ: నూట ఐదు పాయింట్ రెండు ఏడు, నూట రెండు పాయింట్ ఆరు ఏడు కంటే పైన. <mark why> ఎంగల్ఫింగ్, కొనుగోలుదారులు నియంత్రణ తీసుకోవడం చూపించింది. మూడో క్యాండిల్, వాళ్ళు దాన్ని నిలబెట్టుకున్నారని చూపిస్తుంది. ఒక పెద్ద ఆకుపచ్చ క్యాండిల్ ఒకే పెద్ద ఆర్డర్ కావచ్చు. వరుసగా రెండు క్లోజ్‌లను అలా కొట్టిపారేయడం కష్టం.",
+        "outsidedown": "త్రీ ఔట్‌సైడ్ డౌన్: ఒక పెరుగుదల తర్వాత, ఒక బేరిష్ ఎంగల్ఫింగ్, <mark third> తర్వాత రెండో క్యాండిల్ క్లోజ్ కంటే కింద క్లోజ్ అయ్యే ఒక ఎరుపు క్యాండిల్. తొంభై నాలుగు పాయింట్ నాలుగు ఏడు, తొంభై ఏడు పాయింట్ రెండు ఏడు కంటే కింద. రెండో రోజు అమ్మకందారులు నియంత్రణ తీసుకున్నారు, మూడో రోజు దాన్ని నిలబెట్టుకున్నారు.",
+        "third": "మూడో క్యాండిల్ సరిగ్గా ఏం చేయాలి? <mark inside> ఇన్‌సైడ్ రూపాలకు: మొదటి క్యాండిల్ ఓపెన్ దాటి క్లోజ్ అవ్వాలి. <mark outside> ఔట్‌సైడ్ రూపాలకు: రెండో క్యాండిల్ క్లోజ్ దాటి క్లోజ్ అవ్వాలి. <mark why> ఇన్‌సైడ్ రూపాలకు కష్టమైన పరీక్ష ఉంది. హరామి చిన్న క్యాండిల్ ఒక పెద్దదాని లోపల మొదలైంది, కాబట్టి మలుపుని నిరూపించడానికి మూడో క్యాండిల్ ఇంకా దూరం వెళ్ళాలి. ఎంగల్ఫింగ్ అప్పటికే చాలా పని చేసింది, కాబట్టి ఔట్‌సైడ్ రూపాలకు, అదే దిశలో ఇంకొక్క క్లోజ్ చాలు.",
+        "valid": "హరామి, ఎంగల్ఫింగ్ పాఠాల్లోని ప్రతిదీ ఇక్కడ వర్తిస్తుంది. ఇవి రివర్సల్ ప్యాటర్న్స్. వీటికి ముందు ఒక ట్రెండ్ కావాలి. సపోర్ట్, రెసిస్టెన్స్ దగ్గర, డైలీ చార్ట్‌ల మీద ఇవి బలంగా ఉంటాయి. <mark watch> ఇంకా, వీటిలో సొంత కన్ఫర్మేషన్ ఉంది కాబట్టి, మీరు నిజంగా ట్రేడ్ చేసేది తరచుగా ఈ రూపమే. హరామి కనిపిస్తే, గమనించమని అర్థం. త్రీ ఇన్‌సైడ్ అప్ కనిపిస్తే, గమనించడం అయిపోయిందని అర్థం.",
+        "trade": "మూడో క్యాండిలే కన్ఫర్మేషన్ కాబట్టి, చాలా మంది ట్రేడర్లు దాని క్లోజ్ దగ్గర, లేదా తర్వాతి ఓపెన్ దగ్గర ఎంటర్ అవుతారు. <mark inside> త్రీ ఇన్‌సైడ్ అప్: మూడో క్లోజ్ దగ్గర, నూట మూడు పాయింట్ ఆరు దగ్గర ఎంటర్ అవ్వండి. స్టాప్, పెద్ద ఎరుపు క్యాండిల్ లో కంటే కింద, తొంభై ఆరు పాయింట్ ఎనిమిది. అంటే ఆరు పాయింట్ ఎనిమిది రిస్క్. <mark outside> త్రీ ఔట్‌సైడ్ అప్: మూడో క్లోజ్ దగ్గర, నూట ఐదు పాయింట్ రెండు ఏడు దగ్గర ఎంటర్ అవ్వండి. స్టాప్, ఎంగల్ఫింగ్ క్యాండిల్ లో కంటే కింద, తొంభై ఏడు పాయింట్ తొమ్మిది ఏడు. అంటే ఏడు పాయింట్ మూడు రిస్క్. <mark size> డౌన్ రూపాలు వీటికి అద్దం, స్టాప్‌లు ప్యాటర్న్ హై కంటే పైన. మూడు సెషన్ల కదలిక వల్ల స్టాప్ చాలా దూరంగా ఉండొచ్చు, కాబట్టి స్టాప్‌కి తగ్గట్టు పొజిషన్ సైజ్ పెట్టుకోండి.",
+        "cost": "కన్ఫర్మేషన్‌కి మీరు ధర చెల్లిస్తారు. హరామి చిన్న క్యాండిల్ దగ్గర కొన్న ట్రేడర్, వంద పాయింట్ నాలుగు దగ్గర ఎంటర్ అయ్యారు. మూడో క్యాండిల్ కోసం వేచి ఉంటే, నూట మూడు పాయింట్ ఆరు. అంటే మూడు పాయింట్ రెండు ఆలస్యంగా, ఇంకా దూరపు స్టాప్‌తో. <mark tradeoff> అదే బేరం: తక్కువ తప్పుడు సిగ్నల్స్, కానీ ప్రతి కదలికలో చిన్న భాగం. కన్ఫర్మేషన్, ధరతో కచ్చితత్వాన్ని కొంటుంది. మీకు ఏది నచ్చుతుందో, మీ సొంత టెస్టింగ్‌లో మీరే నిర్ణయించుకోవాలి.",
+        "reliability": "ఇక్కడే ఆసక్తికరమైన భాగం. <mark harami> బుల్కోవ్‌స్కీ టెస్టుల్లో, కన్ఫర్మేషన్ జోడించడం హరామికి చాలా సహాయపడింది. బుల్లిష్ హరామి దాదాపు యాభై మూడు శాతం సార్లు తిరిగింది. త్రీ ఇన్‌సైడ్ అప్, దాదాపు అరవై ఐదు. బేరిష్ హరామి, దాదాపు నలభై ఏడు. త్రీ ఇన్‌సైడ్ డౌన్, దాదాపు అరవై. <mark engulfing> ఔట్‌సైడ్ రూపాల ఫలితాలు కలగలుపుగా ఉన్నాయి. త్రీ ఔట్‌సైడ్ అప్, దాదాపు డెబ్భై ఐదు, బుల్లిష్ ఎంగల్ఫింగ్ అరవై మూడు కంటే ఎక్కువ. కానీ త్రీ ఔట్‌సైడ్ డౌన్, దాదాపు అరవై తొమ్మిది: బేరిష్ ఎంగల్ఫింగ్ డెబ్భై తొమ్మిది కంటే తక్కువ. <mark lesson> కాబట్టి, కేవలం ఆగిపోవడం మాత్రమే అయిన హరామికి, కన్ఫర్మేషన్ బాగా ఉపయోగపడింది. అప్పటికే స్పష్టమైన మార్పు అయిన ఎంగల్ఫింగ్‌కి, దాని ప్రభావం కలగలుపు. మీ ఓపికని, అది ఫలితం ఇచ్చే చోట వాడండి.",
+        "takeaways": "సంక్షిప్తంగా. త్రీ ఇన్‌సైడ్ అప్ లేదా డౌన్ అంటే, ఒక హరామి, దానికి మొదటి క్యాండిల్ ఓపెన్ దాటి క్లోజ్ అయ్యే మూడో క్యాండిల్. త్రీ ఔట్‌సైడ్ అప్ లేదా డౌన్ అంటే, ఒక ఎంగల్ఫింగ్, దానికి రెండో క్యాండిల్ క్లోజ్ దాటి క్లోజ్ అయ్యే మూడో క్యాండిల్. వీటికి ముందు ట్రెండ్ కావాలి, సపోర్ట్ లేదా రెసిస్టెన్స్ దగ్గర బాగా పనిచేస్తాయి. మూడో క్లోజ్ దగ్గర ఎంటర్ అవ్వండి, స్టాప్ ప్యాటర్న్ చివర అవతల, దూరపు స్టాప్‌కి తగ్గట్టు సైజ్. ఇంకా, కన్ఫర్మేషన్ ఎంగల్ఫింగ్ కంటే హరామికి చాలా ఎక్కువ సహాయపడుతుంది.",
+        "quiz": "ఒక చిన్న టెస్ట్. కన్ఫర్మేషన్ ఎంగల్ఫింగ్ కంటే హరామికి ఎందుకు ఎక్కువ సహాయపడుతుంది? రెండింటికీ సహాయపడదా? లేక హరామి కేవలం ఆగిపోవడం, ఎంగల్ఫింగ్ అప్పటికే నియంత్రణ మార్పుని చూపించిందా? <mark think> ఒక్క సెకను ఆలోచించండి. <pause 2.5> <mark reveal> జవాబు: హరామి కేవలం ఆగిపోవడం, చాలా హరామిలు మళ్ళీ ట్రెండ్‌లోకే వెళ్తాయి. కన్ఫర్మేషన్ వాటిని వడపోస్తుంది. ఎంగల్ఫింగ్ అప్పటికే చాలా పని చేసింది.",
+        "end": "ఇప్పుడు మీ వంతు. ప్యాటర్న్ ట్రైనర్‌లో ప్రాక్టీస్ చేయండి. మీకు హరామి గానీ, ఎంగల్ఫింగ్ గానీ కనిపించినప్పుడల్లా, తర్వాతి క్యాండిల్ చూసి అడగండి: ఇది త్రీ ఇన్‌సైడ్ గానీ, త్రీ ఔట్‌సైడ్ గానీ పూర్తి చేస్తుందా?"
+      }
+    }
+  }
+}
