@@ -1,7 +1,7 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState, type ComponentType } from 'react';
 import { Link, Navigate, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { MDXProvider } from '@mdx-js/react';
-import { CheckCircle2, ChevronRight, Clock } from 'lucide-react';
+import { CheckCircle2, ChevronRight, Clock, PlayCircle } from 'lucide-react';
 import { findLesson, findModule, LEVELS } from '@/content/curriculum';
 import { mdxComponents } from '@/components/mdx';
 import { useProgress, lessonKey } from '@/store/progress';
@@ -10,6 +10,9 @@ import { RouteFallback } from '@/components/layout/RouteProgress';
 import { LessonOutline } from '@/components/lesson/LessonOutline';
 import { OnThisPage, ReadingProgressBar, useLessonScroll } from '@/components/lesson/OnThisPage';
 import { LessonFooter } from '@/components/lesson/LessonFooter';
+import { LessonVideo } from '@/components/lesson/LessonVideo';
+import videos from 'virtual:lesson-videos';
+import { formatTime } from '@/lib/video';
 import { useLessonKeys } from '@/components/lesson/useLessonKeys';
 import { LevelBadge } from '@/components/curriculum/ModuleCover';
 import { Chip } from '@/components/ui/Chip';
@@ -55,6 +58,8 @@ export default function LessonPage() {
   const navigate = useNavigate();
   const { hash } = useLocation();
   const key = lessonKey(moduleId, lessonId);
+  // The lesson's video, if one is published for it (see vite.config.ts lessonVideos()).
+  const video = videos[key];
   const done = useProgress((s) => !!s.completed[key]);
   const quiz = useProgress((s) => s.quizScores[key]);
   const markComplete = useProgress((s) => s.markComplete);
@@ -246,6 +251,11 @@ export default function LessonPage() {
               <span className="mr-2 flex items-center gap-1.5">
                 <Clock size={14} strokeWidth={1.5} aria-hidden /> {t('lesson.minutes', { count: lesson.minutes })}
               </span>
+              {video && (
+                <a href="#lesson-video" className="mr-2 flex items-center gap-1.5 hover:text-ink">
+                  <PlayCircle size={14} strokeWidth={1.5} aria-hidden /> {t('video.chip', { duration: formatTime(video.tracks[0].duration) })}
+                </a>
+              )}
               {quiz && (
                 <Chip tone={quiz.score === quiz.total ? 'up' : 'accent'} size="md">
                   {t('common.quizBest', { score: quiz.score, total: quiz.total })}
@@ -258,6 +268,8 @@ export default function LessonPage() {
               )}
             </div>
           </header>
+
+          {video && <LessonVideo key={key} id={key} title={lesson.title} entry={video} />}
 
           <div className="prose-lesson">
             {error === 'missing' && <div className="not-prose rounded-card border-l-[3px] border-warn bg-warn-soft p-5 text-body-sm text-ink">{t('lesson.missing')}</div>}

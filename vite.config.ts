@@ -1,4 +1,5 @@
-import { readFileSync } from 'node:fs';
+import { createReadStream, existsSync, readFileSync, statSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
@@ -108,6 +109,73 @@ function seoFiles(): Plugin {
   };
 }
 
+/**
+ * `virtual:lesson-videos`: which lessons have a video, and where its files are.
+ *
+ * A public build reads only src/content/videos.json, which the upload tool writes for sets that
+ * are approved and uploaded to the media bucket. The development server, and a build made with
+ * VIDEO_LOCAL=1 for a local preview, also read src/content/videos.local.json (gitignored, from
+ * video/scripts/video_index.py --local), and serve its files under /media-local/ straight from
+ * video/out/publish/, with byte ranges so seeking works. A public build never sees either.
+ */
+function lessonVideos(): Plugin {
+  const id = 'virtual:lesson-videos';
+  const resolved = `\0${id}`;
+  const published = fileURLToPath(new URL('./src/content/videos.json', import.meta.url));
+  const local = fileURLToPath(new URL('./src/content/videos.local.json', import.meta.url));
+  const publishDir = fileURLToPath(new URL('./video/out/publish/', import.meta.url));
+  const types: Record<string, string> = { mp4: 'video/mp4', vtt: 'text/vtt; charset=utf-8', jpg: 'image/jpeg', json: 'application/json' };
+  let useLocal = false;
+  const serveLocal = (req: import('node:http').IncomingMessage, res: import('node:http').ServerResponse, next: () => void) => {
+    if (!useLocal || !req.url?.startsWith('/media-local/')) return next();
+    const rel = decodeURIComponent(req.url.slice('/media-local/'.length).split('?')[0]);
+    const file = resolve(publishDir, rel);
+    // Only files under out/publish/, never a path that climbs out of it.
+    if (!file.startsWith(resolve(publishDir)) || !existsSync(file) || !statSync(file).isFile()) {
+      res.statusCode = 404;
+      return res.end();
+    }
+    const size = statSync(file).size;
+    res.setHeader('Content-Type', types[file.split('.').pop() ?? ''] ?? 'application/octet-stream');
+    res.setHeader('Accept-Ranges', 'bytes');
+    const range = /bytes=(\d*)-(\d*)/.exec(req.headers.range ?? '');
+    if (range) {
+      const start = range[1] ? Number(range[1]) : Math.max(0, size - Number(range[2]));
+      const end = range[1] && range[2] ? Math.min(Number(range[2]), size - 1) : size - 1;
+      res.statusCode = 206;
+      res.setHeader('Content-Range', `bytes ${start}-${end}/${size}`);
+      res.setHeader('Content-Length', String(end - start + 1));
+      return createReadStream(file, { start, end }).pipe(res);
+    }
+    res.setHeader('Content-Length', String(size));
+    createReadStream(file).pipe(res);
+  };
+  return {
+    name: 'nitora:lesson-videos',
+    configResolved(config) {
+      useLocal = config.command === 'serve' || process.env.VIDEO_LOCAL === '1';
+    },
+    resolveId: (source) => (source === id ? resolved : undefined),
+    load(loadId) {
+      if (loadId !== resolved) return;
+      this.addWatchFile(published);
+      const index = JSON.parse(readFileSync(published, 'utf8'));
+      if (useLocal && existsSync(local)) {
+        this.addWatchFile(local);
+        // Published entries win: they are the files the public site really uses.
+        return `export default ${JSON.stringify({ ...JSON.parse(readFileSync(local, 'utf8')), ...index })};`;
+      }
+      return `export default ${JSON.stringify(index)};`;
+    },
+    configureServer(server) {
+      server.middlewares.use(serveLocal);
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use(serveLocal);
+    },
+  };
+}
+
 export default defineConfig({
   plugins: [
     { enforce: 'pre', ...mdx({ remarkPlugins: [remarkGfm, remarkSlides], rehypePlugins: [rehypeHeadingIds], providerImportSource: '@mdx-js/react' }) },
@@ -116,8 +184,12 @@ export default defineConfig({
     lessonExcerpt(),
     contentIndex(),
     seoFiles(),
+    lessonVideos(),
   ],
   resolve: { alias: { '@': '/src' } },
+  // video/ is the video project (its renders, a Chrome profile, gigabytes of media): the site
+  // imports nothing from it, and watching it crashes the dev server on a locked render file.
+  server: { watch: { ignored: ['**/video/**'] } },
   build: {
     chunkSizeWarningLimit: 1200,
   },

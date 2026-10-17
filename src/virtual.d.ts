@@ -19,3 +19,9 @@ declare module 'virtual:content-index' {
   };
   export default index;
 }
+
+declare module 'virtual:lesson-videos' {
+  /** Lesson key ("module/lesson") -> its video set. See vite.config.ts lessonVideos(). */
+  const index: Record<string, import('@/lib/video').LessonVideoEntry>;
+  export default index;
+}

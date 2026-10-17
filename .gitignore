@@ -11,3 +11,6 @@ video/.blender
 video/narration/.google-usage.json
 video/public
 video/build
+
+# The development-only video index (video/scripts/video_index.py --local).
+src/content/videos.local.json

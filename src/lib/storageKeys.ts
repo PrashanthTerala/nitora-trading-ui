@@ -39,6 +39,10 @@ export const PREF_KEYS = {
   simDock: 'nitora-sim-dock',
   /** "open" or "closed": the simulator's order-ticket rail. */
   simRail: 'nitora-sim-rail',
+  /** The language last chosen for lesson videos ("en", "te", ...). */
+  videoLang: 'nitora-video-lang',
+  /** Where each lesson video was left, per lesson and language: {"module/lesson|te": seconds}. */
+  videoPositions: 'nitora-video-positions',
 } as const;
 
 /** The part of Storage the migration uses, so a test can hand it a plain object. */
