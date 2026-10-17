@@ -11,6 +11,19 @@
         "file": "06-engulfing.en.mp4",
         "sha256": "733cab73411952a609a8ca4274b70c39721c1247a1ceb0bd77a5fa3ea2a980d2"
       }
+    },
+    "te": {
+      "approved": "2026-10-17",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "06-engulfing.te.vtt",
+        "sha256": "fe6504f9478097ac7a52d771e39b53177b2473e6ab749c0b2aa05e01809a157a"
+      },
+      "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
+      "video": {
+        "file": "06-engulfing.te.mp4",
+        "sha256": "6fe6bffdb3904cc415c94f3644dda8a9e57c106cfd40e3ddf21d66d23c7dad9f"
+      }
     }
   },
   "m02-candlestick-patterns/07-harami-and-harami-cross": {
@@ -24,6 +37,19 @@
       "video": {
         "file": "07-harami-and-harami-cross.en.mp4",
         "sha256": "7c13e770e0d0c83c3f34302a79453225008bf342a58d0b1073016fb7f260424e"
+      }
+    },
+    "te": {
+      "approved": "2026-10-17",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "07-harami-and-harami-cross.te.vtt",
+        "sha256": "b73873ee912dcf4f07e1d480fde7ba995c95a156fce054a92ad77fac5e179f36"
+      },
+      "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
+      "video": {
+        "file": "07-harami-and-harami-cross.te.mp4",
+        "sha256": "9c13232304ff92c840651872e1156edd0d8eefe0d6a5cf7ec316beec64642252"
       }
     }
   },
@@ -39,6 +65,19 @@
         "file": "08-piercing-dark-cloud.en.mp4",
         "sha256": "bbbfd61337cb6b5c13a434b869c674615f3a1e854a934de79626a586b285e2bd"
       }
+    },
+    "te": {
+      "approved": "2026-10-17",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "08-piercing-dark-cloud.te.vtt",
+        "sha256": "091aa11a3aa7cfa82ed3aab261d3d5158028916ae453b9e6036180f03b2f4df8"
+      },
+      "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
+      "video": {
+        "file": "08-piercing-dark-cloud.te.mp4",
+        "sha256": "1251260428b0c36cc8c83a10ef276c21966bb64463b0a07f60b7d1047c2c7edd"
+      }
     }
   },
   "m02-candlestick-patterns/09-tweezers-and-counterattack": {
@@ -52,6 +91,19 @@
       "video": {
         "file": "09-tweezers-and-counterattack.en.mp4",
         "sha256": "bda545b5c79cfbfff78b42d15e23d7a17d8a97749b0b470a26ae1d1a3707d2a9"
+      }
+    },
+    "te": {
+      "approved": "2026-10-17",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "09-tweezers-and-counterattack.te.vtt",
+        "sha256": "d517de35836461a328780551aa52b08ad64fe923ee05b5da81ff47e0035c62ed"
+      },
+      "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
+      "video": {
+        "file": "09-tweezers-and-counterattack.te.mp4",
+        "sha256": "3de048d11547f6d388f3832ff9ec37173cd92b4f7bae6ec3f8df1f27b611047f"
       }
     }
   },
@@ -67,6 +119,19 @@
         "file": "10-morning-evening-star.en.mp4",
         "sha256": "57481dfc28a52e15c8ed9e0c65a40dfdf55debaea95a20f4464d81b031484dec"
       }
+    },
+    "te": {
+      "approved": "2026-10-17",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "10-morning-evening-star.te.vtt",
+        "sha256": "40b1e38ec8e43ac552a1595b768934d07ff52a6dd4b4fa596155e2ff7b3b5cb6"
+      },
+      "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
+      "video": {
+        "file": "10-morning-evening-star.te.mp4",
+        "sha256": "c1528f20b24fbabe71bb39ed95e1db257ebd9804331079ca1fd2e0f4aeec4080"
+      }
     }
   },
   "m02-candlestick-patterns/11-three-soldiers-three-crows": {
@@ -80,6 +145,19 @@
       "video": {
         "file": "11-three-soldiers-three-crows.en.mp4",
         "sha256": "a686cbe72c4e7c619939132830ba6d16080d1ca776259d33e7ab5b52395989b6"
+      }
+    },
+    "te": {
+      "approved": "2026-10-17",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "11-three-soldiers-three-crows.te.vtt",
+        "sha256": "2bffb25b98d43699262735c7b2e938069cf34d743fa515ce80d1007f59ad61a4"
+      },
+      "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
+      "video": {
+        "file": "11-three-soldiers-three-crows.te.mp4",
+        "sha256": "b9f038a7a4b473fd6b58c605ddcef88ff4e70ceff9c67bf75ae50ccf6a53618a"
       }
     }
   },
@@ -95,6 +173,19 @@
         "file": "12-three-inside-outside.en.mp4",
         "sha256": "7bf7287b613d954a715ea39b976bbf963c767a8e042e643fd38570d819fb2316"
       }
+    },
+    "te": {
+      "approved": "2026-10-17",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "12-three-inside-outside.te.vtt",
+        "sha256": "425a00c718f4ab8a7a8dd739fb2d7e48ab175775f7a41c5ecd10649a0029feb7"
+      },
+      "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
+      "video": {
+        "file": "12-three-inside-outside.te.mp4",
+        "sha256": "c6f17620559f1c13042d8c8afeef4ff99af86a2382d12985888efade3b45fbe5"
+      }
     }
   },
   "m02-candlestick-patterns/13-abandoned-baby-and-stars": {
@@ -109,6 +200,19 @@
         "file": "13-abandoned-baby-and-stars.en.mp4",
         "sha256": "7b13dfc5d9453e6c68ef2e774ff597e36981ab0fb4a0c75ff8608f0c635571e0"
       }
+    },
+    "te": {
+      "approved": "2026-10-17",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "13-abandoned-baby-and-stars.te.vtt",
+        "sha256": "df3368e08b1f6297fa2886b7a5ffaf3d0ce0921f358a1eb660cb8b8db50727f7"
+      },
+      "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
+      "video": {
+        "file": "13-abandoned-baby-and-stars.te.mp4",
+        "sha256": "a11bf7d80321056a4b2785d8d1defc23c253c1b8a5bc0623ff180faef8581ea5"
+      }
     }
   },
   "m05-indicators/03-ma-crossovers": {
@@ -122,6 +226,19 @@
       "video": {
         "file": "03-ma-crossovers.en.mp4",
         "sha256": "a3bd960595b778035dbaf274b0d7a4031980ea0b3f573a6fe8963382d7522eff"
+      }
+    },
+    "te": {
+      "approved": "2026-10-17",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "03-ma-crossovers.te.vtt",
+        "sha256": "cf0da44c689281dd8153c4e659360075216a1fe58017334068eea8eb68070eeb"
+      },
+      "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
+      "video": {
+        "file": "03-ma-crossovers.te.mp4",
+        "sha256": "cda51ada97a63383486e30aeba2446d209c9283c494d40b11435e38f65040f42"
       }
     }
   }
