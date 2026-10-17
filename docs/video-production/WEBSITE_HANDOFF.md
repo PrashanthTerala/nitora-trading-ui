@@ -28,6 +28,7 @@ Both are the cinematic (V3) cut. All files passed `qa.py` and are at −16 LUFS.
 | m02 · 08 Piercing line and dark cloud cover | `video/out/publish/m02-candlestick-patterns/08-piercing-dark-cloud/v3/` | 6:40 | 8:29 | — | — | 99 MB |
 | m02 · 09 Tweezers and counterattack lines | `video/out/publish/m02-candlestick-patterns/09-tweezers-and-counterattack/v3/` | 6:56 | 8:10 | — | — | 100 MB |
 | m02 · 10 Morning star and evening star | `video/out/publish/m02-candlestick-patterns/10-morning-evening-star/v3/` | 6:36 | 8:20 | — | — | 95 MB |
+| m02 · 11 Three white soldiers and three black crows | `video/out/publish/m02-candlestick-patterns/11-three-soldiers-three-crows/v3/` | 7:37 | 9:18 | — | — | 232 MB |
 
 New lessons are made in English and Telugu only, until the owner revisits the other languages after these videos are on the site.
 
@@ -36,6 +37,16 @@ The engulfing, harami, piercing, tweezers and stars sets follow two later rules:
 - the end card shows the Nitora icon.
 
 The piercing, tweezers and stars sets also follow a third: chart labels sit on what they name, with no pointer lines.
+
+From the soldiers set on, lessons use the studio look (approved 2026-10-16):
+- a brand opening and chapter cards, with a chaptered progress bar;
+- kinetic headlines;
+- candles that build with a live price tag;
+- a camera push with depth of field;
+- levels that draw themselves;
+- a drifting haze, a vignette and fine, still grain.
+
+The opening and chapter cards are short designed pauses, and QA counts them as intended.
 
 The crossover v3 set was rendered before these rules and is kept as it is.
 

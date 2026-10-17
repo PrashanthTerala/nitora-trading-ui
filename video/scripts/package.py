@@ -55,9 +55,11 @@ def scene_starts(spec: dict, timings: dict) -> dict:
     lead, tail = spec["timing"]["lead"], spec["timing"]["tail"]
     t, starts = 0, {}
     for scene, meta in spec["scenes"].items():
-        starts[scene] = t / FPS
+        # A scene's "pre" (the studio look's brand opening or chapter card) comes before it, quiet.
+        pre = round(meta.get("pre", 0) * FPS)
+        starts[scene] = (t + pre) / FPS
         seconds = max(meta["base"], lead + timings[scene]["seconds"] + tail)
-        t += round(seconds * FPS)
+        t += pre + round(seconds * FPS)
     return starts
 
 
@@ -138,7 +140,7 @@ def finish(src: Path, dst: Path, lang: str) -> dict:
 # publish. The bases must match the composition's (src/MaCrossoversCinematic.tsx BASES); a cut
 # over every scene takes its overrides per lesson.
 # Where the poster frame is, as a share of the English video.
-POSTER_AT = {"ma-crossovers": 0.36, "engulfing": 0.25, "harami": 0.25, "piercing": 0.21, "tweezers": 0.22, "stars": 0.24}
+POSTER_AT = {"ma-crossovers": 0.36, "engulfing": 0.25, "harami": 0.25, "piercing": 0.21, "tweezers": 0.22, "stars": 0.24, "soldiers": 0.25}
 CUTS = {
     # The proof of concept (4 scenes); its composition has since grown into the full lesson.
     "cinematic-poc": {"bases": {"title": 7, "average": 30, "golden": 18, "lag": 26}, "input": "v3/{name}-cinematic-{lang}.mp4", "dir": "v3-cinematic-poc"},
@@ -196,8 +198,13 @@ def main() -> None:
         # such instead of as a fault, but only when the silence sits inside a scripted pause.
         lead = spec["timing"]["lead"]
         intended = []
+        said = 0.0  # where the previous scene's last sentence ended
         for scene, start in scene_starts(spec, timings).items():
             cues = timings[scene]["cues"]
+            # The studio look's brand opening and chapter cards ("pre") are quiet on purpose too.
+            if spec["scenes"][scene].get("pre"):
+                intended.append((said, start + lead + cues[0]["start"]))
+            said = start + lead + cues[-1]["end"]
             for a, b in zip(cues, cues[1:]):
                 if b["start"] - a["end"] >= 2.0:
                     intended.append((start + lead + a["end"], start + lead + b["start"]))

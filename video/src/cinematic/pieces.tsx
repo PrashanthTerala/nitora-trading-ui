@@ -4,7 +4,7 @@
  * recap and closing scenes. Each lesson passes its own words and data.
  */
 import { useGsapTimeline } from '@remotion/gsap';
-import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
+import { AbsoluteFill, Easing, interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 import type { OHLC } from '@/engine/market/types';
 import { Brand, body, kicker, s, useSpeechAt } from '../kit';
 import { CinematicChart, frameOf, type Camera, type LegendItem } from './CinematicChart';
@@ -63,6 +63,7 @@ export function Volume({ bars, cam, left, right, top, bottom, highlight, opacity
     <svg viewBox="0 0 1920 1080" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity }}>
       <line x1={left} x2={right} y1={bottom} y2={bottom} stroke="var(--color-line)" strokeWidth={2} />
       {bars.map((b, i) => {
+        if (x(i) < left - w / 2 || x(i) > right + w / 2) return null; // only the bars in the camera's window
         const h = ((b.v ?? 0) / max) * (bottom - top);
         return <rect key={i} x={x(i) - w / 2} y={bottom - h} width={w} height={h} rx={3} fill={i === highlight ? (b.c >= b.o ? UP : DOWN) : SOFT} opacity={i === highlight ? 1 : 0.45} />;
       })}
@@ -193,4 +194,35 @@ export function Checklist({ items, left = 1120, top = 320 }: { items: { title: s
       })}
     </div>
   );
+}
+
+// ---------------------------------------------------------------- the studio look (from the soldiers lesson)
+
+/**
+ * Candles that build one at a time: each step's candle grows through its session (see grow) from
+ * its start frame, over `len` frames. Returns the series as drawn so far, the `draw` extent (the
+ * last candle started, or `shown` before any), and the candle still building, for the price tag.
+ */
+export function buildCandles(bars: OHLC[], f: number, shown: number, steps: { index: number; at: number; len?: number }[]) {
+  let out = bars;
+  let last = shown;
+  let building: number | undefined;
+  for (const { index, at, len = s(1.6) } of steps) {
+    if (f < at) break;
+    const t = Math.min(1, (f - at) / len);
+    out = grow(out, index, t);
+    last = index;
+    building = t < 1 ? index : undefined;
+  }
+  return { bars: out, draw: upto(last, bars.length), building };
+}
+
+/** A number that counts up to its value from `at`, settling exactly on it, with its decimals kept. */
+export const countUp = (f: number, at: number, value: number, decimals = 0, len = s(1.2)) =>
+  interpolate(f, [at, at + len], [0, value], { ...clamp, easing: Easing.out(Easing.cubic) }).toFixed(decimals);
+
+/** A fill that overshoots a little and settles (bars, gauges), 0 to 1 and a touch past. */
+export function useOvershoot() {
+  const { fps } = useVideoConfig();
+  return (f: number, at: number) => spring({ frame: f - at, fps, config: { damping: 10, mass: 0.7 } });
 }

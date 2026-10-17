@@ -4,8 +4,8 @@
  * renders the same picture, in preview, scrubbing and render alike.
  */
 import { useGsapTimeline } from '@remotion/gsap';
-import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from 'remotion';
-import { s, useMark } from '../kit';
+import { AbsoluteFill, Easing, interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
+import { s, useChapter, useLook, useMark } from '../kit';
 import { Ship } from '../ma-crossovers/explainers';
 import { BAND_SPACE, CLOSES, CinematicChart, DEATH, GOLDEN, HIGH, LOW, PLOT, SMA50, WIDE, cameraAt, frameBars } from './CinematicChart';
 import { useT } from './strings';
@@ -29,6 +29,7 @@ export function Headline({ kicker, children, at = 0, accent }: { kicker: string;
   // One line, always: long headlines get smaller type (about 0.55 em per character) rather
   // than a second line that would run into the chart's legend.
   const size = Math.min(58, Math.floor(1680 / (children.length * 0.55)));
+  if (useLook() === 'studio') return <KineticHeadline kicker={kicker} at={at} accent={accent} keyText={key} rest={rest} size={size} sweep={sweep} />;
   return (
     <div style={{ position: 'absolute', left: 120, top: 70, right: 120, opacity: o, transform: `translateY(${(1 - o) * 16}px)` }}>
       <div style={{ fontSize: 30, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--color-accent)' }}>{kicker}</div>
@@ -40,6 +41,46 @@ export function Headline({ kicker, children, at = 0, accent }: { kicker: string;
           </span>
         )}
         {rest}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * The studio look's headline: the chapter number before the kicker, and the words rising one by
+ * one out of a blur (split at spaces only, so Telugu clusters stay whole), the key term's
+ * underline sweeping in under it.
+ */
+function KineticHeadline({ kicker, at, accent, keyText, rest, size, sweep }: { kicker: string; at: number; accent?: string; keyText: string; rest: string; size: number; sweep: number }) {
+  const f = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const chapter = useChapter();
+  const k = Math.min(1, spring({ frame: f - at, fps, config: { damping: 200 } }));
+  let n = 0;
+  const word = (w: string, i: number, gap: boolean) => {
+    const p = Math.min(1, spring({ frame: f - at - 3 - n++ * 2.5, fps, config: { damping: 20, mass: 0.6 } }));
+    return (
+      <span key={i} style={{ display: 'inline-block', marginRight: gap ? '0.25em' : 0, opacity: p, transform: `translateY(${(1 - p) * 34}px)`, filter: p < 0.98 ? `blur(${(1 - p) * 8}px)` : undefined }}>
+        {w}
+      </span>
+    );
+  };
+  const keyWords = keyText ? keyText.split(' ') : [];
+  const restWords = rest.split(' ').filter(Boolean);
+  return (
+    <div style={{ position: 'absolute', left: 120, top: 70, right: 120 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 16, fontSize: 30, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--color-accent)', opacity: k, transform: `translateX(${(1 - k) * -24}px)` }}>
+        {chapter > 0 && <span style={{ fontFamily: 'var(--font-mono)', letterSpacing: 0, border: '2px solid var(--color-accent)', borderRadius: 10, padding: '0 10px', fontSize: 26 }}>{String(chapter).padStart(2, '0')}</span>}
+        {kicker}
+      </div>
+      <div style={{ fontFamily: 'var(--font-display)', fontSize: size, fontWeight: 700, lineHeight: 1.15, marginTop: 10, color: 'var(--color-ink)', whiteSpace: 'nowrap' }}>
+        {keyWords.length > 0 && (
+          <span style={{ position: 'relative', display: 'inline-block', color: accent }}>
+            {keyWords.map((w, i) => word(w, i, i < keyWords.length - 1))}
+            <span style={{ position: 'absolute', left: 0, bottom: -6, height: 6, borderRadius: 3, width: `${sweep * 100}%`, background: accent }} />
+          </span>
+        )}
+        {restWords.map((w, i) => word(w, 100 + i, i < restWords.length - 1))}
       </div>
     </div>
   );

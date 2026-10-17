@@ -7,7 +7,7 @@
  * voice instead of the longest one's.
  */
 import { createContext, useContext, type CSSProperties, type ReactNode } from 'react';
-import { AbsoluteFill, Audio, Img, interpolate, Sequence, spring, staticFile, useCurrentFrame, useVideoConfig } from 'remotion';
+import { AbsoluteFill, Audio, Easing, Img, interpolate, Sequence, spring, staticFile, useCurrentFrame, useVideoConfig } from 'remotion';
 import { Theme } from './theme';
 
 export const FPS = 30;
@@ -19,8 +19,12 @@ export const s = (seconds: number) => Math.round(seconds * FPS);
  * and options: `fadeIn` / `fadeOut` false for a scene that continues straight from or into its
  * neighbour (one camera move across a cut), `bleed` true to draw edge to edge (no page padding),
  * `tag` a disclaimer for the whole scene ("Synthetic data, for teaching", "Illustration"), drawn by CornerTag.
+ * The studio look adds: `pre` seconds of quiet before the scene (the brand opening on the first
+ * scene, a chapter card before a chapter's first scene), `chapter` that card's title, and `sweep`
+ * a band of light across the frame as the scene arrives (a change of topic). The narration script
+ * carries `pre` too (scripts/package.py times the captions from it), so the two always agree.
  */
-export type SceneOptions = { fadeIn?: boolean; fadeOut?: boolean; bleed?: boolean; tag?: string };
+export type SceneOptions = { fadeIn?: boolean; fadeOut?: boolean; bleed?: boolean; tag?: string; pre?: number; chapter?: string; sweep?: boolean };
 export type Scene<Id extends string> = [Id, number, () => ReactNode, SceneOptions?];
 
 /**
@@ -43,7 +47,8 @@ const DEFAULT_TIMING: Timing = { lead: 0.5, tail: 0.9 };
 export function timeline<Id extends string>(scenes: Scene<Id>[], narration: Narration<Id>, lang: string, timing: Timing = DEFAULT_TIMING) {
   return scenes.map(([id, base, render, options]) => {
     const seconds = Math.max(base, timing.lead + narration[lang][id].seconds + timing.tail);
-    return { id, frames: s(seconds), stretch: seconds / base, render, options: options ?? {}, marks: narration[lang][id].marks ?? {}, seconds: narration[lang][id].seconds };
+    const pre = s(options?.pre ?? 0);
+    return { id, pre, frames: pre + s(seconds), stretch: seconds / base, render, options: options ?? {}, marks: narration[lang][id].marks ?? {}, seconds: narration[lang][id].seconds };
   });
 }
 
@@ -80,32 +85,189 @@ export function useSpeechAt() {
   return (fraction: number) => s(lead + fraction * seconds);
 }
 
-export function LessonVideo<Id extends string>({ scenes, narration, lang, timing = DEFAULT_TIMING, textLang = 'en' }: { scenes: Scene<Id>[]; narration: Narration<Id>; lang: string; timing?: Timing; textLang?: string }) {
+/**
+ * The look: "cinematic" (every lesson up to the stars lesson) or "studio" (from the soldiers
+ * lesson, approved 2026-10-16): a moving haze, a vignette and fine grain, scenes that arrive out
+ * of a soft focus, kinetic headlines, a brand opening, chapter cards and a chaptered progress bar.
+ */
+export type Look = 'cinematic' | 'studio';
+const LookContext = createContext<Look>('cinematic');
+export const useLook = () => useContext(LookContext);
+/** The chapter the current scene belongs to (1-based; 0 before the first), for headlines. */
+const ChapterContext = createContext(0);
+export const useChapter = () => useContext(ChapterContext);
+
+export function LessonVideo<Id extends string>({ scenes, narration, lang, timing = DEFAULT_TIMING, textLang = 'en', look = 'cinematic' }: { scenes: Scene<Id>[]; narration: Narration<Id>; lang: string; timing?: Timing; textLang?: string; look?: Look }) {
   let from = 0;
+  let chapter = 0;
   const LEAD = timing.lead;
+  const parts = timeline(scenes, narration, lang, timing);
+  const chapters: number[] = [];
   return (
     <Theme>
-      <Backdrop />
-      {timeline(scenes, narration, lang, timing).map(({ id, frames, stretch, render, options, marks, seconds }) => {
-        const seq = (
-          <Sequence key={id} name={id} from={from} durationInFrames={frames}>
-            <PaceContext.Provider value={stretch}>
-              <MarksContext.Provider value={{ marks, lead: LEAD, seconds }}>
-                <LangContext.Provider value={textLang}>
-                  <SceneFade length={frames} options={options}>{render()}</SceneFade>
-                </LangContext.Provider>
-              </MarksContext.Provider>
-            </PaceContext.Provider>
-            <Sequence from={s(LEAD)} name={`${id} narration`}>
-              <Audio src={narration[lang][id].src} />
+      <LookContext.Provider value={look}>
+        {look === 'studio' ? <StudioBackdrop /> : <Backdrop />}
+        {parts.map(({ id, pre, frames, stretch, render, options, marks, seconds }, k) => {
+          if (options.chapter) {
+            chapter += 1;
+            chapters.push(from);
+          }
+          const seq = (
+            <Sequence key={id} name={id} from={from} durationInFrames={frames}>
+              {pre > 0 && (
+                <Sequence durationInFrames={pre + s(0.4)} name={`${id} ${k === 0 ? 'opening' : 'chapter'}`}>
+                  {k === 0 ? <Opening length={pre} /> : <ChapterCard number={chapter} title={options.chapter ?? ''} length={pre} />}
+                </Sequence>
+              )}
+              <Sequence from={pre} durationInFrames={frames - pre} name={`${id} scene`}>
+                <PaceContext.Provider value={stretch}>
+                  <MarksContext.Provider value={{ marks, lead: LEAD, seconds }}>
+                    <LangContext.Provider value={textLang}>
+                      <ChapterContext.Provider value={chapter}>
+                        {look === 'studio' ? <StudioEnter length={frames - pre} options={options}>{render()}</StudioEnter> : <SceneFade length={frames} options={options}>{render()}</SceneFade>}
+                      </ChapterContext.Provider>
+                    </LangContext.Provider>
+                  </MarksContext.Provider>
+                </PaceContext.Provider>
+                <Sequence from={s(LEAD)} name={`${id} narration`}>
+                  <Audio src={narration[lang][id].src} />
+                </Sequence>
+              </Sequence>
             </Sequence>
-          </Sequence>
-        );
-        from += frames;
-        return seq;
-      })}
-      <Progress />
+          );
+          from += frames;
+          return seq;
+        })}
+        {look === 'studio' ? (
+          <>
+            <Finish />
+            <ChapterProgress starts={chapters} />
+          </>
+        ) : (
+          <Progress />
+        )}
+      </LookContext.Provider>
     </Theme>
+  );
+}
+
+const ease = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' } as const;
+
+/** The studio backdrop: the page colour under two slow-drifting accent hazes. */
+function StudioBackdrop() {
+  const t = useCurrentFrame() / FPS;
+  const ax = 72 + 8 * Math.sin(t / 9);
+  const ay = 28 + 6 * Math.cos(t / 11);
+  const bx = 18 + 7 * Math.cos(t / 13);
+  const by = 82 + 5 * Math.sin(t / 10);
+  return (
+    <AbsoluteFill
+      style={{
+        background: `radial-gradient(55% 50% at ${ax}% ${ay}%, color-mix(in oklch, var(--color-accent) 17%, transparent), transparent 70%), radial-gradient(45% 45% at ${bx}% ${by}%, color-mix(in oklch, var(--color-chart-2) 9%, transparent), transparent 70%), var(--color-bg)`,
+      }}
+    />
+  );
+}
+
+/** Fine grain, as an SVG noise tile. */
+const GRAIN = `url("data:image/svg+xml;utf8,${encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' width='256' height='256'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/></filter><rect width='256' height='256' filter='url(#n)'/></svg>")}")`;
+
+/**
+ * Over everything, faint enough never to hide anything: a light vignette and fine grain. The grain
+ * holds still: grain that moved every frame made the files four to five times larger.
+ */
+function Finish() {
+  return (
+    <AbsoluteFill style={{ pointerEvents: 'none' }}>
+      <AbsoluteFill style={{ background: 'radial-gradient(120% 95% at 50% 45%, transparent 62%, rgba(0, 0, 0, 0.32) 100%)' }} />
+      <AbsoluteFill style={{ backgroundImage: GRAIN, opacity: 0.045, mixBlendMode: 'screen' }} />
+    </AbsoluteFill>
+  );
+}
+
+/**
+ * A studio scene arrives out of a soft focus (a slight blur and scale that clear in half a
+ * second) and fades out; `sweep` adds a band of light across the frame as it arrives.
+ */
+function StudioEnter({ length, options, children }: { length: number; options: SceneOptions; children: ReactNode }) {
+  const f = useCurrentFrame();
+  const inP = options.fadeIn === false ? 1 : interpolate(f, [0, 16], [0, 1], { ...ease, easing: Easing.out(Easing.cubic) });
+  const out = options.fadeOut === false ? 1 : interpolate(f, [length - 10, length], [1, 0], ease);
+  const sw = interpolate(f, [2, 28], [-0.3, 1.3], ease);
+  return (
+    <AbsoluteFill style={{ opacity: Math.min(inP, out) }}>
+      <AbsoluteFill style={{ padding: options.bleed ? 0 : '96px 140px', filter: inP < 1 ? `blur(${(1 - inP) * 8}px)` : undefined, transform: inP < 1 ? `scale(${1 + (1 - inP) * 0.02})` : undefined }}>{children}</AbsoluteFill>
+      {options.tag && <CornerTag label={options.tag} />}
+      {options.sweep && sw > -0.3 && sw < 1.3 && (
+        <AbsoluteFill style={{ pointerEvents: 'none', background: `linear-gradient(105deg, transparent ${sw * 100 - 18}%, color-mix(in oklch, var(--color-accent) 14%, transparent) ${sw * 100}%, transparent ${sw * 100 + 18}%)` }} />
+      )}
+    </AbsoluteFill>
+  );
+}
+
+/** The brand opening: the Nitora icon arrives as a ring draws round it, then the name. */
+function Opening({ length }: { length: number }) {
+  const f = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const icon = spring({ frame: f - 4, fps, config: { damping: 14, mass: 0.7 } });
+  const ring = interpolate(f, [6, 34], [0, 1], { ...ease, easing: Easing.inOut(Easing.cubic) });
+  const name = spring({ frame: f - 20, fps, config: { damping: 200 } });
+  const out = interpolate(f, [length - 8, length + 10], [1, 0], ease);
+  const C = 2 * Math.PI * 92;
+  return (
+    <AbsoluteFill style={{ justifyContent: 'center', alignItems: 'center', gap: 40, opacity: out, filter: out < 1 ? `blur(${(1 - out) * 10}px)` : undefined }}>
+      <div style={{ position: 'relative', width: 220, height: 220 }}>
+        <svg viewBox="0 0 220 220" style={{ position: 'absolute', inset: 0 }}>
+          <circle cx={110} cy={110} r={92} fill="none" stroke="var(--color-accent)" strokeWidth={5} strokeLinecap="round" strokeDasharray={`${C * ring} ${C}`} transform="rotate(-90 110 110)" />
+        </svg>
+        <Img src={staticFile('favicon.svg')} style={{ position: 'absolute', left: 50, top: 50, width: 120, height: 120, transform: `scale(${icon}) rotate(${(1 - icon) * -40}deg)`, opacity: Math.min(1, icon * 1.4) }} />
+      </div>
+      <div style={{ fontSize: 56, fontWeight: 700, color: 'var(--color-ink)', opacity: name, transform: `translateY(${(1 - name) * 20}px)` }}>
+        Nitora <span style={{ fontWeight: 400, color: 'var(--color-ink-soft)' }}>Trading Academy</span>
+      </div>
+    </AbsoluteFill>
+  );
+}
+
+/** A chapter card: its number, a rule that draws itself, and its title, word by word. */
+function ChapterCard({ number, title, length }: { number: number; title: string; length: number }) {
+  const f = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const num = spring({ frame: f, fps, config: { damping: 200 } });
+  const rule = interpolate(f, [3, 18], [0, 1], { ...ease, easing: Easing.out(Easing.cubic) });
+  const out = interpolate(f, [length - 4, length + 10], [1, 0], ease);
+  return (
+    <AbsoluteFill style={{ justifyContent: 'center', padding: '0 220px', opacity: out, filter: out < 1 ? `blur(${(1 - out) * 8}px)` : undefined }}>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 40, fontWeight: 700, color: 'var(--color-accent)', opacity: num, transform: `translateX(${(1 - num) * -30}px)` }}>Chapter {String(number).padStart(2, '0')}</div>
+      <div style={{ height: 6, width: 420 * rule, borderRadius: 3, background: 'var(--color-accent)', margin: '26px 0 30px' }} />
+      <div style={{ fontFamily: 'var(--font-display)', fontSize: 110, fontWeight: 750, letterSpacing: '-0.02em', lineHeight: 1.05 }}>
+        {title.split(' ').map((w, i) => {
+          const p = Math.min(1, spring({ frame: f - 4 - i * 3, fps, config: { damping: 18, mass: 0.6 } }));
+          return (
+            <span key={i} style={{ display: 'inline-block', marginRight: '0.26em', opacity: p, transform: `translateY(${(1 - p) * 60}px)`, filter: p < 0.98 ? `blur(${(1 - p) * 10}px)` : undefined }}>
+              {w}
+            </span>
+          );
+        })}
+      </div>
+    </AbsoluteFill>
+  );
+}
+
+/** The progress bar in chapters: a faint track, the fill, and a notch at each chapter's start. */
+function ChapterProgress({ starts }: { starts: number[] }) {
+  const f = useCurrentFrame();
+  const { durationInFrames } = useVideoConfig();
+  return (
+    <AbsoluteFill style={{ justifyContent: 'flex-end' }}>
+      <div style={{ position: 'relative', height: 6 }}>
+        <div style={{ position: 'absolute', inset: 0, background: 'var(--color-line)', opacity: 0.5 }} />
+        <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: `${(f / durationInFrames) * 100}%`, background: 'var(--color-accent)', opacity: 0.9 }} />
+        {starts.filter((x) => x > 0).map((x) => (
+          <div key={x} style={{ position: 'absolute', top: 0, bottom: 0, left: `calc(${(x / durationInFrames) * 100}% - 3px)`, width: 6, background: 'var(--color-bg)' }} />
+        ))}
+      </div>
+    </AbsoluteFill>
   );
 }
 

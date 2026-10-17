@@ -15,7 +15,7 @@
  * what they name. A scene that needs room below (the ship card) shrinks the plot with
  * `plotBottom` instead of drawing over it.
  */
-import { useId } from 'react';
+import { useId, type ReactElement } from 'react';
 import { Easing, interpolate } from 'remotion';
 import type { OHLC } from '@/engine/market/types';
 import * as d from '../ma-crossovers/data';
@@ -136,8 +136,15 @@ export function placeLabels(items: { x: number; w: number; pri?: number }[], res
 export type Marker = { index: number; label: string; color: string; opacity: number; pulse: number; value?: number };
 /** A small triangle at a crossing, without a label (for showing many crosses at once). */
 export type Tick = { index: number; value: number; up: boolean; opacity?: number };
-/** A dashed horizontal level (support, resistance); its label goes in the band, never on the candles. */
-export type Level = { price: number; label: string; color: string; opacity: number };
+/**
+ * A dashed horizontal level (support, resistance), labelled on its own line. `draw` (0-1, default 1)
+ * draws the line in from the left; its label waits until the line is drawn.
+ */
+export type Level = { price: number; label: string; color: string; opacity: number; draw?: number };
+/** Depth of field: candles outside `from`..`to` go soft and dim by `strength` (0-1), so the eye stays on the pattern. */
+export type Focus = { from: number; to: number; strength: number };
+/** A live price tag on the axis at a candle's close (the candle being drawn), in its colour. */
+export type PriceTag = { index: number; opacity: number };
 export type Line = { values: number[]; color: string; width?: number };
 export type LegendItem = { label: string; color: string; kind: 'candle' | 'line' };
 /** A label for the band that belongs to no shape (a count, a summary); `index` places it, else it sits right. */
@@ -170,6 +177,8 @@ export function CinematicChart({
   notes = [],
   outlines = [],
   maxBody = 22,
+  focus,
+  priceTag,
 }: {
   cam: Camera;
   /** The candles (default: the pilot series) and the lines drawn over them (default: its SMA 200 and 50). */
@@ -195,6 +204,8 @@ export function CinematicChart({
   plotBottom?: number;
   dim?: number;
   spotlight?: Spotlight;
+  focus?: Focus;
+  priceTag?: PriceTag;
 }) {
   const { left, right, top } = { ...PLOT, ...plot };
   const bottom = plotBottom ?? plot?.bottom ?? PLOT.bottom;
@@ -229,14 +240,16 @@ export function CinematicChart({
     }
     return dpath;
   };
-  const candles = [];
+  const candles: ReactElement[] = [];
+  const soft: ReactElement[] = [];
+  const blurred = (i: number) => !!focus && focus.strength > 0.01 && (i < focus.from || i > focus.to);
   for (let i = from; i <= to; i++) {
     const b = bars[i];
     const up = b.c >= b.o;
     const color = up ? 'var(--color-up)' : 'var(--color-down)';
     const yo = y(b.o);
     const yc = y(b.c);
-    candles.push(
+    (blurred(i) ? soft : candles).push(
       <g key={i}>
         <line x1={x(i)} x2={x(i)} y1={y(b.h)} y2={y(b.l)} stroke={color} strokeWidth={Math.max(1, Math.min(body * 0.18, 2.5))} />
         <rect x={x(i) - body / 2} y={Math.min(yo, yc)} width={body} height={Math.max(1.5, Math.abs(yc - yo))} fill={color} />
@@ -244,6 +257,8 @@ export function CinematicChart({
     );
   }
   const tickValues = ticks(cam.y0, cam.y1);
+  // An axis number the price tag would sit on gives way to it.
+  const tagY = priceTag && bars[priceTag.index] ? y(bars[priceTag.index].c) : undefined;
 
   // Labels sit on what they name, with no pointer lines: a level's label on its own line at the
   // right, a note just under (or over) its candle, an arrow's label beside its arrow. Each spot is
@@ -287,7 +302,7 @@ export function CinematicChart({
   const steps = (n: number, d: number) => Array.from({ length: n }, (_, k) => k * d);
   const liveLevels = levels.filter((lv) => lv.opacity > 0.01);
   for (const lv of liveLevels) {
-    if (!lv.label) continue; // an unlabelled line, explained once by the scene itself
+    if (!lv.label || (lv.draw ?? 1) < 0.999) continue; // an unlabelled line (the scene explains it), or one still drawing
     const w = textWidth(lv.label);
     const cy = y(lv.price);
     // On its own line, as far right as it fits, sliding left past anything in the way; where
@@ -349,6 +364,7 @@ export function CinematicChart({
             <stop offset="1" stopColor="var(--color-bg)" stopOpacity={0.78 * spotlight.strength} />
           </radialGradient>
         )}
+        {focus && <filter id={`soft${uid}`} x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation={4 * focus.strength} /></filter>}
         <filter id={`glow${uid}`} x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur stdDeviation="5" result="b" />
           <feMerge>
@@ -361,7 +377,7 @@ export function CinematicChart({
       {tickValues.map((v) => (
         <g key={v}>
           <line x1={left} x2={right} y1={y(v)} y2={y(v)} stroke="var(--color-line)" strokeWidth={1.5} />
-          <text x={right + 20} y={y(v) + 11} fontSize={30} fill="var(--color-ink-soft)" fontFamily="var(--font-mono)">
+          <text x={right + 20} y={y(v) + 11} fontSize={30} fill="var(--color-ink-soft)" fontFamily="var(--font-mono)" opacity={tagY !== undefined && Math.abs(y(v) - tagY) < 44 ? 1 - priceTag!.opacity : 1}>
             {v.toFixed(v % 1 ? 1 : 0)}
           </text>
         </g>
@@ -375,6 +391,11 @@ export function CinematicChart({
             <line x1={x(r.to)} x2={x(r.to)} y1={top} y2={bottom} stroke={r.color} strokeWidth={2} strokeDasharray="8 8" />
           </g>
         ))}
+        {soft.length > 0 && focus && (
+          <g filter={`url(#soft${uid})`} opacity={1 - 0.6 * focus.strength}>
+            {soft}
+          </g>
+        )}
         {candles}
         {outlines.map((o, k) => {
           let hi = -Infinity;
@@ -388,7 +409,7 @@ export function CinematicChart({
           return <rect key={k} x={x0} y={y(hi) - 14} width={x1 - x0} height={y(lo) - y(hi) + 28} rx={12} fill="none" stroke={o.color} strokeWidth={4} opacity={o.opacity} />;
         })}
         {levels.map((lv, k) => (
-          <line key={k} x1={left} x2={right} y1={y(lv.price)} y2={y(lv.price)} stroke={lv.color} strokeWidth={3} strokeDasharray="14 10" opacity={lv.opacity} />
+          <line key={k} x1={left} x2={left + (right - left) * Math.max(0, Math.min(1, lv.draw ?? 1))} y1={y(lv.price)} y2={y(lv.price)} stroke={lv.color} strokeWidth={3} strokeDasharray="14 10" opacity={lv.opacity} />
         ))}
         <g opacity={smaOpacity} filter={`url(#glow${uid})`}>
           {drawn.map((l, k) => (
@@ -472,6 +493,14 @@ export function CinematicChart({
         );
       })}
 
+      {priceTag && priceTag.opacity > 0.01 && bars[priceTag.index] && (
+        <g opacity={priceTag.opacity}>
+          <rect x={right + 8} y={y(bars[priceTag.index].c) - 25} width={150} height={50} rx={10} fill={bars[priceTag.index].c >= bars[priceTag.index].o ? 'var(--color-up)' : 'var(--color-down)'} />
+          <text x={right + 83} y={y(bars[priceTag.index].c) + 10} textAnchor="middle" fontSize={30} fontWeight={700} fill="var(--color-bg)" fontFamily="var(--font-mono)">
+            {bars[priceTag.index].c.toFixed(2)}
+          </text>
+        </g>
+      )}
       {head && draw < 1 && (
         <g>
           <rect x={Math.min(x(last) + 18, right - 150)} y={y(bars[last].c) - 26} width={140} height={50} rx={10} fill="var(--color-surface-1)" stroke="var(--color-line)" strokeWidth={2} />

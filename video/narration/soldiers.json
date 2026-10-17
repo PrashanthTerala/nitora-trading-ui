@@ -1,0 +1,211 @@
+{
+  "lesson": "m02-candlestick-patterns/11-three-soldiers-three-crows",
+  "version": 2,
+  "source": {
+    "file": "src/content/modules/m02-candlestick-patterns/11-three-soldiers-three-crows.mdx",
+    "sha256": "a83ed88a125f9b579d85fcded696a67a3fc92d7c0dea79c559cb7fefc248933a"
+  },
+  "timing": {
+    "lead": 0.5,
+    "tail": 0.9
+  },
+  "note": "v2 (studio look): script approved 2026-10-16 (docs/video-production/scripts/soldiers-en-v2.md). English and Telugu only, by the owner's decision. Each scene names the lesson lines it says; 'computed' numbers are checked against src/soldiers/data.ts by scripts/check.mjs; 'pre' is the quiet brand opening or chapter card before a scene. Reliability figures and ranks are Bulkowski's (thepatternsite.com, read 2026-10-16), as the corrected lesson states. <mark name> sets a timing marker; <pause s> inserts silence.",
+  "scenes": {
+    "title": {
+      "base": 6,
+      "lines": "curriculum.ts: m02-candlestick-patterns / 11-three-soldiers-three-crows",
+      "pre": 1.8
+    },
+    "intro": {
+      "base": 30,
+      "lines": "1-5",
+      "marks": [
+        "three",
+        "names",
+        "momentum"
+      ]
+    },
+    "rules": {
+      "base": 22,
+      "lines": "7-12",
+      "marks": [
+        "trend",
+        "tall",
+        "inside",
+        "similar"
+      ],
+      "computed": {
+        "CLOSE_1": 103.14,
+        "CLOSE_2": 105.94,
+        "CLOSE_3": 108.84
+      },
+      "pre": 0.9
+    },
+    "psychology": {
+      "base": 20,
+      "lines": "16-20",
+      "marks": [
+        "day1",
+        "day2",
+        "day3"
+      ]
+    },
+    "staircase": {
+      "base": 14,
+      "lines": "22-26"
+    },
+    "crows": {
+      "base": 20,
+      "lines": "28-36",
+      "marks": [
+        "bounce",
+        "drop"
+      ],
+      "computed": {
+        "CROW_OPEN": 100.17,
+        "CROW_CLOSE": 91.57
+      },
+      "pre": 0.9
+    },
+    "variations": {
+      "base": 32,
+      "lines": "38-46",
+      "marks": [
+        "block",
+        "stall",
+        "identical",
+        "quality"
+      ],
+      "computed": {
+        "ADVANCE_BLOCK_UP": 64
+      },
+      "pre": 0.9
+    },
+    "valid": {
+      "base": 24,
+      "lines": "48-54",
+      "marks": [
+        "continuation",
+        "blowoff"
+      ]
+    },
+    "confirmation": {
+      "base": 18,
+      "lines": "56-58",
+      "marks": [
+        "fourth",
+        "volume"
+      ]
+    },
+    "trade": {
+      "base": 30,
+      "lines": "60-67",
+      "marks": [
+        "wide",
+        "pullback",
+        "smaller",
+        "crows"
+      ],
+      "computed": {
+        "ENTRY": 108.84,
+        "WIDE_STOP": 99.84,
+        "WIDE_RISK": 9,
+        "PULLBACK": 107.04,
+        "TIGHT_STOP": 104.94,
+        "TIGHT_RISK": 2.1
+      },
+      "pre": 0.9
+    },
+    "chase": {
+      "base": 14,
+      "lines": "69-73"
+    },
+    "reliability": {
+      "base": 28,
+      "lines": "75-79",
+      "marks": [
+        "but",
+        "ranks",
+        "summary"
+      ],
+      "computed": {
+        "BULKOWSKI_SOLDIERS": 82,
+        "BULKOWSKI_CROWS": 78,
+        "RANK_SOLDIERS": 32,
+        "RANK_CROWS": 3,
+        "PATTERNS": 103
+      },
+      "pre": 0.9
+    },
+    "takeaways": {
+      "base": 22,
+      "lines": "81-88"
+    },
+    "quiz": {
+      "base": 16,
+      "lines": "93",
+      "marks": [
+        "think",
+        "reveal"
+      ]
+    },
+    "end": {
+      "base": 12,
+      "lines": "98"
+    }
+  },
+  "languages": {
+    "en": {
+      "voice": "en_US-ljspeech-high",
+      "lengthScale": 1.12,
+      "sentenceGap": {
+        ".": 0.35,
+        "?": 0.45,
+        "!": 0.4
+      },
+      "scenes": {
+        "title": "Three white soldiers and three black crows. Module two, lesson eleven.",
+        "intro": "One strong candle can be a fluke: one big order, one headline. Two in a row is more interesting. <mark three> Three strong candles in a row, each starting inside the last and closing near its extreme, is a crowd that has made up its mind and is acting on it, day after day. <mark names> Three white soldiers march upward after a decline. Three black crows drop lower after a rise. The names come from old Japanese charts, where up candles were drawn white and down candles black. <mark momentum> These are momentum patterns: no long wicks, no stalls. Easy to read, and tricky to trade, because by the time three tall candles have printed, much of the move has already happened.",
+        "rules": "Here are the soldiers' rules. <mark trend> They come after a decline. <mark tall> Three green candles in a row, each with a large body and a small upper wick: each closes near its high. <mark inside> Each opens inside the previous body, then closes above the previous close: here, one hundred and three point one four, then one hundred and five point nine four, then one hundred and eight point eight four. <mark similar> And the bodies are roughly the same size. A soldier much smaller than the last, or with a long upper wick, says the advance is tiring.",
+        "psychology": "<mark day1> Day one: buyers step in after the decline and close strong. <mark day2> Day two opens a little lower, inside yesterday's body. That gives the sellers a chance, and the buyers absorb it and close at a new high. <mark day3> Day three: the same. Three times, every dip was bought and the session finished near the top. This is what orderly demand looks like. Nobody is panicking in.",
+        "staircase": "Picture three friends carrying a heavy box up a staircase. Each takes a step, pauses to grip, then takes another. No slipping, no dropping it. After three clean steps, everyone watching believes the box is going up.",
+        "crows": "Three black crows are the mirror. After a rise, three tall red candles, each opening inside the previous body and closing near its low. <mark bounce> Each day opens with a small bounce, sellers absorb it, and the close is near the low. <mark drop> Three days of that, from one hundred point one seven down to ninety-one point five seven. The buyers who drove the rally are being replaced by sellers who are not in a hurry, but are not stopping either.",
+        "variations": "Three green candles are not automatically soldiers. <mark block> In an advance block, each body is smaller than the last, and the upper wicks grow. The soldiers are tiring. In Bulkowski's tests price still rose about sixty-four percent of the time, so it is a sign of tiring, not a sell signal. <mark stall> In a stalled pattern, two strong candles are followed by a small one perched at the top: momentum has paused. <mark identical> And in identical three crows, each crow opens right at the previous close, with no bounce at all. It is rarer, and it reversed about as often as ordinary crows. <mark quality> The lesson from all three: judge the quality. Tall bodies, small wicks, strong closes.",
+        "valid": "Soldiers matter most after a decline or a long sideways stretch that they break out of. Crows matter most after an extended rise that was already tiring. <mark continuation> Both also confirm a trend: soldiers after a pullback in an uptrend say the trend is healthy. <mark blowoff> Where they are least useful is at the end of a long move in the same direction. Three giant soldiers after a month-long rally may be the final blow-off, as the last buyers pile in.",
+        "confirmation": "The pattern already holds three sessions of agreement, so many traders treat the third candle as confirmation. <mark fourth> A more cautious trader waits for a fourth candle that does not give back much of the third. <mark volume> Steady or rising volume across the three supports the pattern. Shrinking volume says the move is running out of participants.",
+        "trade": "This is where soldiers get awkward. <mark wide> Buy at the third close, one hundred and eight point eight four, and the natural stop below the first soldier's low, ninety-nine point eight four, is nine points away. <mark pullback> The lesson's first answer: wait for a pullback. Say price dips to the middle of the third body, one hundred and seven point oh four. With the stop below the third soldier's low, one hundred and four point nine four, the risk is two point one. <mark smaller> The second answer: keep the wide stop and take a smaller position. <mark crows> For crows, the mirror: short a bounce into the third crow's body, with the stop above its high.",
+        "chase": "The urge to buy the third soldier at its close, because it looks so obviously strong, is exactly the fear of missing out. Everyone else sees the same candle and buys the same close. The pattern is a reason to be bullish. The pullback is the entry.",
+        "reliability": "How reliable are they? At calling direction, very. In Thomas Bulkowski's published tests, three white soldiers broke upward about eighty-two percent of the time, and three black crows broke downward about seventy-eight. <mark but> But those numbers count which way price left the pattern, not how far it went. <mark ranks> Bulkowski ranks the soldiers only thirty-second of a hundred and three overall: after them, price does not trend all that well. The crows rank third, but his best results came when price broke upward, against the pattern. <mark summary> So: very good at telling you which way the market has turned, and only fair at telling you how much further it goes.",
+        "takeaways": "To recap. Three white soldiers: three tall green candles after a decline, each opening inside the last body and closing near its high. Three black crows: the mirror, after a rise. They show orderly control by one side. Shrinking bodies or growing wicks are signs of tiring, not strength. And entering at the third close means a wide stop and a partly finished move: prefer the pullback.",
+        "quiz": "Quick check. Why is buying at the close of the third soldier often a poor entry? Because the pattern is bearish? Or because the stop is far away and part of the move has already happened? <mark think> Take a second to think. <pause 2.5> <mark reveal> The stop is far away, and part of the move has already happened. A pullback into the third candle gives a better entry and a tighter stop.",
+        "end": "Now practise in the pattern trainer. When you see three same-coloured candles in a row, judge the quality: are the bodies tall and similar, are the wicks small, and does each close beat the last?"
+      }
+    },
+    "te": {
+      "provider": "google",
+      "voice": "te-IN-Chirp3-HD-Achird",
+      "languageCode": "te-IN",
+      "flow": true,
+      "commaPause": "[pause short]",
+      "speakingRate": 0.92,
+      "note": "Friendly spoken Telugu; 'soldiers' kept as సోల్జర్స్, 'crows' as క్రోస్. Needs a native speaker's review.",
+      "scenes": {
+        "title": "హాయ్! ఈరోజు మనం త్రీ వైట్ సోల్జర్స్, త్రీ బ్లాక్ క్రోస్ గురించి మాట్లాడుకుందాం. మాడ్యూల్ రెండు. పాఠం పదకొండు.",
+        "intro": "ఒక బలమైన క్యాండిల్ అనుకోకుండా రావచ్చు: ఒక పెద్ద ఆర్డర్, ఒక వార్త. వరుసగా రెండు వస్తే, అది ఇంకా ఆసక్తికరం. <mark three> వరుసగా మూడు బలమైన క్యాండిల్స్, ప్రతి ఒక్కటీ ముందుదాని లోపల మొదలై, దాని చివర దగ్గర క్లోజ్ అయితే, అది ఒక నిర్ణయానికి వచ్చిన గుంపు, రోజు తర్వాత రోజు దాని మీద పనిచేస్తోంది. <mark names> త్రీ వైట్ సోల్జర్స్, ఒక పతనం తర్వాత పైకి కవాతు చేస్తారు. త్రీ బ్లాక్ క్రోస్, ఒక పెరుగుదల తర్వాత కిందకి దిగుతాయి. ఈ పేర్లు పాత జపనీస్ చార్ట్‌ల నుంచి వచ్చాయి. అక్కడ పెరిగే క్యాండిల్స్‌ని తెల్లగా, పడే క్యాండిల్స్‌ని నల్లగా గీసేవారు. <mark momentum> ఇవి మొమెంటమ్ ప్యాటర్న్స్. పొడవైన విక్స్ లేవు, ఆగిపోవడాలు లేవు. చదవడం సులభం, ట్రేడ్ చేయడం కష్టం. ఎందుకంటే మూడు పొడవైన క్యాండిల్స్ ఏర్పడే సమయానికి, కదలికలో చాలా భాగం అయిపోయి ఉంటుంది.",
+        "rules": "సోల్జర్స్ నియమాలు ఇవి. <mark trend> ఇవి ఒక పతనం తర్వాత వస్తాయి. <mark tall> వరుసగా మూడు ఆకుపచ్చ క్యాండిల్స్, ప్రతి దానికీ పెద్ద బాడీ, చిన్న పై విక్. అంటే ప్రతి ఒక్కటీ దాని హై దగ్గర క్లోజ్ అవుతుంది. <mark inside> ప్రతి ఒక్కటీ ముందు బాడీ లోపల ఓపెన్ అయి, ముందు క్లోజ్ కంటే పైన క్లోజ్ అవుతుంది. ఇక్కడ, నూట మూడు పాయింట్ ఒకటి నాలుగు, తర్వాత నూట ఐదు పాయింట్ తొమ్మిది నాలుగు, తర్వాత నూట ఎనిమిది పాయింట్ ఎనిమిది నాలుగు. <mark similar> ఇంకా, బాడీలు దాదాపు ఒకే సైజులో ఉంటాయి. ఒక సోల్జర్ ముందుదాని కంటే చాలా చిన్నగా ఉంటే, లేదా దానికి పొడవైన పై విక్ ఉంటే, పెరుగుదల అలసిపోతోందని అర్థం.",
+        "psychology": "<mark day1> మొదటి రోజు: పతనం తర్వాత కొనుగోలుదారులు వచ్చి, బలంగా క్లోజ్ చేస్తారు. <mark day2> రెండో రోజు కొంచెం కింద, నిన్నటి బాడీ లోపల ఓపెన్ అవుతుంది. అది అమ్మకందారులకు ఒక అవకాశం ఇస్తుంది. కొనుగోలుదారులు దాన్ని తీసుకుని, కొత్త హై దగ్గర క్లోజ్ చేస్తారు. <mark day3> మూడో రోజు: అదే కథ. మూడు సార్లు, ప్రతి చిన్న పతనాన్నీ కొన్నారు, ప్రతి సెషన్ పైభాగం దగ్గర ముగిసింది. క్రమబద్ధమైన డిమాండ్ అంటే ఇదే. ఎవరూ భయంతో కొనడం లేదు.",
+        "staircase": "ముగ్గురు స్నేహితులు ఒక బరువైన పెట్టెని మెట్లు ఎక్కిస్తున్నారని ఊహించండి. ప్రతి ఒక్కరూ ఒక మెట్టు ఎక్కుతారు, పట్టు కోసం ఆగుతారు, మళ్ళీ ఇంకో మెట్టు. జారడం లేదు, పడేయడం లేదు. మూడు శుభ్రమైన అడుగుల తర్వాత, చూస్తున్న అందరూ పెట్టె పైకి వెళ్తోందని నమ్ముతారు.",
+        "crows": "త్రీ బ్లాక్ క్రోస్ దీనికి అద్దం. ఒక పెరుగుదల తర్వాత, మూడు పొడవైన ఎరుపు క్యాండిల్స్, ప్రతి ఒక్కటీ ముందు బాడీ లోపల ఓపెన్ అయి, దాని లో దగ్గర క్లోజ్ అవుతుంది. <mark bounce> ప్రతి రోజూ ఒక చిన్న బౌన్స్‌తో మొదలవుతుంది, అమ్మకందారులు దాన్ని తీసుకుంటారు, క్లోజ్ లో దగ్గర ఉంటుంది. <mark drop> అలా మూడు రోజులు, వంద పాయింట్ ఒకటి ఏడు నుంచి తొంభై ఒకటి పాయింట్ ఐదు ఏడు వరకు. పెరుగుదలని నడిపిన కొనుగోలుదారుల స్థానంలో, అమ్మకందారులు వస్తున్నారు. వాళ్ళు తొందరపడటం లేదు, కానీ ఆగడం కూడా లేదు.",
+        "variations": "మూడు ఆకుపచ్చ క్యాండిల్స్ అంటే ఆటోమేటిక్‌గా సోల్జర్స్ కాదు. <mark block> అడ్వాన్స్ బ్లాక్‌లో, ప్రతి బాడీ ముందుదాని కంటే చిన్నది, పై విక్స్ పెరుగుతాయి. సోల్జర్స్ అలసిపోతున్నారు. బుల్కోవ్‌స్కీ టెస్టుల్లో, దాదాపు అరవై నాలుగు శాతం సార్లు ధర ఇంకా పెరిగింది. కాబట్టి ఇది అలసటకి సంకేతం, అమ్మమని సిగ్నల్ కాదు. <mark stall> స్టాల్డ్ ప్యాటర్న్‌లో, రెండు బలమైన క్యాండిల్స్ తర్వాత, పైన ఒక చిన్న క్యాండిల్ కూర్చుంటుంది. మొమెంటమ్ ఆగింది. <mark identical> ఐడెంటికల్ త్రీ క్రోస్‌లో, ప్రతి క్రో సరిగ్గా ముందు క్లోజ్ దగ్గరే ఓపెన్ అవుతుంది, అసలు బౌన్స్ ఉండదు. ఇది అరుదు, మామూలు క్రోస్ ఎంత తరచుగా తిరిగాయో, ఇదీ దాదాపు అంతే. <mark quality> ఈ మూడింటి పాఠం ఒక్కటే: నాణ్యతని చూడండి. పొడవైన బాడీలు, చిన్న విక్స్, బలమైన క్లోజ్‌లు.",
+        "valid": "సోల్జర్స్‌కి ఎక్కువ అర్థం ఉండేది, ఒక పతనం తర్వాత, లేదా ఒక పొడవైన సైడ్‌వేస్ కాలం నుంచి బయటకి వచ్చినప్పుడు. క్రోస్‌కి, అప్పటికే అలసిపోతున్న ఒక పెద్ద పెరుగుదల తర్వాత. <mark continuation> రెండూ ట్రెండ్‌ని కన్ఫర్మ్ కూడా చేస్తాయి. అప్‌ట్రెండ్‌లో ఒక పుల్‌బ్యాక్ తర్వాత సోల్జర్స్ వస్తే, ట్రెండ్ ఆరోగ్యంగా ఉందని అర్థం. <mark blowoff> అవి తక్కువ ఉపయోగపడేది, అదే దిశలో ఒక పెద్ద కదలిక చివరలో. నెల రోజుల ర్యాలీ తర్వాత మూడు భారీ సోల్జర్స్ అంటే, అది చివరి బ్లో ఆఫ్ కావచ్చు, ఆఖరి కొనుగోలుదారులు దూకుతున్నారు.",
+        "confirmation": "ప్యాటర్న్‌లో అప్పటికే మూడు సెషన్ల ఒప్పందం ఉంది. అందుకే చాలా మంది ట్రేడర్లు మూడో క్యాండిల్‌నే కన్ఫర్మేషన్‌గా తీసుకుంటారు. <mark fourth> జాగ్రత్తగా ఉండే ట్రేడర్, మూడో క్యాండిల్ లాభాన్ని ఎక్కువ తిరిగి ఇవ్వని ఒక నాలుగో క్యాండిల్ కోసం వేచి ఉంటారు. <mark volume> మూడింటిలోనూ వాల్యూమ్ స్థిరంగా ఉంటే, లేదా పెరుగుతుంటే, అది ప్యాటర్న్‌కి బలం. వాల్యూమ్ తగ్గుతుంటే, కదలికలో పాల్గొనేవాళ్ళు అయిపోతున్నారని అర్థం.",
+        "trade": "సోల్జర్స్ ఇక్కడే ఇబ్బంది పెడతాయి. <mark wide> మూడో క్లోజ్ దగ్గర, నూట ఎనిమిది పాయింట్ ఎనిమిది నాలుగు దగ్గర కొంటే, సహజమైన స్టాప్, మొదటి సోల్జర్ లో కంటే కింద, తొంభై తొమ్మిది పాయింట్ ఎనిమిది నాలుగు. అది తొమ్మిది పాయింట్ల దూరం. <mark pullback> పాఠం ఇచ్చే మొదటి జవాబు: పుల్‌బ్యాక్ కోసం వేచి ఉండండి. ధర మూడో బాడీ మధ్యకి, నూట ఏడు పాయింట్ సున్నా నాలుగుకి దిగిందనుకోండి. స్టాప్‌ని మూడో సోల్జర్ లో కంటే కింద, నూట నాలుగు పాయింట్ తొమ్మిది నాలుగు దగ్గర పెడితే, రిస్క్ రెండు పాయింట్ ఒకటి మాత్రమే. <mark smaller> రెండో జవాబు: దూరపు స్టాప్‌నే ఉంచి, చిన్న పొజిషన్ తీసుకోండి. <mark crows> క్రోస్‌కి దీని అద్దం: మూడో క్రో బాడీలోకి వచ్చే బౌన్స్ మీద షార్ట్ చేయండి, స్టాప్ దాని హై కంటే పైన.",
+        "chase": "మూడో సోల్జర్‌ని దాని క్లోజ్ దగ్గర కొనాలనే కోరిక, అది అంత స్పష్టంగా బలంగా కనిపిస్తుంది కాబట్టి, అదే అవకాశం కోల్పోతానేమో అనే భయం. మిగతా అందరూ అదే క్యాండిల్ చూస్తారు, అదే క్లోజ్ దగ్గర కొంటారు. ప్యాటర్న్, బుల్లిష్‌గా ఉండటానికి ఒక కారణం. ఎంట్రీ మాత్రం పుల్‌బ్యాక్.",
+        "reliability": "ఇవి ఎంత నమ్మదగినవి? దిశ చెప్పడంలో, చాలా. థామస్ బుల్కోవ్‌స్కీ ప్రచురించిన టెస్టుల్లో, త్రీ వైట్ సోల్జర్స్ దాదాపు ఎనభై రెండు శాతం సార్లు పైకి బ్రేక్ అయ్యాయి, త్రీ బ్లాక్ క్రోస్ దాదాపు డెబ్బై ఎనిమిది శాతం సార్లు కిందకి. <mark but> కానీ ఆ నంబర్లు, ధర ప్యాటర్న్ నుంచి ఏ వైపు బయటకి వెళ్ళిందో మాత్రమే లెక్కపెడతాయి, ఎంత దూరం వెళ్ళిందో కాదు. <mark ranks> బుల్కోవ్‌స్కీ మొత్తం ర్యాంకింగ్‌లో, నూట మూడింటిలో సోల్జర్స్ ముప్పై రెండో స్థానంలో మాత్రమే ఉన్నాయి. వాటి తర్వాత ధర అంత బాగా ట్రెండ్ అవ్వదు. క్రోస్ మూడో స్థానంలో ఉన్నాయి, కానీ ఆయనకి ఉత్తమ ఫలితాలు వచ్చింది, ధర ప్యాటర్న్‌కి వ్యతిరేకంగా పైకి బ్రేక్ అయినప్పుడు. <mark summary> కాబట్టి: మార్కెట్ ఏ వైపు తిరిగిందో చెప్పడంలో చాలా బాగుంటాయి, ఇంకా ఎంత దూరం వెళ్తుందో చెప్పడంలో మాత్రం అంతంత మాత్రమే.",
+        "takeaways": "సంక్షిప్తంగా. త్రీ వైట్ సోల్జర్స్: ఒక పతనం తర్వాత మూడు పొడవైన ఆకుపచ్చ క్యాండిల్స్, ప్రతి ఒక్కటీ ముందు బాడీ లోపల ఓపెన్ అయి, హై దగ్గర క్లోజ్ అవుతుంది. త్రీ బ్లాక్ క్రోస్: దీనికి అద్దం, ఒక పెరుగుదల తర్వాత. ఇవి ఒక వైపు క్రమబద్ధమైన నియంత్రణని చూపిస్తాయి. చిన్నవి అవుతున్న బాడీలు, పెరుగుతున్న విక్స్, అలసటకి సంకేతాలు, బలానికి కాదు. ఇంకా, మూడో క్లోజ్ దగ్గర ఎంటర్ అయితే, స్టాప్ దూరం, కదలికలో కొంత అయిపోయింది: పుల్‌బ్యాక్‌నే ఎంచుకోండి.",
+        "quiz": "ఒక చిన్న టెస్ట్. మూడో సోల్జర్ క్లోజ్ దగ్గర కొనడం తరచుగా ఎందుకు మంచి ఎంట్రీ కాదు? ప్యాటర్న్ బేరిష్ కాబట్టా? లేక స్టాప్ దూరంగా ఉంది, కదలికలో కొంత భాగం అప్పటికే అయిపోయింది కాబట్టా? <mark think> ఒక్క సెకను ఆలోచించండి. <pause 2.5> <mark reveal> జవాబు: స్టాప్ దూరంగా ఉంది, కదలికలో కొంత భాగం అప్పటికే అయిపోయింది. మూడో క్యాండిల్‌లోకి వచ్చే పుల్‌బ్యాక్, మంచి ఎంట్రీ, దగ్గరి స్టాప్ ఇస్తుంది.",
+        "end": "ఇప్పుడు మీ వంతు. ప్యాటర్న్ ట్రైనర్‌లో ప్రాక్టీస్ చేయండి. వరుసగా ఒకే రంగు మూడు క్యాండిల్స్ కనిపిస్తే, నాణ్యతని అంచనా వేయండి: బాడీలు పొడవుగా, ఒకేలా ఉన్నాయా? విక్స్ చిన్నవా? ప్రతి క్లోజ్ ముందుదాన్ని దాటిందా?"
+      }
+    }
+  }
+}
