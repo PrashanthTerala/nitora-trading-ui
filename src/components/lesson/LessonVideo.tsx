@@ -49,7 +49,10 @@ export function readLang(tracks: VideoTrack[]): string {
 export function LessonVideo({ id, title, entry }: { id: string; title: string; entry: LessonVideoEntry }) {
   const [lang, setLang] = useState(() => readLang(entry.tracks));
   const [started, setStarted] = useState(false);
-  const [failed, setFailed] = useState(false);
+  // false while it plays; otherwise the browser's MediaError code (0 when it gives none), shown with the error.
+  const [failed, setFailed] = useState<number | false>(false);
+  // The captions as a same-origin blob: URL (see below), once fetched.
+  const [trackSrc, setTrackSrc] = useState<string | null>(null);
   const [resumedAt, setResumedAt] = useState<number | null>(null);
   const [cues, setCues] = useState<Cue[] | 'loading' | 'failed' | null>(null);
   const [transcriptOpen, setTranscriptOpen] = useState(false);
@@ -126,34 +129,58 @@ export function LessonVideo({ id, title, entry }: { id: string; title: string; e
     };
   }, [transcriptOpen, captionsUrl]);
 
+  // The video plays as a plain request, exactly as when its link is opened directly: no
+  // crossOrigin, because some phone browsers fail a cross-origin video in CORS mode even when the
+  // server answers it correctly (the lesson page failed on a phone that played the file itself).
+  // A cross-origin <track> needs a CORS-mode video, so the captions are fetched instead (a normal
+  // CORS fetch) and handed to the track as a same-origin blob: URL.
+  useEffect(() => {
+    if (!started) return;
+    let url: string | null = null;
+    let alive = true;
+    fetch(captionsUrl)
+      .then((res) => (res.ok ? res.text() : Promise.reject(new Error(String(res.status)))))
+      .then((text) => {
+        if (!alive) return;
+        url = URL.createObjectURL(new Blob([text], { type: 'text/vtt' }));
+        setTrackSrc(url);
+      })
+      .catch(() => alive && setTrackSrc(null));
+    return () => {
+      alive = false;
+      setTrackSrc(null);
+      if (url) URL.revokeObjectURL(url);
+    };
+  }, [started, captionsUrl]);
+
   const options = entry.tracks.map((x) => ({ value: x.lang, label: LANGUAGE_NAMES[x.lang]?.native ?? x.lang }));
   const videoUrl = fileUrl(entry, track.video);
 
   return (
     <section id="lesson-video" aria-label={t('video.region')} className="not-prose mb-10 scroll-mt-24">
       <div className="relative aspect-video overflow-hidden rounded-card border border-line bg-surface-2">
-        {started && !failed ? (
+        {started && failed === false ? (
           <video
             ref={videoRef}
             className="absolute inset-0 h-full w-full"
             controls
             playsInline
             preload="metadata"
-            crossOrigin="anonymous"
             poster={fileUrl(entry, entry.poster)}
             src={videoUrl}
             onLoadedMetadata={onLoaded}
             onTimeUpdate={onTime}
             onPause={() => videoRef.current && writePosition(posKey, videoRef.current.currentTime)}
             onEnded={() => writePosition(posKey, null)}
-            onError={() => setFailed(true)}
+            onError={() => setFailed(videoRef.current?.error?.code ?? 0)}
           >
             {/* No `default`: captions start off, and the reader turns them on from the controls. */}
-            <track kind="captions" src={captionsUrl} srcLang={track.lang} label={LANGUAGE_NAMES[track.lang]?.native ?? track.lang} />
+            {trackSrc && <track key={trackSrc} kind="captions" src={trackSrc} srcLang={track.lang} label={LANGUAGE_NAMES[track.lang]?.native ?? track.lang} />}
           </video>
-        ) : failed ? (
+        ) : failed !== false ? (
           <div role="alert" className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center text-body-sm text-ink">
             <p>{t('video.error')}</p>
+            <p className="font-mono text-caption text-ink-muted">{t('video.errorCode', { code: failed })}</p>
             <a href={videoUrl} download className="font-semibold text-accent underline underline-offset-4">
               {t('video.download')}
             </a>
