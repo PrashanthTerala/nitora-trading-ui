@@ -1,11 +1,11 @@
 {
   "m02-candlestick-patterns/06-engulfing": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/06-engulfing",
-    "poster": "poster.e952cacf.jpg",
+    "poster": "poster.a794f5b7.jpg",
     "tracks": [
       {
         "lang": "en",
-        "video": "06-engulfing.en.733cab73.mp4",
+        "video": "06-engulfing.en.07f83e31.mp4",
         "captions": "06-engulfing.en.481f7353.vtt",
         "duration": 395.1,
         "scenes": [
@@ -29,7 +29,7 @@
       },
       {
         "lang": "te",
-        "video": "06-engulfing.te.6fe6bffd.mp4",
+        "video": "06-engulfing.te.8c847da5.mp4",
         "captions": "06-engulfing.te.fe6504f9.vtt",
         "duration": 483.7,
         "scenes": [
@@ -53,7 +53,7 @@
       },
       {
         "lang": "hi",
-        "video": "06-engulfing.hi.50dcee23.mp4",
+        "video": "06-engulfing.hi.4ba12ce9.mp4",
         "captions": "06-engulfing.hi.c12e6f87.vtt",
         "duration": 360.7,
         "scenes": [
@@ -77,7 +77,7 @@
       },
       {
         "lang": "es",
-        "video": "06-engulfing.es.fae7ac62.mp4",
+        "video": "06-engulfing.es.9a9d65bb.mp4",
         "captions": "06-engulfing.es.fb14a035.vtt",
         "duration": 408.7,
         "scenes": [
@@ -108,7 +108,7 @@
     "tracks": [
       {
         "lang": "en",
-        "video": "07-harami-and-harami-cross.en.7c13e770.mp4",
+        "video": "07-harami-and-harami-cross.en.088f7b8d.mp4",
         "captions": "07-harami-and-harami-cross.en.fd633cb9.vtt",
         "duration": 441.8,
         "scenes": [
@@ -133,7 +133,7 @@
       },
       {
         "lang": "te",
-        "video": "07-harami-and-harami-cross.te.9c132323.mp4",
+        "video": "07-harami-and-harami-cross.te.4b1f564d.mp4",
         "captions": "07-harami-and-harami-cross.te.b73873ee.vtt",
         "duration": 528.9,
         "scenes": [
@@ -165,7 +165,7 @@
     "tracks": [
       {
         "lang": "en",
-        "video": "08-piercing-dark-cloud.en.bbbfd613.mp4",
+        "video": "08-piercing-dark-cloud.en.e602c13d.mp4",
         "captions": "08-piercing-dark-cloud.en.1dc811e7.vtt",
         "duration": 400.1,
         "scenes": [
@@ -189,7 +189,7 @@
       },
       {
         "lang": "te",
-        "video": "08-piercing-dark-cloud.te.12512604.mp4",
+        "video": "08-piercing-dark-cloud.te.473092bd.mp4",
         "captions": "08-piercing-dark-cloud.te.091aa11a.vtt",
         "duration": 509.3,
         "scenes": [
@@ -220,7 +220,7 @@
     "tracks": [
       {
         "lang": "en",
-        "video": "09-tweezers-and-counterattack.en.bda545b5.mp4",
+        "video": "09-tweezers-and-counterattack.en.8007a4c4.mp4",
         "captions": "09-tweezers-and-counterattack.en.d1b723c7.vtt",
         "duration": 415.9,
         "scenes": [
@@ -245,7 +245,7 @@
       },
       {
         "lang": "te",
-        "video": "09-tweezers-and-counterattack.te.3de048d1.mp4",
+        "video": "09-tweezers-and-counterattack.te.9add9939.mp4",
         "captions": "09-tweezers-and-counterattack.te.d517de35.vtt",
         "duration": 489.9,
         "scenes": [
@@ -273,11 +273,11 @@
   },
   "m02-candlestick-patterns/10-morning-evening-star": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/10-morning-evening-star",
-    "poster": "poster.e5d951f8.jpg",
+    "poster": "poster.921088fd.jpg",
     "tracks": [
       {
         "lang": "en",
-        "video": "10-morning-evening-star.en.57481dfc.mp4",
+        "video": "10-morning-evening-star.en.f6aed3eb.mp4",
         "captions": "10-morning-evening-star.en.fcc68f06.vtt",
         "duration": 396.4,
         "scenes": [
@@ -301,7 +301,7 @@
       },
       {
         "lang": "te",
-        "video": "10-morning-evening-star.te.c1528f20.mp4",
+        "video": "10-morning-evening-star.te.706affea.mp4",
         "captions": "10-morning-evening-star.te.40b1e38e.vtt",
         "duration": 499.7,
         "scenes": [
@@ -328,11 +328,11 @@
   },
   "m02-candlestick-patterns/11-three-soldiers-three-crows": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/11-three-soldiers-three-crows",
-    "poster": "poster.06a187c9.jpg",
+    "poster": "poster.c1f4c17e.jpg",
     "tracks": [
       {
         "lang": "en",
-        "video": "11-three-soldiers-three-crows.en.a686cbe7.mp4",
+        "video": "11-three-soldiers-three-crows.en.7bf0aa67.mp4",
         "captions": "11-three-soldiers-three-crows.en.5ed08cc8.vtt",
         "duration": 456.6,
         "scenes": [
@@ -356,7 +356,7 @@
       },
       {
         "lang": "te",
-        "video": "11-three-soldiers-three-crows.te.b9f038a7.mp4",
+        "video": "11-three-soldiers-three-crows.te.7736eeef.mp4",
         "captions": "11-three-soldiers-three-crows.te.2bffb25b.vtt",
         "duration": 557.6,
         "scenes": [
@@ -387,7 +387,7 @@
     "tracks": [
       {
         "lang": "en",
-        "video": "12-three-inside-outside.en.7bf7287b.mp4",
+        "video": "12-three-inside-outside.en.0c283983.mp4",
         "captions": "12-three-inside-outside.en.f035c770.vtt",
         "duration": 463.9,
         "scenes": [
@@ -411,7 +411,7 @@
       },
       {
         "lang": "te",
-        "video": "12-three-inside-outside.te.c6f17620.mp4",
+        "video": "12-three-inside-outside.te.68a4b51b.mp4",
         "captions": "12-three-inside-outside.te.425a00c7.vtt",
         "duration": 565.0,
         "scenes": [
@@ -442,7 +442,7 @@
     "tracks": [
       {
         "lang": "en",
-        "video": "13-abandoned-baby-and-stars.en.7b13dfc5.mp4",
+        "video": "13-abandoned-baby-and-stars.en.a44008b5.mp4",
         "captions": "13-abandoned-baby-and-stars.en.c1228483.vtt",
         "duration": 402.8,
         "scenes": [
@@ -464,7 +464,7 @@
       },
       {
         "lang": "te",
-        "video": "13-abandoned-baby-and-stars.te.a11bf7d8.mp4",
+        "video": "13-abandoned-baby-and-stars.te.b304097a.mp4",
         "captions": "13-abandoned-baby-and-stars.te.df3368e0.vtt",
         "duration": 480.3,
         "scenes": [
@@ -493,7 +493,7 @@
     "tracks": [
       {
         "lang": "en",
-        "video": "03-ma-crossovers.en.a3bd9605.mp4",
+        "video": "03-ma-crossovers.en.ac88f1af.mp4",
         "captions": "03-ma-crossovers.en.7ca8a02a.vtt",
         "duration": 404.6,
         "scenes": [
@@ -516,7 +516,7 @@
       },
       {
         "lang": "te",
-        "video": "03-ma-crossovers.te.cda51ada.mp4",
+        "video": "03-ma-crossovers.te.5a6e4821.mp4",
         "captions": "03-ma-crossovers.te.cf0da44c.vtt",
         "duration": 511.6,
         "scenes": [
@@ -539,7 +539,7 @@
       },
       {
         "lang": "hi",
-        "video": "03-ma-crossovers.hi.ad8c5d58.mp4",
+        "video": "03-ma-crossovers.hi.0b050435.mp4",
         "captions": "03-ma-crossovers.hi.ca6594a8.vtt",
         "duration": 367.6,
         "scenes": [
@@ -562,7 +562,7 @@
       },
       {
         "lang": "es",
-        "video": "03-ma-crossovers.es.c541f15b.mp4",
+        "video": "03-ma-crossovers.es.cba0b4dd.mp4",
         "captions": "03-ma-crossovers.es.cbb27ad4.vtt",
         "duration": 410.28,
         "scenes": [

@@ -7,9 +7,10 @@
         "file": "06-engulfing.en.vtt",
         "sha256": "481f7353d482e1efc25b9929e02a7a63d92519f5fcc6c0c3aaf0f845600c8c2c"
       },
+      "change": "2026-10-17: re-encoded for mobile playback (limited-range yuv420p; the full-range original would not play in phone browsers), same picture and sound; re-approved by the owner in chat",
       "video": {
         "file": "06-engulfing.en.mp4",
-        "sha256": "733cab73411952a609a8ca4274b70c39721c1247a1ceb0bd77a5fa3ea2a980d2"
+        "sha256": "07f83e3146676b5e000c7543952fd4e5d2a5a1d6faeab665c00421410cd14b1d"
       }
     },
     "es": {
@@ -19,10 +20,11 @@
         "file": "06-engulfing.es.vtt",
         "sha256": "fb14a035d21fd88a49da52a7430428982831c35cd281d119902cca404a4b7795"
       },
+      "change": "2026-10-17: re-encoded for mobile playback (limited-range yuv420p; the full-range original would not play in phone browsers), same picture and sound; re-approved by the owner in chat",
       "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
       "video": {
         "file": "06-engulfing.es.mp4",
-        "sha256": "fae7ac629a0451b5ab7d416bd7e1d0e140dac860baf82e841dd8d5885002ab16"
+        "sha256": "9a9d65bb762188d02c0b1a06997efe08f69588bbe66e44992887d2a3249eab77"
       }
     },
     "hi": {
@@ -32,10 +34,11 @@
         "file": "06-engulfing.hi.vtt",
         "sha256": "c12e6f8752f24765482de37e5f7c5bf0d361298c9e4e786f2701a19fa3941e56"
       },
+      "change": "2026-10-17: re-encoded for mobile playback (limited-range yuv420p; the full-range original would not play in phone browsers), same picture and sound; re-approved by the owner in chat",
       "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
       "video": {
         "file": "06-engulfing.hi.mp4",
-        "sha256": "50dcee23f965da10262da0cbbdaed6899ae6e4bbd2dea05b11ebdf386e8adc3c"
+        "sha256": "4ba12ce99e95bfe303e469fc641f7fac4aa09cdd16a6c384f916366096f4ec45"
       }
     },
     "te": {
@@ -45,10 +48,11 @@
         "file": "06-engulfing.te.vtt",
         "sha256": "fe6504f9478097ac7a52d771e39b53177b2473e6ab749c0b2aa05e01809a157a"
       },
+      "change": "2026-10-17: re-encoded for mobile playback (limited-range yuv420p; the full-range original would not play in phone browsers), same picture and sound; re-approved by the owner in chat",
       "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
       "video": {
         "file": "06-engulfing.te.mp4",
-        "sha256": "6fe6bffdb3904cc415c94f3644dda8a9e57c106cfd40e3ddf21d66d23c7dad9f"
+        "sha256": "8c847da52358fb23cc1381b867720ed85872d116adf12057389b6f9042fe5b71"
       }
     }
   },
@@ -60,9 +64,10 @@
         "file": "07-harami-and-harami-cross.en.vtt",
         "sha256": "fd633cb94e1d6ffbfa1a49af0f23199dd0712b1ed380c332d95cdbfb5c517cb0"
       },
+      "change": "2026-10-17: re-encoded for mobile playback (limited-range yuv420p; the full-range original would not play in phone browsers), same picture and sound; re-approved by the owner in chat",
       "video": {
         "file": "07-harami-and-harami-cross.en.mp4",
-        "sha256": "7c13e770e0d0c83c3f34302a79453225008bf342a58d0b1073016fb7f260424e"
+        "sha256": "088f7b8d458003a45dd3900a1a95504561541f95306d53a3cd0282fea1155a4f"
       }
     },
     "te": {
@@ -72,10 +77,11 @@
         "file": "07-harami-and-harami-cross.te.vtt",
         "sha256": "b73873ee912dcf4f07e1d480fde7ba995c95a156fce054a92ad77fac5e179f36"
       },
+      "change": "2026-10-17: re-encoded for mobile playback (limited-range yuv420p; the full-range original would not play in phone browsers), same picture and sound; re-approved by the owner in chat",
       "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
       "video": {
         "file": "07-harami-and-harami-cross.te.mp4",
-        "sha256": "9c13232304ff92c840651872e1156edd0d8eefe0d6a5cf7ec316beec64642252"
+        "sha256": "4b1f564d6b16b9f22e822e870f94881af1f46210b04e035093d9a407919bc85f"
       }
     }
   },
@@ -87,9 +93,10 @@
         "file": "08-piercing-dark-cloud.en.vtt",
         "sha256": "1dc811e73f7f1163fba180fa8b274f37cb10e9782130baa12056e40590051ece"
       },
+      "change": "2026-10-17: re-encoded for mobile playback (limited-range yuv420p; the full-range original would not play in phone browsers), same picture and sound; re-approved by the owner in chat",
       "video": {
         "file": "08-piercing-dark-cloud.en.mp4",
-        "sha256": "bbbfd61337cb6b5c13a434b869c674615f3a1e854a934de79626a586b285e2bd"
+        "sha256": "e602c13dc61f39cffebdd720584fe7dcc181e8071dcda62f1cf0de7ea1989850"
       }
     },
     "te": {
@@ -99,10 +106,11 @@
         "file": "08-piercing-dark-cloud.te.vtt",
         "sha256": "091aa11a3aa7cfa82ed3aab261d3d5158028916ae453b9e6036180f03b2f4df8"
       },
+      "change": "2026-10-17: re-encoded for mobile playback (limited-range yuv420p; the full-range original would not play in phone browsers), same picture and sound; re-approved by the owner in chat",
       "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
       "video": {
         "file": "08-piercing-dark-cloud.te.mp4",
-        "sha256": "1251260428b0c36cc8c83a10ef276c21966bb64463b0a07f60b7d1047c2c7edd"
+        "sha256": "473092bd4e6320e463e6faee345e5e3a93f3e7b6720b2c9bb67abc4c17fc9741"
       }
     }
   },
@@ -114,9 +122,10 @@
         "file": "09-tweezers-and-counterattack.en.vtt",
         "sha256": "d1b723c7cf57725a61a2c12f8a630e38190cf44cac6154846f5517ac2adcb2f1"
       },
+      "change": "2026-10-17: re-encoded for mobile playback (limited-range yuv420p; the full-range original would not play in phone browsers), same picture and sound; re-approved by the owner in chat",
       "video": {
         "file": "09-tweezers-and-counterattack.en.mp4",
-        "sha256": "bda545b5c79cfbfff78b42d15e23d7a17d8a97749b0b470a26ae1d1a3707d2a9"
+        "sha256": "8007a4c4025a8a0879943abb1e76524e7fa0febb7e2c8f4c96ab95ad026fdaaf"
       }
     },
     "te": {
@@ -126,10 +135,11 @@
         "file": "09-tweezers-and-counterattack.te.vtt",
         "sha256": "d517de35836461a328780551aa52b08ad64fe923ee05b5da81ff47e0035c62ed"
       },
+      "change": "2026-10-17: re-encoded for mobile playback (limited-range yuv420p; the full-range original would not play in phone browsers), same picture and sound; re-approved by the owner in chat",
       "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
       "video": {
         "file": "09-tweezers-and-counterattack.te.mp4",
-        "sha256": "3de048d11547f6d388f3832ff9ec37173cd92b4f7bae6ec3f8df1f27b611047f"
+        "sha256": "9add993901e06b363f6aeb7d510473496c1e6f87de2c2a34abfa71bdfc6c28df"
       }
     }
   },
@@ -141,9 +151,10 @@
         "file": "10-morning-evening-star.en.vtt",
         "sha256": "fcc68f0689fa5ee8a1097ee7c910ae28e6ad720d9b020e9228e6650a0f207d8a"
       },
+      "change": "2026-10-17: re-encoded for mobile playback (limited-range yuv420p; the full-range original would not play in phone browsers), same picture and sound; re-approved by the owner in chat",
       "video": {
         "file": "10-morning-evening-star.en.mp4",
-        "sha256": "57481dfc28a52e15c8ed9e0c65a40dfdf55debaea95a20f4464d81b031484dec"
+        "sha256": "f6aed3ebd86d384f8e3e29e72895509d08e455e35e495a4b4faadface4db0568"
       }
     },
     "te": {
@@ -153,10 +164,11 @@
         "file": "10-morning-evening-star.te.vtt",
         "sha256": "40b1e38ec8e43ac552a1595b768934d07ff52a6dd4b4fa596155e2ff7b3b5cb6"
       },
+      "change": "2026-10-17: re-encoded for mobile playback (limited-range yuv420p; the full-range original would not play in phone browsers), same picture and sound; re-approved by the owner in chat",
       "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
       "video": {
         "file": "10-morning-evening-star.te.mp4",
-        "sha256": "c1528f20b24fbabe71bb39ed95e1db257ebd9804331079ca1fd2e0f4aeec4080"
+        "sha256": "706affea727866f8684bcc4e426e877ee78d82d8aa4c486560120a3c27dff42e"
       }
     }
   },
@@ -168,9 +180,10 @@
         "file": "11-three-soldiers-three-crows.en.vtt",
         "sha256": "5ed08cc8bb00775b8c77e0b3eb874ece681ae2d05c9874d6156120fb3dd86089"
       },
+      "change": "2026-10-17: re-encoded for mobile playback (limited-range yuv420p; the full-range original would not play in phone browsers), same picture and sound; re-approved by the owner in chat",
       "video": {
         "file": "11-three-soldiers-three-crows.en.mp4",
-        "sha256": "a686cbe72c4e7c619939132830ba6d16080d1ca776259d33e7ab5b52395989b6"
+        "sha256": "7bf0aa67d6f9927a70364e1d12c1f82beb6e210afd5879e56c662280a03e85e0"
       }
     },
     "te": {
@@ -180,10 +193,11 @@
         "file": "11-three-soldiers-three-crows.te.vtt",
         "sha256": "2bffb25b98d43699262735c7b2e938069cf34d743fa515ce80d1007f59ad61a4"
       },
+      "change": "2026-10-17: re-encoded for mobile playback (limited-range yuv420p; the full-range original would not play in phone browsers), same picture and sound; re-approved by the owner in chat",
       "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
       "video": {
         "file": "11-three-soldiers-three-crows.te.mp4",
-        "sha256": "b9f038a7a4b473fd6b58c605ddcef88ff4e70ceff9c67bf75ae50ccf6a53618a"
+        "sha256": "7736eeef7c7168540286e004e2a6c2fdd863acd63545daa76bab0befad345ec2"
       }
     }
   },
@@ -195,9 +209,10 @@
         "file": "12-three-inside-outside.en.vtt",
         "sha256": "f035c7705e72578c6095bf9fc40b6f92d16d6e47c7e4d9e7b2fa03b16cf52ed5"
       },
+      "change": "2026-10-17: re-encoded for mobile playback (limited-range yuv420p; the full-range original would not play in phone browsers), same picture and sound; re-approved by the owner in chat",
       "video": {
         "file": "12-three-inside-outside.en.mp4",
-        "sha256": "7bf7287b613d954a715ea39b976bbf963c767a8e042e643fd38570d819fb2316"
+        "sha256": "0c28398359204bbbf03a54643fc410fd9f4e85c357d31642c6fb84b39c7ff800"
       }
     },
     "te": {
@@ -207,10 +222,11 @@
         "file": "12-three-inside-outside.te.vtt",
         "sha256": "425a00c718f4ab8a7a8dd739fb2d7e48ab175775f7a41c5ecd10649a0029feb7"
       },
+      "change": "2026-10-17: re-encoded for mobile playback (limited-range yuv420p; the full-range original would not play in phone browsers), same picture and sound; re-approved by the owner in chat",
       "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
       "video": {
         "file": "12-three-inside-outside.te.mp4",
-        "sha256": "c6f17620559f1c13042d8c8afeef4ff99af86a2382d12985888efade3b45fbe5"
+        "sha256": "68a4b51b4c8811903e5d0bf5f744459c9ba751aaebfac269ed51c0698c78fe24"
       }
     }
   },
@@ -222,9 +238,10 @@
         "file": "13-abandoned-baby-and-stars.en.vtt",
         "sha256": "c12284832f95ffdeb3fe87efde98109d8ba3b1222d85e6172cd80d5d9fba1db7"
       },
+      "change": "2026-10-17: re-encoded for mobile playback (limited-range yuv420p; the full-range original would not play in phone browsers), same picture and sound; re-approved by the owner in chat",
       "video": {
         "file": "13-abandoned-baby-and-stars.en.mp4",
-        "sha256": "7b13dfc5d9453e6c68ef2e774ff597e36981ab0fb4a0c75ff8608f0c635571e0"
+        "sha256": "a44008b558135f96288e7cf34dc90b899364fc1cf747ef798e29e8fc9e411ca0"
       }
     },
     "te": {
@@ -234,10 +251,11 @@
         "file": "13-abandoned-baby-and-stars.te.vtt",
         "sha256": "df3368e08b1f6297fa2886b7a5ffaf3d0ce0921f358a1eb660cb8b8db50727f7"
       },
+      "change": "2026-10-17: re-encoded for mobile playback (limited-range yuv420p; the full-range original would not play in phone browsers), same picture and sound; re-approved by the owner in chat",
       "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
       "video": {
         "file": "13-abandoned-baby-and-stars.te.mp4",
-        "sha256": "a11bf7d80321056a4b2785d8d1defc23c253c1b8a5bc0623ff180faef8581ea5"
+        "sha256": "b304097a2dad17dd145fdf12d2035355e8f425afb2638b8b94bcf4b871d72be1"
       }
     }
   },
@@ -249,9 +267,10 @@
         "file": "03-ma-crossovers.en.vtt",
         "sha256": "7ca8a02a1294defaf471c3fd2502ea513890fa7052c1af2fd8761b75cd71f8a4"
       },
+      "change": "2026-10-17: re-encoded for mobile playback (limited-range yuv420p; the full-range original would not play in phone browsers), same picture and sound; re-approved by the owner in chat",
       "video": {
         "file": "03-ma-crossovers.en.mp4",
-        "sha256": "a3bd960595b778035dbaf274b0d7a4031980ea0b3f573a6fe8963382d7522eff"
+        "sha256": "ac88f1af9f273b52988cb0f7b3f0914214098325f25e5443dd55cfa3de9a2d9d"
       }
     },
     "es": {
@@ -261,10 +280,11 @@
         "file": "03-ma-crossovers.es.vtt",
         "sha256": "cbb27ad4870a5bdc72240581b16287c283e1db26771398d5bb592d7953eb9a94"
       },
+      "change": "2026-10-17: re-encoded for mobile playback (limited-range yuv420p; the full-range original would not play in phone browsers), same picture and sound; re-approved by the owner in chat",
       "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
       "video": {
         "file": "03-ma-crossovers.es.mp4",
-        "sha256": "c541f15b6df6680fbfda5b32d9c42d83881112f6e4aad6dcbc72e19aba79a3e0"
+        "sha256": "cba0b4dd9b45ae038c45515e6b2cd78e88b83efa362bba66b2c6c42a07107f21"
       }
     },
     "hi": {
@@ -274,10 +294,11 @@
         "file": "03-ma-crossovers.hi.vtt",
         "sha256": "ca6594a804829d76635cfa74a6ee10944c95d964802131ce6a3addf178a503e1"
       },
+      "change": "2026-10-17: re-encoded for mobile playback (limited-range yuv420p; the full-range original would not play in phone browsers), same picture and sound; re-approved by the owner in chat",
       "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
       "video": {
         "file": "03-ma-crossovers.hi.mp4",
-        "sha256": "ad8c5d58f9f070cc2f4a2b7fc52e7c0a36945f08ad738460f60edbaad5aac553"
+        "sha256": "0b050435910d3cc88f4c712a6cbfc183f63c69d62010ed843bd06032651647da"
       }
     },
     "te": {
@@ -287,10 +308,11 @@
         "file": "03-ma-crossovers.te.vtt",
         "sha256": "cf0da44c689281dd8153c4e659360075216a1fe58017334068eea8eb68070eeb"
       },
+      "change": "2026-10-17: re-encoded for mobile playback (limited-range yuv420p; the full-range original would not play in phone browsers), same picture and sound; re-approved by the owner in chat",
       "note": "published on the owner's instruction before a native speaker's review; review still to be recorded",
       "video": {
         "file": "03-ma-crossovers.te.mp4",
-        "sha256": "cda51ada97a63383486e30aeba2446d209c9283c494d40b11435e38f65040f42"
+        "sha256": "5a6e4821d2050dc1b01a027d564429350ddf994b11d1be2acbaca8427282cb8d"
       }
     }
   }

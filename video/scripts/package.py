@@ -133,7 +133,17 @@ def finish(src: Path, dst: Path, lang: str) -> dict:
         f"loudnorm=I=-16:TP=-2:LRA=11:measured_I={measured['input_i']}:measured_TP={measured['input_tp']}"
         f":measured_LRA={measured['input_lra']}:measured_thresh={measured['input_thresh']}:offset={measured['target_offset']}:linear=true"
     )
-    ff(["-i", str(src), "-map", "0:v:0", "-map", "0:a:0", "-c:v", "copy", "-af", af, "-ar", "48000", "-c:a", "aac", "-b:a", "160k",
+    # The video is re-encoded to what every phone decodes: Remotion encodes from JPEG frames, which
+    # leaves full-range "yuvj420p" with BT.601 tags, and mobile browsers (Safari on iPhone, Chrome on
+    # Android) refuse it with a "can't play this video" / download prompt. So: limited-range
+    # yuv420p, H.264 High at level 4.0. Only the range is converted; the matrix stays BT.601 (tagged
+    # smpte170m), since converting it to BT.709 darkened every frame by 2-3 levels, which measured
+    # against the source; this way the decoded picture matches the render to within a level.
+    ff(["-i", str(src), "-map", "0:v:0", "-map", "0:a:0",
+        "-vf", "scale=in_range=pc:out_range=tv:in_color_matrix=bt601:out_color_matrix=bt601,format=yuv420p",
+        "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-profile:v", "high", "-level:v", "4.0",
+        "-colorspace", "smpte170m", "-color_primaries", "smpte170m", "-color_trc", "smpte170m", "-color_range", "tv",
+        "-af", af, "-ar", "48000", "-c:a", "aac", "-b:a", "160k",
         "-metadata:s:a:0", f"language={ISO639_2[lang]}", "-metadata", f"title=Nitora Trading Academy ({lang})", "-movflags", "+faststart", str(dst)])
     return {"before_lufs": m["integrated_lufs"], "after": qa.loudness(dst)}
 
@@ -142,12 +152,14 @@ def finish(src: Path, dst: Path, lang: str) -> dict:
 # publish. The bases must match the composition's (src/MaCrossoversCinematic.tsx BASES); a cut
 # over every scene takes its overrides per lesson.
 # Where the poster frame is, as a share of the English video.
-POSTER_AT = {"ma-crossovers": 0.36, "engulfing": 0.25, "harami": 0.25, "piercing": 0.21, "tweezers": 0.22, "stars": 0.24, "soldiers": 0.25, "insideout": 0.18, "gapped": 0.371}
+POSTER_AT = {"ma-crossovers": 0.36, "engulfing": 0.25, "harami": 0.25, "piercing": 0.21, "tweezers": 0.22, "stars": 0.24, "soldiers": 0.25, "insideout": 0.18, "gapped": 0.371, "lemonade": 0.11}
 CUTS = {
     # The proof of concept (4 scenes); its composition has since grown into the full lesson.
     "cinematic-poc": {"bases": {"title": 7, "average": 30, "golden": 18, "lag": 26}, "input": "v3/{name}-cinematic-{lang}.mp4", "dir": "v3-cinematic-poc"},
     # The full cinematic lesson: every scene, the script's bases (the crossover lesson's intro: 7 s).
     "cinematic": {"bases": {"ma-crossovers": {"title": 7}}, "all": True, "input": "v3/{name}-cinematic-{lang}.mp4", "dir": "v3"},
+    # Module 0 in clay (look G2): the same lesson and timing as "cinematic", its own render and folder.
+    "clay": {"bases": {}, "all": True, "input": "v3/{name}-clay-{lang}.mp4", "dir": "v4-clay"},
 }
 
 
