@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Play, Pause, SkipForward, StepForward, RotateCcw, Settings2, Sparkles, Keyboard, PanelRightClose, PanelRightOpen, ArrowLeftRight } from 'lucide-react';
 import { TradingChart } from '@/components/sim/TradingChart';
 import { OrderTicket } from '@/components/sim/OrderTicket';
@@ -87,6 +88,27 @@ export function SimulatorPage() {
   const [dock, setDock] = useState(() => Math.max(DOCK_MIN, Number(readPref(PREF_KEYS.simDock)) || DOCK_DEFAULT));
 
   useEffect(() => startClock(), []);
+
+  // A link can open the simulator on an instrument and timeframe (/simulator?symbol=BLUE&tf=1D).
+  // The query is applied once and then dropped, so a reload keeps whatever the user picks next.
+  const [params, setParams] = useSearchParams();
+  useEffect(() => {
+    if (!params.has('symbol') && !params.has('tf')) return;
+    const sym = params.get('symbol');
+    const tf = params.get('tf');
+    // As with the command palette, the instrument only switches on the synthetic market:
+    // changing source would reset the account.
+    if (sym && useSim.getState().source === 'synthetic' && SYMBOLS.some((s) => s.symbol === sym)) setSymbol(sym);
+    if (tf && (TIMEFRAMES as string[]).includes(tf)) setTimeframe(tf as Timeframe);
+    setParams(
+      (p) => {
+        p.delete('symbol');
+        p.delete('tf');
+        return p;
+      },
+      { replace: true },
+    );
+  }, [params, setParams, setSymbol, setTimeframe]);
 
   const isReal = usesRealFeed(source);
   const isLive = source === 'live';

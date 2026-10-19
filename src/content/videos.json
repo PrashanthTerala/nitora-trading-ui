@@ -30,7 +30,7 @@
             600,
             76
           ],
-          "href": "/simulator",
+          "href": "/simulator?symbol=BLUE&tf=1D",
           "label": "Open BLUE in the simulator"
         }
       }
