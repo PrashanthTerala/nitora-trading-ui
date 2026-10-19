@@ -12,6 +12,19 @@
         "file": "01-the-lemonade-stand.en.mp4",
         "sha256": "ea16150482d137470950a8b8efcfdba25f7f36ea7c7e26782ec2a8491b04ba1f"
       }
+    },
+    "te": {
+      "approved": "2026-10-18",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "01-the-lemonade-stand.te.vtt",
+        "sha256": "de84948dc1b1c097e22b0953ecd78e6f102f03fbc9dbeb9d625460360c1bda52"
+      },
+      "change": "2026-10-18: published on the owner's instruction before a native speaker's review (conversational Telugu narration, Chirp 3 HD te-IN Achird; Gate G render)",
+      "video": {
+        "file": "01-the-lemonade-stand.te.mp4",
+        "sha256": "3780442b56f10ae345964dffab73e9e46633704b9fe3daffcc5c0f175cd9b0bd"
+      }
     }
   },
   "m02-candlestick-patterns/06-engulfing": {

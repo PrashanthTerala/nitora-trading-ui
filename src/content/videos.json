@@ -33,6 +33,37 @@
           "href": "/simulator?symbol=BLUE&tf=1D",
           "label": "Open BLUE in the simulator"
         }
+      },
+      {
+        "lang": "te",
+        "video": "01-the-lemonade-stand.te.3780442b.mp4",
+        "captions": "01-the-lemonade-stand.te.de84948d.vtt",
+        "duration": 350.2,
+        "scenes": [
+          0.0,
+          24.77,
+          53.5,
+          81.1,
+          112.97,
+          152.27,
+          188.73,
+          220.97,
+          251.23,
+          305.9,
+          344.63
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 333.84,
+          "box": [
+            660,
+            724,
+            600,
+            76
+          ],
+          "href": "/simulator?symbol=BLUE&tf=1D",
+          "label": "Open BLUE in the simulator"
+        }
       }
     ],
     "published": "2026-10-18"
