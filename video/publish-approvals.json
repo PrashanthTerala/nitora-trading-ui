@@ -53,6 +53,32 @@
       }
     }
   },
+  "m00-what-is-a-market/03-why-prices-move": {
+    "en": {
+      "approved": "2026-10-19",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "03-why-prices-move.en.vtt",
+        "sha256": "483e8849651c3524ab766130cfafddc6e34bcd48eddd6217078bef83e2208a82"
+      },
+      "video": {
+        "file": "03-why-prices-move.en.mp4",
+        "sha256": "7bea463e8a495722717a50686e1c0121109af31a2a5f9688d4252ee80addeda8"
+      }
+    },
+    "te": {
+      "approved": "2026-10-19",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "03-why-prices-move.te.vtt",
+        "sha256": "8e35f5246bbe44dbcc111909199a5b42b4c4c34488398a9dc3a448919919747b"
+      },
+      "video": {
+        "file": "03-why-prices-move.te.mp4",
+        "sha256": "11c5948546b3be2425efab6f4f774cf415d1981996734bbe7d35bbe8b74aac0c"
+      }
+    }
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "en": {
       "approved": "2026-10-17",

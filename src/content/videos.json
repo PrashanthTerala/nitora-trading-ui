@@ -139,6 +139,79 @@
     ],
     "published": "2026-10-19"
   },
+  "m00-what-is-a-market/03-why-prices-move": {
+    "base": "https://media.nitoratrading.com/m00-what-is-a-market/03-why-prices-move",
+    "poster": "poster.2a847558.jpg",
+    "tracks": [
+      {
+        "lang": "en",
+        "video": "03-why-prices-move.en.7bea463e.mp4",
+        "captions": "03-why-prices-move.en.483e8849.vtt",
+        "duration": 242.3,
+        "scenes": [
+          0.0,
+          13.3,
+          25.47,
+          42.27,
+          62.43,
+          80.93,
+          92.07,
+          110.3,
+          130.73,
+          147.77,
+          159.03,
+          227.37,
+          236.8
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 230.57,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=BIOX&tf=1D",
+          "label": "Open BIOX in the simulator"
+        }
+      },
+      {
+        "lang": "te",
+        "video": "03-why-prices-move.te.11c59485.mp4",
+        "captions": "03-why-prices-move.te.8e35f524.vtt",
+        "duration": 357.63,
+        "scenes": [
+          0.0,
+          18.03,
+          34.23,
+          63.5,
+          94.23,
+          119.9,
+          134.37,
+          161.63,
+          193.43,
+          217.87,
+          236.13,
+          339.03,
+          352.13
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 342.23,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=BIOX&tf=1D",
+          "label": "Open BIOX in the simulator"
+        }
+      }
+    ],
+    "published": "2026-10-19"
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/06-engulfing",
     "poster": "poster.a794f5b7.jpg",
