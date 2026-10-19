@@ -12,7 +12,7 @@ export interface VideoTrack {
   duration: number;
   /** Each scene's start, in seconds, in this language. Languages run to different lengths. */
   scenes: number[];
-  /** The voice credit, shown under the player. */
+  /** The voice credit, kept with the track as a record (the player does not show it). */
   credit: string;
 }
 

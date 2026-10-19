@@ -193,7 +193,6 @@ export const en = {
     error: 'The video could not be played here.',
     errorCode: 'Browser error {code}',
     download: 'Download the video',
-    note: 'Synthetic data, for teaching. {credit}',
     watched: 'Lesson marked complete',
   },
   lesson: {

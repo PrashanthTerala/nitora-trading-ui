@@ -210,7 +210,6 @@ export function LessonVideo({ id, title, entry }: { id: string; title: string; e
             </button>
           </span>
         )}
-        <span className="ml-auto text-caption text-ink-muted">{t('video.note', { credit: track.credit })}</span>
       </div>
 
       <details className="mt-3 rounded-card border border-line bg-surface-1" onToggle={(e) => setTranscriptOpen((e.currentTarget as HTMLDetailsElement).open)}>
