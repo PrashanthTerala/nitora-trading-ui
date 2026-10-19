@@ -79,6 +79,32 @@
       }
     }
   },
+  "m00-what-is-a-market/04-trading-vs-investing": {
+    "en": {
+      "approved": "2026-10-19",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "04-trading-vs-investing.en.vtt",
+        "sha256": "10e1e347af791174571a072979863e2124f3de4d023bd969f57b3deae10895d6"
+      },
+      "video": {
+        "file": "04-trading-vs-investing.en.mp4",
+        "sha256": "7f73901bfe63f375ae2818d77f9c65cba29bdbaa0283252df75a34660dd4efb1"
+      }
+    },
+    "te": {
+      "approved": "2026-10-19",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "04-trading-vs-investing.te.vtt",
+        "sha256": "f9dfc401ab86c41794d21a1a14acd73f34869bf5760e38d49f50e31a463b3bf2"
+      },
+      "video": {
+        "file": "04-trading-vs-investing.te.mp4",
+        "sha256": "e52afeee0abf618927b7346b168126bba75ea0251ba12348125ab65836c270ce"
+      }
+    }
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "en": {
       "approved": "2026-10-17",

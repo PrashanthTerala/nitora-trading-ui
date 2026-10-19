@@ -212,6 +212,77 @@
     ],
     "published": "2026-10-19"
   },
+  "m00-what-is-a-market/04-trading-vs-investing": {
+    "base": "https://media.nitoratrading.com/m00-what-is-a-market/04-trading-vs-investing",
+    "poster": "poster.24036a7d.jpg",
+    "tracks": [
+      {
+        "lang": "en",
+        "video": "04-trading-vs-investing.en.7f73901b.mp4",
+        "captions": "04-trading-vs-investing.en.10e1e347.vtt",
+        "duration": 287.07,
+        "scenes": [
+          0.0,
+          24.6,
+          56.63,
+          92.83,
+          115.47,
+          131.33,
+          155.13,
+          171.73,
+          182.1,
+          196.8,
+          269.73,
+          281.57
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 272.93,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=BLUE&tf=1D",
+          "label": "Open BLUE in the simulator"
+        }
+      },
+      {
+        "lang": "te",
+        "video": "04-trading-vs-investing.te.e52afeee.mp4",
+        "captions": "04-trading-vs-investing.te.f9dfc401.vtt",
+        "duration": 414.4,
+        "scenes": [
+          0.0,
+          31.57,
+          78.3,
+          133.97,
+          168.27,
+          190.47,
+          222.57,
+          245.07,
+          261.03,
+          283.57,
+          394.57,
+          408.9
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 397.77,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=BLUE&tf=1D",
+          "label": "Open BLUE in the simulator"
+        }
+      }
+    ],
+    "published": "2026-10-19"
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/06-engulfing",
     "poster": "poster.a794f5b7.jpg",
