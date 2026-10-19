@@ -85,6 +85,12 @@ const tests = {
         for (const k of ['lang', 'video', 'captions', 'credit']) assert.ok(t[k], `${key}/${t.lang}: no ${k}`);
         assert.ok(t.duration > 0, `${key}/${t.lang}: no duration`);
         assert.ok(t.scenes.every((s, i) => s >= 0 && s < t.duration && (i === 0 || s > t.scenes[i - 1])), `${key}/${t.lang}: scene starts out of order`);
+        if (t.cta) {
+          const [x, y, w, h] = t.cta.box;
+          assert.ok(t.cta.from >= 0 && t.cta.from < t.duration, `${key}/${t.lang}: cta starts outside the video`);
+          assert.ok(x >= 0 && y >= 0 && w > 0 && h > 0 && x + w <= 1920 && y + h <= 1080, `${key}/${t.lang}: cta box outside the frame`);
+          assert.ok(t.cta.href.startsWith('/') && t.cta.label, `${key}/${t.lang}: cta needs a site path and a label`);
+        }
       }
     }
   },

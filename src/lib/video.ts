@@ -3,6 +3,23 @@
  * helpers the player uses. Pure, so tools/test-video.mjs can check them without a browser.
  */
 
+/**
+ * A button drawn into the video's end card. A picture can't be clicked, so while it shows, the player
+ * lays a real link exactly over it.
+ */
+export interface VideoCta {
+  /** Seconds into this language's video when the button is on screen; it stays to the end. */
+  from: number;
+  /** The button's box in the 1920x1080 frame: [x, y, width, height]. */
+  box: [number, number, number, number];
+  /** A path on this site. */
+  href: string;
+  label: string;
+}
+
+/** A box in the 1920x1080 frame as percentages, to sit over the video at any size. */
+export const frameBox = ([x, y, w, h]: VideoCta['box']) => ({ left: `${x / 19.2}%`, top: `${y / 10.8}%`, width: `${w / 19.2}%`, height: `${h / 10.8}%` });
+
 /** One language of a lesson video. Files are relative to the set's `base`. */
 export interface VideoTrack {
   lang: string;
@@ -14,6 +31,8 @@ export interface VideoTrack {
   scenes: number[];
   /** The voice credit, kept with the track as a record (the player does not show it). */
   credit: string;
+  /** The end card's button, made clickable (see VideoCta). */
+  cta?: VideoCta;
 }
 
 export interface LessonVideoEntry {

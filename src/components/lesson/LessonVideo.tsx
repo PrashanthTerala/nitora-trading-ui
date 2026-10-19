@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Play } from 'lucide-react';
 import { Segmented } from '@/components/ui/Segmented';
 import { toast } from '@/components/ui/Toast';
 import { useProgress } from '@/store/progress';
 import { PREF_KEYS } from '@/lib/storageKeys';
-import { LANGUAGE_NAMES, fileUrl, formatTime, mapTime, parseVtt, resumePoint, type Cue, type LessonVideoEntry, type VideoTrack } from '@/lib/video';
+import { LANGUAGE_NAMES, fileUrl, formatTime, frameBox, mapTime, parseVtt, resumePoint, type Cue, type LessonVideoEntry, type VideoTrack } from '@/lib/video';
 import { t } from '@/i18n';
 
 /** Read and write the per-lesson, per-language positions; storage can be blocked, so every touch is guarded. */
@@ -56,6 +57,8 @@ export function LessonVideo({ id, title, entry }: { id: string; title: string; e
   const [resumedAt, setResumedAt] = useState<number | null>(null);
   const [cues, setCues] = useState<Cue[] | 'loading' | 'failed' | null>(null);
   const [transcriptOpen, setTranscriptOpen] = useState(false);
+  // True while the end card's button is on screen, so the real link can sit over it.
+  const [ctaOn, setCtaOn] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const pending = useRef<{ at: number; play: boolean } | null>(null);
   const lastSaved = useRef(0);
@@ -84,6 +87,7 @@ export function LessonVideo({ id, title, entry }: { id: string; title: string; e
     if (started && v) pending.current = { at: mapTime(track, to, v.currentTime), play: !v.paused };
     setLang(next);
     setResumedAt(null);
+    setCtaOn(false);
     try {
       localStorage.setItem(PREF_KEYS.videoLang, next);
     } catch {
@@ -103,6 +107,7 @@ export function LessonVideo({ id, title, entry }: { id: string; title: string; e
   const onTime = () => {
     const v = videoRef.current;
     if (!v || !v.duration) return;
+    setCtaOn(!!track.cta && v.currentTime >= track.cta.from);
     if (Math.abs(v.currentTime - lastSaved.current) >= 5) {
       lastSaved.current = v.currentTime;
       writePosition(posKey, v.currentTime);
@@ -171,7 +176,10 @@ export function LessonVideo({ id, title, entry }: { id: string; title: string; e
             onLoadedMetadata={onLoaded}
             onTimeUpdate={onTime}
             onPause={() => videoRef.current && writePosition(posKey, videoRef.current.currentTime)}
-            onEnded={() => writePosition(posKey, null)}
+            onEnded={() => {
+              writePosition(posKey, null);
+              setCtaOn(!!track.cta);
+            }}
             onError={() => setFailed(videoRef.current?.error?.code ?? 0)}
           >
             {/* No `default`: captions start off, and the reader turns them on from the controls. */}
@@ -197,6 +205,16 @@ export function LessonVideo({ id, title, entry }: { id: string; title: string; e
               {formatTime(track.duration)}
             </span>
           </button>
+        )}
+        {/* The end card draws a button into the picture; while it shows, this real link sits exactly over it. */}
+        {started && failed === false && ctaOn && track.cta && (
+          <Link
+            to={track.cta.href}
+            style={frameBox(track.cta.box)}
+            aria-label={track.cta.label}
+            title={track.cta.label}
+            className="absolute rounded-control outline-offset-2 hover:outline-2 hover:outline-ink focus-visible:outline-2 focus-visible:outline-ink"
+          />
         )}
       </div>
 

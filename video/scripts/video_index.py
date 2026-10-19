@@ -55,6 +55,7 @@ def entry(set_dir: Path, base: str) -> tuple[str, dict]:
             "duration": info["duration_s"],
             "scenes": [round(s, 2) for s in starts.values()],
             "credit": info["voice"]["credit"],
+            **({"cta": info["cta"]} if "cta" in info else {}),
         })
     return manifest["lesson"], {"base": base, "poster": manifest["poster"], "tracks": tracks}
 
