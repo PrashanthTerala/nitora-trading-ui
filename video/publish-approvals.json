@@ -5,11 +5,12 @@
       "by": "owner, in chat",
       "captions": {
         "file": "01-the-lemonade-stand.en.vtt",
-        "sha256": "87979ef1c3a5aab2d3e9e60197b7dd9483e2ba6c0e11edce3f172706854fccd7"
+        "sha256": "294764f228aa15c5bffa0f586a03d95559b03fad71bd8425465b778b2f25fbad"
       },
+      "change": "2026-10-18: Gate G re-render (on-screen text raised to 24 px for phones; captions held into the pauses; end-card button made clickable on the site), re-approved by the owner in chat",
       "video": {
         "file": "01-the-lemonade-stand.en.mp4",
-        "sha256": "fb9b6dc698309f96a7f532552ec06f22a88b93ac9d4a06ad38785146fdd3c18c"
+        "sha256": "ea16150482d137470950a8b8efcfdba25f7f36ea7c7e26782ec2a8491b04ba1f"
       }
     }
   },

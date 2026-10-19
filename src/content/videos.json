@@ -5,8 +5,8 @@
     "tracks": [
       {
         "lang": "en",
-        "video": "01-the-lemonade-stand.en.fb9b6dc6.mp4",
-        "captions": "01-the-lemonade-stand.en.87979ef1.vtt",
+        "video": "01-the-lemonade-stand.en.ea161504.mp4",
+        "captions": "01-the-lemonade-stand.en.294764f2.vtt",
         "duration": 233.7,
         "scenes": [
           0.0,
@@ -21,7 +21,18 @@
           203.2,
           228.17
         ],
-        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird)."
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 221.21,
+          "box": [
+            660,
+            724,
+            600,
+            76
+          ],
+          "href": "/simulator",
+          "label": "Open BLUE in the simulator"
+        }
       }
     ],
     "published": "2026-10-18"
