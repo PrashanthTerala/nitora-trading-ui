@@ -1,4 +1,31 @@
 {
+  "m00-what-is-a-market/01-the-lemonade-stand": {
+    "base": "https://media.nitoratrading.com/m00-what-is-a-market/01-the-lemonade-stand",
+    "poster": "poster.d849607a.jpg",
+    "tracks": [
+      {
+        "lang": "en",
+        "video": "01-the-lemonade-stand.en.fb9b6dc6.mp4",
+        "captions": "01-the-lemonade-stand.en.87979ef1.vtt",
+        "duration": 233.7,
+        "scenes": [
+          0.0,
+          15.47,
+          36.3,
+          54.9,
+          74.5,
+          100.7,
+          126.13,
+          148.93,
+          169.93,
+          203.2,
+          228.17
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird)."
+      }
+    ],
+    "published": "2026-10-18"
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/06-engulfing",
     "poster": "poster.a794f5b7.jpg",

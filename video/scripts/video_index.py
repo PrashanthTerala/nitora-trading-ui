@@ -36,15 +36,18 @@ def narration_for(lesson: str) -> tuple[str, dict]:
 
 def entry(set_dir: Path, base: str) -> tuple[str, dict]:
     manifest = json.loads((set_dir / "manifest.json").read_text(encoding="utf-8"))
-    name, spec = narration_for(manifest["lesson"])
-    bases = package.CUTS["cinematic"]["bases"].get(name, {})
-    spec = {**spec, "scenes": {k: {**m, "base": bases.get(k, m["base"])} for k, m in spec["scenes"].items()}}
     tracks = []
     langs = manifest["languages"]
     for lang in sorted(langs, key=lambda l: ORDER.index(l) if l in ORDER else 99):
         info = langs[lang]
-        timings = json.loads((ROOT / "narration" / name / lang / "timings.json").read_text(encoding="utf-8"))
-        starts = package.scene_starts(spec, timings)
+        if "scenes" in info:  # a set made outside this project (the motion film) carries its own scene starts
+            starts = dict(enumerate(info["scenes"]))
+        else:
+            name, spec = narration_for(manifest["lesson"])
+            bases = package.CUTS["cinematic"]["bases"].get(name, {})
+            spec = {**spec, "scenes": {k: {**m, "base": bases.get(k, m["base"])} for k, m in spec["scenes"].items()}}
+            timings = json.loads((ROOT / "narration" / name / lang / "timings.json").read_text(encoding="utf-8"))
+            starts = package.scene_starts(spec, timings)
         tracks.append({
             "lang": lang,
             "video": info["video"],

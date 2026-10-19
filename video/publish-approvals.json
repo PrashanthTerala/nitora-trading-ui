@@ -1,4 +1,18 @@
 {
+  "m00-what-is-a-market/01-the-lemonade-stand": {
+    "en": {
+      "approved": "2026-10-18",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "01-the-lemonade-stand.en.vtt",
+        "sha256": "87979ef1c3a5aab2d3e9e60197b7dd9483e2ba6c0e11edce3f172706854fccd7"
+      },
+      "video": {
+        "file": "01-the-lemonade-stand.en.mp4",
+        "sha256": "fb9b6dc698309f96a7f532552ec06f22a88b93ac9d4a06ad38785146fdd3c18c"
+      }
+    }
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "en": {
       "approved": "2026-10-17",
