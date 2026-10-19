@@ -103,6 +103,38 @@
           "href": "/simulator?symbol=BLUE&tf=1D",
           "label": "Compare BLUE and NOVA in the simulator"
         }
+      },
+      {
+        "lang": "te",
+        "video": "02-what-is-a-stock.te.b7beaf31.mp4",
+        "captions": "02-what-is-a-stock.te.fcc732dc.vtt",
+        "duration": 334.7,
+        "scenes": [
+          0.0,
+          24.17,
+          41.83,
+          94.73,
+          114.5,
+          135.1,
+          162.1,
+          195.0,
+          225.3,
+          266.77,
+          296.63,
+          329.13
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 321.38,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=BLUE&tf=1D",
+          "label": "Compare BLUE and NOVA in the simulator"
+        }
       }
     ],
     "published": "2026-10-19"

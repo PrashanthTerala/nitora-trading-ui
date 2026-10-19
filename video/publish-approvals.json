@@ -39,6 +39,18 @@
         "file": "02-what-is-a-stock.en.mp4",
         "sha256": "d7087ece26fc91bd03c909fb85d332e5028cad91022175a799d66a0ce87055c8"
       }
+    },
+    "te": {
+      "approved": "2026-10-19",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "02-what-is-a-stock.te.vtt",
+        "sha256": "fcc732dcdf2c4b641bf79fc757f3dfd26545d15b46574e330674c93a00d09f81"
+      },
+      "video": {
+        "file": "02-what-is-a-stock.te.mp4",
+        "sha256": "b7beaf31a85825c8b7d0cab840a1d269e032920af380f224304f81382844cfea"
+      }
     }
   },
   "m02-candlestick-patterns/06-engulfing": {
