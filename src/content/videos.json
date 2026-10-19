@@ -68,6 +68,45 @@
     ],
     "published": "2026-10-18"
   },
+  "m00-what-is-a-market/02-what-is-a-stock": {
+    "base": "https://media.nitoratrading.com/m00-what-is-a-market/02-what-is-a-stock",
+    "poster": "poster.85d80423.jpg",
+    "tracks": [
+      {
+        "lang": "en",
+        "video": "02-what-is-a-stock.en.d7087ece.mp4",
+        "captions": "02-what-is-a-stock.en.8e6d6f9a.vtt",
+        "duration": 231.1,
+        "scenes": [
+          0.0,
+          17.83,
+          29.8,
+          62.07,
+          77.37,
+          92.1,
+          107.97,
+          132.0,
+          152.6,
+          182.8,
+          204.17,
+          225.5
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 220.5,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=BLUE&tf=1D",
+          "label": "Compare BLUE and NOVA in the simulator"
+        }
+      }
+    ],
+    "published": "2026-10-19"
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/06-engulfing",
     "poster": "poster.a794f5b7.jpg",

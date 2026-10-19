@@ -27,6 +27,20 @@
       }
     }
   },
+  "m00-what-is-a-market/02-what-is-a-stock": {
+    "en": {
+      "approved": "2026-10-19",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "02-what-is-a-stock.en.vtt",
+        "sha256": "8e6d6f9ad3a4da36b68ce14415712cb18a6b8ac72f047830f263674c21be9839"
+      },
+      "video": {
+        "file": "02-what-is-a-stock.en.mp4",
+        "sha256": "d7087ece26fc91bd03c909fb85d332e5028cad91022175a799d66a0ce87055c8"
+      }
+    }
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "en": {
       "approved": "2026-10-17",
