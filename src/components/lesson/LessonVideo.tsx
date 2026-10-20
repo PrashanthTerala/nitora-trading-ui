@@ -60,6 +60,9 @@ export function LessonVideo({ id, title, entry }: { id: string; title: string; e
   // True while the end card's button is on screen, so the real link can sit over it.
   const [ctaOn, setCtaOn] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const trackRef = useRef<HTMLTrackElement>(null);
+  // Whether the reader had captions on when they last changed language, for the new language's track.
+  const captionsOn = useRef(false);
   const pending = useRef<{ at: number; play: boolean } | null>(null);
   const lastSaved = useRef(0);
   const markedDone = useRef(false);
@@ -84,7 +87,15 @@ export function LessonVideo({ id, title, entry }: { id: string; title: string; e
     const v = videoRef.current;
     const to = entry.tracks.find((x) => x.lang === next);
     if (!to) return;
-    if (started && v) pending.current = { at: mapTime(track, to, v.currentTime), play: !v.paused };
+    if (started && v) {
+      pending.current = { at: mapTime(track, to, v.currentTime), play: !v.paused };
+      // Turn the old captions off before their <track> is removed: Chrome keeps painting the cue of
+      // a showing track removed while the video is paused, under the new language's cue. The
+      // reader's choice is carried over to the new track instead (see below).
+      const tracks = Array.from(v.textTracks);
+      captionsOn.current = tracks.some((x) => x.mode === 'showing');
+      for (const x of tracks) x.mode = 'disabled';
+    }
     setLang(next);
     setResumedAt(null);
     setCtaOn(false);
@@ -158,6 +169,11 @@ export function LessonVideo({ id, title, entry }: { id: string; title: string; e
     };
   }, [started, captionsUrl]);
 
+  // Captions the reader had on stay on in the new language.
+  useEffect(() => {
+    if (trackSrc && captionsOn.current && trackRef.current) trackRef.current.track.mode = 'showing';
+  }, [trackSrc]);
+
   const options = entry.tracks.map((x) => ({ value: x.lang, label: LANGUAGE_NAMES[x.lang]?.native ?? x.lang }));
   const videoUrl = fileUrl(entry, track.video);
 
@@ -183,7 +199,7 @@ export function LessonVideo({ id, title, entry }: { id: string; title: string; e
             onError={() => setFailed(videoRef.current?.error?.code ?? 0)}
           >
             {/* No `default`: captions start off, and the reader turns them on from the controls. */}
-            {trackSrc && <track key={trackSrc} kind="captions" src={trackSrc} srcLang={track.lang} label={LANGUAGE_NAMES[track.lang]?.native ?? track.lang} />}
+            {trackSrc && <track key={trackSrc} ref={trackRef} kind="captions" src={trackSrc} srcLang={track.lang} label={LANGUAGE_NAMES[track.lang]?.native ?? track.lang} />}
           </video>
         ) : failed !== false ? (
           <div role="alert" className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center text-body-sm text-ink">
