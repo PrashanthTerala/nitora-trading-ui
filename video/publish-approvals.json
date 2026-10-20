@@ -63,7 +63,7 @@
       },
       "video": {
         "file": "03-why-prices-move.en.mp4",
-        "sha256": "7bea463e8a495722717a50686e1c0121109af31a2a5f9688d4252ee80addeda8"
+        "sha256": "df4cf8ae76986269619927d17e85d99a89e5eef6bbdf60e084f9e305cc0bb649"
       }
     },
     "te": {
@@ -75,7 +75,7 @@
       },
       "video": {
         "file": "03-why-prices-move.te.mp4",
-        "sha256": "11c5948546b3be2425efab6f4f774cf415d1981996734bbe7d35bbe8b74aac0c"
+        "sha256": "5a274a8858bfc757d60f01a391788d742df779415bc39860142d61c7e013d55f"
       }
     }
   },
