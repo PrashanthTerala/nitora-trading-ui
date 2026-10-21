@@ -131,6 +131,32 @@
       }
     }
   },
+  "m00-what-is-a-market/06-what-can-you-trade": {
+    "en": {
+      "approved": "2026-10-20",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "06-what-can-you-trade.en.vtt",
+        "sha256": "a58113a80ed8607f2d415061b96b76bf487b3cc5e35ede70ac1e09d8f6c88ced"
+      },
+      "video": {
+        "file": "06-what-can-you-trade.en.mp4",
+        "sha256": "5da09d368cf68a90f4a5ec1b4ed057536bf103cc3342dcdfa49f5cb0c747f909"
+      }
+    },
+    "te": {
+      "approved": "2026-10-20",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "06-what-can-you-trade.te.vtt",
+        "sha256": "59d5b58739528beef50acd7d250a045cc719912f0ab9d84a31d4dddd58847cf0"
+      },
+      "video": {
+        "file": "06-what-can-you-trade.te.mp4",
+        "sha256": "af77a24b752825180c918e7c7da40e1e42ec10ae78bf8e88654497ce7b077c67"
+      }
+    }
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "en": {
       "approved": "2026-10-17",
