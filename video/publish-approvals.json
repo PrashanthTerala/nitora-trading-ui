@@ -209,6 +209,32 @@
       }
     }
   },
+  "m00-what-is-a-market/09-tickers-lots-and-units": {
+    "en": {
+      "approved": "2026-10-21",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "09-tickers-lots-and-units.en.vtt",
+        "sha256": "ee046c0957c7002fa246519159dfdb602565fc79bdc433928583207dd48b8186"
+      },
+      "video": {
+        "file": "09-tickers-lots-and-units.en.mp4",
+        "sha256": "43735454857c3a8de929decab9032138873761dd8e037e052d508454e5fa6a17"
+      }
+    },
+    "te": {
+      "approved": "2026-10-21",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "09-tickers-lots-and-units.te.vtt",
+        "sha256": "4315476fcbb6d2c501e34ae0804fe8427f046b8fb8b688e851fec1eb63a73de0"
+      },
+      "video": {
+        "file": "09-tickers-lots-and-units.te.mp4",
+        "sha256": "cbed89225d82d79b3b59a9674f195b0a4e2c02d8b15dd7df4fcc25f4e1072f20"
+      }
+    }
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "en": {
       "approved": "2026-10-17",
