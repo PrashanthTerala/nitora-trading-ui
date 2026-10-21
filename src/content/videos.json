@@ -727,6 +727,79 @@
     ],
     "published": "2026-10-21"
   },
+  "m01-reading-price/02-line-bar-candle": {
+    "base": "https://media.nitoratrading.com/m01-reading-price/02-line-bar-candle",
+    "poster": "poster.38dcc6bd.jpg",
+    "tracks": [
+      {
+        "lang": "en",
+        "video": "02-line-bar-candle.en.4f8281dd.mp4",
+        "captions": "02-line-bar-candle.en.f84fb0a6.vtt",
+        "duration": 318.73,
+        "scenes": [
+          0.0,
+          25.67,
+          42.6,
+          65.77,
+          92.37,
+          116.7,
+          132.63,
+          155.4,
+          178.53,
+          201.97,
+          225.3,
+          299.23,
+          313.23
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 302.43,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=BLUE&tf=1D",
+          "label": "Open BLUE in the simulator"
+        }
+      },
+      {
+        "lang": "te",
+        "video": "02-line-bar-candle.te.05d433e5.mp4",
+        "captions": "02-line-bar-candle.te.3006f7e1.vtt",
+        "duration": 431.3,
+        "scenes": [
+          0.0,
+          37.73,
+          60.37,
+          92.3,
+          128.2,
+          157.3,
+          179.47,
+          209.43,
+          243.67,
+          277.03,
+          309.57,
+          404.4,
+          425.8
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 407.6,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=BLUE&tf=1D",
+          "label": "Open BLUE in the simulator"
+        }
+      }
+    ],
+    "published": "2026-10-21"
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/06-engulfing",
     "poster": "poster.a794f5b7.jpg",

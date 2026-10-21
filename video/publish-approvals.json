@@ -261,6 +261,32 @@
       }
     }
   },
+  "m01-reading-price/02-line-bar-candle": {
+    "en": {
+      "approved": "2026-10-21",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "02-line-bar-candle.en.vtt",
+        "sha256": "f84fb0a6b4ef2bd1947babfccb0a54b24d9a5648896db08ddd35aca90074a9f7"
+      },
+      "video": {
+        "file": "02-line-bar-candle.en.mp4",
+        "sha256": "4f8281ddf497a78122a4de38c5912bbb7975615a9274ac533bcdcbba259005dd"
+      }
+    },
+    "te": {
+      "approved": "2026-10-21",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "02-line-bar-candle.te.vtt",
+        "sha256": "3006f7e12e64a3b4c16ad07641126fc8bbb588fe62fe7be67e15e4da7795216c"
+      },
+      "video": {
+        "file": "02-line-bar-candle.te.mp4",
+        "sha256": "05d433e5314c0d6df393e3edd1e50f7010dcc12521c366f5f5372f3ab61f087c"
+      }
+    }
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "en": {
       "approved": "2026-10-17",
