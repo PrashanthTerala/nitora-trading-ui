@@ -157,6 +157,32 @@
       }
     }
   },
+  "m00-what-is-a-market/07-bid-ask-spread": {
+    "en": {
+      "approved": "2026-10-20",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "07-bid-ask-spread.en.vtt",
+        "sha256": "a446b843d202800a2f8b702b5da90387e62ec8df04bedf22242bb8d2f9b04dde"
+      },
+      "video": {
+        "file": "07-bid-ask-spread.en.mp4",
+        "sha256": "c291de4cff3cc6615094251bbfe8696ba6053b52f28ee86122eb5a9f320c7578"
+      }
+    },
+    "te": {
+      "approved": "2026-10-20",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "07-bid-ask-spread.te.vtt",
+        "sha256": "bb5add7047f7effba8fe82307866aa2b34f4d4867e114ce0afbebb4bcc273ff7"
+      },
+      "video": {
+        "file": "07-bid-ask-spread.te.mp4",
+        "sha256": "48272c92947f10f2ce55139a4fc1e1f1b8549f8fa9876adfd0476d87b3d1e096"
+      }
+    }
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "en": {
       "approved": "2026-10-17",
