@@ -105,6 +105,32 @@
       }
     }
   },
+  "m00-what-is-a-market/05-the-players": {
+    "en": {
+      "approved": "2026-10-20",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "05-the-players.en.vtt",
+        "sha256": "1312c43453fab0e10909ad088d985636146e396913f20bc93571d04446f689bf"
+      },
+      "video": {
+        "file": "05-the-players.en.mp4",
+        "sha256": "a5bc37fd83b50c42ad5b45d8b612381cb6ff5884281965d1f2bc7e550d6a5efc"
+      }
+    },
+    "te": {
+      "approved": "2026-10-20",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "05-the-players.te.vtt",
+        "sha256": "5b81c5149a9c2bfc85d914469c520f14d54d6cb1fcc05c867a91b3e4e2030888"
+      },
+      "video": {
+        "file": "05-the-players.te.mp4",
+        "sha256": "e44fd36dfe0adc22ee3d268ebe6c438b97aa6cc7ccfc38b7fb111c73b0a465f6"
+      }
+    }
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "en": {
       "approved": "2026-10-17",

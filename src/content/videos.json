@@ -283,6 +283,79 @@
     ],
     "published": "2026-10-19"
   },
+  "m00-what-is-a-market/05-the-players": {
+    "base": "https://media.nitoratrading.com/m00-what-is-a-market/05-the-players",
+    "poster": "poster.ff66bf01.jpg",
+    "tracks": [
+      {
+        "lang": "en",
+        "video": "05-the-players.en.a5bc37fd.mp4",
+        "captions": "05-the-players.en.1312c434.vtt",
+        "duration": 269.27,
+        "scenes": [
+          0.0,
+          13.6,
+          37.13,
+          56.03,
+          78.6,
+          101.2,
+          115.97,
+          130.6,
+          147.2,
+          162.77,
+          178.37,
+          249.67,
+          263.77
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 252.87,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=FXEU&tf=1m",
+          "label": "Open FXEU in the simulator"
+        }
+      },
+      {
+        "lang": "te",
+        "video": "05-the-players.te.e44fd36d.mp4",
+        "captions": "05-the-players.te.5b81c514.vtt",
+        "duration": 419.0,
+        "scenes": [
+          0.0,
+          21.8,
+          59.37,
+          93.17,
+          123.9,
+          155.5,
+          181.7,
+          204.13,
+          234.23,
+          257.2,
+          283.13,
+          393.5,
+          413.5
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 396.7,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=FXEU&tf=1m",
+          "label": "Open FXEU in the simulator"
+        }
+      }
+    ],
+    "published": "2026-10-20"
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/06-engulfing",
     "poster": "poster.a794f5b7.jpg",
