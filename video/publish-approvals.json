@@ -183,6 +183,32 @@
       }
     }
   },
+  "m00-what-is-a-market/08-market-hours-and-sessions": {
+    "en": {
+      "approved": "2026-10-21",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "08-market-hours-and-sessions.en.vtt",
+        "sha256": "beb5cfbb74c6e13c4e564bc1a52a77c129480c00444cb6b4b57d2d3a086eba2b"
+      },
+      "video": {
+        "file": "08-market-hours-and-sessions.en.mp4",
+        "sha256": "a0c89c46ba917bde0b9b46ebfb2cfa50cad20bec2cfa5bb37d5a1ba43498bd57"
+      }
+    },
+    "te": {
+      "approved": "2026-10-21",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "08-market-hours-and-sessions.te.vtt",
+        "sha256": "1bcaa0903164b6827c614b17e9f22aa8358d9838b1958a04989cf2974adc834c"
+      },
+      "video": {
+        "file": "08-market-hours-and-sessions.te.mp4",
+        "sha256": "8af2b1413d56ae1da9752bd07afcbe4c7b161942501398b239cd8e70b0db8e54"
+      }
+    }
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "en": {
       "approved": "2026-10-17",

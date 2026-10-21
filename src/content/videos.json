@@ -506,6 +506,81 @@
     ],
     "published": "2026-10-20"
   },
+  "m00-what-is-a-market/08-market-hours-and-sessions": {
+    "base": "https://media.nitoratrading.com/m00-what-is-a-market/08-market-hours-and-sessions",
+    "poster": "poster.d8d7e906.jpg",
+    "tracks": [
+      {
+        "lang": "en",
+        "video": "08-market-hours-and-sessions.en.a0c89c46.mp4",
+        "captions": "08-market-hours-and-sessions.en.beb5cfbb.vtt",
+        "duration": 284.4,
+        "scenes": [
+          0.0,
+          17.6,
+          34.87,
+          59.87,
+          82.83,
+          101.07,
+          127.17,
+          144.63,
+          158.17,
+          172.53,
+          181.17,
+          197.7,
+          267.43,
+          278.9
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 270.63,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=NOVA&tf=5m",
+          "label": "Open NOVA in the simulator"
+        }
+      },
+      {
+        "lang": "te",
+        "video": "08-market-hours-and-sessions.te.8af2b141.mp4",
+        "captions": "08-market-hours-and-sessions.te.1bcaa090.vtt",
+        "duration": 413.47,
+        "scenes": [
+          0.0,
+          23.63,
+          49.97,
+          81.9,
+          115.4,
+          143.13,
+          185.27,
+          209.27,
+          232.33,
+          252.8,
+          264.37,
+          292.1,
+          391.87,
+          407.97
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 395.07,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=NOVA&tf=5m",
+          "label": "Open NOVA in the simulator"
+        }
+      }
+    ],
+    "published": "2026-10-21"
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/06-engulfing",
     "poster": "poster.a794f5b7.jpg",
