@@ -235,6 +235,32 @@
       }
     }
   },
+  "m01-reading-price/01-what-is-a-chart": {
+    "en": {
+      "approved": "2026-10-21",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "01-what-is-a-chart.en.vtt",
+        "sha256": "d0b296477475c086988effc4a967a0357a5f7bdbb5b5ef6e7a495c0a9b02457d"
+      },
+      "video": {
+        "file": "01-what-is-a-chart.en.mp4",
+        "sha256": "5a2a4a06505503be6274ef7495c71bc5925262642f1f7520d0206f779f3d161f"
+      }
+    },
+    "te": {
+      "approved": "2026-10-21",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "01-what-is-a-chart.te.vtt",
+        "sha256": "5c7c221841c2da7401ab4e2eef9a0d1015a9f5644d0d35c425e0691763c42ca7"
+      },
+      "video": {
+        "file": "01-what-is-a-chart.te.mp4",
+        "sha256": "12e97dfe9086a9febd4bf5b0970695bfb9ef2a7c68f2a478fc7ef5188ebaac6d"
+      }
+    }
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "en": {
       "approved": "2026-10-17",
