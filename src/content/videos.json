@@ -800,6 +800,81 @@
     ],
     "published": "2026-10-21"
   },
+  "m01-reading-price/03-anatomy-of-a-candle": {
+    "base": "https://media.nitoratrading.com/m01-reading-price/03-anatomy-of-a-candle",
+    "poster": "poster.41e0a0ff.jpg",
+    "tracks": [
+      {
+        "lang": "en",
+        "video": "03-anatomy-of-a-candle.en.cb34bc0c.mp4",
+        "captions": "03-anatomy-of-a-candle.en.d9a66e63.vtt",
+        "duration": 331.17,
+        "scenes": [
+          0.0,
+          29.63,
+          45.33,
+          68.27,
+          86.53,
+          112.17,
+          138.63,
+          156.37,
+          170.97,
+          186.2,
+          204.8,
+          227.6,
+          313.0,
+          325.67
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 316.2,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=BLUE&tf=5m",
+          "label": "Open BLUE in the simulator"
+        }
+      },
+      {
+        "lang": "te",
+        "video": "03-anatomy-of-a-candle.te.44fba5b5.mp4",
+        "captions": "03-anatomy-of-a-candle.te.81c28fc7.vtt",
+        "duration": 441.97,
+        "scenes": [
+          0.0,
+          44.3,
+          65.43,
+          95.0,
+          119.83,
+          153.67,
+          189.07,
+          210.37,
+          235.3,
+          257.03,
+          280.0,
+          307.7,
+          422.07,
+          436.47
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 425.27,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=BLUE&tf=5m",
+          "label": "Open BLUE in the simulator"
+        }
+      }
+    ],
+    "published": "2026-10-25"
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/06-engulfing",
     "poster": "poster.a794f5b7.jpg",

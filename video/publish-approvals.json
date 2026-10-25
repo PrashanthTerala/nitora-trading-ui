@@ -287,6 +287,32 @@
       }
     }
   },
+  "m01-reading-price/03-anatomy-of-a-candle": {
+    "en": {
+      "approved": "2026-10-25",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "03-anatomy-of-a-candle.en.vtt",
+        "sha256": "d9a66e63fc98b7677131445d0ebd316edf47d86c34174fbe7108ed7044c53b24"
+      },
+      "video": {
+        "file": "03-anatomy-of-a-candle.en.mp4",
+        "sha256": "cb34bc0c8f0b94cae2bf37d10d9cc80cabda765894b888b674a9791ea4601941"
+      }
+    },
+    "te": {
+      "approved": "2026-10-25",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "03-anatomy-of-a-candle.te.vtt",
+        "sha256": "81c28fc71c923b56e053481e81a126fbd8a1106b9207ee22602c64055ea954e6"
+      },
+      "video": {
+        "file": "03-anatomy-of-a-candle.te.mp4",
+        "sha256": "44fba5b5cffe6310a865fe617a458d680e7e0e6052d976c7cbbbb07c350f9d89"
+      }
+    }
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "en": {
       "approved": "2026-10-17",
