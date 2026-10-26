@@ -313,6 +313,32 @@
       }
     }
   },
+  "m01-reading-price/04-bullish-vs-bearish": {
+    "en": {
+      "approved": "2026-10-25",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "04-bullish-vs-bearish.en.vtt",
+        "sha256": "2b3e8cfcac75236fbb9ed5db639ee88e5b0ae1d0555066ff93cb4e9f81553044"
+      },
+      "video": {
+        "file": "04-bullish-vs-bearish.en.mp4",
+        "sha256": "2b13524b8938a6ffb3130970ccd762753f2bac860a6152f3c0bc747117122586"
+      }
+    },
+    "te": {
+      "approved": "2026-10-25",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "04-bullish-vs-bearish.te.vtt",
+        "sha256": "053359313ad7ba69c638473ffc47d650555a70d3790b7d6be346435c014ed5cd"
+      },
+      "video": {
+        "file": "04-bullish-vs-bearish.te.mp4",
+        "sha256": "453b18c4f4b95b4ab511a7bf97f8ad2049d2b0db41b630332c750777a1590a27"
+      }
+    }
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "en": {
       "approved": "2026-10-17",

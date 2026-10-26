@@ -875,6 +875,83 @@
     ],
     "published": "2026-10-25"
   },
+  "m01-reading-price/04-bullish-vs-bearish": {
+    "base": "https://media.nitoratrading.com/m01-reading-price/04-bullish-vs-bearish",
+    "poster": "poster.9494d331.jpg",
+    "tracks": [
+      {
+        "lang": "en",
+        "video": "04-bullish-vs-bearish.en.2b13524b.mp4",
+        "captions": "04-bullish-vs-bearish.en.2b3e8cfc.vtt",
+        "duration": 366.57,
+        "scenes": [
+          0.0,
+          21.33,
+          34.57,
+          55.7,
+          82.83,
+          100.5,
+          129.77,
+          145.53,
+          177.97,
+          200.1,
+          226.23,
+          244.33,
+          264.33,
+          348.57,
+          361.07
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 351.77,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=BLUE&tf=1D",
+          "label": "Open BLUE in the simulator"
+        }
+      },
+      {
+        "lang": "te",
+        "video": "04-bullish-vs-bearish.te.453b18c4.mp4",
+        "captions": "04-bullish-vs-bearish.te.05335931.vtt",
+        "duration": 515.43,
+        "scenes": [
+          0.0,
+          31.57,
+          54.23,
+          80.53,
+          116.0,
+          144.07,
+          181.57,
+          206.53,
+          252.5,
+          285.67,
+          322.47,
+          349.57,
+          374.8,
+          492.43,
+          509.93
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 495.63,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=BLUE&tf=1D",
+          "label": "Open BLUE in the simulator"
+        }
+      }
+    ],
+    "published": "2026-10-25"
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/06-engulfing",
     "poster": "poster.a794f5b7.jpg",
