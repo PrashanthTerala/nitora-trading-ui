@@ -339,6 +339,32 @@
       }
     }
   },
+  "m01-reading-price/05-timeframes": {
+    "en": {
+      "approved": "2026-10-27",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "05-timeframes.en.vtt",
+        "sha256": "f3587ea4bcbae36fa10cf791b9b461f16ffa6a0e060dcfafb2f3645a7e6b244e"
+      },
+      "video": {
+        "file": "05-timeframes.en.mp4",
+        "sha256": "d4a4c067c38ea1f7fe9590943c7f127b3f58d0272c9262028d48970b0c6dd885"
+      }
+    },
+    "te": {
+      "approved": "2026-10-27",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "05-timeframes.te.vtt",
+        "sha256": "d8ff34f496bd333a984c3578f00e3624d465668c7e3c4daccfec44ce6a830110"
+      },
+      "video": {
+        "file": "05-timeframes.te.mp4",
+        "sha256": "bb82d08fc02721749492e51ce3374e66e1b4142119d862500e29aa1e7c24d768"
+      }
+    }
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "en": {
       "approved": "2026-10-17",

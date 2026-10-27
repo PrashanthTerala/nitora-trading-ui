@@ -952,6 +952,83 @@
     ],
     "published": "2026-10-25"
   },
+  "m01-reading-price/05-timeframes": {
+    "base": "https://media.nitoratrading.com/m01-reading-price/05-timeframes",
+    "poster": "poster.ca8a7edb.jpg",
+    "tracks": [
+      {
+        "lang": "en",
+        "video": "05-timeframes.en.d4a4c067.mp4",
+        "captions": "05-timeframes.en.f3587ea4.vtt",
+        "duration": 378.57,
+        "scenes": [
+          0.0,
+          28.7,
+          55.87,
+          78.13,
+          93.23,
+          124.9,
+          141.87,
+          165.33,
+          182.0,
+          209.67,
+          227.93,
+          244.27,
+          265.13,
+          357.5,
+          373.07
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 360.7,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=NOVA&tf=1D",
+          "label": "Open NOVA in the simulator"
+        }
+      },
+      {
+        "lang": "te",
+        "video": "05-timeframes.te.bb82d08f.mp4",
+        "captions": "05-timeframes.te.d8ff34f4.vtt",
+        "duration": 516.1,
+        "scenes": [
+          0.0,
+          38.97,
+          74.13,
+          104.53,
+          124.97,
+          166.43,
+          192.7,
+          222.17,
+          243.43,
+          286.53,
+          310.77,
+          333.87,
+          364.3,
+          486.53,
+          510.6
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 489.73,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=NOVA&tf=1D",
+          "label": "Open NOVA in the simulator"
+        }
+      }
+    ],
+    "published": "2026-10-27"
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/06-engulfing",
     "poster": "poster.a794f5b7.jpg",
