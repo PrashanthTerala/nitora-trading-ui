@@ -1110,6 +1110,81 @@
     ],
     "published": "2026-10-27"
   },
+  "m01-reading-price/07-gaps": {
+    "base": "https://media.nitoratrading.com/m01-reading-price/07-gaps",
+    "poster": "poster.9534439b.jpg",
+    "tracks": [
+      {
+        "lang": "en",
+        "video": "07-gaps.en.e6941f21.mp4",
+        "captions": "07-gaps.en.54636cc2.vtt",
+        "duration": 358.9,
+        "scenes": [
+          0.0,
+          19.97,
+          43.73,
+          65.83,
+          87.47,
+          125.43,
+          140.17,
+          162.9,
+          182.37,
+          219.43,
+          236.6,
+          257.3,
+          340.33,
+          353.4
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 343.53,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=BIOX&tf=1D",
+          "label": "Open BIOX in the simulator"
+        }
+      },
+      {
+        "lang": "te",
+        "video": "07-gaps.te.5204c27f.mp4",
+        "captions": "07-gaps.te.f931fdce.vtt",
+        "duration": 543.0,
+        "scenes": [
+          0.0,
+          30.0,
+          62.8,
+          95.6,
+          128.9,
+          189.07,
+          216.97,
+          252.03,
+          285.0,
+          343.13,
+          371.23,
+          402.2,
+          517.23,
+          537.5
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 520.43,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=BIOX&tf=1D",
+          "label": "Open BIOX in the simulator"
+        }
+      }
+    ],
+    "published": "2026-10-28"
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/06-engulfing",
     "poster": "poster.a794f5b7.jpg",

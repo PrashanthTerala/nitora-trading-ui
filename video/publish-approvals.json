@@ -391,6 +391,32 @@
       }
     }
   },
+  "m01-reading-price/07-gaps": {
+    "en": {
+      "approved": "2026-10-28",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "07-gaps.en.vtt",
+        "sha256": "54636cc27ff77a8355500a14e8b5fb5e9fd49d929600b4d15d8c3273ffbe1321"
+      },
+      "video": {
+        "file": "07-gaps.en.mp4",
+        "sha256": "e6941f2178fccdaa3108cb634253ef01e3066f9c275c4d6a70f3e7fe93665209"
+      }
+    },
+    "te": {
+      "approved": "2026-10-28",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "07-gaps.te.vtt",
+        "sha256": "f931fdceb363aeafa5fb15b5914ee870070919e789fb785a715230a1b43f978b"
+      },
+      "video": {
+        "file": "07-gaps.te.mp4",
+        "sha256": "5204c27fe4e1d666ed9a313c83aa91f79bcf0f4ebaa638be11d21074e15cd7e5"
+      }
+    }
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "en": {
       "approved": "2026-10-17",
