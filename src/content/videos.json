@@ -1029,6 +1029,87 @@
     ],
     "published": "2026-10-27"
   },
+  "m01-reading-price/06-volume": {
+    "base": "https://media.nitoratrading.com/m01-reading-price/06-volume",
+    "poster": "poster.735d974c.jpg",
+    "tracks": [
+      {
+        "lang": "en",
+        "video": "06-volume.en.73dd1eb7.mp4",
+        "captions": "06-volume.en.5c2e0546.vtt",
+        "duration": 393.17,
+        "scenes": [
+          0.0,
+          29.83,
+          47.57,
+          68.47,
+          90.37,
+          112.57,
+          132.3,
+          154.83,
+          171.9,
+          187.13,
+          202.57,
+          220.63,
+          245.33,
+          271.63,
+          292.33,
+          374.87,
+          387.67
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 378.07,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=NOVA&tf=1D",
+          "label": "Open NOVA in the simulator"
+        }
+      },
+      {
+        "lang": "te",
+        "video": "06-volume.te.8691b1be.mp4",
+        "captions": "06-volume.te.d715b7a1.vtt",
+        "duration": 584.03,
+        "scenes": [
+          0.0,
+          44.2,
+          70.4,
+          99.23,
+          135.83,
+          171.7,
+          197.73,
+          231.37,
+          257.33,
+          279.07,
+          300.8,
+          329.93,
+          367.37,
+          409.13,
+          445.6,
+          559.57,
+          578.53
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 562.77,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=NOVA&tf=1D",
+          "label": "Open NOVA in the simulator"
+        }
+      }
+    ],
+    "published": "2026-10-27"
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/06-engulfing",
     "poster": "poster.a794f5b7.jpg",
