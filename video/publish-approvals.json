@@ -495,6 +495,32 @@
       }
     }
   },
+  "m02-candlestick-patterns/03-hammer-hanging-man": {
+    "en": {
+      "approved": "2026-10-29",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "03-hammer-hanging-man.en.vtt",
+        "sha256": "88688779f7abe1aca514b8ed319df67fb1e38b5744ee1e616df54f246673a298"
+      },
+      "video": {
+        "file": "03-hammer-hanging-man.en.mp4",
+        "sha256": "9f53c47124d50be4049f0b4f124ee4b0bae91893dea19bfce5864ce2aff51c80"
+      }
+    },
+    "te": {
+      "approved": "2026-10-29",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "03-hammer-hanging-man.te.vtt",
+        "sha256": "0a73064fd4a73343d7d7f0354e82362f853a27075e8a311e5a387cfb9d9920ef"
+      },
+      "video": {
+        "file": "03-hammer-hanging-man.te.mp4",
+        "sha256": "32bc266a23aaf3e4fc446e8b7069ec921ff494e316300f13148b5865d898df7d"
+      }
+    }
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "en": {
       "approved": "2026-10-17",
