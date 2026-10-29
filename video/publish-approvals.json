@@ -417,6 +417,32 @@
       }
     }
   },
+  "m01-reading-price/08-log-vs-linear": {
+    "en": {
+      "approved": "2026-10-28",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "08-log-vs-linear.en.vtt",
+        "sha256": "8fc6de22dc2401aba8a6b37d2ee3d02332ae20acd39ff79141c17503fa81f39f"
+      },
+      "video": {
+        "file": "08-log-vs-linear.en.mp4",
+        "sha256": "5293852dc5887c52e3ae0007589943d8710ef09fbb8efabf1e38b2a39d534b57"
+      }
+    },
+    "te": {
+      "approved": "2026-10-28",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "08-log-vs-linear.te.vtt",
+        "sha256": "5fe4e69dc02e2feb46cc98dd917a2075256b76970d952a542dbcd41157997f13"
+      },
+      "video": {
+        "file": "08-log-vs-linear.te.mp4",
+        "sha256": "7cd2cc20cee80a472335a0a863a2e7a9137a154a2bc208c584c75ef0452d4f4e"
+      }
+    }
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "en": {
       "approved": "2026-10-17",

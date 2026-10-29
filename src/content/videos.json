@@ -1185,6 +1185,83 @@
     ],
     "published": "2026-10-28"
   },
+  "m01-reading-price/08-log-vs-linear": {
+    "base": "https://media.nitoratrading.com/m01-reading-price/08-log-vs-linear",
+    "poster": "poster.66b78bb0.jpg",
+    "tracks": [
+      {
+        "lang": "en",
+        "video": "08-log-vs-linear.en.5293852d.mp4",
+        "captions": "08-log-vs-linear.en.8fc6de22.vtt",
+        "duration": 389.07,
+        "scenes": [
+          0.0,
+          19.43,
+          37.83,
+          56.83,
+          87.07,
+          113.23,
+          137.3,
+          166.1,
+          184.57,
+          208.13,
+          239.17,
+          259.63,
+          283.73,
+          369.63,
+          383.57
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 372.83,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=CRYP&tf=1D",
+          "label": "Open CRYP in the simulator"
+        }
+      },
+      {
+        "lang": "te",
+        "video": "08-log-vs-linear.te.7cd2cc20.mp4",
+        "captions": "08-log-vs-linear.te.5fe4e69d.vtt",
+        "duration": 558.23,
+        "scenes": [
+          0.0,
+          31.53,
+          60.4,
+          83.7,
+          123.93,
+          159.0,
+          197.2,
+          239.37,
+          268.27,
+          306.53,
+          350.0,
+          383.73,
+          419.43,
+          532.87,
+          552.73
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 536.07,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/simulator?symbol=CRYP&tf=1D",
+          "label": "Open CRYP in the simulator"
+        }
+      }
+    ],
+    "published": "2026-10-28"
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/06-engulfing",
     "poster": "poster.a794f5b7.jpg",
