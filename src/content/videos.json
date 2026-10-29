@@ -1262,6 +1262,85 @@
     ],
     "published": "2026-10-28"
   },
+  "m02-candlestick-patterns/01-how-to-read-patterns": {
+    "base": "https://media.nitoratrading.com/m02-candlestick-patterns/01-how-to-read-patterns",
+    "poster": "poster.d41d8452.jpg",
+    "tracks": [
+      {
+        "lang": "en",
+        "video": "01-how-to-read-patterns.en.8d125e4d.mp4",
+        "captions": "01-how-to-read-patterns.en.ffd82b1d.vtt",
+        "duration": 430.23,
+        "scenes": [
+          0.0,
+          25.13,
+          52.53,
+          69.0,
+          99.07,
+          117.47,
+          140.4,
+          169.73,
+          184.63,
+          224.9,
+          245.0,
+          280.87,
+          305.47,
+          327.63,
+          410.43,
+          424.73
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 413.63,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/trainer",
+          "label": "Open the pattern trainer"
+        }
+      },
+      {
+        "lang": "te",
+        "video": "01-how-to-read-patterns.te.18aeffd7.mp4",
+        "captions": "01-how-to-read-patterns.te.a653b2c6.vtt",
+        "duration": 593.2,
+        "scenes": [
+          0.0,
+          31.37,
+          70.03,
+          97.27,
+          135.53,
+          162.03,
+          193.5,
+          232.93,
+          254.0,
+          306.5,
+          337.8,
+          384.6,
+          418.73,
+          451.9,
+          568.6,
+          587.7
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 571.8,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/trainer",
+          "label": "Open the pattern trainer"
+        }
+      }
+    ],
+    "published": "2026-10-28"
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/06-engulfing",
     "poster": "poster.a794f5b7.jpg",

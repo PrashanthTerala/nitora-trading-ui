@@ -443,6 +443,32 @@
       }
     }
   },
+  "m02-candlestick-patterns/01-how-to-read-patterns": {
+    "en": {
+      "approved": "2026-10-28",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "01-how-to-read-patterns.en.vtt",
+        "sha256": "ffd82b1dc0e1a9010983ce63e485209c3981b00f69f0969d327a5cc179ce04b6"
+      },
+      "video": {
+        "file": "01-how-to-read-patterns.en.mp4",
+        "sha256": "8d125e4d0afcebec0912792641ed8d65cc34c7062e74e27c8dd795fda22b8fa6"
+      }
+    },
+    "te": {
+      "approved": "2026-10-28",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "01-how-to-read-patterns.te.vtt",
+        "sha256": "a653b2c6147bbf342a5f798633b25f9c382921c762739e9895f0a774f02766be"
+      },
+      "video": {
+        "file": "01-how-to-read-patterns.te.mp4",
+        "sha256": "18aeffd76772131fe611023a905a658bda4e3c5dade32e5d50b2f39437898b73"
+      }
+    }
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "en": {
       "approved": "2026-10-17",
