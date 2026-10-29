@@ -469,6 +469,32 @@
       }
     }
   },
+  "m02-candlestick-patterns/02-doji-family": {
+    "en": {
+      "approved": "2026-10-29",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "02-doji-family.en.vtt",
+        "sha256": "5902a36c2ffc0f99edff07918941cfc19be0d4ca38108d52420cd3f7a9a3bc68"
+      },
+      "video": {
+        "file": "02-doji-family.en.mp4",
+        "sha256": "fc91f1593a32f768094e529327a7226f62554a9543899e77a2886011a7bb1cf9"
+      }
+    },
+    "te": {
+      "approved": "2026-10-29",
+      "by": "owner, in chat",
+      "captions": {
+        "file": "02-doji-family.te.vtt",
+        "sha256": "f79ba2044ac7dfac7bf4358835166c75e432d7f619834820ad0065e7b7ca4d74"
+      },
+      "video": {
+        "file": "02-doji-family.te.mp4",
+        "sha256": "339626f32af33c25d71aa1f83f81ca18b229b79137f5f5f29264315dd41f774d"
+      }
+    }
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "en": {
       "approved": "2026-10-17",

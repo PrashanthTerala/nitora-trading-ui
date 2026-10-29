@@ -1341,6 +1341,87 @@
     ],
     "published": "2026-10-28"
   },
+  "m02-candlestick-patterns/02-doji-family": {
+    "base": "https://media.nitoratrading.com/m02-candlestick-patterns/02-doji-family",
+    "poster": "poster.5e809ce8.jpg",
+    "tracks": [
+      {
+        "lang": "en",
+        "video": "02-doji-family.en.fc91f159.mp4",
+        "captions": "02-doji-family.en.5902a36c.vtt",
+        "duration": 463.57,
+        "scenes": [
+          0.0,
+          27.1,
+          44.0,
+          66.47,
+          101.37,
+          134.27,
+          153.5,
+          173.2,
+          195.27,
+          211.27,
+          254.73,
+          289.97,
+          310.53,
+          348.77,
+          370.03,
+          446.77,
+          458.07
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 449.97,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/trainer",
+          "label": "Open the pattern trainer"
+        }
+      },
+      {
+        "lang": "te",
+        "video": "02-doji-family.te.339626f3.mp4",
+        "captions": "02-doji-family.te.f79ba204.vtt",
+        "duration": 660.87,
+        "scenes": [
+          0.0,
+          39.5,
+          65.33,
+          100.37,
+          144.23,
+          190.57,
+          215.63,
+          247.07,
+          279.53,
+          302.97,
+          366.0,
+          412.87,
+          442.33,
+          497.93,
+          528.47,
+          638.77,
+          655.37
+        ],
+        "credit": "Voice: Google Cloud Text-to-Speech, Chirp 3 HD (Achird).",
+        "cta": {
+          "from": 641.97,
+          "box": [
+            588,
+            806,
+            744,
+            88
+          ],
+          "href": "/trainer",
+          "label": "Open the pattern trainer"
+        }
+      }
+    ],
+    "published": "2026-10-29"
+  },
   "m02-candlestick-patterns/06-engulfing": {
     "base": "https://media.nitoratrading.com/m02-candlestick-patterns/06-engulfing",
     "poster": "poster.a794f5b7.jpg",
